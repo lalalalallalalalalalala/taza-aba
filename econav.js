@@ -123,12 +123,16 @@
   /* ---------- окно разрешения геолокации ---------- */
   function sheet(title, text, btns) { return new Promise(res => { const d = document.createElement("div"); d.className = "nv-sheet-bg"; d.innerHTML = `<div class="nv-sheet" role="alertdialog" aria-modal="true" aria-labelledby="nvsT"><div class="nv-sheet-ic">${'<svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>'}</div><h3 id="nvsT">${esc(title)}</h3><p>${esc(text)}</p><div class="nv-sheet-b">${btns.map((b, k) => `<button type="button" data-k="${k}" class="${b[1] ? "pri" : ""}">${esc(b[0])}</button>`).join("")}</div></div>`;
     (document.querySelector(".nv") || document.body).appendChild(d); d.querySelectorAll("[data-k]").forEach(b => b.onclick = () => { d.remove(); res(+b.dataset.k); }); setTimeout(() => d.querySelector(".pri, button").focus(), 30); }); }
-  async function geoState() { if (!navigator.geolocation) return "none"; if (!window.isSecureContext) return "insecure"; try { const p = await navigator.permissions.query({ name: "geolocation" }); return p.state; } catch (e) { return "prompt"; } }
+  async function geoState() { if (!navigator.geolocation) return "none"; if (!window.isSecureContext) return "insecure";
+    /* v68: в Android-приложении состояние берём у системы (Permissions API в WebView его не знает) */
+    try { if (window.TazaApp && TazaApp.geoStatus) { const a = JSON.parse(TazaApp.geoStatus()); return a.on === false ? "off" : a.perm === "granted" ? "granted" : a.perm === "denied" ? "denied" : "prompt"; } } catch (e) {} try { const p = await navigator.permissions.query({ name: "geolocation" }); return p.state; } catch (e) { return "prompt"; } }
   /* возвращает true, если можно запускать watchPosition */
   async function askGeo() { const s = await geoState();
     if (s === "granted") return true;
     if (s === "none" || s === "insecure") { await sheet(nt("unT"), s === "insecure" ? nt("insec") : nt("unP"), [[nt("close"), true]]); return false; }
-    if (s === "denied") { await sheet(nt("denT"), nt("denP"), [[nt("close"), true]]); return false; }
+    const app = window.TazaApp && TazaApp.openAppSettings, G = k => typeof ET === "function" ? ET(k) : "";
+    if (s === "off") { if ((await sheet(nt("unT"), G("gOff"), app ? [[nt("close")], [G("gOn"), true]] : [[nt("close"), true]])) === 1) TazaApp.openLocationSettings(); return false; }
+    if (s === "denied") { if ((await sheet(nt("denT"), app ? G("gDenApp") : nt("denP"), app ? [[nt("close")], [G("gSet"), true]] : [[nt("close"), true]])) === 1) TazaApp.openAppSettings(); return false; }
     return (await sheet(nt("geoT"), nt("geoP"), [[nt("cancel")], [nt("allow"), true]])) === 1; }
   window.ecoNavAskGeo = askGeo; window.ecoNavSheet = sheet; window.ecoNavT = nt;
 

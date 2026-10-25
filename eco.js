@@ -2,7 +2,7 @@
  * (Valhalla / OSRM FOSSGIS, без ключей), 2–3 варианта, оценка вдыхаемой дозы PM2.5 по поверхности «Дымка»,
  * лучшее время по почасовому прогнозу, готовые маршруты, 3D-навигатор (eco3d.js, MapLibre — грузится лениво). */
 const ECO_T = {
-  ru: { go2: "Поехали", locDen: "Доступ к геолокации запрещён — разрешите его в настройках браузера", locUn: "Нет сигнала GPS — попробуйте на открытом месте", accM: "точность ±{m} м", title: "Эко-маршруты", sub: "Проложите путь, где воздух чище: выберите точки на карте или найдите адрес", from: "Откуда", to: "Куда", stop: "Остановка", add: "Добавить точку", swap: "Поменять местами", me: "Моё местоположение",
+  ru: { gBtn: "Моё местоположение", gBusy: "Определяю…", gGps: "Ищу сигнал GPS…", gOk: "Моё местоположение · ±{m} м", gRetry: "Повторить", gRef: "Обновить местоположение", gSet: "Открыть настройки", gOn: "Включить геолокацию", gDenApp: "Приложению не разрешён доступ к местоположению. Откройте настройки → Разрешения → Местоположение → «Разрешить».", gDen: "Доступ к местоположению запрещён для сайта. Нажмите значок слева от адреса → Разрешения → Местоположение → «Разрешить».", gDenPwa: "Доступ к местоположению запрещён. Откройте Chrome → Настройки → Настройки сайтов → Местоположение и разрешите для «Таза Аба».", gOff: "Геолокация на телефоне выключена. Включите её и нажмите «Повторить».", gUn: "Телефон не смог определить координаты. Проверьте, что геолокация (GPS) включена, и повторите.", gTime: "Не удалось поймать сигнал. Подойдите к окну или выйдите на улицу — или отметьте точку «Откуда» на карте.", gNo: "Это устройство не поддерживает геолокацию — отметьте точку «Откуда» на карте.", go2: "Поехали", locDen: "Доступ к геолокации запрещён — разрешите его в настройках браузера", locUn: "Нет сигнала GPS — попробуйте на открытом месте", accM: "точность ±{m} м", title: "Эко-маршруты", sub: "Проложите путь, где воздух чище: выберите точки на карте или найдите адрес", from: "Откуда", to: "Куда", stop: "Остановка", add: "Добавить точку", swap: "Поменять местами", me: "Моё местоположение",
     walk: "Пешком", bike: "Велосипед", car: "Авто", hint: "Нажмите на карту: первая точка — «Откуда», вторая — «Куда». Маркеры можно перетаскивать.", build: "Проложить", building: "Прокладываю маршрут…",
     here: "Отсюда", there: "Сюда", via: "Через эту точку", min: "мин", h: "ч", km: "км", m: "м", aqi: "AQI в среднем", dose: "Доза PM2.5", cleanest: "Чище всего", fastest: "Быстрее всего", balanced: "Рекомендуем",
     cleaner: "чище на {p}%", dirtier: "грязнее на {p}%", same: "по воздуху почти одинаково", nav3d: "3D-навигатор", pick: "Выбрать", bestC: "прогноз модели CAMS с поправкой по датчикам", bestM: "по прогнозу модели CAMS", best: "Лучшее время сегодня", bestAt: "около {t} — AQI ≈ {a}",
@@ -10,7 +10,7 @@ const ECO_T = {
     eqAir: "Данные о воздухе — по районам, поэтому близкие маршруты получают похожую оценку. Выбирайте удобный.", fail: "Сервис маршрутов не ответил — показываю прямую линию (оценка).", lineEst: "по прямой, оценка",
     ready: "Готовые эко-маршруты", readySub: "Парки, бульвары и набережные — проложим по реальным дорожкам и оценим воздух", go: "Построить", detour: "через {d}", none: "Ничего не найдено", my: "Моё место", mapPt: "Точка на карте",
     loc: "Определяю местоположение…", locErr: "Не удалось определить местоположение", src: "Маршруты: © OpenStreetMap, Valhalla/OSRM (FOSSGIS). Поиск: Photon (komoot).", fewer: "Удалить точку", near: "рядом с «{d}»" },
-  ky: { go2: "Жолго чыгуу", locDen: "Геолокацияга тыюу салынган — браузердин жөндөөлөрүнөн уруксат бериңиз", locUn: "GPS сигналы жок — ачык жерден аракет кылыңыз", accM: "тактык ±{m} м", title: "Эко-маршруттар", sub: "Абасы тазараак жолду түзүңүз: картадан чекит тандаңыз же даректи издеңиз", from: "Кайдан", to: "Кайда", stop: "Аялдама", add: "Чекит кошуу", swap: "Алмаштыруу", me: "Менин жайгашкан жерим",
+  ky: { gBtn: "Менин жайгашкан жерим", gBusy: "Аныкталууда…", gGps: "GPS сигналы изделүүдө…", gOk: "Менин жайгашкан жерим · ±{m} м", gRetry: "Кайталоо", gRef: "Жайгашкан жерди жаңыртуу", gSet: "Жөндөөлөрдү ачуу", gOn: "Геолокацияны күйгүзүү", gDenApp: "Тиркемеге жайгашкан жерге уруксат берилген эмес. Жөндөөлөр → Уруксаттар → Жайгашкан жер → «Уруксат берүү».", gDen: "Сайтка жайгашкан жерге уруксат жок. Даректин сол жагындагы белгини басыңыз → Уруксаттар → Жайгашкан жер → «Уруксат берүү».", gDenPwa: "Жайгашкан жерге уруксат жок. Chrome → Жөндөөлөр → Сайттын жөндөөлөрү → Жайгашкан жер бөлүмүнөн «Таза Аба» үчүн уруксат бериңиз.", gOff: "Телефондо геолокация өчүк. Күйгүзүп, «Кайталоо» басыңыз.", gUn: "Телефон координаттарды аныктай алган жок. Геолокация (GPS) күйүк экенин текшерип, кайталаңыз.", gTime: "Сигнал табылган жок. Терезеге жакын барыңыз же сыртка чыгыңыз — же «Кайдан» чекитин картадан белгилеңиз.", gNo: "Бул түзмөк геолокацияны колдобойт — «Кайдан» чекитин картадан белгилеңиз.", go2: "Жолго чыгуу", locDen: "Геолокацияга тыюу салынган — браузердин жөндөөлөрүнөн уруксат бериңиз", locUn: "GPS сигналы жок — ачык жерден аракет кылыңыз", accM: "тактык ±{m} м", title: "Эко-маршруттар", sub: "Абасы тазараак жолду түзүңүз: картадан чекит тандаңыз же даректи издеңиз", from: "Кайдан", to: "Кайда", stop: "Аялдама", add: "Чекит кошуу", swap: "Алмаштыруу", me: "Менин жайгашкан жерим",
     walk: "Жөө", bike: "Велосипед", car: "Унаа", hint: "Картаны басыңыз: биринчи чекит — «Кайдан», экинчиси — «Кайда». Белгилерди сүйрөсө болот.", build: "Түзүү", building: "Маршрут түзүлүүдө…",
     here: "Ушул жерден", there: "Ушул жерге", via: "Ушул чекит аркылуу", min: "мүн", h: "саат", km: "км", m: "м", aqi: "Орточо AQI", dose: "PM2.5 дозасы", cleanest: "Эң таза", fastest: "Эң тез", balanced: "Сунуштайбыз",
     cleaner: "{p}% тазараак", dirtier: "{p}% булганычыраак", same: "аба боюнча дээрлик бирдей", nav3d: "3D-навигатор", pick: "Тандоо", bestC: "CAMS моделинин божомолу, датчиктер боюнча оңдолгон", bestM: "CAMS моделинин божомолу боюнча", best: "Бүгүн эң жакшы убакыт", bestAt: "болжол менен {t} — AQI ≈ {a}",
@@ -18,7 +18,7 @@ const ECO_T = {
     eqAir: "Аба маалыматы райондор боюнча, ошондуктан жакын маршруттар окшош бааланат. Ыңгайлуусун тандаңыз.", fail: "Маршрут кызматы жооп берген жок — түз сызык көрсөтүлдү (баалоо).", lineEst: "түз сызык, баалоо",
     ready: "Даяр эко-маршруттар", readySub: "Парктар, бульварлар, жээктер — чыныгы жолдор менен түзүп, абаны баалайбыз", go: "Түзүү", detour: "{d} аркылуу", none: "Эч нерсе табылган жок", my: "Менин жерим", mapPt: "Картадагы чекит",
     loc: "Жайгашкан жер аныкталууда…", locErr: "Жайгашкан жерди аныктоо мүмкүн болбоду", src: "Маршруттар: © OpenStreetMap, Valhalla/OSRM (FOSSGIS). Издөө: Photon (komoot).", fewer: "Чекитти өчүрүү", near: "«{d}» жанында" },
-  en: { go2: "Go", locDen: "Location access is blocked — allow it in your browser settings", locUn: "No GPS signal — try in an open area", accM: "accuracy ±{m} m", title: "Eco routes", sub: "Plan a path with cleaner air: tap points on the map or search an address", from: "From", to: "To", stop: "Stop", add: "Add stop", swap: "Swap", me: "My location",
+  en: { gBtn: "My location", gBusy: "Locating…", gGps: "Searching for GPS signal…", gOk: "My location · ±{m} m", gRetry: "Try again", gRef: "Refresh location", gSet: "Open settings", gOn: "Turn on location", gDenApp: "The app isn't allowed to use your location. Open Settings → Permissions → Location → Allow.", gDen: "Location is blocked for this site. Tap the icon left of the address → Permissions → Location → Allow.", gDenPwa: "Location is blocked. Open Chrome → Settings → Site settings → Location and allow it for Taza Aba.", gOff: "Location is turned off on your phone. Turn it on and tap Try again.", gUn: "Your phone couldn't get coordinates. Check that location (GPS) is on and try again.", gTime: "Couldn't get a signal. Move closer to a window or step outside — or mark the From point on the map.", gNo: "This device doesn't support location — mark the From point on the map.", go2: "Go", locDen: "Location access is blocked — allow it in your browser settings", locUn: "No GPS signal — try in an open area", accM: "accuracy ±{m} m", title: "Eco routes", sub: "Plan a path with cleaner air: tap points on the map or search an address", from: "From", to: "To", stop: "Stop", add: "Add stop", swap: "Swap", me: "My location",
     walk: "Walk", bike: "Bike", car: "Car", hint: "Tap the map: first point is “From”, second is “To”. Drag markers to adjust.", build: "Route", building: "Finding routes…",
     here: "From here", there: "To here", via: "Via this point", min: "min", h: "h", km: "km", m: "m", aqi: "Average AQI", dose: "PM2.5 dose", cleanest: "Cleanest", fastest: "Fastest", balanced: "Recommended",
     cleaner: "{p}% cleaner", dirtier: "{p}% dirtier", same: "about the same air", nav3d: "3D navigator", pick: "Select", bestC: "CAMS model forecast, corrected by sensors", bestM: "per the CAMS model forecast", best: "Best time today", bestAt: "around {t} — AQI ≈ {a}",
@@ -147,14 +147,14 @@ function ecoForm(f) {
     ${typeof ecoTfForm === "function" && ECO_HAS_TF() ? ecoTfForm() : ""}
     <div class="eco-pts">${eco.pts.map((p, i) => `<div class="eco-pt" data-i="${i}"><i class="eco-dot ${i === 0 ? "a" : i === n - 1 ? "b" : "s"}">${i === 0 ? "A" : i === n - 1 ? "B" : i}</i>
       <div class="eco-in"><input type="search" autocomplete="off" spellcheck="false" aria-label="${esc(lab(i))}" placeholder="${esc(lab(i))}" value="${p ? esc(p.label) : ""}"><ul class="eco-sug" hidden></ul></div>
-      ${i === 0 ? `<button type="button" class="eco-ib" data-me title="${esc(ET("me"))}" aria-label="${esc(ET("me"))}"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="7"/></svg></button>` : i === n - 1 ? `<button type="button" class="eco-ib" data-swap title="${esc(ET("swap"))}" aria-label="${esc(ET("swap"))}"><svg viewBox="0 0 24 24"><path d="M7 4v16M7 4l-3 3M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3"/></svg></button>` : `<button type="button" class="eco-ib" data-del="${i}" aria-label="${esc(ET("fewer"))}">✕</button>`}</div>`).join("")}</div>
+      ${i === 0 ? `<span class="eco-ib-sp" aria-hidden="true"></span>` : i === n - 1 ? `<button type="button" class="eco-ib" data-swap title="${esc(ET("swap"))}" aria-label="${esc(ET("swap"))}"><svg viewBox="0 0 24 24"><path d="M7 4v16M7 4l-3 3M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3"/></svg></button>` : `<button type="button" class="eco-ib" data-del="${i}" aria-label="${esc(ET("fewer"))}">✕</button>`}</div>${i === 0 ? ecoLocHtml() : ""}`).join("")}</div>
     <div class="eco-row"><button type="button" class="eco-add" ${n >= 5 ? "disabled" : ""}>＋ ${esc(ET("add"))}</button><span class="eco-hint">${esc(ET("hint"))}</span></div>`;
   if (typeof ecoTfBind === "function") ecoTfBind(f);
   f.querySelectorAll("[data-m]").forEach(b => b.onclick = () => { eco.mode = b.dataset.m; ecoRoute(); ecoRender(); });
   f.querySelector(".eco-add").onclick = () => { eco.pts.splice(eco.pts.length - 1, 0, null); ecoRender(); f.querySelectorAll(".eco-pt input")[eco.pts.length - 2].focus(); };
   f.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { eco.pts.splice(+b.dataset.del, 1); ecoRoute(); ecoRender(); });
   f.querySelector("[data-swap]").onclick = () => { eco.pts.reverse(); ecoRoute(); ecoRender(); };
-  f.querySelector("[data-me]").onclick = () => ecoLocate();
+  ecoLocBind(f);
   document.querySelectorAll("body > .eco-sug").forEach(x => x.remove());   /* v42b: старые выпадающие списки (портал) */
   f.querySelectorAll(".eco-pt").forEach(row => { const i = +row.dataset.i, inp = row.querySelector("input"), ul = row.querySelector("ul"); let res = [], cur = -1;
     document.body.appendChild(ul); ul.setAttribute("role", "listbox");   /* v42b: список вне карточек — не обрезается и не просвечивает */
@@ -348,15 +348,46 @@ let ecoNavP = null;
 const ecoNavLib = () => ecoNavP || (ecoNavP = new Promise((ok, no) => { if (window.ecoNavOpen) return ok(); const s = document.createElement("script"); s.src = "econav.js"; s.onload = ok; s.onerror = () => { ecoNavP = null; no(); }; document.head.appendChild(s); }));
 function ecoOpenNav(r) { if (!r) return; ecoNavLib().then(() => window.ecoNavOpen(r, eco.mode)).catch(() => toast("Navigation: load error")); }
 let ecoMeL = null;
-async function ecoLocate() {
-  try { await ecoNavLib(); } catch (e) {}
-  if (window.ecoNavAskGeo && !(await window.ecoNavAskGeo())) return; if (!navigator.geolocation) return toast(ET("locErr"));
-  toast(ET("loc"));
-  navigator.geolocation.getCurrentPosition(p => { const ll = [p.coords.latitude, p.coords.longitude], acc = Math.round(p.coords.accuracy || 0);
-    if (ecoMap && ecoMap === map) { if (ecoMeL) ecoMeL.remove(); ecoMeL = L.layerGroup([L.circle(ll, { radius: Math.max(5, acc), color: "#5AB4E8", weight: 1, opacity: .6, fillColor: "#5AB4E8", fillOpacity: .14, interactive: false }),
-      L.marker(ll, { icon: L.divIcon({ className: "", html: '<div class="eco-me"></div>', iconSize: [22, 22], iconAnchor: [11, 11] }), keyboard: false, interactive: false, zIndexOffset: 1000 })]).addTo(ecoMap); }
-    ecoSetPt(0, ll, ET("my")); if (acc) toast(ET("accM", { m: acc })); },
-    e => toast(e && e.code === 1 ? ET("locDen") : e && e.code === 2 ? ET("locUn") : ET("locErr")), { enableHighAccuracy: true, timeout: 12000, maximumAge: 5000 }); }
+/* v68: «Моё местоположение» — понятная кнопка под «Откуда» с состояниями (ожидание · определяю · ±N м · ошибка с действием).
+   Причина бага v67 (Android-приложение): getCurrentPosition({enableHighAccuracy:true, timeout:12000}) — WebView в этом режиме берёт только GPS,
+   в помещении фикс не приходит за 12 с → TIMEOUT → «Не удалось определить местоположение». Теперь: сначала быстрый ответ сети/кэша
+   (low accuracy, maximumAge 60 с, 15 с), при таймауте/недоступности — watchPosition с GPS до 25 с, потом уточнение в фоне. */
+const ecoLoc = { st: "idle", err: "", m: 0, seq: 0 };
+const ECO_LOC_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="2" x2="5" y1="12" y2="12"/><line x1="19" x2="22" y1="12" y2="12"/><line x1="12" x2="12" y1="2" y2="5"/><line x1="12" x2="12" y1="19" y2="22"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/></svg>';
+const ecoApp = () => { try { return window.TazaApp && TazaApp.geoStatus ? JSON.parse(TazaApp.geoStatus()) : null; } catch (e) { return null; } };
+function ecoLocHtml() { const L0 = eco.pts[0], on = L0 && L0.me && ecoLoc.st !== "busy" && ecoLoc.st !== "err", st = on ? "ok" : ecoLoc.st === "ok" ? "idle" : ecoLoc.st;
+  const txt = st === "busy" ? (ecoLoc.gps ? ET("gGps") : ET("gBusy")) : st === "ok" ? ET("gRef") : st === "err" ? ET("gRetry") : ET("gBtn");
+  const app = window.TazaApp && TazaApp.openAppSettings, act = st !== "err" ? "" : ecoLoc.err === "den" && app ? `<button type="button" class="eco-loc-a" data-geo-set>${esc(ET("gSet"))}</button>` : (ecoLoc.err === "off" || ecoLoc.err === "un") && app ? `<button type="button" class="eco-loc-a" data-geo-on>${esc(ET("gOn"))}</button>` : "";
+  return `<div class="eco-locw"><button type="button" class="eco-loc ${st}" data-me aria-live="polite" ${st === "busy" ? 'aria-busy="true"' : ""}>${st === "busy" ? '<i class="eco-spin" aria-hidden="true"></i>' : ECO_LOC_IC}<span>${esc(txt)}</span></button>
+    ${st === "err" ? `<div class="eco-loc-e" role="alert"><p>${esc(ecoLocMsg(ecoLoc.err))}</p>${act}</div>` : ""}</div>`; }
+function ecoLocMsg(c) { const pwa = matchMedia("(display-mode: standalone)").matches;
+  return c === "den" ? (window.TazaApp && TazaApp.geoStatus ? ET("gDenApp") : pwa ? ET("gDenPwa") : ET("gDen")) : c === "off" ? ET("gOff") : c === "un" ? ET("gUn") : c === "no" ? ET("gNo") : ET("gTime"); }
+function ecoLocBind(f) { const b = f.querySelector("[data-me]"); if (!b) return; b.onclick = () => ecoLocate();
+  const s = f.querySelector("[data-geo-set]"), o = f.querySelector("[data-geo-on]"); if (s) s.onclick = () => TazaApp.openAppSettings(); if (o) o.onclick = () => TazaApp.openLocationSettings();
+  const inp = f.querySelector('.eco-pt[data-i="0"] input'); if (inp) { inp.onfocus = () => { if (!inp.value.trim()) b.classList.add("hint"); }; inp.onblur = () => b.classList.remove("hint"); } }
+function ecoLocSet(st, x) { Object.assign(ecoLoc, { st }, x || {}); const w = document.querySelector(".eco-form .eco-locw"); if (w) { w.outerHTML = ecoLocHtml(); ecoLocBind(document.querySelector(".eco-form")); } }
+const ecoGeo1 = o => new Promise((ok, no) => navigator.geolocation.getCurrentPosition(ok, no, o));
+function ecoGeoW(ms, onP) { return new Promise((ok, no) => { let best = null, id = null; const end = (fn, v) => { clearTimeout(t); navigator.geolocation.clearWatch(id); fn(v); };
+  const t = setTimeout(() => end(best ? ok : no, best || { code: 3 }), ms);
+  id = navigator.geolocation.watchPosition(p => { if (!best || p.coords.accuracy < best.coords.accuracy) { best = p; onP && onP(p); } if (p.coords.accuracy <= 30) end(ok, p); },
+    e => { if (e.code === 3) return; end(best ? ok : no, best || e); }, { enableHighAccuracy: true, maximumAge: 0, timeout: ms }); }); }
+function ecoPutMe(p) { const ll = [p.coords.latitude, p.coords.longitude], acc = Math.max(1, Math.round(p.coords.accuracy || 0));
+  if (ecoMap && ecoMap === map) { if (ecoMeL) ecoMeL.remove(); ecoMeL = L.layerGroup([L.circle(ll, { radius: Math.max(5, acc), color: "#5AB4E8", weight: 1, opacity: .6, fillColor: "#5AB4E8", fillOpacity: .14, interactive: false }),
+    L.marker(ll, { icon: L.divIcon({ className: "", html: '<div class="eco-me"></div>', iconSize: [22, 22], iconAnchor: [11, 11] }), keyboard: false, interactive: false, zIndexOffset: 1000 })]).addTo(ecoMap); }
+  eco.pts[0] = { ll, label: ET("gOk", { m: acc }), me: 1, acc }; }
+async function ecoLocate() { const my = ++ecoLoc.seq, cur = () => my === ecoLoc.seq;
+  if (!navigator.geolocation || !window.isSecureContext) return ecoLocSet("err", { err: "no" });
+  const app = ecoApp(); if (app && app.on === false) return ecoLocSet("err", { err: "off" });
+  if (!app && navigator.permissions) { try { if ((await navigator.permissions.query({ name: "geolocation" })).state === "denied") return ecoLocSet("err", { err: "den" }); } catch (e) {} }
+  ecoLocSet("busy", { gps: false, err: "" }); let p;
+  try { try { p = await ecoGeo1({ enableHighAccuracy: false, maximumAge: 60000, timeout: 15000 }); }
+    catch (e) { if (e.code === 1 || !cur()) throw e; ecoLocSet("busy", { gps: true }); p = await ecoGeoW(25000); } }
+  catch (e) { if (!cur()) return; const a = ecoApp(); return ecoLocSet("err", { err: e.code === 1 ? "den" : a && a.on === false ? "off" : e.code === 2 ? "un" : "time" }); }
+  if (!cur()) return; ecoPutMe(p); ecoLoc.st = "ok"; ecoRoute(); ecoRender(); try { if (ecoMap) ecoMap.setView(eco.pts[0].ll, Math.max(ecoMap.getZoom(), 15)); } catch (e) {}
+  if (p.coords.accuracy > 30) ecoGeoW(15000, q => { if (cur() && eco.pts[0] && eco.pts[0].me && q.coords.accuracy < (eco.pts[0].acc || 1e9) * 0.7) { ecoPutMe(q); ecoRoute(); ecoRender(); } }).catch(() => {}); }
+/* вернулись из настроек (Android-приложение: событие tazaresume; браузер: вкладка снова видима) — повторяем, если ошибка была из-за запрета/выключенной геолокации */
+const ecoLocBack = () => { if (ecoLoc.st === "err" && (ecoLoc.err === "den" || ecoLoc.err === "off") && document.querySelector(".eco-form .eco-locw")) setTimeout(ecoLocate, 400); };
+window.addEventListener("tazaresume", ecoLocBack); document.addEventListener("visibilitychange", () => { if (!document.hidden) ecoLocBack(); });
 if (/[?&]navsim=1/.test(location.search)) ecoNavLib().catch(() => {});
 function ecoOpen3d(r, o) { const go = () => window.eco3dOpen && window.eco3dOpen(r, eco.mode, o);
   if (window.eco3dOpen) return go(); const s = document.createElement("script"); s.src = "eco3d.js"; s.onload = go; s.onerror = () => toast("3D: load error"); document.head.appendChild(s); }
