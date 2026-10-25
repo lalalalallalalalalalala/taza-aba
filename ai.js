@@ -190,7 +190,8 @@ function aiRulesHtml(q) { const qk = detectQuick(q); return qk ? quickAnswer(qk)
 async function aiSubmit(q, rerender) {
   const cfg = llmCfg(), prov = provOf(cfg);
   adv.extra.push({ me: true, text: q });
-  if (prov === "rules" || (prov !== "free" && !cfg.key)) { rerender(); typing(); await new Promise(r => setTimeout(r, 350)); adv.extra.push({ html: aiRulesHtml(q) }); aiSave(); rerender(); return; }
+  const offl = navigator.onLine === false;   // v62: без интернета — встроенные советы, с честной пометкой
+  if (offl || prov === "rules" || (prov !== "free" && !cfg.key)) { rerender(); typing(); await new Promise(r => setTimeout(r, 350)); adv.extra.push({ html: (offl ? `<span class="small muted">${esc({ ru: "Нет интернета — ответ из встроенных советов, без ИИ.", ky: "Интернет жок — жооп орнотулган кеңештерден, ЖИ колдонулган жок.", en: "Offline — answer from built-in tips, without AI." }[LANG] || "")}</span><br>` : "") + aiRulesHtml(q) }); aiSave(); rerender(); return; }
   const m = { ai: true, text: "", via: "", pending: true }, idx = adv.extra.push(m) - 1; rerender(); aiBusy(true);
   let raf = 0;
   const res = await aiAnswer(q, (txt, via) => { m.text = txt; m.via = via;

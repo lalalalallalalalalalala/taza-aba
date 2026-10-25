@@ -105,7 +105,7 @@ async function ecoRoute() {
   eco.busy = true; eco.note = ""; ecoRender(); let rs = [];
   try { rs = await ecoValhalla(P, mode, P.length === 2 ? 2 : 0, sig); }
   catch (e) { if (sig.aborted) return; try { rs = await ecoOsrm(P, mode, sig); } catch (e2) { if (sig.aborted) return;
-    const g = P.map(p => p.ll), km = g.slice(1).reduce((s, p, i) => s + ecoKm(g[i], p), 0); rs = [{ geom: g, dur: km / ECO_SPEED[mode] * 3600, src: "line", est: true }]; eco.note = ET("fail"); } }
+    const g = P.map(p => p.ll), km = g.slice(1).reduce((s, p, i) => s + ecoKm(g[i], p), 0); rs = [{ geom: g, dur: km / ECO_SPEED[mode] * 3600, src: "line", est: true }]; eco.note = navigator.onLine === false ? ({ ru: "Нет интернета: маршрут по дорогам строится онлайн. Показана прямая линия — это оценка.", ky: "Интернет жок: жол боюнча маршрут онлайн түзүлөт. Түз сызык көрсөтүлдү — бул болжолдуу баа.", en: "Offline: road routes are built online. Showing a straight line — an estimate." }[LANG] || ET("fail")) : ET("fail"); } }
   rs = rs.map(r => ({ ...r, ...ecoExposure(r.geom, r.dur, mode) }));
   /* дополнительный вариант «через чистый район», если он рядом и заметно чище */
   if (P.length === 2 && !rs[0].est && typeof msPts === "function") try {

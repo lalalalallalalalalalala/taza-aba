@@ -1,0 +1,7 @@
+/* Таза Аба · плашка «нет интернета» (v64) — спокойная, в тон calm/polish */
+.off-bar{position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:7px 14px;
+  font:500 var(--t2,13px)/1.35 var(--c-font,system-ui,sans-serif);letter-spacing:-.005em;color:var(--c-text,#E3E7EB);
+  background:var(--c-surface,#161B21);border-bottom:1px solid var(--c-line,#262D35);font-variant-numeric:tabular-nums;text-align:center}
+.off-bar[hidden]{display:none}
+.off-dot{flex:none;width:7px;height:7px;border-radius:50%;background:#C9A227;box-shadow:0 0 0 3px rgba(201,162,39,.16)}
+.off-bar.ok .off-dot{background:#3FA37A;box-shadow:0 0 0 3px rgba(63,163,122,.16)}
