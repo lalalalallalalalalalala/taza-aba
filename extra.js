@@ -129,10 +129,11 @@ function airCtx() {
   const d = byId(state.district), a = air.byDistrict[d.id];
   if (!a || !a.time) return null;
   const today = (a.currentTime || a.time[0]).slice(0, 10), nowH = +(a.currentTime || "T00").slice(11, 13);
-  const idx = a.time.map((tm, i) => [tm, i]).filter(([tm, i]) => tm.startsWith(today) && +tm.slice(11, 13) >= Math.min(nowH, 21) && a.hourly[i] != null);
+  const HA = typeof hAqi === "function" ? hAqi(a) : a.hourly;   // v52: по PM2.5 каждого часа
+  const idx = a.time.map((tm, i) => [tm, i]).filter(([tm, i]) => tm.startsWith(today) && +tm.slice(11, 13) >= Math.min(nowH, 21) && HA[i] != null);
   const day = idx.filter(([tm]) => +tm.slice(11, 13) <= 21);
-  const best = (day.length ? day : idx).reduce((m, [tm, i]) => (a.hourly[i] < (m.v ?? 1e9) ? { tm, v: a.hourly[i] } : m), {});
-  const worst = idx.reduce((m, [tm, i]) => (a.hourly[i] > (m.v ?? -1) ? { tm, v: a.hourly[i] } : m), {});
+  const best = (day.length ? day : idx).reduce((m, [tm, i]) => (HA[i] < (m.v ?? 1e9) ? { tm, v: HA[i] } : m), {});
+  const worst = idx.reduce((m, [tm, i]) => (HA[i] > (m.v ?? -1) ? { tm, v: HA[i] } : m), {});
   const days = dailyForecast(a); const P = getProfile();
   const sensitive = P.kids || P.asthma || P.elderly;
   const T = sensitive ? 100 : 150;

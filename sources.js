@@ -103,7 +103,7 @@ function stationSrcLabel(a) { return "📡 " + ST("measured", { s: esc(stLabelNa
 function agreementInfo() {
   const pts = [...(air.sensors || []).map(s => ({ lat: s.lat, lon: s.lon, aqi: pm25ToAqi(s.p2) })), ...(air.stations || []).map(s => ({ lat: s.lat, lon: s.lon, aqi: s.aqi }))];
   const diffs = [];
-  pts.forEach(p => { let best = null; DISTRICTS.forEach(d => { const km = kmDist(d, p), r = air.byDistrict[d.id]; if (km <= 3 && r && r.model && (!best || km < best.km)) best = { km, m: r.model.aqi }; }); if (best) diffs.push(best.m - p.aqi); });
+  pts.forEach(p => { let best = null; DISTRICTS.forEach(d => { const km = kmDist(d, p), r = air.byDistrict[d.id]; if (km <= 3 && r && r.model && (!best || km < best.km)) best = { km, m: typeof modelNowAqi === "function" ? modelNowAqi(r) : r.model.aqi }; }); if (best) diffs.push(best.m - p.aqi); });   // v52: модель тоже по PM2.5 текущего часа (как датчики), а не по среднему за 24 ч
   if (!diffs.length) return null;
   const md = median(diffs), mad = median(diffs.map(Math.abs));
   return { n: diffs.length, d: Math.round(md), abs: Math.round(mad), lvl: mad <= 20 ? "ok" : mad <= 50 ? "mid" : "bad" };

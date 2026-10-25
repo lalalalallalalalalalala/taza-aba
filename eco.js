@@ -86,10 +86,10 @@ function ecoBestTime(S) {
   if (!ids.length) return null; const r0 = air.byDistrict[ids[0]], T = r0.time || [], now = (r0.currentTime || "").slice(0, 13); let i0 = T.findIndex(x => x.slice(0, 13) >= now); if (i0 < 0) return null;
   /* v42: поправка прогноза CAMS по датчикам — тот же коэффициент, что у текущего AQI района (скорректированный / модельный),
    * к 24 ч упреждения ослабляется вдвое (поправка по датчикам устаревает). Без датчиков — чистый прогноз CAMS (так и подписано). */
-  const K = {}; let corr = false; ids.forEach(id => { const r = air.byDistrict[id], m = r.model && r.model.aqi; let k = 1;
+  const K = {}; let corr = false; ids.forEach(id => { const r = air.byDistrict[id], m = typeof modelNowAqi === "function" ? modelNowAqi(r) : r.model && r.model.aqi; let k = 1;
     if (r.aqi != null && m != null && m >= 5 && r.src && r.src !== "model") k = Math.max(0.4, Math.min(2.5, r.aqi / m)); if (Math.abs(k - 1) > 0.03) corr = true; K[id] = k; });
   let best = null; for (let i = i0; i < Math.min(T.length, i0 + 24); i++) { const hh = +T[i].slice(11, 13); if (hh < 7 || hh > 21) continue; const lead = i - i0;
-    const vs = ids.map(id => { const v = air.byDistrict[id].hourly[i]; return v == null ? null : v * (1 + (K[id] - 1) * Math.max(0.5, 1 - lead / 48)); }).filter(x => x != null); if (!vs.length) continue; const m = vs.reduce((a, b) => a + b, 0) / vs.length;
+    const vs = ids.map(id => { const v = (typeof hAqi === "function" ? hAqi(air.byDistrict[id]) : air.byDistrict[id].hourly)[i]; return v == null ? null : v * (1 + (K[id] - 1) * Math.max(0.5, 1 - lead / 48)); }).filter(x => x != null); if (!vs.length) continue; const m = vs.reduce((a, b) => a + b, 0) / vs.length;
     if (!best || m < best.a - 0.5) best = { a: Math.round(m), t: T[i].slice(11, 16), day: T[i].slice(0, 10), corr }; }
   return best;
 }
@@ -289,7 +289,7 @@ function ecoNear(ix, p, rad, dir) { const kx = 111.32 * Math.cos(p[0] * Math.PI 
   return out; }
 /* почасовая поправка воздуха: прогноз района на час отправления / сейчас */
 function ecoHourK(ll, ahead) { if (!ahead || typeof nearestDistrict !== "function") return 1; const d = nearestDistrict(ll[0], ll[1]), r = d && air.byDistrict[d.id]; if (!r || !r.hourly || !r.time) return 1;
-  const now = (r.currentTime || "").slice(0, 13), i0 = r.time.findIndex(x => x.slice(0, 13) >= now); if (i0 < 0) return 1; const a = r.hourly[i0], b = r.hourly[i0 + ahead];
+  const now = (r.currentTime || "").slice(0, 13), i0 = r.time.findIndex(x => x.slice(0, 13) >= now); if (i0 < 0) return 1; const H = typeof hAqi === "function" ? hAqi(r) : r.hourly, a = H[i0], b = H[i0 + ahead];
   return a && b != null ? Math.max(0.3, Math.min(3, b / a)) : 1; }
 /* трафик + выхлоп + воздух на час отправления для одного варианта */
 function ecoTfApply(r, mode, ix, hd) {

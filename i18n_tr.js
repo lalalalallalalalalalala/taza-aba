@@ -2,7 +2,7 @@
 DICT.tr = {
   brandSub: "{city} için temiz hava", live: "Canlı", demo: "Demo", tab_home: "Ana sayfa", tab_map: "Harita", tab_house: "Evim", tab_group: "Birlikte", tab_advisor: "Danışman", tab_profile: "Profil",
   loading: "Hava kalitesi verileri yükleniyor…", loadingSub: "Open-Meteo · {city}", district: "Bölge", dayAdvice: "Günün tavsiyesi", forecast3: "3 günlük tahmin", tomorrow: "Yarın", dayAfter: "Öbür gün",
-  peakNote: "Günün en yüksek AQI değeri.", avg: "ort.", todayHourly: "Bugün saat saat", bestTime: "🌿 Yürüyüş için en iyi saat", peakSmog: "🔥 Duman zirvesi",
+  peakNote: "Zirve = günün en kirli saati (saatlik PM2.5), “ort.” = günlük ortalama PM2.5’e göre AQI; CAMS modeli.", hourNote: "Çubuklar her saatin PM2.5 değerini gösterir (CAMS modeli); böylece en iyi saat ve akşam zirvesi görünür. Üstteki büyük model AQI değeri son 24 saatin ortalamasıyla hesaplanır (EPA günlük AQI gibi) ve daha yavaş değişir.", avg: "ort.", todayHourly: "Bugün saat saat", bestTime: "🌿 Yürüyüş için en iyi saat", peakSmog: "🔥 Duman zirvesi",
   coalTip: "{in}: evlerin %{p}'i hâlâ kömür yakıyor", coalTipSub: "Temiz ısınmaya geçerek ne kadar tasarruf edeceğinizi görün.", calcBtn: "Evim için hesapla →",
   footLive: "Veri: {link} üzerinden CAMS modeli ve Sensor.Community sensörleri, güncelleme {t}. Her bölge kendi koordinatlarıyla sorgulanır; model ızgarası ~10 km olduğundan komşu bölgeler çoğu zaman aynı değeri alır.", footDemo: "⚠️ Open-Meteo bağlantısı yok — sunum için DEMO veriler gösteriliyor.", footProto: "SolarPunk hackathon prototipi · Bişkek 2026",
   mapTitle: "Duman haritası", mapSub: "{city} bölgelerinde hava kalitesi ve kömürü bırakan evler", layerSmog: "💨 Bölgelere göre duman", layerHomes: "🏡 Temiz evler", demoChip: "demo",

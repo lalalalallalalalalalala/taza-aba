@@ -21,7 +21,7 @@ const QD = {
     shAdv0: "можно гулять и проветривать", shAdv1: "чувствительным лучше сократить прогулки", shAdv2: "не гуляйте с детьми", shAdv3: "лучше остаться дома, на улице — маска", shAdv4: "не выходите без необходимости", shAdv5: "опасно: оставайтесь дома",
     evTitle: "Риск вечернего смога", ev0: "низкий", ev1: "средний", ev2: "высокий", evLow: "Вечером воздух ожидается чище — можно проветривать.",
     evBefore: "Проветрите сейчас и гуляйте до {x}; после 18:00 держите окна закрытыми.", evNow: "Держите окна закрытыми до утра, прогулки перенесите.",
-    evF: "18–23 ч: AQI до {a}", evWind: "ветер {w} м/с", evInv: "инверсия", evNoInv: "без инверсии", evInvD: "инверсия (на ~{m} м теплее на {d} °C)", evBlh: "слой перемешивания ~{m} м (модель)", evSrc: "прогноз Open-Meteo (CAMS + погода)", evTomorrow: "на завтра",
+    evF: "18–23 ч: AQI до {a}", evFp: "18–23 ч: PM2.5 до {p} мкг/м³ (AQI {a} за час)", evWind: "ветер {w} м/с", evInv: "инверсия", evNoInv: "без инверсии", evInvD: "инверсия (на ~{m} м теплее на {d} °C)", evBlh: "слой перемешивания ~{m} м (модель)", evSrc: "прогноз Open-Meteo (CAMS + погода)", evTomorrow: "на завтра",
     mWeather: "Погода", mWeatherSub: "Прогноз и ветер на 7 дней", mHouse: "Расчёт перехода с угля", mGroup: "Совместные закупки",
     cmpMake: "Сформировать обращение", lsFull: "Память браузера для сайта переполнена — последние изменения могут не сохраниться. Удалите старые жалобы с фото или лишние данные.", cmpQuota: "Обращение создано, но память браузера переполнена — после перезагрузки оно пропадёт. Удалите старые жалобы с фото.", cmpMade: "Обращение готово — выберите, как отправить", cmpDraft: "Черновик", cmpSentYou: "Отправлено вами", cmpVia: "через {v}, {t}",
     cmpHead: "Обращение о загрязнении воздуха", cmpType: "Тип", cmpDesc: "Описание", cmpPlace: "Район", cmpCoords: "Координаты", cmpTime: "Время", cmpAqi: "Текущий AQI в районе", cmpPhoto: "Фото: есть, прилагаю отдельно",
@@ -44,7 +44,7 @@ const QD = {
     shAdv0: "сейилдеп, желдетсе болот", shAdv1: "сезгич адамдар сейилдөөнү кыскартсын", shAdv2: "балдар менен сейилдебеңиз", shAdv3: "үйдө калган жакшы, сыртта — маска", shAdv4: "зарылчылыксыз чыкпаңыз", shAdv5: "коркунучтуу: үйдө калыңыз",
     evTitle: "Кечки түтүн тобокели", ev0: "төмөн", ev1: "орточо", ev2: "жогору", evLow: "Кечинде аба тазараак болот — желдетсе болот.",
     evBefore: "Азыр желдетиңиз, {x} чейин сейилдеңиз; 18:00дөн кийин терезелерди жабык кармаңыз.", evNow: "Эртеңге чейин терезелерди жабык кармаңыз, сейилдөөнү кийинкиге калтырыңыз.",
-    evF: "18–23: AQI {a} чейин", evWind: "шамал {w} м/с", evInv: "инверсия", evNoInv: "инверсия жок", evInvD: "инверсия (~{m} м бийиктикте {d} °C жылуу)", evBlh: "аралашуу катмары ~{m} м (модель)", evSrc: "Open-Meteo божомолу (CAMS + аба ырайы)", evTomorrow: "эртеңге",
+    evF: "18–23: AQI {a} чейин", evFp: "18–23: PM2.5 {p} мкг/м³ чейин (саатына AQI {a})", evWind: "шамал {w} м/с", evInv: "инверсия", evNoInv: "инверсия жок", evInvD: "инверсия (~{m} м бийиктикте {d} °C жылуу)", evBlh: "аралашуу катмары ~{m} м (модель)", evSrc: "Open-Meteo божомолу (CAMS + аба ырайы)", evTomorrow: "эртеңге",
     mWeather: "Аба ырайы", mWeatherSub: "7 күнгө божомол жана шамал", mHouse: "Көмүрдөн өтүү эсеби", mGroup: "Биргелешкен сатып алуу",
     cmpMake: "Арызды түзүү", lsFull: "Браузердин сайт үчүн эси толду — акыркы өзгөрүүлөр сакталбашы мүмкүн. Сүрөттүү эски арыздарды өчүрүңүз.", cmpQuota: "Арыз түзүлдү, бирок браузердин эси толду — кайра жүктөгөндө жоголот. Сүрөттүү эски арыздарды өчүрүңүз.", cmpMade: "Арыз даяр — кантип жөнөтүүнү тандаңыз", cmpDraft: "Долбоор", cmpSentYou: "Сиз жөнөттүңүз", cmpVia: "{v} аркылуу, {t}",
     cmpHead: "Абанын булганышы тууралуу арыз", cmpType: "Түрү", cmpDesc: "Сүрөттөмө", cmpPlace: "Аймак", cmpCoords: "Координаттар", cmpTime: "Убакыт", cmpAqi: "Аймактагы учурдагы AQI", cmpPhoto: "Сүрөт: бар, өзүнчө тиркейм",
@@ -67,7 +67,7 @@ const QD = {
     shAdv0: "fine to walk and air out", shAdv1: "sensitive people should cut walks short", shAdv2: "don't take kids for a walk", shAdv3: "better stay inside, wear a mask outdoors", shAdv4: "don't go out unless necessary", shAdv5: "hazardous: stay indoors",
     evTitle: "Evening smog risk", ev0: "low", ev1: "medium", ev2: "high", evLow: "The evening air should be cleaner — fine to air out.",
     evBefore: "Air out now and walk before {x}; keep windows closed after 18:00.", evNow: "Keep windows closed until morning and postpone walks.",
-    evF: "18–23h: AQI up to {a}", evWind: "wind {w} m/s", evInv: "inversion", evNoInv: "no inversion", evInvD: "inversion ({d} °C warmer at ~{m} m)", evBlh: "mixing layer ~{m} m (model)", evSrc: "Open-Meteo forecast (CAMS + weather)", evTomorrow: "for tomorrow",
+    evF: "18–23h: AQI up to {a}", evFp: "18–23h: PM2.5 up to {p} µg/m³ (hourly AQI {a})", evWind: "wind {w} m/s", evInv: "inversion", evNoInv: "no inversion", evInvD: "inversion ({d} °C warmer at ~{m} m)", evBlh: "mixing layer ~{m} m (model)", evSrc: "Open-Meteo forecast (CAMS + weather)", evTomorrow: "for tomorrow",
     mWeather: "Weather", mWeatherSub: "7-day forecast and wind", mHouse: "Coal switch calculator", mGroup: "Group buying",
     cmpMake: "Prepare complaint", lsFull: "Browser storage for this site is full — recent changes may not be saved. Delete old complaints with photos.", cmpQuota: "Complaint created, but browser storage is full — it will be lost after reload. Delete old complaints with photos.", cmpMade: "Complaint ready — choose how to send it", cmpDraft: "Draft", cmpSentYou: "Sent by you", cmpVia: "via {v}, {t}",
     cmpHead: "Air pollution complaint", cmpType: "Type", cmpDesc: "Description", cmpPlace: "District", cmpCoords: "Coordinates", cmpTime: "Time", cmpAqi: "Current AQI in the district", cmpPhoto: "Photo: available, attached separately",
@@ -90,7 +90,7 @@ const QD = {
     shAdv0: "yürüyüş ve havalandırma uygun", shAdv1: "hassas kişiler yürüyüşü kısaltsın", shAdv2: "çocuklarla dışarı çıkmayın", shAdv3: "evde kalmak daha iyi, dışarıda maske takın", shAdv4: "zorunlu olmadıkça çıkmayın", shAdv5: "tehlikeli: evde kalın",
     evTitle: "Akşam duman riski", ev0: "düşük", ev1: "orta", ev2: "yüksek", evLow: "Akşam hava daha temiz olacak — havalandırabilirsiniz.",
     evBefore: "Şimdi havalandırın, {x} saatinden önce yürüyün; 18:00'den sonra pencereleri kapalı tutun.", evNow: "Sabaha kadar pencereleri kapalı tutun, yürüyüşü erteleyin.",
-    evF: "18–23: AQI en çok {a}", evWind: "rüzgâr {w} m/s", evInv: "inversiyon", evNoInv: "inversiyon yok", evInvD: "inversiyon (~{m} m yükseklikte {d} °C daha sıcak)", evBlh: "karışım katmanı ~{m} m (model)", evSrc: "Open-Meteo tahmini (CAMS + hava)", evTomorrow: "yarın için",
+    evF: "18–23: AQI en çok {a}", evFp: "18–23: PM2.5 en çok {p} µg/m³ (saatlik AQI {a})", evWind: "rüzgâr {w} m/s", evInv: "inversiyon", evNoInv: "inversiyon yok", evInvD: "inversiyon (~{m} m yükseklikte {d} °C daha sıcak)", evBlh: "karışım katmanı ~{m} m (model)", evSrc: "Open-Meteo tahmini (CAMS + hava)", evTomorrow: "yarın için",
     mWeather: "Hava durumu", mWeatherSub: "7 günlük tahmin ve rüzgâr", mHouse: "Kömürden geçiş hesabı", mGroup: "Ortak alım",
     cmpMake: "Şikâyeti hazırla", lsFull: "Bu site için tarayıcı belleği dolu — son değişiklikler kaydedilmeyebilir. Fotoğraflı eski şikâyetleri silin.", cmpQuota: "Şikâyet oluşturuldu ancak tarayıcı belleği dolu — yeniden yüklemede kaybolur. Fotoğraflı eski şikâyetleri silin.", cmpMade: "Şikâyet hazır — nasıl göndereceğinizi seçin", cmpDraft: "Taslak", cmpSentYou: "Sizin tarafınızdan gönderildi", cmpVia: "{v} ile, {t}",
     cmpHead: "Hava kirliliği şikâyeti", cmpType: "Tür", cmpDesc: "Açıklama", cmpPlace: "Semt", cmpCoords: "Koordinatlar", cmpTime: "Zaman", cmpAqi: "Semtteki güncel AQI", cmpPhoto: "Fotoğraf: var, ayrıca ekliyorum",
@@ -247,9 +247,11 @@ function eveningRisk(a) {
   let day = ct.slice(0, 10), tomorrow = false;
   if (curH >= 23) { const nx = a.time.find(tm => tm.slice(0, 10) > day); if (!nx) return null; day = nx.slice(0, 10); tomorrow = true; }
   const inEv = tm => tm.startsWith(day) && +tm.slice(11, 13) >= 18 && +tm.slice(11, 13) <= 23;
-  const aq = a.time.map((tm, i) => inEv(tm) ? a.hourly[i] : null).filter(v => v != null);
+  const HA = typeof hAqi === "function" ? hAqi(a) : a.hourly;   // v52: PM2.5 каждого часа, а не среднее за 24 ч (оно сглаживало вечерний пик)
+  const aq = a.time.map((tm, i) => inEv(tm) ? HA[i] : null).filter(v => v != null);
   if (!aq.length) return null;
   const aqMax = Math.max(...aq);
+  const pmE = Array.isArray(a.pmH) ? a.time.map((tm, i) => inEv(tm) ? a.pmH[i] : null).filter(v => v != null) : [], pmMax = pmE.length ? Math.max(...pmE) : null;
   let wind = null, inv = null, blh = null, invD = null; const W = air.wxH;
   if (W && W.time) {
     const ix = W.time.map((tm, i) => inEv(tm) ? i : -1).filter(i => i >= 0);
@@ -265,9 +267,9 @@ function eveningRisk(a) {
   // v51: одна погода (ветер, инверсия) без высокого AQI по модели — не выше «умеренного»
   const risk = sc >= 4 && aqMax >= 76 ? 2 : sc >= 2 ? 1 : 0;
   let x = "18:00";
-  if (!tomorrow) { const bad = a.time.findIndex((tm, i) => tm.startsWith(day) && +tm.slice(11, 13) > curH && a.hourly[i] > 100); if (bad >= 0 && +a.time[bad].slice(11, 13) < 18) x = a.time[bad].slice(11, 16); }
+  if (!tomorrow) { const bad = a.time.findIndex((tm, i) => tm.startsWith(day) && +tm.slice(11, 13) > curH && HA[i] > 100); if (bad >= 0 && +a.time[bad].slice(11, 13) < 18) x = a.time[bad].slice(11, 16); }
   const adv = risk === 0 ? Q("evLow") : (!tomorrow && curH < 18) ? Q("evBefore", { x }) : Q("evNow");
-  return { risk, aqMax, wind, inv, invD, blh, adv, tomorrow };
+  return { risk, aqMax, pmMax, wind, inv, invD, blh, adv, tomorrow };
 }
 /* inline SVG вместо эмодзи (🌫️ на iOS рисуется серым размытым квадратом) */
 const EV_ICO = [
@@ -275,7 +277,7 @@ const EV_ICO = [
   `<svg viewBox="0 0 36 36" fill="none" stroke-linecap="round"><path d="M9 17a6 6 0 0 1 11.3-2.8A4.6 4.6 0 1 1 25.5 21H10.5A4 4 0 0 1 9 17z" fill="#9AA7A0" stroke="#6E7C75" stroke-width="1.5"/><path d="M5 25h20M10 29h21" stroke="#0EA5E9" stroke-width="2.6"/></svg>`,
   `<svg viewBox="0 0 36 36"><path d="M4 31V17l7 4v-4l7 4v-4l7 4V7h5v24z" fill="#8A5A44"/><rect x="8" y="24" width="3" height="3" fill="#FFD27A"/><rect x="15" y="24" width="3" height="3" fill="#FFD27A"/><rect x="22" y="24" width="3" height="3" fill="#FFD27A"/><path d="M27 6c0-2 2-3 4-3M30 5c1-1 3-1 4 0" stroke="#7d7d7d" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`];
 function evFactors(r) {
-  const f = [Q("evF", { a: r.aqMax })]; if (r.wind != null) f.push(Q("evWind", { w: fmt(r.wind, 1) }));
+  const f = [r.pmMax != null ? Q("evFp", { a: r.aqMax, p: fmt(r.pmMax, 0) }) : Q("evF", { a: r.aqMax })]; if (r.wind != null) f.push(Q("evWind", { w: fmt(r.wind, 1) }));
   if (r.inv != null) f.push(r.inv && r.invD ? Q("evInvD", { d: fmt(r.invD.dT, 1), m: typeof mRound === "function" ? mRound(r.invD.z) : Math.round(r.invD.z * 1000) }) : r.inv ? Q("evInv") : Q("evNoInv"));
   if (r.blh != null) f.push(Q("evBlh", { m: Math.max(10, Math.round(r.blh / 10) * 10) }));
   return f;

@@ -137,6 +137,7 @@ function mkAirRec(r) {
     pol: { pm25: [r.current.pm2_5, r.current.us_aqi_pm2_5, "model"], pm10: [r.current.pm10, r.current.us_aqi_pm10, "model"], no2: [r.current.nitrogen_dioxide, r.current.us_aqi_nitrogen_dioxide, "model"],
       so2: [r.current.sulphur_dioxide, r.current.us_aqi_sulphur_dioxide, "model"], o3: [r.current.ozone, r.current.us_aqi_ozone, "model"], co: [r.current.carbon_monoxide, r.current.us_aqi_carbon_monoxide, "model"] },
     time: r.hourly.time, hourly: r.hourly.us_aqi.map(v => v == null ? null : Math.round(v)), currentTime: r.current.time,
+    pmH: (r.hourly.pm2_5 || []).map(v => v == null ? null : Math.round(v * 10) / 10),   // v52: PM2.5 каждого часа (модель CAMS)
     src: "model", model: { aqi: a0, pm25: r.current.pm2_5 },
   };
 }
@@ -428,13 +429,26 @@ function decorate(root) {
 new MutationObserver(() => decorate($("#view"))).observe(document.getElementById("view"), { childList: true, subtree: true });
 
 /* ---------------- 1. Главная ---------------- */
+/* v52: почасовой индекс по PM2.5 этого часа (модель CAMS). us_aqi Open-Meteo для PM считается по среднему за прошедшие 24 ч —
+ * он сглаживает вечерний пик и не показывает лучший час дня (25.10, Бишкек: PM2.5 10,6 мкг/м³ в 11:00 и 23,4 в 21:00, а us_aqi 50 → 57 монотонно). */
+function hAqi(a) {
+  if (!a) return [];
+  if (a._hA) return a._hA;
+  const v = Array.isArray(a.pmH) && a.pmH.some(x => x != null) ? a.pmH.map(x => x == null ? null : pm25ToAqi(x)) : (a.hourly || []);
+  try { Object.defineProperty(a, "_hA", { value: v, enumerable: false }); } catch (e) { /* ignore */ }
+  return v;
+}
+/* модельный AQI «сейчас» на той же основе (PM2.5 текущего часа) — для сравнения с датчиками */
+const modelNowAqi = r => r && r.model ? (r.model.pm25 != null ? pm25ToAqi(r.model.pm25) : r.model.aqi) : null;
+/* пик — самый грязный час (PM2.5 за час); сред. — AQI по среднесуточному PM2.5 (так EPA считает суточный AQI) */
 function dailyForecast(data) {
-  const days = {};
+  const days = {}, H = hAqi(data), P = Array.isArray(data.pmH) && data.pmH.some(x => x != null) ? data.pmH : null;
   data.time.forEach((tm, i) => {
-    const k = tm.slice(0, 10); const v = data.hourly[i];
-    if (v != null) (days[k] = days[k] || []).push(v);
+    const k = tm.slice(0, 10); const v = H[i];
+    if (v != null) { const o = (days[k] = days[k] || { v: [], p: [] }); o.v.push(v); if (P && P[i] != null) o.p.push(P[i]); }
   });
-  return Object.entries(days).map(([k, vals]) => ({ date: k, max: Math.max(...vals), avg: Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) }));
+  return Object.entries(days).map(([k, o]) => ({ date: k, max: Math.max(...o.v),
+    avg: o.p.length >= 12 ? pm25ToAqi(o.p.reduce((a, b) => a + b, 0) / o.p.length) : Math.round(o.v.reduce((a, b) => a + b, 0) / o.v.length) }));
 }
 
 function viewHome(el) {
@@ -447,10 +461,13 @@ function viewHome(el) {
   const next = days.slice(1, 4);
   const todayIdx = a.time.map((tm, i) => [tm, i]).filter(([tm]) => tm.startsWith(today));
   const nowHour = (a.currentTime || "").slice(0, 13);
-  const maxBar = Math.max(60, ...todayIdx.map(([, i]) => a.hourly[i] || 0));
-  const worst = todayIdx.reduce((m, [tm, i]) => (a.hourly[i] > (m.v ?? -1) ? { tm, v: a.hourly[i] } : m), {});
+  const HA = hAqi(a);
+  const maxBar = Math.max(60, ...todayIdx.map(([, i]) => HA[i] || 0));
+  // v52: высота столбика — концентрация PM2.5 (мкг/м³, линейно), цвет — уровень AQI этого часа
+  const pmBar = Array.isArray(a.pmH) && todayIdx.some(([, i]) => a.pmH[i] != null), pmMaxBar = pmBar ? Math.max(15, ...todayIdx.map(([, i]) => a.pmH[i] || 0)) : 1;
+  const worst = todayIdx.reduce((m, [tm, i]) => (HA[i] > (m.v ?? -1) ? { tm, v: HA[i] } : m), {});
   const best = todayIdx.filter(([tm]) => +tm.slice(11, 13) >= 7 && +tm.slice(11, 13) <= 21)
-    .reduce((m, [tm, i]) => (a.hourly[i] != null && a.hourly[i] < (m.v ?? 1e9) ? { tm, v: a.hourly[i] } : m), {});
+    .reduce((m, [tm, i]) => (HA[i] != null && HA[i] < (m.v ?? 1e9) ? { tm, v: HA[i] } : m), {});
   const w = air.weather;
   const days7 = t("days");
 
@@ -525,14 +542,15 @@ function viewHome(el) {
     <h2>⏱️ ${t("todayHourly")}</h2>
     <div class="card">
       <div class="bars">${todayIdx.map(([tm, i]) => {
-        const v0 = a.hourly[i], v = v0 || 0;
-        return `<div title="${tm.slice(11, 16)} — AQI ${aqiTxt(v0)}" class="${tm.startsWith(nowHour) ? "now" : ""}" style="height:${Math.max(6, v / maxBar * 100)}%;background:${level(v0).color}"></div>`;
+        const v0 = HA[i], v = v0 || 0, pv = pmBar ? a.pmH[i] || 0 : 0;
+        return `<div title="${tm.slice(11, 16)} — AQI ${aqiTxt(v0)}${a.pmH && a.pmH[i] != null ? " · PM2.5 " + fmt(a.pmH[i], 1) : ""}" class="${tm.startsWith(nowHour) ? "now" : ""}" style="height:${Math.max(6, pmBar ? pv / pmMaxBar * 100 : v / maxBar * 100)}%;background:${level(v0).color}"></div>`;
       }).join("")}</div>
       <div class="bars-x"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div>
       <div class="stat-grid" style="margin-top:12px">
-        <div class="stat"><div class="k">${t("bestTime")}</div><div class="v">${(best.tm || "").slice(11, 16) || "—"}</div><div class="small muted">AQI ${best.v ?? "—"}</div></div>
-        <div class="stat"><div class="k">${t("peakSmog")}</div><div class="v">${(worst.tm || "").slice(11, 16) || "—"}</div><div class="small muted">AQI ${worst.v ?? "—"}</div></div>
+        <div class="stat"><div class="k">${t("bestTime")}</div><div class="v">${(best.tm || "").slice(11, 16) || "—"}</div><div class="small muted">AQI ${best.v ?? "—"}${a.pmH && best.tm && a.pmH[a.time.indexOf(best.tm)] != null ? " · PM2.5 " + fmt(a.pmH[a.time.indexOf(best.tm)], 1) : ""}</div></div>
+        <div class="stat"><div class="k">${t("peakSmog")}</div><div class="v">${(worst.tm || "").slice(11, 16) || "—"}</div><div class="small muted">AQI ${worst.v ?? "—"}${a.pmH && worst.tm && a.pmH[a.time.indexOf(worst.tm)] != null ? " · PM2.5 " + fmt(a.pmH[a.time.indexOf(worst.tm)], 1) : ""}</div></div>
       </div>
+      ${a.pmH ? `<p class="small muted hour-note">ℹ️ ${t("hourNote")}</p>` : ""}
     </div>
 
     <div class="card tip">
