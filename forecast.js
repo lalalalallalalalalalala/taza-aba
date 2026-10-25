@@ -19,13 +19,13 @@
   const TX = {
     ru: { sens: "Модель CAMS с поправкой по датчикам города ({n} шт.) — оценка", stove: "Оценка (модель + поправка на печной дым)", range: "PM2.5 вероятно {a}–{b} мкг/м³",
       noS: "датчиков рядом нет — вечером модель может занижать дым печей", acc: "Точность за {d} дн. (на сутки вперёд): ошибка ±{e} мкг/м³, без поправки было ±{r} · оценка (модель)",
-      band: "Полоса — вероятный диапазон", accS: "Без датчиков точность проверить нельзя: печной дым оценён по холоду, ветру и слою перемешивания (калибровка по Бишкеку)" },
+      band: "Полоса — вероятный диапазон", noWx: "без поправки на печной дым — нет данных погоды", accS: "Без датчиков точность проверить нельзя: печной дым оценён по холоду, ветру и слою перемешивания (калибровка по Бишкеку)" },
     ky: { sens: "CAMS модели шаардын датчиктери боюнча оңдолгон ({n} даана) — баалоо", stove: "Баалоо (модель + меш түтүнүнө оңдоо)", range: "PM2.5 болжол менен {a}–{b} мкг/м³",
       noS: "жакын жерде датчик жок — кечинде модель меш түтүнүн азайтып көрсөтүшү мүмкүн", acc: "{d} күндөгү тактык (бир сутка алдыга): ката ±{e} мкг/м³, оңдоосуз ±{r} болчу · баалоо (модель)",
-      band: "Тилке — болжолдуу диапазон", accS: "Датчик жок болгондуктан тактыкты текшерүүгө болбойт: меш түтүнү суукка, шамалга жана аралашуу катмарына жараша бааланды (Бишкек боюнча калибровка)" },
+      band: "Тилке — болжолдуу диапазон", noWx: "меш түтүнүнө оңдоосуз — аба ырайы маалыматы жок", accS: "Датчик жок болгондуктан тактыкты текшерүүгө болбойт: меш түтүнү суукка, шамалга жана аралашуу катмарына жараша бааланды (Бишкек боюнча калибровка)" },
     en: { sens: "CAMS model corrected by the city's sensors ({n}) — estimate", stove: "Estimate (model + stove-smoke correction)", range: "PM2.5 likely {a}–{b} µg/m³",
       noS: "no sensors nearby — in the evening the model may underestimate stove smoke", acc: "Accuracy over {d} days (24 h ahead): error ±{e} µg/m³, ±{r} without correction · estimate (model)",
-      band: "Band = likely range", accS: "No sensors, so accuracy can't be checked: stove smoke is estimated from cold, wind and mixing height (calibrated on Bishkek)" } };
+      band: "Band = likely range", noWx: "no stove-smoke correction — weather data unavailable", accS: "No sensors, so accuracy can't be checked: stove smoke is estimated from cold, wind and mixing height (calibrated on Bishkek)" } };
   const T = (k, p) => { const L = (typeof LANG !== "undefined" && TX[LANG]) ? LANG : "ru"; let s = TX[L][k] || TX.ru[k]; Object.entries(p || {}).forEach(([a, b]) => { s = s.split("{" + a + "}").join(b); }); return s; };
   const f1 = v => (Math.round(v * 10) / 10).toLocaleString((typeof LANG !== "undefined" && LANG === "en") ? "en" : "ru");
   const f0 = v => String(Math.round(v));
@@ -47,13 +47,29 @@
   const dot = (x, b) => x.reduce((s, v, i) => s + v * (b[i] || 0), 0);
   const kmD = (a, b) => typeof kmDist === "function" ? kmDist(a, b) : 999;
   function cityId() { try { return typeof CITY !== "undefined" ? CITY : null; } catch (e) { return null; } }
+  /* v60: погода для поправки — повтор с паузой, кэш (< 3 ч), иначе честная пометка «без поправки». У API качества воздуха (CAMS) полей погоды нет. */
+  const WXK = c => "tazaAba.wx." + c, WX_TTL = 3 * 36e5;
+  function wxCacheGet(c) { try { const j = JSON.parse(localStorage.getItem(WXK(c)) || "null"); return j && j.h && Date.now() - j.at < WX_TTL ? j.h : null; } catch (e) { return null; } }
+  function wxCacheSet(c, h) { try { localStorage.setItem(WXK(c), JSON.stringify({ at: Date.now(), h })); } catch (e) {} }
+  let wxRetry = null;
+  function wxRefetch(c) {
+    if (wxRetry === c) return; wxRetry = c;
+    const cc = typeof cityObj === "function" && cityObj().center; if (!cc) { wxRetry = null; return; }
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${cc[0]}&longitude=${cc[1]}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,wind_speed_10m,temperature_925hPa,temperature_900hPa,temperature_850hPa,temperature_800hPa,temperature_700hPa,surface_pressure,boundary_layer_height&forecast_days=2&wind_speed_unit=ms&timezone=auto`;
+    const go = k => fetch(u, { signal: AbortSignal.timeout(12000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)))
+      .catch(e => k < 2 ? new Promise(res => setTimeout(res, 1500 * 2 ** k)).then(() => go(k + 1)) : Promise.reject(e));
+    go(0).then(w => { if (cityId() !== c || !w || !w.hourly) return; air.wxH = w.hourly; if (!air.weather && w.current) air.weather = w.current; wxCacheSet(c, w.hourly);
+      apply(); try { if (typeof saveAirCache === "function") saveAirCache(); } catch (e) {} const cur = (location.hash || "#home").slice(1).split("/")[0]; if (typeof route === "function" && ["home", "map", "weather", ""].includes(cur)) route(true); })
+      .catch(e => console.warn("weather retry failed:", e.message)).finally(() => { wxRetry = null; });
+  }
   function apply() {
+    { const c = cityId(); if (air.wxH && air.wxH.time) wxCacheSet(c, air.wxH); else { const h = wxCacheGet(c); if (h) air.wxH = h; else wxRefetch(c); } }
     if (typeof air === "undefined" || !air.byDistrict) return;
     const W = air.wxH, cid = cityId(), cc = (typeof cityObj === "function" && cityObj().center) || null;
     const sens = (air.sensors || []).filter(s => s.p2 != null && (!cc || kmD({ lat: cc[0], lon: cc[1] }, s) <= 25));
     const cc0 = C.cities && C.cities[cid], useInc = cc0 && fresh() ? cc0.bInc : null;
     const band = (cc0 && cc0.band) || DEF.cities.bishkek.band;
-    const ds = Object.entries(air.byDistrict).filter(([, r]) => r && !r.fc && Array.isArray(r.pmH) && r.time);
+    const ds = Object.entries(air.byDistrict).filter(([, r]) => r && (!r.fc || r.fc.kind === "nowx") && Array.isArray(r.pmH) && r.time);
     if (!ds.length) return;
     let e0c = null;
     if (sens.length) {   // городское отклонение: медиана датчиков против модели (+поправка) в ближайших районах
@@ -77,6 +93,7 @@
         r.pmH = out.map(v => v == null ? null : Math.round(v * 10) / 10);
         r.fc = { kind: "sens", n: sens.length, w: Math.round(w * 100) / 100, inc: !!useInc };
       } else {
+        if (!W || !W.time) { r.fc = { kind: "nowx" }; return; }   // нет погоды — значение модели как есть, с видимой пометкой
         let any = false;
         const out = P.map((v, i) => { if (v == null) return null; const X = wxX(W, r.time[i]); if (!X || X.H <= 0) { lo[i] = hi[i] = v; return v; }
           const b = tr.bBg.slice(); b[0] *= Math.min(1, X.H / 0.3); const s = Math.min(60, Math.max(0, smooth(W, r.time[i], b))); if (s >= 1) any = true;
@@ -98,6 +115,7 @@
   window.tazaFcApply = apply;
   if (typeof saveAirCache === "function") { const o = saveAirCache; window.saveAirCache = function () { try { apply(); } catch (e) { console.warn("forecast fc:", e.message); } return o.apply(this, arguments); }; }
   if (typeof srcLabel === "function") { const o = srcLabel; window.srcLabel = function (a, d) { const s = o(a, d); if (!a || !a.fc || a.src !== "model") return s;
+    if (a.fc.kind === "nowx") return s + " · ⚠️ " + T("noWx");
     if (a.fc.kind === "stove") return "🔥 " + T("stove") + (a.fc.lo != null ? " · " + T("range", { a: f0(a.fc.lo), b: f0(a.fc.hi) }) : "") + " · " + T("noS") + (d && d.approx && typeof t === "function" ? " · " + t("coordApprox") : "");
     return "📡 " + T("sens", { n: a.fc.n }) + (a.fc.lo != null ? " · " + T("range", { a: f0(a.fc.lo), b: f0(a.fc.hi) }) : "") + (d && d.approx && typeof t === "function" ? " · " + t("coordApprox") : ""); }; }
   /* полоса неопределённости на почасовом графике главной + честная строка точности */
