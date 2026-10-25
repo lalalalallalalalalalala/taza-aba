@@ -1,7 +1,7 @@
 {
  "title": "Taza Aba — news headlines from public RSS feeds",
  "note": "Headline, link to the original article, date and a short teaser only. Copyright belongs to the publishers.",
- "updated": "2026-10-25T11:16:22.156Z",
+ "updated": "2026-10-25T16:04:59.873Z",
  "sets": {
   "kg-ru": [
    {
@@ -47,32 +47,6 @@
    {
     "name": "24.kg",
     "url": "https://24.kg/english/rss/",
-    "ok": true,
-    "items": 30
-   }
-  ],
-  "tr": [
-   {
-    "name": "Anadolu Ajansı",
-    "url": "https://www.aa.com.tr/tr/rss/default?cat=guncel",
-    "ok": true,
-    "items": 30
-   },
-   {
-    "name": "TRT Haber",
-    "url": "https://www.trthaber.com/sondakika.rss",
-    "ok": true,
-    "items": 30
-   },
-   {
-    "name": "Hürriyet",
-    "url": "https://www.hurriyet.com.tr/rss/anasayfa",
-    "ok": true,
-    "items": 30
-   },
-   {
-    "name": "Sözcü",
-    "url": "https://www.sozcu.com.tr/feeds-rss-category-gundem",
     "ok": true,
     "items": 30
    }
