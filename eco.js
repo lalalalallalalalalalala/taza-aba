@@ -2,7 +2,7 @@
  * (Valhalla / OSRM FOSSGIS, без ключей), 2–3 варианта, оценка вдыхаемой дозы PM2.5 по поверхности «Дымка»,
  * лучшее время по почасовому прогнозу, готовые маршруты, 3D-навигатор (eco3d.js, MapLibre — грузится лениво). */
 const ECO_T = {
-  ru: { title: "Эко-маршруты", sub: "Проложите путь, где воздух чище: выберите точки на карте или найдите адрес", from: "Откуда", to: "Куда", stop: "Остановка", add: "Добавить точку", swap: "Поменять местами", me: "Моё местоположение",
+  ru: { go2: "Поехали", locDen: "Доступ к геолокации запрещён — разрешите его в настройках браузера", locUn: "Нет сигнала GPS — попробуйте на открытом месте", accM: "точность ±{m} м", title: "Эко-маршруты", sub: "Проложите путь, где воздух чище: выберите точки на карте или найдите адрес", from: "Откуда", to: "Куда", stop: "Остановка", add: "Добавить точку", swap: "Поменять местами", me: "Моё местоположение",
     walk: "Пешком", bike: "Велосипед", car: "Авто", hint: "Нажмите на карту: первая точка — «Откуда», вторая — «Куда». Маркеры можно перетаскивать.", build: "Проложить", building: "Прокладываю маршрут…",
     here: "Отсюда", there: "Сюда", via: "Через эту точку", min: "мин", h: "ч", km: "км", m: "м", aqi: "AQI в среднем", dose: "Доза PM2.5", cleanest: "Чище всего", fastest: "Быстрее всего", balanced: "Рекомендуем",
     cleaner: "чище на {p}%", dirtier: "грязнее на {p}%", same: "по воздуху почти одинаково", nav3d: "3D-навигатор", pick: "Выбрать", bestC: "прогноз модели CAMS с поправкой по датчикам", bestM: "по прогнозу модели CAMS", best: "Лучшее время сегодня", bestAt: "около {t} — AQI ≈ {a}",
@@ -10,7 +10,7 @@ const ECO_T = {
     eqAir: "Данные о воздухе — по районам, поэтому близкие маршруты получают похожую оценку. Выбирайте удобный.", fail: "Сервис маршрутов не ответил — показываю прямую линию (оценка).", lineEst: "по прямой, оценка",
     ready: "Готовые эко-маршруты", readySub: "Парки, бульвары и набережные — проложим по реальным дорожкам и оценим воздух", go: "Построить", detour: "через {d}", none: "Ничего не найдено", my: "Моё место", mapPt: "Точка на карте",
     loc: "Определяю местоположение…", locErr: "Не удалось определить местоположение", src: "Маршруты: © OpenStreetMap, Valhalla/OSRM (FOSSGIS). Поиск: Photon (komoot).", fewer: "Удалить точку", near: "рядом с «{d}»" },
-  ky: { title: "Эко-маршруттар", sub: "Абасы тазараак жолду түзүңүз: картадан чекит тандаңыз же даректи издеңиз", from: "Кайдан", to: "Кайда", stop: "Аялдама", add: "Чекит кошуу", swap: "Алмаштыруу", me: "Менин жайгашкан жерим",
+  ky: { go2: "Жолго чыгуу", locDen: "Геолокацияга тыюу салынган — браузердин жөндөөлөрүнөн уруксат бериңиз", locUn: "GPS сигналы жок — ачык жерден аракет кылыңыз", accM: "тактык ±{m} м", title: "Эко-маршруттар", sub: "Абасы тазараак жолду түзүңүз: картадан чекит тандаңыз же даректи издеңиз", from: "Кайдан", to: "Кайда", stop: "Аялдама", add: "Чекит кошуу", swap: "Алмаштыруу", me: "Менин жайгашкан жерим",
     walk: "Жөө", bike: "Велосипед", car: "Унаа", hint: "Картаны басыңыз: биринчи чекит — «Кайдан», экинчиси — «Кайда». Белгилерди сүйрөсө болот.", build: "Түзүү", building: "Маршрут түзүлүүдө…",
     here: "Ушул жерден", there: "Ушул жерге", via: "Ушул чекит аркылуу", min: "мүн", h: "саат", km: "км", m: "м", aqi: "Орточо AQI", dose: "PM2.5 дозасы", cleanest: "Эң таза", fastest: "Эң тез", balanced: "Сунуштайбыз",
     cleaner: "{p}% тазараак", dirtier: "{p}% булганычыраак", same: "аба боюнча дээрлик бирдей", nav3d: "3D-навигатор", pick: "Тандоо", bestC: "CAMS моделинин божомолу, датчиктер боюнча оңдолгон", bestM: "CAMS моделинин божомолу боюнча", best: "Бүгүн эң жакшы убакыт", bestAt: "болжол менен {t} — AQI ≈ {a}",
@@ -18,7 +18,7 @@ const ECO_T = {
     eqAir: "Аба маалыматы райондор боюнча, ошондуктан жакын маршруттар окшош бааланат. Ыңгайлуусун тандаңыз.", fail: "Маршрут кызматы жооп берген жок — түз сызык көрсөтүлдү (баалоо).", lineEst: "түз сызык, баалоо",
     ready: "Даяр эко-маршруттар", readySub: "Парктар, бульварлар, жээктер — чыныгы жолдор менен түзүп, абаны баалайбыз", go: "Түзүү", detour: "{d} аркылуу", none: "Эч нерсе табылган жок", my: "Менин жерим", mapPt: "Картадагы чекит",
     loc: "Жайгашкан жер аныкталууда…", locErr: "Жайгашкан жерди аныктоо мүмкүн болбоду", src: "Маршруттар: © OpenStreetMap, Valhalla/OSRM (FOSSGIS). Издөө: Photon (komoot).", fewer: "Чекитти өчүрүү", near: "«{d}» жанында" },
-  en: { title: "Eco routes", sub: "Plan a path with cleaner air: tap points on the map or search an address", from: "From", to: "To", stop: "Stop", add: "Add stop", swap: "Swap", me: "My location",
+  en: { go2: "Go", locDen: "Location access is blocked — allow it in your browser settings", locUn: "No GPS signal — try in an open area", accM: "accuracy ±{m} m", title: "Eco routes", sub: "Plan a path with cleaner air: tap points on the map or search an address", from: "From", to: "To", stop: "Stop", add: "Add stop", swap: "Swap", me: "My location",
     walk: "Walk", bike: "Bike", car: "Car", hint: "Tap the map: first point is “From”, second is “To”. Drag markers to adjust.", build: "Route", building: "Finding routes…",
     here: "From here", there: "To here", via: "Via this point", min: "min", h: "h", km: "km", m: "m", aqi: "Average AQI", dose: "PM2.5 dose", cleanest: "Cleanest", fastest: "Fastest", balanced: "Recommended",
     cleaner: "{p}% cleaner", dirtier: "{p}% dirtier", same: "about the same air", nav3d: "3D navigator", pick: "Select", bestC: "CAMS model forecast, corrected by sensors", bestM: "per the CAMS model forecast", best: "Best time today", bestAt: "around {t} — AQI ≈ {a}",
@@ -154,8 +154,7 @@ function ecoForm(f) {
   f.querySelector(".eco-add").onclick = () => { eco.pts.splice(eco.pts.length - 1, 0, null); ecoRender(); f.querySelectorAll(".eco-pt input")[eco.pts.length - 2].focus(); };
   f.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { eco.pts.splice(+b.dataset.del, 1); ecoRoute(); ecoRender(); });
   f.querySelector("[data-swap]").onclick = () => { eco.pts.reverse(); ecoRoute(); ecoRender(); };
-  f.querySelector("[data-me]").onclick = () => { if (!navigator.geolocation) return toast(ET("locErr")); toast(ET("loc"));
-    navigator.geolocation.getCurrentPosition(p => ecoSetPt(0, [p.coords.latitude, p.coords.longitude], ET("my")), () => toast(ET("locErr")), { enableHighAccuracy: true, timeout: 10000 }); };
+  f.querySelector("[data-me]").onclick = () => ecoLocate();
   document.querySelectorAll("body > .eco-sug").forEach(x => x.remove());   /* v42b: старые выпадающие списки (портал) */
   f.querySelectorAll(".eco-pt").forEach(row => { const i = +row.dataset.i, inp = row.querySelector("input"), ul = row.querySelector("ul"); let res = [], cur = -1;
     document.body.appendChild(ul); ul.setAttribute("role", "listbox");   /* v42b: список вне карточек — не обрезается и не просвечивает */
@@ -189,11 +188,12 @@ function ecoList(box) {
           ${rs.length > 1 && r.vsFast ? `<span class="${r.vsFast > 0 ? "g" : "r"}">${esc(ET(r.vsFast > 0 ? "cleaner" : "dirtier", { p: Math.abs(r.vsFast) }))}</span>` : ""}</div>
         ${ecoTfMeta(r)}
         ${ecoBar(r.S)}
-        <div class="eco-act"><button type="button" class="eco-3d" data-3d="${k}"><svg viewBox="0 0 24 24"><path d="M12 2l8 18-8-4-8 4z"/></svg>${esc(ET("nav3d"))}</button><button type="button" class="eco-3d eco-3ds" data-3d="${k}" data-sat="1" style="margin-left:6px"><svg viewBox="0 0 24 24"><path d="M2 16l20-8-8 12-2-5z"/></svg>${esc(ECO_SAT3D[LANG] || ECO_SAT3D.ru)}</button></div></div>`; }).join("")}
+        <div class="eco-act"><button type="button" class="eco-3d eco-go" data-go="${k}" style="margin-right:6px"><svg viewBox="0 0 24 24"><path d="M12 3l7 18-7-4-7 4z"/></svg>${esc(ET("go2"))}</button><button type="button" class="eco-3d" data-3d="${k}"><svg viewBox="0 0 24 24"><path d="M12 2l8 18-8-4-8 4z"/></svg>${esc(ET("nav3d"))}</button><button type="button" class="eco-3d eco-3ds" data-3d="${k}" data-sat="1" style="margin-left:6px"><svg viewBox="0 0 24 24"><path d="M2 16l20-8-8 12-2-5z"/></svg>${esc(ECO_SAT3D[LANG] || ECO_SAT3D.ru)}</button></div></div>`; }).join("")}
     ${same ? `<div class="eco-note">${esc(ET("eqAir"))}</div>` : ""}
     ${eco.best ? `<div class="eco-card eco-best"><b>🕒 ${esc(ET("best"))}</b><span>${esc(ET("bestAt", { t: eco.best.t, a: eco.best.a }))}</span><small class="eco-best-src">${esc(ET(eco.best.corr ? "bestC" : "bestM"))}</small></div>` : ""}
     <div class="eco-note">${esc(ET("est", { v: ECO_V[eco.mode] }))}</div>${eco.tfOk && eco.hd ? `<div class="eco-note">🚦 ${esc(ETT("note", { t: eco.hd.t + (eco.hd.tom ? " " + ETT("tomorrow") : "") }))}</div>` : ""}`;
-  box.querySelectorAll(".eco-r").forEach(c => { const go = () => { eco.sel = +c.dataset.k; ecoList(box); ecoDraw(); }; c.onclick = e => { if (!e.target.closest("[data-3d]")) go(); }; c.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } }; });
+  box.querySelectorAll(".eco-r").forEach(c => { const go = () => { eco.sel = +c.dataset.k; ecoList(box); ecoDraw(); }; c.onclick = e => { if (!e.target.closest("[data-3d],[data-go]")) go(); }; c.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } }; });
+  box.querySelectorAll("[data-go]").forEach(b => b.onclick = () => ecoOpenNav(eco.routes[+b.dataset.go]));
   box.querySelectorAll("[data-3d]").forEach(b => b.onclick = () => ecoOpen3d(eco.routes[+b.dataset["3d"]], b.dataset.sat ? { sat: true, fly: true } : null));
 }
 function ecoMarker(i) { const n = eco.pts.length, c = i === 0 ? "a" : i === n - 1 ? "b" : "s";
@@ -232,7 +232,7 @@ function viewEco(el) {
     <div class="eco-grid"><div class="eco-side"><div class="eco-card eco-form"></div><div class="eco-res" aria-live="polite"></div></div>
       <div class="eco-mapw"><div id="ecoMap"></div><div class="eco-legend">${[25, 75, 125, 175, 250].map(a => `<i style="background:${ecoCol(a)}"></i>`).join("")}<span>AQI</span></div>${ecoTfLegend()}</div></div>
     ${ecoReady(el)}<div class="foot">${esc(ET("src"))}</div></div>`;
-  map = mkMap("ecoMap", { zoomControl: true }); ecoMap = map; baseTiles(map); ecoSvg = L.svg({ padding: 0.5 });
+  ecoMeL = null; map = mkMap("ecoMap", { zoomControl: true }); ecoMap = map; baseTiles(map); ecoSvg = L.svg({ padding: 0.5 });
   map.setView(cityObj().center, (cityObj().zoom || 12) + 0.5);
   if (typeof MsCanvas !== "undefined" && typeof msPts === "function") new MsCanvas((ctx, tl, m, w, h) => { const pts = msPts(); if (!pts.length) return; const S = 10, gw = Math.ceil(w / S), gh = Math.ceil(h / S), off = document.createElement("canvas"); off.width = gw; off.height = gh;
     const oc = off.getContext("2d"), img = oc.createImageData(gw, gh); for (let j = 0; j < gh; j++) for (let i = 0; i < gw; i++) { const ll = m.layerPointToLatLng(tl.add([i * S, j * S])), r = msIdw(ll.lat, ll.lng, pts), c = msBinRGB(r.v), al = Math.max(0, Math.min(1, 1 - (r.dmin - 1.2) / 2.5)), k = (j * gw + i) * 4;
@@ -343,6 +343,21 @@ function ecoTfLegend() { if (!ECO_HAS_TF() || typeof tfCol !== "function") retur
 for (const l in ECO_TT) if (ECO_T[l]) ECO_T[l].nojam = ECO_TT[l].nojam;
 /* 3D-навигатор — отдельный модуль, грузится только по нажатию */
 const ECO_SAT3D = { ru: "3D-спутник", ky: "3D-спутник", en: "3D satellite" }; /* v44-sat: облёт маршрута над спутниковым снимком с рельефом */
+/* v59-nav: живая навигация (econav.js, грузится по кнопке «Поехали») + «Моё местоположение» с объяснением и кругом точности */
+let ecoNavP = null;
+const ecoNavLib = () => ecoNavP || (ecoNavP = new Promise((ok, no) => { if (window.ecoNavOpen) return ok(); const s = document.createElement("script"); s.src = "econav.js"; s.onload = ok; s.onerror = () => { ecoNavP = null; no(); }; document.head.appendChild(s); }));
+function ecoOpenNav(r) { if (!r) return; ecoNavLib().then(() => window.ecoNavOpen(r, eco.mode)).catch(() => toast("Navigation: load error")); }
+let ecoMeL = null;
+async function ecoLocate() {
+  try { await ecoNavLib(); } catch (e) {}
+  if (window.ecoNavAskGeo && !(await window.ecoNavAskGeo())) return; if (!navigator.geolocation) return toast(ET("locErr"));
+  toast(ET("loc"));
+  navigator.geolocation.getCurrentPosition(p => { const ll = [p.coords.latitude, p.coords.longitude], acc = Math.round(p.coords.accuracy || 0);
+    if (ecoMap && ecoMap === map) { if (ecoMeL) ecoMeL.remove(); ecoMeL = L.layerGroup([L.circle(ll, { radius: Math.max(5, acc), color: "#5AB4E8", weight: 1, opacity: .6, fillColor: "#5AB4E8", fillOpacity: .14, interactive: false }),
+      L.marker(ll, { icon: L.divIcon({ className: "", html: '<div class="eco-me"></div>', iconSize: [22, 22], iconAnchor: [11, 11] }), keyboard: false, interactive: false, zIndexOffset: 1000 })]).addTo(ecoMap); }
+    ecoSetPt(0, ll, ET("my")); if (acc) toast(ET("accM", { m: acc })); },
+    e => toast(e && e.code === 1 ? ET("locDen") : e && e.code === 2 ? ET("locUn") : ET("locErr")), { enableHighAccuracy: true, timeout: 12000, maximumAge: 5000 }); }
+if (/[?&]navsim=1/.test(location.search)) ecoNavLib().catch(() => {});
 function ecoOpen3d(r, o) { const go = () => window.eco3dOpen && window.eco3dOpen(r, eco.mode, o);
   if (window.eco3dOpen) return go(); const s = document.createElement("script"); s.src = "eco3d.js"; s.onload = go; s.onerror = () => toast("3D: load error"); document.head.appendChild(s); }
 if (typeof views !== "undefined") views.routes = el => viewEco(el);
