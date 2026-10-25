@@ -416,35 +416,48 @@ const NW = {
     news: "News", newsSrc: "Source: publishers' RSS · refreshed hourly", cityNews: "About {city}", kgNews: "Kyrgyzstan — latest", noCity: "No fresh items about {city} in the feed right now — showing general Kyrgyzstan news.",
     fail: "Failed to load", retry: "Retry", loading: "Loading…", hpa: "hPa", mm: "mm" },
 };
-Object.assign(NW.ru, { invZ: " и температурная инверсия (примерно в {z} км над городом теплее, чем у земли — оценка)", nightHi: "🌙 Ночью ({h}): {f} — дым от печей может застаиваться до утра. Проветривайте днём.", nightW: "почти штиль (ветер до {w} м/с)", nightInv: "инверсия (примерно в {z} км над городом теплее, чем у земли)", wxTab: "Погода", updN: "Новости обновлены {t}", srcN: "источников: {n}", noCity2: "Свежих новостей про {city} в лентах сейчас нет.", ctryNews: "Новости страны — {c}", newsSrc2: "Источники: публичные RSS-ленты изданий (заголовки и ссылки на оригинал), сервер приложения забирает их раз в час: {s}", newsFail: "в последний раз не ответили (показаны прошлые заголовки): {s}", airNews: "Экология: воздух, смог, уголь", newsNone: "Новости сейчас недоступны: файл с заголовками не загрузился (нет сети или лента ещё не обновилась).", newsDirect: "Сайты изданий:", newsStale: "Ленты давно не обновлялись — заголовки могут быть устаревшими." });
-Object.assign(NW.ky, { invZ: " жана температуралык инверсия (шаардан болжол менен {z} км бийиктикте жерге караганда жылуу — баалоо)", nightHi: "🌙 Түнкүсүн ({h}): {f} — мештердин түтүнү эртең мененге чейин туруп калышы мүмкүн. Күндүзү желдетиңиз.", nightW: "дээрлик шамалсыз (шамал {w} м/с чейин)", nightInv: "инверсия (шаардан болжол менен {z} км бийиктикте жерге караганда жылуу)", wxTab: "Аба ырайы", updN: "Жаңылыктар жаңыланды {t}", srcN: "булактар: {n}", noCity2: "Тасмаларда азыр {city} тууралуу жаңы кабар жок.", ctryNews: "Өлкөнүн жаңылыктары — {c}", newsSrc2: "Булактар: басылмалардын ачык RSS тасмалары (аталыштар жана түпнускага шилтемелер), колдонмонун сервери саатына бир жолу алат: {s}", newsFail: "акыркы жолу жооп бербеди (мурунку аталыштар көрсөтүлдү): {s}", airNews: "Экология: аба, түтүн, көмүр", newsNone: "Жаңылыктар азыр жеткиликсиз: аталыштар файлы жүктөлгөн жок (тармак жок же тасма али жаңыланган жок).", newsDirect: "Басылмалардын сайттары:", newsStale: "Тасмалар көптөн бери жаңыланган жок — аталыштар эскирген болушу мүмкүн." });
-Object.assign(NW.en, { invZ: " and a temperature inversion (about {z} km above the city it is warmer than at ground level — estimate)", nightHi: "🌙 At night ({h}): {f} — stove smoke may stagnate until morning. Air out during the day.", nightW: "almost calm (wind up to {w} m/s)", nightInv: "an inversion (about {z} km above the city it is warmer than at ground level)", wxTab: "Weather", updN: "News updated {t}", srcN: "sources: {n}", noCity2: "No fresh items about {city} in the feeds right now.", ctryNews: "Country news — {c}", newsSrc2: "Sources: publishers' public RSS feeds (headlines and links to the original), fetched hourly by the app's server: {s}", newsFail: "did not respond last time (showing earlier headlines): {s}", airNews: "Environment: air, smog, coal", newsNone: "News is unavailable right now: the headlines file did not load (no connection or the feed has not been updated yet).", newsDirect: "Publisher websites:", newsStale: "The feeds have not been updated for a while — headlines may be outdated." });
+Object.assign(NW.ru, { profLg: "температура воздуха по высоте", profInv1: "{t}: у земли {t0}, а уже на высоте ~{m} м — {t1} (теплее на {d} °C). Это инверсия: тёплый слой сверху работает как крышка — дым печей и выхлопы остаются у земли.", profT: "Профиль температуры над городом", profAria: "График: температура воздуха на разной высоте над городом в {t} (модель)", profInv: "{t}: у земли {t0}; теплее становится уже с высоты ~{m0} м, а на ~{m} м — {t1} (на {d} °C теплее, чем у земли). Это инверсия: тёплый слой сверху работает как крышка — дым печей и выхлопы остаются у земли.", profNo: "{t}: с высотой становится холоднее (у земли {t0}, на ~{m} м — {t1}) — инверсии нет, воздух может подниматься и рассеиваться.", profBlh: "Слой перемешивания, в котором рассеивается дым, — ~{m} м.", blhL: "слой перемешивания ~{m} м", mU: "м", gnd: "земля", profSrc: "Модель Open-Meteo, а не измерения зонда: уровни давления 925–700 гПа выше рельефа (здесь — {n}), высоты — оценка по давлению. Показан час этой ночи с самой сильной инверсией (если её нет — 06:00).", invZ: " и температурная инверсия (уже примерно в {m} м над городом теплее, чем у земли, на {d} °C — оценка)", nightHi: "🌙 Ночью ({h}): {f} — дым от печей может застаиваться до утра. Проветривайте днём.", nightW: "почти штиль (ветер до {w} м/с)", nightInv: "инверсия (уже примерно в {m} м над городом теплее, чем у земли, на {d} °C)", wxTab: "Погода", updN: "Новости обновлены {t}", srcN: "источников: {n}", noCity2: "Свежих новостей про {city} в лентах сейчас нет.", ctryNews: "Новости страны — {c}", newsSrc2: "Источники: публичные RSS-ленты изданий (заголовки и ссылки на оригинал), сервер приложения забирает их раз в час: {s}", newsFail: "в последний раз не ответили (показаны прошлые заголовки): {s}", airNews: "Экология: воздух, смог, уголь", newsNone: "Новости сейчас недоступны: файл с заголовками не загрузился (нет сети или лента ещё не обновилась).", newsDirect: "Сайты изданий:", newsStale: "Ленты давно не обновлялись — заголовки могут быть устаревшими." });
+Object.assign(NW.ky, { profLg: "абанын бийиктик боюнча температурасы", profInv1: "{t}: жерде {t0}, ал эми ~{m} м бийиктикте эле — {t1} ({d} °C жылуу). Бул инверсия: үстүндөгү жылуу катмар капкактай болуп, мештердин түтүнү жана унаалардын газы жерге жакын калат.", profT: "Шаардын үстүндөгү температура профили", profAria: "График: {t} убагында шаардын үстүндө ар кандай бийиктиктеги абанын температурасы (модель)", profInv: "{t}: жерде {t0}; ~{m0} м бийиктиктен баштап эле жылуураак, ал эми ~{m} м бийиктикте — {t1} (жерге караганда {d} °C жылуу). Бул инверсия: үстүндөгү жылуу катмар капкактай болуп, мештердин түтүнү жана унаалардын газы жерге жакын калат.", profNo: "{t}: бийиктеген сайын суук (жерде {t0}, ~{m} м бийиктикте — {t1}) — инверсия жок, аба көтөрүлүп, таралышы мүмкүн.", profBlh: "Түтүн тарай турган аралашуу катмары — ~{m} м.", blhL: "аралашуу катмары ~{m} м", mU: "м", gnd: "жер", profSrc: "Open-Meteo модели, зонддун өлчөөсү эмес: рельефтен жогору 925–700 гПа басым деңгээлдери (бул жерде — {n}), бийиктиктер басым боюнча баалоо. Бул түндүн эң күчтүү инверсиясы бар сааты көрсөтүлөт (инверсия жок болсо — 06:00).", invZ: " жана температуралык инверсия (шаардан болжол менен {m} м бийиктикте эле жерге караганда {d} °C жылуу — баалоо)", nightHi: "🌙 Түнкүсүн ({h}): {f} — мештердин түтүнү эртең мененге чейин туруп калышы мүмкүн. Күндүзү желдетиңиз.", nightW: "дээрлик шамалсыз (шамал {w} м/с чейин)", nightInv: "инверсия (шаардан болжол менен {m} м бийиктикте эле жерге караганда {d} °C жылуу)", wxTab: "Аба ырайы", updN: "Жаңылыктар жаңыланды {t}", srcN: "булактар: {n}", noCity2: "Тасмаларда азыр {city} тууралуу жаңы кабар жок.", ctryNews: "Өлкөнүн жаңылыктары — {c}", newsSrc2: "Булактар: басылмалардын ачык RSS тасмалары (аталыштар жана түпнускага шилтемелер), колдонмонун сервери саатына бир жолу алат: {s}", newsFail: "акыркы жолу жооп бербеди (мурунку аталыштар көрсөтүлдү): {s}", airNews: "Экология: аба, түтүн, көмүр", newsNone: "Жаңылыктар азыр жеткиликсиз: аталыштар файлы жүктөлгөн жок (тармак жок же тасма али жаңыланган жок).", newsDirect: "Басылмалардын сайттары:", newsStale: "Тасмалар көптөн бери жаңыланган жок — аталыштар эскирген болушу мүмкүн." });
+Object.assign(NW.en, { profLg: "air temperature by height", profInv1: "{t}: {t0} at ground level, but already {t1} at ~{m} m ({d} °C warmer). This is an inversion: the warm layer above acts like a lid, so stove smoke and exhaust stay near the ground.", profT: "Temperature profile above the city", profAria: "Chart: air temperature at different heights above the city at {t} (model)", profInv: "{t}: {t0} at ground level; it is already warmer from ~{m0} m up, and {t1} at ~{m} m ({d} °C warmer than at the ground). This is an inversion: the warm layer above acts like a lid, so stove smoke and exhaust stay near the ground.", profNo: "{t}: it gets colder with height ({t0} at ground level, {t1} at ~{m} m) — no inversion, air can rise and disperse.", profBlh: "The mixing layer, where smoke disperses, is ~{m} m deep.", blhL: "mixing layer ~{m} m", mU: "m", gnd: "ground", profSrc: "Open-Meteo model, not radiosonde measurements: 925–700 hPa pressure levels above the terrain (here: {n}), heights estimated from pressure. Shows tonight's hour with the strongest inversion (06:00 if there is none).", invZ: " and a temperature inversion (already about {m} m above the city it is {d} °C warmer than at ground level — estimate)", nightHi: "🌙 At night ({h}): {f} — stove smoke may stagnate until morning. Air out during the day.", nightW: "almost calm (wind up to {w} m/s)", nightInv: "an inversion (already about {m} m above the city it is {d} °C warmer than at ground level)", wxTab: "Weather", updN: "News updated {t}", srcN: "sources: {n}", noCity2: "No fresh items about {city} in the feeds right now.", ctryNews: "Country news — {c}", newsSrc2: "Sources: publishers' public RSS feeds (headlines and links to the original), fetched hourly by the app's server: {s}", newsFail: "did not respond last time (showing earlier headlines): {s}", airNews: "Environment: air, smog, coal", newsNone: "News is unavailable right now: the headlines file did not load (no connection or the feed has not been updated yet).", newsDirect: "Publisher websites:", newsStale: "The feeds have not been updated for a while — headlines may be outdated." });
 const N = (k, v = {}) => String(NW[LANG][k] ?? NW.ru[k]).replace(/\{(\w+)\}/g, (m, x) => v[x] ?? m);
 Object.assign(DICT.ru, { tab_news: "Новости", q_news: "Новости" }); Object.assign(DICT.ky, { tab_news: "Жаңылык", q_news: "Жаңылыктар" }); Object.assign(DICT.en, { tab_news: "News", q_news: "News" });
 const WMO = c => c === 0 ? "☀️" : c <= 2 ? "🌤️" : c === 3 ? "☁️" : c <= 48 ? "🌁" : c <= 57 ? "🌦️" : c <= 67 ? "🌧️" : c <= 77 ? "🌨️" : c <= 82 ? "🌧️" : c <= 86 ? "❄️" : "⛈️";
 const DIRS = { ru: ["С", "СВ", "В", "ЮВ", "Ю", "ЮЗ", "З", "СЗ"], ky: ["Т", "ТЧ", "Ч", "ТшЧ", "Тш", "ТшБ", "Б", "ТБ"], en: ["N", "NE", "E", "SE", "S", "SW", "W", "NW"] };
 const dirOf = d => DIRS[LANG][Math.round(d / 45) % 8];
 const CITY_RX = { bishkek: /Бишкек/i, osh: /(^|[^А-Яа-яЁё])Ош(а|е|ом|ск|ской|скую)?([^А-Яа-яЁё]|$)/, naryn: /Нарын/i, jalal: /Джалал-Абад|Жалал-Абад/i, karakol: /Каракол|Иссык-Кул/i, talas: /Талас/i, batken: /Баткен/i, tokmok: /Токмок/i };
-/* v50: температурная инверсия — сравниваем T у земли с уровнем давления, который ВЫШЕ рельефа (≥ ~50 гПа над поверхностью).
- * 850 гПа ≈ 1,5 км над морем: в Нарыне (≈2 км), Кочкоре, Караколе этот уровень под землёй — Open-Meteo экстраполирует,
- * и раньше там «инверсия» показывалась почти всегда. Высота уровня над городом — по барометрической формуле (оценка). */
-function invAt(H, i) {
+/* v51: температурная инверсия по профилю из нескольких уровней (925/900/850/800/700 гПа).
+ * Берём только уровни, которые выше рельефа (давление минимум на 8 гПа ниже, чем у земли, ≈ 70 м) и не выше ~1,6 км над городом.
+ * Раньше (v50) сравнивали только с 850 или 700 гПа (≈0,8 км над Бишкеком) и пропускали приземные инверсии в нижних 100–300 м,
+ * которые как раз держат дым печей. Высота уровней — по барометрической формуле (оценка). Это модель Open-Meteo, не зонд. */
+const INV_LV = [925, 900, 850, 800, 700];
+function invProfile(H, i) {
   const T = H && H.temperature_2m ? H.temperature_2m[i] : null, ps = H && H.surface_pressure ? H.surface_pressure[i] : null;
   if (T == null || ps == null) return null;
-  for (const p of [850, 700]) {
+  const lv = [];
+  for (const p of INV_LV) {
     const Tp = H["temperature_" + p + "hPa"] ? H["temperature_" + p + "hPa"][i] : null;
-    if (Tp == null || p > ps - 50) continue;
-    return { inv: Tp > T, dz: 29.27 * (273.15 + (T + Tp) / 2) * Math.log(ps / p) / 1000, p };
+    if (Tp == null || p > ps - 8) continue;
+    const z = 29.27 * (273.15 + (T + Tp) / 2) * Math.log(ps / p);   // м над поверхностью (оценка)
+    if (z > 1600 && lv.length) break;
+    lv.push({ p, T: Tp, z });
+    if (z > 1600) break;
   }
-  return null;
+  return lv.length ? { T2: T, lv, blh: H.boundary_layer_height ? H.boundary_layer_height[i] : null } : null;
 }
+function invAt(H, i) {
+  const pr = invProfile(H, i); if (!pr) return null;
+  const warm = pr.lv.filter(l => l.T > pr.T2);
+  const top = warm.length ? warm.reduce((m, l) => l.T > m.T ? l : m) : null;
+  return { inv: !!warm.length, dz: (warm.length ? warm[0].z : pr.lv[0].z) / 1000, dT: top ? top.T - pr.T2 : 0, p: (warm[0] || pr.lv[0]).p, n: pr.lv.length, blh: pr.blh };
+}
+const mRound = km => Math.max(50, Math.round(km * 1000 / 50) * 50);
 const newsState = { wx: {}, news: null, newsErr: false, wxErr: {}, timer: null };
 async function loadWeather(force) {
   const id = CITY, c = cityObj().center, cur = newsState.wx[id];
   if (!force && cur && Date.now() - cur.at < 15 * 60e3) return;
   try {
     const u = `https://api.open-meteo.com/v1/forecast?latitude=${c[0]}&longitude=${c[1]}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,wind_direction_10m,surface_pressure,precipitation,cloud_cover,weather_code` +
-      `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability,temperature_850hPa,temperature_700hPa,surface_pressure&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&wind_speed_unit=ms&timezone=auto&forecast_days=7`;
+      `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability,temperature_925hPa,temperature_900hPa,temperature_850hPa,temperature_800hPa,temperature_700hPa,surface_pressure,boundary_layer_height&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&wind_speed_unit=ms&timezone=auto&forecast_days=7`;
     newsState.wx[id] = { at: Date.now(), d: await fetchJSON(u) }; newsState.wxErr[id] = false;
   } catch (e) { newsState.wxErr[id] = true; }
 }
@@ -513,7 +526,7 @@ function wxSmogNote(h, hrs) {
   try {
     if (typeof eveningRisk !== "function" || typeof air === "undefined" || !air.live || !air.wxH || !state.district) return "";
     const r = eveningRisk(air.byDistrict[state.district]); if (!r) return "";
-    const f = [Q("evF", { a: r.aqMax })]; if (r.wind != null) f.push(Q("evWind", { w: fmt(r.wind, 1) })); if (r.inv != null) f.push(r.inv ? Q("evInv") : Q("evNoInv"));
+    const f = typeof evFactors === "function" ? evFactors(r) : [Q("evF", { a: r.aqMax })];
     let out = `<div class="smog-note wx-ev ${r.risk ? "hi" : ""}"><div>${r.risk ? "⚠️" : "✅"} ${Q("evTitle")}${r.tomorrow ? " (" + Q("evTomorrow") + ")" : ""}: ${Q("ev" + r.risk)}. ${r.adv}</div>
       <div class="wx-ev-f">${f.join(" · ")} · ${Q("evSrc")}</div></div>`;
     // ночь: первый непрерывный отрезок 00–08 ч в ближайших 24 ч
@@ -521,10 +534,40 @@ function wxSmogNote(h, hrs) {
     if (nh.length >= 3) {
       const nw = Math.min(...nh.map(x => x.w).filter(v => v != null)), ni = nh.map(x => invAt(h, x.k)).filter(v => v && v.inv);
       const parts = []; if (isFinite(nw) && nw < 1) parts.push(N("nightW", { w: fmt(nw, 1) }));
-      if (ni.length) parts.push(N("nightInv", { z: fmt(ni.reduce((s, v) => s + v.dz, 0) / ni.length, 1) }));
+      if (ni.length) parts.push(N("nightInv", { m: mRound(Math.min(...ni.map(v => v.dz))), d: fmt(Math.max(...ni.map(v => v.dT)), 1) }));
       if (parts.length) out += `<div class="smog-note wx-night hi">${N("nightHi", { h: nh[0].tm.slice(11, 16) + "–" + nh[nh.length - 1].tm.slice(11, 13) + ":59", f: parts.join(", ") })}</div>`;
     }
     return out;
+  } catch (e) { return ""; }
+}
+/* v51: «Профиль температуры над городом» — как устроен воздух ночью (модель Open-Meteo, уровни выше рельефа). */
+function wxProfileHTML(h, night) {
+  try {
+    const cand = night.map(x => ({ x, pr: invProfile(h, x.k), iv: invAt(h, x.k) })).filter(o => o.pr && o.iv);
+    if (!cand.length) return "";
+    const invs = cand.filter(o => o.iv.inv);
+    const pick = invs.length ? invs.reduce((a, o) => o.iv.dT > a.iv.dT ? o : a) : (cand.find(o => +o.x.tm.slice(11, 13) === 6) || cand[cand.length - 1]);
+    const { pr, iv, x } = pick, pts = [{ z: 0, T: pr.T2 }].concat(pr.lv.map(l => ({ z: l.z, T: l.T })));
+    const W = 320, H = 170, L = 44, R = 12, Tp = 12, B = 26;
+    const tMin = Math.floor(Math.min(...pts.map(p => p.T)) - 1), tMax = Math.ceil(Math.max(...pts.map(p => p.T)) + 1);
+    const zMax = Math.max(400, Math.ceil(Math.max(...pts.map(p => p.z), pr.blh || 0) / 200) * 200);
+    const X = T => L + (T - tMin) / (tMax - tMin) * (W - L - R), Y = z => H - B - z / zMax * (H - B - Tp);
+    const zt = []; for (let z = 0; z <= zMax; z += zMax > 1000 ? 400 : 200) zt.push(z);
+    const tt = []; const st = Math.max(1, Math.ceil((tMax - tMin) / 5)); for (let T = tMin; T <= tMax; T += st) tt.push(T);
+    const deg = v => fmt(v, 1) + "°";
+    const hh = x.tm.slice(11, 16), top = pts.slice(1).reduce((a, p) => p.T > a.T ? p : a);
+    const blhOk = pr.blh != null && pr.blh <= zMax;
+    const svg = `<svg class="wx-prof-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(N("profAria", { t: hh }))}">
+      ${zt.map(z => `<line class="g" x1="${L}" x2="${W - R}" y1="${Y(z)}" y2="${Y(z)}"/><text class="ax" x="${L - 6}" y="${Y(z) + 4}" text-anchor="end">${z ? z + " " + N("mU") : N("gnd")}</text>`).join("")}
+      ${tt.map(T => `<text class="ax" x="${X(T)}" y="${H - 8}" text-anchor="middle">${fmt(T, 0)}°</text>`).join("")}
+      ${blhOk ? `<line class="blh" x1="${L}" x2="${W - R}" y1="${Y(pr.blh)}" y2="${Y(pr.blh)}"/>` : ""}
+      <polyline class="ln${iv.inv ? " inv" : ""}" points="${pts.map(p => X(p.T).toFixed(1) + "," + Y(p.z).toFixed(1)).join(" ")}"/>
+      ${pts.map(p => `<circle class="pt${p.z ? "" : " g0"}" cx="${X(p.T).toFixed(1)}" cy="${Y(p.z).toFixed(1)}" r="4"><title>${p.z ? "~" + Math.round(p.z / 10) * 10 + " " + N("mU") : N("gnd")}: ${deg(p.T)}</title></circle>`).join("")}
+    </svg>`;
+    const txt = iv.inv ? N(mRound(iv.dz) === mRound(top.z / 1000) ? "profInv1" : "profInv", { t: hh, t0: deg(pr.T2), m0: mRound(iv.dz), m: mRound(top.z / 1000), t1: deg(top.T), d: fmt(iv.dT, 1) })
+      : N("profNo", { t: hh, t0: deg(pr.T2), m: mRound(pts[pts.length - 1].z / 1000), t1: deg(pts[pts.length - 1].T) });
+    return `<div class="card wx-prof"><h3>🌡️ ${N("profT")}</h3><p class="wx-prof-txt ${iv.inv ? "hi" : ""}">${txt}${pr.blh != null ? " " + N("profBlh", { m: Math.max(10, Math.round(pr.blh / 10) * 10) }) : ""}</p>
+      ${svg}<div class="wx-prof-lg small"><span><i class="sw ln${iv.inv ? " inv" : ""}"></i>${N("profLg")}</span>${blhOk ? `<span><i class="sw blh"></i>${esc(N("blhL", { m: Math.max(10, Math.round(pr.blh / 10) * 10) }))}</span>` : ""}</div><p class="small muted">${N("profSrc", { n: pr.lv.length })}</p></div>`;
   } catch (e) { return ""; }
 }
 function wxHTML() {
@@ -536,9 +579,9 @@ function wxHTML() {
   const night = hrs.filter(x => { const hh = +x.tm.slice(11, 13); return hh >= 18 || hh <= 8; }).slice(0, 12);
   const minW = Math.min(c.wind_speed_10m, ...night.map(x => x.w));
   const invs = night.map(x => invAt(h, x.k)).filter(v => v && v.inv), inv = invs.length > 0;
-  const zOf = a => fmt(a.reduce((s, v) => s + v.dz, 0) / a.length, 1);
+  const zOf = a => mRound(Math.min(...a.map(v => v.dz))), dOf = a => fmt(Math.max(...a.map(v => v.dT)), 1);
   const risk = minW < 2 || inv && minW < 3.5;
-  const smogNote = wxSmogNote(h, hrs) || `<div class="smog-note ${risk ? "hi" : ""}">${risk ? N("smogHi", { w: fmt(minW, 1), inv: inv ? N("invZ", { z: zOf(invs) }) : "" }) : N("smogLo", { w: fmt(minW, 1) })}</div>`;
+  const smogNote = wxSmogNote(h, hrs) || `<div class="smog-note ${risk ? "hi" : ""}">${risk ? N("smogHi", { w: fmt(minW, 1), inv: inv ? N("invZ", { m: zOf(invs), d: dOf(invs) }) : "" }) : N("smogLo", { w: fmt(minW, 1) })}</div>`;
   const dd = d.daily;
   return `
     <div class="card wx-now">
@@ -555,6 +598,7 @@ function wxHTML() {
       ${smogNote}
       <div class="small muted" style="margin-top:8px">🛰️ Open-Meteo · ${N("upd", { t: new Date(W.at).toLocaleTimeString(numLocale(), { hour: "2-digit", minute: "2-digit" }) })}</div>
     </div>
+    ${wxProfileHTML(h, night)}
     <h2>🕒 ${N("h24")}</h2>
     <div class="wx-hours">${hrs.map(x => `<div><span>${x.tm.slice(11, 16)}</span><b>${WMO(x.wc)}</b><i>${fmt(x.T, 0)}°</i>${x.p != null ? `<small>${x.p}%</small>` : ""}</div>`).join("")}</div>
     <h2>📅 ${N("d7")}</h2>

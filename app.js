@@ -184,7 +184,7 @@ function loadFarAir() {
 async function loadAirImpl() {
   const reqCity = CITY, cc = cityObj().center;
   const farR = ECO_ROUTES.filter(r => r.far), pts = [...DISTRICTS.map(d => [d.lat, d.lon]), ...farR.map(r => r.path[r.path.length >> 1])];
-  const wurl = `https://api.open-meteo.com/v1/forecast?latitude=${cc[0]}&longitude=${cc[1]}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,wind_speed_10m,temperature_850hPa,temperature_700hPa,surface_pressure,boundary_layer_height&forecast_days=2&wind_speed_unit=ms&timezone=auto`;
+  const wurl = `https://api.open-meteo.com/v1/forecast?latitude=${cc[0]}&longitude=${cc[1]}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,wind_speed_10m,temperature_925hPa,temperature_900hPa,temperature_850hPa,temperature_800hPa,temperature_700hPa,surface_pressure,boundary_layer_height&forecast_days=2&wind_speed_unit=ms&timezone=auto`;
   try {
     let [arr, w, sensors, stations] = await withTimeout(Promise.all([fetchAirPts(pts), fetchJSON(wurl).catch(() => null), loadSensors(cc).catch(() => []),
       (typeof loadStations === "function" ? loadStations(cc) : Promise.resolve([])).catch(() => [])]), 20000);

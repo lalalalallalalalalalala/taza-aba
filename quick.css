@@ -104,3 +104,27 @@ html[data-theme] a.sh-a[data-sh]{color:#fff}
 /* v50: «Погода» — тот же риск вечернего смога, что на главной + ночь */
 .smog-note .wx-ev-f{font-weight:500;font-size:12px;opacity:.85;margin-top:4px}
 .smog-note.wx-night{margin-top:8px}
+/* v51: профиль температуры над городом (#weather) */
+.wx-prof h3{margin:0 0 6px;font-size:16px}
+.wx-prof-txt{margin:0 0 8px;font-weight:600;font-size:13.5px;line-height:1.45}
+.wx-prof-txt.hi{color:#8A3A0C}
+.wx-prof .wx-prof-svg{display:block;width:100%;max-width:460px;height:auto;margin:0 auto 6px;overflow:visible}
+.wx-prof-svg .g{stroke:var(--line,#ddd);stroke-width:1}
+.wx-prof-svg .ax{font-size:10px;fill:var(--muted,#777);font-weight:700}
+.wx-prof-svg .ln{fill:none;stroke:#0EA5E9;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.wx-prof-svg .ln.inv{stroke:#D9480F}
+.wx-prof-svg .pt{fill:#fff;stroke:currentColor;stroke-width:2;color:#0EA5E9}
+.wx-prof-svg .ln.inv~.pt{color:#D9480F}
+.wx-prof-svg .pt.g0{fill:currentColor}
+.wx-prof-svg .blh{stroke:#7C8A84;stroke-width:1.5;stroke-dasharray:5 4}
+.wx-prof-svg .blt{font-size:10px;fill:var(--muted,#777);font-weight:700;font-style:italic}
+html[data-theme="dark"] .wx-prof-txt.hi{color:#F6B98A}
+html[data-theme="dark"] .wx-prof-svg .g{stroke:#34443b}
+html[data-theme="dark"] .wx-prof-svg .ax,html[data-theme="dark"] .wx-prof-svg .blt{fill:#a9b8b0}
+html[data-theme="dark"] .wx-prof-svg .pt:not(.g0){fill:#16211b}
+html[data-theme="dark"] .wx-prof-svg .ln.inv{stroke:#FF8A4C} html[data-theme="dark"] .wx-prof-svg .ln.inv~.pt{color:#FF8A4C}
+.wx-prof-lg{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin:0 0 6px;color:var(--muted,#777);font-weight:700}
+.wx-prof-lg span{display:inline-flex;align-items:center;gap:6px}
+.wx-prof-lg .sw{display:inline-block;width:22px;height:0;border-top:3px solid #0EA5E9}
+.wx-prof-lg .sw.inv{border-top-color:#D9480F} .wx-prof-lg .sw.blh{border-top:2px dashed #7C8A84}
+html[data-theme="dark"] .wx-prof-lg{color:#a9b8b0} html[data-theme="dark"] .wx-prof-lg .sw.inv{border-top-color:#FF8A4C}
