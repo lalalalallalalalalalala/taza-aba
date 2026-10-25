@@ -1,0 +1,154 @@
+/* Таза Аба · «спокойная тёмная» тема (v54): единая палитра, один акцент, без орнаментов. Подключается последней. */
+/* B · Dark calm: graphite background, soft contrast, sky-blue accent */
+:root,html[data-theme]{--c-font:"Inter","Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;--c-bg:#0F1216;--c-sidebar:#12161B;--c-surface:#161B21;--c-surface-2:#1D232A;--c-line:#262D35;--c-text:#E3E7EB;--c-muted:#8B95A1;--c-accent:#5AB4E8;--c-accent-ink:#8CCBF0;--c-accent-soft:#17283A;--c-on-accent:#06131D;--c-link:#7CC3EE;--c-shadow:none;--c-radius:14px;--c-radius-sm:10px;--s3:12px;--s4:16px;--s5:24px;--s6:32px}
+html[data-theme="light"]{--c-bg:#F5F7F9;--c-sidebar:#fff;--c-surface:#fff;--c-surface-2:#EEF1F4;--c-line:#E1E5EA;--c-text:#14181C;--c-muted:#66707A;--c-accent:#1F6FA8;--c-accent-ink:#185A8A;--c-accent-soft:#E4EFF8;--c-on-accent:#fff;--c-link:#1F6FA8}
+
+/* ===== Taza Aba · clean layer (loaded last). Tokens come from tokens-*.css ===== */
+html body{background:var(--c-bg)!important;background-image:none!important;color:var(--c-text)!important;font-family:var(--c-font)!important;-webkit-font-smoothing:antialiased}
+html body *:not(svg):not(svg *):not(.leaflet-container *):not(.maplibregl-map *){font-family:inherit}
+html{--display:var(--c-font)!important;--ink:var(--c-text)!important;--walnut:var(--c-text)!important;--muted:var(--c-muted)!important;--line:var(--c-line)!important;--card:var(--c-surface)!important;--paper:var(--c-surface)!important;--forest:var(--c-text)!important;--felt-red:var(--c-accent)!important;--leaf:var(--c-accent)!important;--leaf-soft:var(--c-accent-soft)!important;--green-700:var(--c-accent)!important;--teal:var(--c-accent)!important;--teal-soft:var(--c-accent-soft)!important;--saffron:var(--c-accent)!important;--saffron-soft:var(--c-accent-soft)!important;--shadow:none!important;--shadow-lg:none!important}
+
+/* 1. remove ornaments */
+.orn-strip,.orn-c,.topbar::after,.hr-sky,.hr-smog{display:none!important}
+html body h2::after{content:none!important;display:none!important}
+.card::before,.fday::before,.opt::before,.gcard::before,.route::before,.hero::before,.hero::after,.more-tile::before,.news-item::before,.mf-row::before{content:none!important;display:none!important}
+
+/* 2. surfaces: flat, one hairline, no gradient/shadow */
+html body :is(.card,.fday,.quick a,.stat,.opt,.gcard,.route,.more-tile,.news-item,.c-item,.mf-row,.eco-card,.tip,.wx-hours div,.hr-card,.fm-panel,.eco-legend){background:var(--c-surface)!important;background-image:none!important;border:1px solid var(--c-line)!important;box-shadow:var(--c-shadow)!important;border-radius:var(--c-radius)!important}
+html body .card{padding:var(--s4)}
+html body :is(.cityrow,.lang,.toggle,.theme-btn,.btn,.btn.ghost,.toast,.stat,.data-badge,.bm-ctl,.leaflet-bar,.fm-chip,input,select,textarea){box-shadow:none!important}
+html body :is(.btn.ghost,.tip,.eco-add,.photo-drop,.adv-modes button,.nw-tabs a,.cityrow,.mf-th.none,.ca-empty,label.btn.ghost,a.btn.ghost){border-style:solid!important}
+html body hr{border:0!important;border-top:1px solid var(--c-line)!important}
+.msg.bot{background:var(--c-surface-2)!important;background-image:none!important;border:0!important;box-shadow:none!important}
+
+/* 3. typography: one family, clear scale */
+html body :is(h1,h2,h3,.brand-name,.side-brand b,.hero .level,.g-val b,.advice b,.fday .v,.stat .v,.ev-v){font-family:var(--c-font)!important;text-shadow:none!important;letter-spacing:-.02em}
+html body h1{font-size:28px!important;font-weight:700!important;color:var(--c-text)!important;line-height:1.2}
+html body h2{font-size:17px!important;font-weight:650!important;color:var(--c-text)!important;margin:var(--s6) 0 var(--s3)!important}
+html body h3{font-size:15px!important;font-weight:650!important;color:var(--c-text)!important}
+html body :is(.muted,.small,small,.sub,.src-foot,.ev-f){color:var(--c-muted)!important}
+.h2i{background:transparent!important;color:var(--c-muted)!important;width:auto!important;padding:0!important;margin-right:8px!important}
+
+/* 4. header & sidebar */
+html body .topbar{background:var(--c-bg)!important;backdrop-filter:none!important;border-bottom:1px solid var(--c-line)!important;padding-top:12px!important;box-shadow:none!important}
+.brand-name,.side-brand b{color:var(--c-text)!important;font-weight:700!important}
+.cityrow{background:var(--c-surface)!important;border:1px solid var(--c-line)!important}
+.cityrow select{font-family:var(--c-font)!important;color:var(--c-text)!important}
+.cityrow .cpin{stroke:var(--c-muted)!important}
+.ctry-flag{filter:grayscale(1);opacity:.6}
+.lang{background:var(--c-surface-2)!important;border:0!important}
+.lang button{color:var(--c-muted)!important;background:transparent!important}
+.lang button.on{background:var(--c-surface)!important;color:var(--c-text)!important;box-shadow:0 0 0 1px var(--c-line)!important}
+.theme-btn{background:transparent!important;border:1px solid var(--c-line)!important;color:var(--c-muted)!important}
+.acc-dot{background:var(--c-accent)!important;background-image:none!important;box-shadow:none!important}
+.data-badge{background:transparent!important;color:var(--c-muted)!important;border:0!important;font-weight:500!important}
+html body .tabbar{background:var(--c-sidebar)!important;background-image:none!important;border:0!important;border-right:1px solid var(--c-line)!important;box-shadow:none!important}
+html body .tabbar::before,html body .tabbar::after{display:none!important;content:none!important}
+html body .tabbar a{color:var(--c-muted)!important;background:transparent!important;font-weight:500!important}
+html body .tabbar a:hover{background:var(--c-surface-2)!important;color:var(--c-text)!important}
+html body .tabbar a.active{background:var(--c-accent-soft)!important;color:var(--c-accent-ink)!important;font-weight:600!important}
+html body .tabbar a.active::before,html body .tabbar a.active::after{display:none!important;content:none!important}
+.side-sep{background:var(--c-line)!important;background-image:none!important;height:1px!important}
+@media (max-width:1023px){html body .tabbar{border-right:0!important;border-top:1px solid var(--c-line)!important;background:var(--c-surface)!important}html body .tabbar a.active{background:transparent!important;color:var(--c-accent)!important}}
+
+/* 5. buttons & controls */
+html body .btn{background:var(--c-accent)!important;background-image:none!important;color:var(--c-on-accent)!important;border:0!important;font-weight:600!important;border-radius:var(--c-radius-sm)!important}
+html body :is(.btn.ghost,a.btn.ghost,label.btn.ghost,.btn.sec){background:transparent!important;color:var(--c-text)!important;border:1px solid var(--c-line)!important}
+html body .btn.sun{background:var(--c-accent)!important;color:var(--c-on-accent)!important}
+html body :is(input,select,textarea){background-color:var(--c-surface)!important;border:1px solid var(--c-line)!important;color:var(--c-text)!important;border-radius:var(--c-radius-sm)!important}
+html body :is(input,select,textarea):focus{border-color:var(--c-accent)!important;box-shadow:0 0 0 3px var(--c-accent-soft)!important;outline:0}
+html body .chip{font-weight:600}
+html body :is(.toggle.on,button.on,.seg button.on,.adv-modes button.on,.nw-tabs a.on){background:var(--c-accent)!important;background-image:none!important;color:var(--c-on-accent)!important;border-color:var(--c-accent)!important}
+html body .toast{background:var(--c-text)!important;color:var(--c-bg)!important}
+html body a{color:var(--c-link)}
+html body :focus-visible{outline:2px solid var(--c-accent)!important;outline-offset:2px}
+
+/* 6. hero AQI card: neutral surface, AQI colour only on the number + thin stripe */
+html body .hero{background:var(--c-surface)!important;background-image:none!important;color:var(--c-text)!important;border:1px solid var(--c-line)!important;box-shadow:var(--c-shadow)!important;border-radius:var(--c-radius)!important;position:relative;overflow:hidden}
+html body .hero{--lv:#2fbf71}html body .hero.lv1{--lv:#d9a400}html body .hero.lv2{--lv:#ff8a3d}html body .hero.lv3{--lv:#e5484d}html body .hero.lv4{--lv:#8e44ad}html body .hero.lv5{--lv:#7a1f2b}
+html body .hero::after{content:""!important;display:block!important;position:absolute;left:0;top:0;bottom:0;width:4px;height:auto;right:auto;background:var(--lv)!important;border-radius:0}
+html body .hero :is(.level,.hero-title,.district,.g-val,.g-val span,.src-line){color:var(--c-text)!important;text-shadow:none!important}
+html body .hero .level{color:var(--lv)!important;font-size:30px!important;font-weight:700!important}
+html body .hero :is(.hero-title,.district,.src-line,.g-val span){color:var(--c-muted)!important}
+html body .hero .g-val b{color:var(--c-text)!important}
+html body .hero .gauge svg{filter:none!important}
+html body .hero .meta span{background:var(--c-surface-2)!important;border:0!important;color:var(--c-text)!important;font-weight:500!important}
+html body .hero .src-line{background:transparent!important;border:0!important;padding-left:0!important}
+html body .hero .sh-a{background:transparent!important;border:1px solid var(--c-line)!important;color:var(--c-text)!important;box-shadow:none!important}
+html body .hero select{background-color:var(--c-surface)!important;color:var(--c-text)!important;border:1px solid var(--c-line)!important}
+
+/* 7. AI showcase: calm card instead of sunset sky */
+html body .hr{background:var(--c-surface-2)!important;background-image:none!important;box-shadow:none!important;border:1px solid var(--c-line)!important;border-radius:var(--c-radius)!important;min-height:0!important}
+html body .hr-pill{background:var(--c-surface)!important;border:1px solid var(--c-line)!important;color:var(--c-muted)!important;backdrop-filter:none!important}
+html body .hr-pill b.live{color:var(--c-accent)!important}
+html body .hr-card{background:var(--c-surface)!important;color:var(--c-text)!important;backdrop-filter:none!important}
+html body .hr-q{background:var(--c-accent)!important;background-image:none!important;color:var(--c-on-accent)!important}
+html body .hr-a{color:var(--c-text)!important}
+html body .hr-in{background:var(--c-surface-2)!important;border:1px solid var(--c-line)!important;color:var(--c-muted)!important}
+html body .hr-send{background:var(--c-accent)!important;color:var(--c-on-accent)!important}
+html body .hr-dock{background:var(--c-surface)!important;border:1px solid var(--c-line)!important;backdrop-filter:none!important}
+html body .hr-di{background:transparent!important;background-image:none!important;color:var(--c-muted)!important}
+html body .hr-di:hover,html body .hr-di:focus-visible{background:var(--c-accent-soft)!important;color:var(--c-accent-ink)!important;transform:none!important}
+.hr-st{display:none!important}
+
+/* 8. quick actions / tiles / icon wells: one tint */
+html body .quick a b,html body :is(.more-tile,.card) > :first-child:is(.ic,.ico,.mt-ic,.fm-ic){background:var(--c-surface-2)!important;color:var(--c-accent)!important}
+html body .quick a:nth-child(n) b{background:var(--c-surface-2)!important;color:var(--c-accent)!important}
+html body .ev-ico{background:var(--c-surface-2)!important;color:var(--c-muted)!important}
+html body .src-ag,html body .pol-main{background:var(--c-surface-2)!important;border:0!important;color:var(--c-text)!important}
+html body .hist-link{color:var(--c-text)!important;font-weight:600}
+html body .stat,html body .fday{background:var(--c-surface)!important}
+
+/* 9. emoji noise: quieter */
+html body .src-ic{filter:grayscale(1);opacity:.7}
+
+/* 10. spacing rhythm */
+html body .view{padding-top:var(--s6)!important}
+html body .home-grid{gap:var(--s5)!important}
+html body .col > * + *{margin-top:var(--s4)}
+html body .view .card{margin-bottom:var(--s4)}
+@media (max-width:600px){html body h1{font-size:24px!important}html body .card{padding:14px}}
+
+/* 11. leaflet chrome */
+html body .leaflet-bar a{background:var(--c-surface)!important;color:var(--c-text)!important;border-color:var(--c-line)!important}
+html{background:var(--c-bg)!important;background-image:none!important}
+html body .app,html body .view,html body main{background-image:none!important}
+html body::before{background:none!important;opacity:0!important}
+
+/* ===== Typography: Inter (UI) + Montserrat (headings) ===== */
+:root,html[data-theme]{--c-head:"Montserrat","Inter",system-ui,-apple-system,"Segoe UI",sans-serif}
+html body{font-size:15px;line-height:1.5}
+html body :is(h1,h2,h3,.brand-name,.side-brand b,.hero .level,.g-val b,.fday .v,.stat .v,.ev-v){font-family:var(--c-head)!important}
+html body h1{font-size:28px!important;font-weight:700!important;letter-spacing:-.02em}
+html body h2{font-size:18px!important;font-weight:600!important;letter-spacing:-.01em}
+html body h3{font-size:15px!important;font-weight:600!important;letter-spacing:0}
+html body .hero .level{font-size:30px!important;font-weight:700!important}
+html body .g-val b{font-weight:700!important}
+html body :is(.small,small){font-size:12.5px}
+
+/* ===== Sidebar: grouped, no truncation (desktop) ===== */
+.nav-grp{display:none}
+@media (min-width:1024px){
+  :root{--side:272px!important}
+  html body nav.tabbar{display:flex!important;flex-direction:column;gap:2px;padding:20px 12px 16px!important;width:var(--side)!important}
+  html body nav.tabbar .side-brand{order:0;margin:0 4px 10px!important;padding:0!important}
+  html body nav.tabbar .side-brand b{font-size:17px!important;font-weight:700!important}
+  html body nav.tabbar .side-sep{display:none!important}
+  .nav-grp{display:block;margin:14px 10px 4px;font:600 11px/1.2 var(--c-font);letter-spacing:.06em;text-transform:uppercase;color:var(--c-muted);opacity:.75}
+  .nav-grp[data-g="main"]{margin-top:0}
+  html body nav.tabbar a,html body nav.tabbar a.side-only{display:flex!important;flex-direction:row!important;align-items:center;gap:11px!important;padding:6px 10px!important;font-size:13.5px!important;line-height:1.25;border-radius:8px!important;min-height:34px}
+  html body nav.tabbar a svg,html body nav.tabbar a.side-only svg{width:18px!important;height:18px!important;flex:0 0 18px;stroke-width:1.8}
+  html body nav.tabbar a span{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;max-width:none!important}
+  html body nav.tabbar a.active{box-shadow:inset 3px 0 0 var(--c-accent)!important}
+  /* order: brand · Главное · Инструменты · Данные · Сообщество · (spacer) · Аккаунт */
+  .nav-grp[data-g="main"]{order:10}
+  nav.tabbar a[data-tab="home"]{order:11} nav.tabbar a[data-tab="map"]{order:12} nav.tabbar a[data-tab="weather"]{order:13} nav.tabbar a[data-tab="news"]{order:14}
+  .nav-grp[data-g="tools"]{order:20}
+  nav.tabbar a[data-tab="routes"]{order:21} nav.tabbar a[data-tab="advisor"]{order:22} nav.tabbar a[data-tab="house"]{order:23} nav.tabbar a[data-tab="cleanair"]{order:24} nav.tabbar a[data-tab="traffic"]{order:25} nav.tabbar a[data-tab="trees"]{order:26}
+  .nav-grp[data-g="data"]{order:30}
+  nav.tabbar a[data-tab="history"]{order:31} nav.tabbar a[data-tab="schools"]{order:32} nav.tabbar a[data-tab="gov"]{order:33} nav.tabbar a[data-tab="govpolicy"]{order:34}
+  .nav-grp[data-g="community"]{order:40}
+  nav.tabbar a[data-tab="complaints"]{order:41} nav.tabbar a[data-tab="group"]{order:42}
+  .nav-grp[data-g="account"]{order:50;margin-top:auto;padding-top:16px;border-top:1px solid var(--c-line)}
+  nav.tabbar a[data-tab="profile"]{order:51} nav.tabbar a[data-tab="alerts"]{order:52} nav.tabbar a[data-tab="account"]{order:53} nav.tabbar a[data-tab="more"]{order:54}
+}

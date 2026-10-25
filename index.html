@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-uaDVzMzVmI+lDcrRBmPJRmkN78LDYjDogddBpBdjPLo=' 'sha256-ZjJY3SxvJHEuUi4xMSf6xOoKv9XfxouNSlVNovAl4oc=' 'sha256-z+KGtNxf10JzKdJxMiSxIFS7Edw/NZJA93xJlMsSXFE=' 'sha256-bzlm4T1fhMNbAvzVNN14ucgRg5OIugAdQ/IoRLvgXXU=' https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: wss: http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*; worker-src 'self'; manifest-src 'self'; media-src 'self' data: blob:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self' https: mailto:">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#EEF1DF">
+<meta name="theme-color" content="#0F1216">
 <meta name="description" content="Качество воздуха в Бишкеке и 59 городах Кыргызстана и Турции: AQI по районам, прогноз смога, PM2.5, эко-маршруты, ИИ-советник по здоровью. Бесплатно, 4 языка.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Таза Аба">
@@ -46,7 +46,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" sizes="180x180">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="theme.css">
@@ -66,6 +66,7 @@
 <link rel="stylesheet" href="fullmap.css">
 <link rel="stylesheet" href="download.css">
 <link rel="stylesheet" href="iosmap.css">
+<link rel="stylesheet" href="calm.css">
 
 </head>
 <body>
@@ -127,6 +128,7 @@
   <div id="toast" class="toast"></div>
   <div id="modal" class="modal hidden"></div>
 </div>
+<script src="calm-boot.js"></script>
 <script src="config.js"></script>
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="i18n.js"></script>
@@ -152,6 +154,7 @@
 <script src="eco.js"></script>
 <script src="fullmap.js"></script>
 <script src="download.js"></script>
+<script src="calm-nav.js"></script>
 <script>/* app.js рисует экран до регистрации разделов из features/gov/traffic2 — перерисовать, если прямая ссылка (#traffic, #gov…) открылась как «Главная» */(function(){var t=(location.hash||"#home").slice(1).split("/")[0];if(t&&views[t]&&!document.getElementById("view").classList.contains("v-"+t))route(true);try{renderChrome()}catch(e){}})();</script>
 </body>
 </html>
