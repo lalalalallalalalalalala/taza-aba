@@ -1,0 +1,56 @@
+/* Таза Аба · премиальная карточка AQI (поверх polish.css). Вариант A «атмосфера». */
+html body .hero.aq-p{--lvt:var(--lvc);padding:20px!important;isolation:isolate}
+html[data-theme="light"] body .hero.aq-p{--lvt:color-mix(in srgb,var(--lvc) 72%,#000)}
+html body .hero.aq-p > .hero-top,html body .hero.aq-p > .meta,html body .hero.aq-p > .orn-c{display:none!important}
+html body .hero.aq-p::after{display:none!important}
+html body .hero.aq-p > *{position:relative;z-index:1}
+.aq-head{position:relative;margin-bottom:16px}
+.aq-loc{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--c-muted);min-width:0}
+.aq-loc span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.aq-loc em{font-style:normal;margin-left:auto;flex:none;font-variant-numeric:tabular-nums;opacity:.85}
+.aq-ic{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.aq-num{font-family:var(--c-head);font-weight:700;font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.05em;line-height:.9;color:var(--c-text)}
+.aq-u{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted)}
+.aq-lvl b{display:block;font-family:var(--c-head);font-weight:700;letter-spacing:-.02em;color:var(--lvt)}
+.aq-lvl > span:not(.aq-u){display:block;color:var(--c-muted);font-size:14px;line-height:1.4;margin-top:2px}
+/* stats: волосяные разделители */
+.aq-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));margin-top:16px;border-top:1px solid var(--c-line);padding-top:12px}
+.aq-stats > div{padding:0 12px;border-left:1px solid var(--c-line);min-width:0}
+.aq-stats > div:first-child{padding-left:0;border-left:0}
+.aq-stats span{display:block;font-size:12px;color:var(--c-muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aq-stats b{display:block;font-size:17px;font-weight:650;font-variant-numeric:tabular-nums;color:var(--c-text);letter-spacing:-.01em;margin-top:2px;white-space:nowrap}
+.aq-stats small{font-size:11px;font-weight:500;color:var(--c-muted);margin-left:3px}
+/* тихие кнопки «поделиться» и подписи */
+html body .hero.aq-p .src-line{font-size:12px!important;color:var(--c-muted)!important;margin:0 0 12px!important}
+html body .hero.aq-p .share-row{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+html body .hero.aq-p .share-row :is(.btn,.sh-a){min-height:36px!important;padding:0 14px!important;font-size:13px!important;font-weight:600!important;background:transparent!important;color:var(--c-text)!important;border:1px solid var(--c-line)!important;box-shadow:none!important}
+html body .hero.aq-p .share-row :is(.btn,.sh-a):hover{background:var(--c-surface-2)!important}
+html body .hero.aq-p .share-row .btn .pi{color:var(--c-muted)}
+html body .hero.aq-p :is(#districtSel,.d-search input){background-color:color-mix(in srgb,var(--c-surface) 70%,transparent)!important}
+
+/* ===== A · атмосфера ===== */
+.aq-A .aq-sky{position:absolute;inset:-20px -20px auto -20px;height:calc(100% + 40px);z-index:-1;overflow:hidden;pointer-events:none;border-radius:inherit;
+  -webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
+html body .hero.aq-A{background:var(--c-surface)!important}
+.aq-A .aq-sky i{position:absolute;border-radius:50%;filter:blur(40px);opacity:.55;will-change:transform}
+.aq-A .aq-sky i:first-child{width:75%;height:120%;left:-15%;top:-45%;background:radial-gradient(closest-side,color-mix(in srgb,var(--lvc) 55%,transparent),transparent);animation:aqDrift1 26s ease-in-out infinite alternate}
+.aq-A .aq-sky i:last-child{width:70%;height:110%;right:-20%;top:-30%;background:radial-gradient(closest-side,color-mix(in srgb,var(--lvc) 30%,var(--c-accent) 18%),transparent);animation:aqDrift2 32s ease-in-out infinite alternate}
+html[data-theme="light"] .aq-A .aq-sky i{opacity:.42}
+@keyframes aqDrift1{to{transform:translate3d(14%,10%,0) scale(1.08)}}
+@keyframes aqDrift2{to{transform:translate3d(-12%,8%,0) scale(1.12)}}
+.aq-A .aq-main{display:flex;align-items:flex-end;gap:16px;margin-top:14px}
+.aq-A .aq-num{font-size:96px}
+.aq-A .aq-lvl{padding-bottom:6px;min-width:0}
+.aq-A .aq-lvl b{font-size:24px;margin-top:2px}
+.aq-scale{position:relative;margin-top:22px;padding-bottom:18px}
+.aq-bar{display:flex;gap:2px;height:4px;border-radius:2px;overflow:hidden}
+.aq-bar i{flex:1;opacity:.9}
+.aq-mk{position:absolute;top:-5px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--c-surface);border:3px solid var(--lvc);box-shadow:0 0 0 3px var(--c-surface),0 2px 6px rgba(0,0,0,.35)}
+.aq-tk span{position:absolute;top:10px;transform:translateX(-50%);font-size:11px;color:var(--c-muted);font-variant-numeric:tabular-nums}
+.aq-tk span:first-child{transform:none}.aq-tk span:last-child{transform:translateX(-100%)}
+
+@media (max-width:380px){.aq-A .aq-num{font-size:80px}}
+@media (min-width:1024px){.aq-A .aq-num{font-size:104px}}
+@media (prefers-reduced-motion:reduce){.aq-A .aq-sky i{animation:none!important}}
+.aq-stats small{display:block;margin:1px 0 0;font-size:11px;letter-spacing:0}
+.aq-stats b{font-size:18px}
