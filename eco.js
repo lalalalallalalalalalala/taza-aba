@@ -87,7 +87,7 @@ function ecoBestTime(S) {
   /* v42: поправка прогноза CAMS по датчикам — тот же коэффициент, что у текущего AQI района (скорректированный / модельный),
    * к 24 ч упреждения ослабляется вдвое (поправка по датчикам устаревает). Без датчиков — чистый прогноз CAMS (так и подписано). */
   const K = {}; let corr = false; ids.forEach(id => { const r = air.byDistrict[id], m = typeof modelNowAqi === "function" ? modelNowAqi(r) : r.model && r.model.aqi; let k = 1;
-    if (r.aqi != null && m != null && m >= 5 && r.src && r.src !== "model") k = Math.max(0.4, Math.min(2.5, r.aqi / m)); if (Math.abs(k - 1) > 0.03) corr = true; K[id] = k; });
+    if (r.fc) corr = true; if (!r.fc && r.aqi != null && m != null && m >= 5 && r.src && r.src !== "model") k = Math.max(0.4, Math.min(2.5, r.aqi / m)); if (Math.abs(k - 1) > 0.03) corr = true; K[id] = k; });
   let best = null; for (let i = i0; i < Math.min(T.length, i0 + 24); i++) { const hh = +T[i].slice(11, 13); if (hh < 7 || hh > 21) continue; const lead = i - i0;
     const vs = ids.map(id => { const v = (typeof hAqi === "function" ? hAqi(air.byDistrict[id]) : air.byDistrict[id].hourly)[i]; return v == null ? null : v * (1 + (K[id] - 1) * Math.max(0.5, 1 - lead / 48)); }).filter(x => x != null); if (!vs.length) continue; const m = vs.reduce((a, b) => a + b, 0) / vs.length;
     if (!best || m < best.a - 0.5) best = { a: Math.round(m), t: T[i].slice(11, 16), day: T[i].slice(0, 10), corr }; }
