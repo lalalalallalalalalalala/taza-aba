@@ -176,7 +176,7 @@ function loadFarAir() {
     if (CITY !== reqCity) return;
     far.forEach((d, i) => { if (arr[i] && arr[i].current) air.byDistrict[d.id] = measuredRec(mkAirRec(arr[i]), d, air.sensors, air.stations); });
     DISTRICTS = c.districts.filter(d => air.byDistrict[d.id]); c.farLoaded = true; saveAirCache();
-    const cur = (location.hash || "#home").slice(1).split("/")[0];
+    const cur = (location.hash || "#home").slice(1).split("?")[0].split("/")[0];
     if (cur === "map" && mapMode === "city" && typeof mapUpdate === "function" && mapUpdate()) return;
     if (["home", "profile", ""].includes(cur)) route(true);
   }).catch(e => console.warn("far districts:", e.message)).finally(() => { farInflight = null; });
@@ -208,7 +208,7 @@ async function loadAirImpl() {
   }
   renderChrome();
   // Перерисовываем только экраны, зависящие от данных о воздухе (чтобы не сбить ввод в формах).
-  const cur = (location.hash || "#home").slice(1).split("/")[0];
+  const cur = (location.hash || "#home").slice(1).split("?")[0].split("/")[0];
   const advIdle = cur === "advisor" && !(document.getElementById("askIn") || {}).value && typeof adv !== "undefined" && adv.extra.some(m => m.quick);
   if (["home", "map", "routes", "profile", "weather", ""].includes(cur) || !views[cur] || advIdle) route(true);   // v50: + weather (риск смога как на главной)
   if (typeof refreshShareLinks === "function") refreshShareLinks();
@@ -313,11 +313,11 @@ const views = { home: viewHome2, map: viewMap, house: viewHouse, advisor: el => 
   profile: viewProfile, complaints: el => viewComplaints2(el), routes: el => viewRoutes2(el), news: el => viewNews(el), weather: el => viewNews(el) };
 const TAB_OF = { house: "more", profile: "more", complaints: "more", routes: "more", weather: "news", history: "more", schools: "more", cleanair: "more", traffic: "more", trees: "more" };
 function route(keepScroll, soft) {
-  const [tab, anchor] = (location.hash || "#home").slice(1).split("/");
+  const [tab, anchor] = (location.hash || "#home").slice(1).split("?")[0].split("/");   /* v68: #routes?from=me */
   const v = views[tab] ? tab : "home";
   if (tab === "group") history.replaceState(null, "", location.pathname + location.search + "#home");   // v54: старый адрес удалённого раздела
   const activeTab = TAB_OF[v] || v;
-  const hash = location.hash || "#home";
+  const hash = (location.hash || "#home").split("?")[0];
   document.querySelectorAll(".tabbar a").forEach(a => {
     const href = a.getAttribute("href") || "";
     const sideHit = a.classList.contains("side-only") && (href === hash || href === "#" + v);
@@ -336,6 +336,7 @@ function route(keepScroll, soft) {
   el.className = "view v-" + v;
   views[v](el);
   decorate(el);
+  if (typeof ecoAfterRoute === "function") ecoAfterRoute(v, el);   /* v68: «Маршрут от меня» на главной, #routes?from=me */
   if (anchor && document.getElementById(anchor)) document.getElementById(anchor).scrollIntoView();
   else window.scrollTo(0, keepScroll === true ? y : 0);
 }

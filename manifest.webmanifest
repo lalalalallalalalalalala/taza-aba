@@ -39,5 +39,20 @@
       "type": "image/svg+xml",
       "purpose": "any"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Эко-маршрут от меня",
+      "short_name": "Эко-маршрут",
+      "description": "Чистый путь от вашего местоположения · Менден таза жол · Route from me",
+      "url": "./#routes?from=me",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
   ]
 }
