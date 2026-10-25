@@ -44,8 +44,6 @@
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebApplication", "name": "Таза Аба", "alternateName": ["Taza Aba", "Таза Аба — качество воздуха"], "url": "https://zusenbaev7-cmd.github.io/taza-aba/", "applicationCategory": "HealthApplication", "applicationSubCategory": "Air quality", "operatingSystem": "Any (web, PWA), Windows", "browserRequirements": "Requires JavaScript", "inLanguage": ["ru", "ky", "en"], "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Качество воздуха в Бишкеке и 39 городах Кыргызстана: AQI и PM2.5 по районам, прогноз смога, эко-маршруты, ИИ-советник.", "image": "https://zusenbaev7-cmd.github.io/taza-aba/icons/og.png", "screenshot": "https://zusenbaev7-cmd.github.io/taza-aba/icons/og.png", "areaServed": [{"@type": "Country", "name": "Kyrgyzstan"}], "publisher": {"@id": "https://zusenbaev7-cmd.github.io/taza-aba/#org"}}, {"@context": "https://schema.org", "@type": "Organization", "@id": "https://zusenbaev7-cmd.github.io/taza-aba/#org", "name": "Таза Аба", "alternateName": "Taza Aba", "url": "https://zusenbaev7-cmd.github.io/taza-aba/", "logo": "https://zusenbaev7-cmd.github.io/taza-aba/icons/icon-512.png", "sameAs": ["https://github.com/zusenbaev7-cmd/taza-aba"]}]</script>
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" sizes="180x180">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="theme.css">
@@ -67,6 +65,9 @@
 <link rel="stylesheet" href="download.css">
 <link rel="stylesheet" href="iosmap.css">
 <link rel="stylesheet" href="calm.css">
+<link rel="preload" href="vendor/fonts/inter-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/fonts/manrope-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="polish.css">
 
 </head>
 <body>
@@ -153,6 +154,7 @@
 <script src="fullmap.js"></script>
 <script src="download.js"></script>
 <script src="calm-nav.js"></script>
+<script src="polish.js"></script>
 <script>/* app.js рисует экран до регистрации разделов из features/gov/traffic2 — перерисовать, если прямая ссылка (#traffic, #gov…) открылась как «Главная» */(function(){var t=(location.hash||"#home").slice(1).split("/")[0];if(t&&views[t]&&!document.getElementById("view").classList.contains("v-"+t))route(true);try{renderChrome()}catch(e){}})();</script>
 </body>
 </html>

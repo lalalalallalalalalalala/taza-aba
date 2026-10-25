@@ -1,0 +1,180 @@
+/* Таза Аба · polish layer (поверх calm.css). Только оформление: шрифты, сетка 8pt, линии, тени, иконки.
+   Шрифты: Inter (интерфейс) + Manrope (заголовки и цифры), OFL, вшиты локально (latin + cyrillic + cyrillic-ext: ө ү ң). */
+@font-face{font-family:"TA Inter";font-style:normal;font-display:swap;font-weight:100 900;src:url(vendor/fonts/inter-cyrillic-ext-wght-normal.woff2) format("woff2");unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:"TA Inter";font-style:normal;font-display:swap;font-weight:100 900;src:url(vendor/fonts/inter-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:"TA Inter";font-style:normal;font-display:swap;font-weight:100 900;src:url(vendor/fonts/inter-latin-ext-wght-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"TA Inter";font-style:normal;font-display:swap;font-weight:100 900;src:url(vendor/fonts/inter-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"TA Manrope";font-style:normal;font-display:swap;font-weight:200 800;src:url(vendor/fonts/manrope-cyrillic-ext-wght-normal.woff2) format("woff2");unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:"TA Manrope";font-style:normal;font-display:swap;font-weight:200 800;src:url(vendor/fonts/manrope-cyrillic-wght-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:"TA Manrope";font-style:normal;font-display:swap;font-weight:200 800;src:url(vendor/fonts/manrope-latin-ext-wght-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"TA Manrope";font-style:normal;font-display:swap;font-weight:200 800;src:url(vendor/fonts/manrope-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+/* ---------- 0. токены ---------- */
+:root,html[data-theme]{
+  --c-font:"TA Inter","Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --c-head:"TA Manrope","Manrope","TA Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  /* шкала: 6 размеров */
+  --t1:12px;--t2:13px;--t3:15px;--t4:18px;--t5:24px;--t6:28px;
+  /* сетка 8pt */
+  --g1:4px;--g2:8px;--g3:12px;--g4:16px;--g5:24px;--g6:32px;
+  /* радиусы: 3 уровня */
+  --r1:6px;--r2:10px;--r3:14px;
+  /* тени: 2 уровня (тёмная тема) */
+  --sh1:0 1px 0 rgba(255,255,255,.03) inset,0 1px 2px rgba(0,0,0,.28);
+  --sh2:0 12px 32px -12px rgba(0,0,0,.6),0 2px 6px rgba(0,0,0,.3);
+  --hair:var(--c-line);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+html[data-theme="light"]{--sh1:0 1px 2px rgba(16,24,40,.05);--sh2:0 12px 32px -12px rgba(16,24,40,.18),0 2px 6px rgba(16,24,40,.06);--c-line:#E3E7EC}
+
+/* ---------- 1. типографика ---------- */
+html body{font-family:var(--c-font)!important;font-size:var(--t3);line-height:1.55;letter-spacing:-.006em;font-feature-settings:"kern","calt","cv11";text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html body :is(button,input,select,textarea){font-family:var(--c-font)!important;letter-spacing:-.006em}
+html body :is(h1,h2,h3,.brand-name,.side-brand b,.hero .level,.g-val b,.fday .v,.stat .v,.ev-v,.more-tile b,.gv-k b){font-family:var(--c-head)!important}
+html body h1{font-size:var(--t6)!important;font-weight:700!important;letter-spacing:-.025em!important;line-height:1.15!important}
+html body h2{font-size:var(--t4)!important;font-weight:700!important;letter-spacing:-.015em!important;line-height:1.3!important}
+html body h3{font-size:var(--t3)!important;font-weight:700!important;letter-spacing:-.01em!important;line-height:1.35!important}
+html body .sub{font-size:var(--t3)!important;line-height:1.5;color:var(--c-muted)!important;max-width:68ch}
+html body :is(.small,small,.src-foot,.ev-f,.muted){font-size:var(--t2)!important;line-height:1.5}
+/* цифры: табличные, ровные столбцы */
+html body :is(.g-val,.g-val b,.fday,.stat,.stat .v,.meta,.ev-v,.gv-k,table,td,th,.fm-chip,.wx-hours,.wx-grid,.hr-a,.badge,.aqi,.aqi-pin,.lvl,.num,time,[class*="-v"]){font-variant-numeric:tabular-nums lining-nums}
+/* «кричащие» КАПС-лейблы → спокойные надзаголовки */
+html body .ev-k{font-size:var(--t1)!important;letter-spacing:.06em!important;font-weight:600!important;color:var(--c-muted)!important}
+
+/* ---------- 2. иконки (замена emoji) ---------- */
+.pi{display:inline-block;width:1.08em;height:1.08em;vertical-align:-.17em;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;opacity:.92}
+.pdot{display:inline-block;width:.62em;height:.62em;border-radius:50%;vertical-align:.04em;flex:none;box-shadow:0 0 0 1.5px color-mix(in srgb,currentColor 12%,transparent)}
+html body h1 .pi{display:none}                          /* заголовки разделов без «стикера» */
+html body :is(h2,h3) > .pi:first-child{color:var(--c-muted);width:1em;height:1em;margin-right:2px}
+html body .pi-only{display:inline-flex;align-items:center;justify-content:center}
+html body :is(.btn,.chip,button,a.sh-a) .pi{width:1.05em;height:1.05em}
+html body .meta .pi{color:var(--c-muted);margin-right:2px}
+html body .src-line .pi{color:var(--c-muted);margin-right:4px}
+html body .smog-note .pi,html body .ev-card .pi{color:currentColor}
+html body .quick a b .pi,html body .more-tile .pi{width:20px;height:20px}
+/* погода: большая иконка состояния — тонкая линия, без «мультяшности» */
+html body .wx-now .pi{stroke-width:1.5}
+html body .wx-hours .pi{width:20px;height:20px;color:var(--c-muted)}
+/* метки точек на карте (заводы, мусор, транспорт) */
+html body .leaflet-marker-icon .pi{width:15px;height:15px;stroke-width:2}
+html body .theme-btn .pi{width:17px;height:17px}
+
+/* ---------- 3. поверхности: волосяные линии + 2 уровня тени ---------- */
+html body :is(.card,.fday,.quick a,.stat,.opt,.gcard,.route,.more-tile,.news-item,.c-item,.mf-row,.eco-card,.hr,.gv-k,.hero){border:1px solid var(--hair)!important;box-shadow:var(--sh1)!important;border-radius:var(--r3)!important}
+html body .card{padding:var(--g5)!important}
+html body .stat,html body .fday{padding:var(--g4)!important}
+html body :is(.fm-chip,.fm-panel,.toast,.ms-find ul,.search-res,.dropdown,.leaflet-popup-content-wrapper,.modal,.sheet,.eco-sug){box-shadow:var(--sh2)!important}
+/* градиентные/ржавые панели предупреждений → нейтральная плашка + тонкая полоса уровня */
+html body .smog-note{background:var(--c-surface-2)!important;background-image:none!important;border:1px solid var(--hair)!important;border-left:3px solid #E0A33A!important;border-radius:var(--r2)!important;color:var(--c-text)!important;padding:var(--g3) var(--g4)!important;font-size:var(--t2)!important;line-height:1.55}
+html body .smog-note.lo{border-left-color:#2fbf71!important}
+html body .smog-note :is(b,strong){color:var(--c-text)!important}
+html body .wx-grid > div{background:var(--c-surface-2)!important;background-image:none!important;border:1px solid var(--hair)!important;border-radius:var(--r2)!important}
+html body .wx-grid > div span{font-size:var(--t1)!important;color:var(--c-muted)!important;font-weight:500!important}
+html body .ev-card{border-left:1px solid var(--hair)!important}
+html body .tip{background:var(--c-surface)!important}
+
+/* ---------- 4. кнопки, чипы, сегменты: меньше «таблеток» ---------- */
+html body :is(.btn,a.btn,label.btn,button.btn){min-height:40px;padding:0 var(--g4)!important;border-radius:var(--r2)!important;font-size:14px!important;font-weight:600!important;letter-spacing:-.005em;display:inline-flex;align-items:center;justify-content:center;gap:var(--g2);line-height:1.2;transition:background-color .16s var(--ease),border-color .16s var(--ease),color .16s var(--ease),transform .16s var(--ease)}
+html body :is(.btn,a.btn):not(.ghost):not(.sec):hover{background:color-mix(in srgb,var(--c-accent) 88%,#fff)!important}
+html body :is(.btn,a.btn):active{transform:translateY(1px)}
+html body :is(.btn.ghost,a.btn.ghost,.btn.sec,.sh-a):hover{border-color:color-mix(in srgb,var(--c-text) 28%,transparent)!important;background:var(--c-surface-2)!important}
+html body .sh-a{min-height:40px;display:inline-flex;align-items:center;padding:0 var(--g4)!important;border-radius:var(--r2)!important;font-size:14px!important;font-weight:600!important}
+/* чипы-«таблетки» → прямоугольники с мягким углом */
+html body :is(.chip,.hero .meta span,.data-badge,.hr-pill,.tag,.pill){border-radius:var(--r1)!important}
+html body .hero .meta span{font-size:var(--t2)!important;padding:4px 10px!important;background:transparent!important;border:1px solid var(--hair)!important;color:var(--c-text)!important}
+html body :is(.adv-modes,.nw-tabs) a,html body .adv-modes button{border-radius:var(--r2)!important}
+/* сегментные переключатели (эко-маршруты, подложка карты) — один язык */
+html body :is(.eco-modes,.eco-seg,.bm-ctl){border-radius:var(--r2)!important;border:1px solid var(--hair)!important;background:var(--c-surface-2)!important;padding:3px!important;gap:2px!important;box-shadow:none!important}
+html body :is(.eco-modes,.eco-seg) button,html body .bm-ctl button{border-radius:8px!important;border:0!important;background:transparent!important;color:var(--c-muted)!important;font-weight:600!important;font-size:var(--t2)!important;transition:background-color .16s var(--ease),color .16s var(--ease)}
+html body :is(.eco-modes,.eco-seg) button.on,html body .bm-ctl button[aria-pressed="true"]{background:var(--c-surface)!important;color:var(--c-text)!important;box-shadow:0 0 0 1px var(--hair),var(--sh1)!important}
+html body .bm-ctl{background:color-mix(in srgb,var(--c-surface) 92%,transparent)!important;backdrop-filter:blur(8px)}
+html body .eco-seg button i{font-style:normal;color:var(--c-muted)}
+html body .eco-seg button.on i{color:var(--c-accent)}
+html body :focus-visible{outline:2px solid var(--c-accent)!important;outline-offset:2px!important;border-radius:var(--r1)}
+
+/* ---------- 5. карточка AQI ---------- */
+html body .hero{padding:var(--g5)!important}
+html body .hero::after{width:3px!important}
+html body .hero .gauge .g-frame{display:none!important}           /* «солнечные лучи» вокруг шкалы */
+html body .hero .gauge .g-bg{stroke:var(--c-surface-2)!important;stroke-width:6!important}
+html body .hero .gauge .g-fg{stroke:var(--lv)!important;stroke-width:6!important;stroke-linecap:round;filter:none!important}
+html body .hero .g-val b{font-size:40px!important;font-weight:700!important;letter-spacing:-.04em!important;line-height:1!important}
+html body .hero .g-val span{font-size:11px!important;font-weight:600!important;letter-spacing:.08em!important;text-transform:uppercase;color:var(--c-muted)!important}
+html body .hero .level{font-size:var(--t6)!important;letter-spacing:-.025em!important}
+html body .hero .hero-title{font-size:var(--t3)!important;font-weight:500!important}
+html body .hero .district{font-size:var(--t2)!important;font-weight:500!important;letter-spacing:0!important}
+html body .hero .src-line{font-size:var(--t1)!important;line-height:1.5}
+html body .hero :is(#districtSel,select){min-height:42px}
+
+/* ---------- 6. ИИ-панель: без «небесных» декораций ---------- */
+html body .hr :is(.hr-mt,.hr-lights,.hr-sky,.hr-glow,.hr-sun,.hr-moon,.hr-cloud){display:none!important}
+html body .hr{padding:var(--g4)!important}
+html body .hr-pill{font-size:var(--t1)!important;font-weight:500!important;letter-spacing:0!important}
+html body .hr-q{border-radius:12px 12px 4px 12px!important;font-weight:500!important}
+html body .hr-a{font-size:14px!important;line-height:1.55}
+html body .hr-dock{border-radius:var(--r2)!important;box-shadow:none!important}
+html body .hr-di svg{stroke-width:1.75}
+
+/* ---------- 7. быстрые действия, «Ещё», прогноз ---------- */
+html body .quick a{font-size:var(--t1)!important;font-weight:500!important;color:var(--c-muted)!important;transition:border-color .16s var(--ease),background-color .16s var(--ease)}
+html body .quick a:hover{border-color:color-mix(in srgb,var(--c-accent) 45%,var(--hair))!important;color:var(--c-text)!important}
+html body .quick a b{border-radius:var(--r2)!important;background:transparent!important;border:1px solid var(--hair)!important}
+html body .more-tile{padding:var(--g4)!important;transition:border-color .16s var(--ease),background-color .16s var(--ease)}
+html body .more-tile:hover{border-color:color-mix(in srgb,var(--c-accent) 45%,var(--hair))!important;background:var(--c-surface-2)!important}
+html body .more-tile b{font-size:var(--t3)!important;font-weight:700!important;letter-spacing:-.01em;line-height:1.3!important}
+html body .more-tile :is(small,span,p){font-size:var(--t2)!important;line-height:1.45!important}
+html body .more-tile > :first-child:is(.ic,.ico,.mt-ic,span,i){border-radius:var(--r2)!important;background:transparent!important;border:1px solid var(--hair)!important}
+html body .fday .v{font-size:var(--t5)!important;font-weight:700!important;letter-spacing:-.03em!important}
+html body .fday .d,html body .stat .k{font-size:var(--t1)!important;font-weight:600!important;color:var(--c-muted)!important;letter-spacing:.02em}
+html body .stat .v{font-size:var(--t5)!important;font-weight:700!important;letter-spacing:-.03em!important}
+html body :is(.fday,.gv-k,table) :is(.lvl,.badge,.chip,b[style*="background"],span[style*="background"]){border-radius:var(--r1)!important}
+
+/* ---------- 8. шапка, навигация ---------- */
+html body .topbar{box-shadow:none!important}
+html body .brand-sub{font-size:var(--t1)!important;letter-spacing:0!important;color:var(--c-muted)!important}
+html body .lang{border-radius:var(--r2)!important;padding:2px!important}
+html body .lang button{border-radius:8px!important;font-size:var(--t1)!important;font-weight:600!important;letter-spacing:.02em}
+html body .theme-btn{border-radius:var(--r2)!important}
+html body .cityrow{border-radius:var(--r2)!important}
+html body .tabbar a{transition:background-color .16s var(--ease),color .16s var(--ease)}
+@media (max-width:1023px){
+  html body .tabbar{box-shadow:0 -1px 0 var(--hair)!important;backdrop-filter:saturate(1.4) blur(14px);background:color-mix(in srgb,var(--c-surface) 92%,transparent)!important}
+  html body .tabbar a{font-size:11px!important;font-weight:500!important;letter-spacing:0!important}
+  html body .tabbar a.active{font-weight:600!important}
+  html body .tabbar a svg{stroke-width:1.75}
+}
+
+/* ---------- 9. карта, полноэкранные панели ---------- */
+html body .fm-chip{border-radius:var(--r3)!important;background:color-mix(in srgb,var(--c-surface) 94%,transparent)!important;border:1px solid var(--hair)!important;backdrop-filter:saturate(1.3) blur(12px);color:var(--c-text)!important}
+html body .fm-chip .fm-v{font-weight:700!important}
+html body .fm-search input,html body .ms-find input{border-radius:var(--r2)!important;box-shadow:var(--sh2)!important}
+html body .leaflet-bar{border-radius:var(--r2)!important;overflow:hidden;border:1px solid var(--hair)!important;box-shadow:var(--sh1)!important}
+html body .leaflet-control-attribution{font-size:10px!important;opacity:.8}
+
+/* ---------- 10. таблицы (#gov) ---------- */
+html body table{border-collapse:collapse}
+html body :is(th){font-size:var(--t1)!important;font-weight:600!important;color:var(--c-muted)!important;letter-spacing:.02em;text-transform:none}
+html body :is(td,th){border-bottom:1px solid var(--hair)!important}
+html body td{font-size:14px}
+
+/* ---------- 11. без обрезки текста и плавность ---------- */
+html body :is(.btn,.chip,.more-tile b,.quick a,.eco-seg button,.fday .d){white-space:normal;overflow-wrap:anywhere;hyphens:auto}
+@media (prefers-reduced-motion:reduce){html body *{transition:none!important;animation:none!important}}
+@media (max-width:600px){
+  html body h1{font-size:var(--t5)!important}
+  html body .card{padding:var(--g4)!important}
+  html body .hero{padding:var(--g4) var(--g4) var(--g4) 20px!important}
+  html body .hero .level{font-size:var(--t5)!important}
+  html body .hero .g-val b{font-size:34px!important}
+}
+
+/* ---------- 12. доводка ---------- */
+html body .quick a{font-size:11px!important;padding-left:4px!important;padding-right:4px!important;overflow-wrap:normal!important;hyphens:manual!important;letter-spacing:-.01em}
+html body :is(.adv-modes button,.nw-tabs a,.cat-chips button,.seg button,.chips button):not(.on){background:transparent!important;border:1px solid var(--hair)!important;color:var(--c-text)!important}
+html body :is(.adv-modes button,.nw-tabs a,.cat-chips button,.seg button,.chips button){border-radius:var(--r2)!important;font-weight:600!important;font-size:14px!important}
+html body .leaflet-marker-icon .pi{color:#2b3138;opacity:1}
+html body .ev-ico{border-radius:var(--r2)!important;border:1px solid var(--hair)}
+html body .rule-note{background:var(--c-surface-2)!important;border:1px solid var(--hair)!important;border-radius:var(--r2)!important;color:var(--c-text)!important}
+html body .v-complaints span.on{background:var(--c-accent-soft)!important;color:var(--c-accent-ink)!important;border-color:transparent!important}
+html body :is(.btn,a.btn,label.btn):not([hidden]):not([style*="display:none"]):not([style*="display: none"]){display:inline-flex!important}
+html body .btn[style*="padding"]{padding-top:0!important;padding-bottom:0!important}
