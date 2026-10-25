@@ -73,7 +73,7 @@ const AD = {
     win_g: "Да, проветривайте — воздух чистый.", win_m: "Проветривайте коротко (5–10 мин) около {best}. Вечером окна закрыты.", win_b: "Нет, держите окна закрытыми. Проветрите 3–5 минут около {best} или используйте очиститель с HEPA-фильтром.",
     mask: "Берите респиратор <b>FFP2/KN95</b> (лучше FFP3 при астме) с плотным прилеганием, без клапана для детей. Медицинская и тканевая маски от PM2.5 почти не защищают. Меняйте каждые 1–2 дня носки.{x}", mask_b: " Сегодня AQI {aqi} — респиратор на улице нужен.",
     coal_coal: "План перехода: 1) утеплите стены и чердак — минус 30–40% угля; 2) поставьте тепловой насос или сплит-систему; 3) добавьте солнечные панели. Пройдите опрос ниже в режиме «Отопление дома» — посчитаю стоимость и окупаемость. Объединяйтесь с соседями во «Вместе» — оптом дешевле до 30%.",
-    coal_clean: "У вас уже {h} — отлично! Помогите соседям: делитесь опытом, присоединяйтесь к групповым закупкам во «Вместе» и жалуйтесь на дым через «Жалобы».",
+    coal_clean: "У вас уже {h} — отлично! Помогите соседям: делитесь опытом и жалуйтесь на дым через «Жалобы».",
     school_g: "Да, воздух чистый — пешком полезно.", school_m: "В целом да. Выбирайте улицы подальше от трасс и частного сектора, утром воздух обычно лучше вечера.", school_b: "Сегодня лучше подвезти или идти в респираторе FFP2 детского размера, коротким путём вдали от дорог. В школе — без уроков физкультуры на улице.",
     sport_g: "Отличный день для бега и велосипеда. Лучшее время: {best}.", sport_m: "Тренируйтесь легче и около {best}; при кашле — прекратите.", sport_b: "Перенесите интенсивную тренировку в зал. На улице только лёгкая прогулка около {best}.",
     asthma_g: "Риск низкий. Держите ингалятор с собой как обычно.", asthma_m: "Будьте осторожны: ингалятор с собой, прогулки около {best}, без нагрузок вечером.", asthma_b: "Высокий риск обострения: оставайтесь дома, окна закрыты, очиститель воздуха. Если хуже — по плану врача.",
@@ -94,7 +94,7 @@ const AD = {
     win_g: "Ооба, желдетиңиз — аба таза.", win_m: "{best} чамасында кыска (5–10 мүн.) желдетиңиз. Кечинде терезелер жабык.", win_b: "Жок, терезелерди жабык кармаңыз. {best} чамасында 3–5 мүнөт желдетиңиз же HEPA чыпкалуу тазалагычты колдонуңуз.",
     mask: "<b>FFP2/KN95</b> респираторун алыңыз (астмада FFP3 жакшы), бетке тыгыз жатсын, балдарга клапансыз. Медициналык жана кездеме маскалар PM2.5тен дээрлик коргобойт. 1–2 күн кийгенден кийин алмаштырыңыз.{x}", mask_b: " Бүгүн AQI {aqi} — көчөдө респиратор керек.",
     coal_coal: "Өтүү планы: 1) дубалды жана чатырды жылуулаңыз — көмүр 30–40% азаят; 2) жылуулук насосун же сплит-системаны коюңуз; 3) күн панелдерин кошуңуз. Төмөндө «Үйдү жылытуу» режиминде сурамжылоодон өтүңүз — баасын жана актоосун эсептейм. «Бирге» бөлүмүндө кошуналар менен бириктиңиз — дүң 30%га чейин арзан.",
-    coal_clean: "Сизде {h} — абдан жакшы! Кошуналарга жардам бериңиз: тажрыйба бөлүшүңүз, «Бирге» бөлүмүндөгү биргелешкен сатып алууга кошулуңуз, түтүн тууралуу «Даттануулар» аркылуу кабарлаңыз.",
+    coal_clean: "Сизде {h} — абдан жакшы! Кошуналарга жардам бериңиз: тажрыйба бөлүшүңүз, түтүн тууралуу «Даттануулар» аркылуу кабарлаңыз.",
     school_g: "Ооба, аба таза — жөө басуу пайдалуу.", school_m: "Негизинен ооба. Трассадан жана жеке сектордон алыс көчөлөрдү тандаңыз, адатта эртең менен аба кечкиге караганда жакшы.", school_b: "Бүгүн машина менен жеткирген же балдар өлчөмүндөгү FFP2 респиратору менен, жолдон алыс кыска жол менен барган жакшы. Мектепте дене тарбия сабагы сыртта өтпөсүн.",
     sport_g: "Чуркоого жана велосипедге сонун күн. Эң жакшы убакыт: {best}.", sport_m: "Жеңилирээк машыгыңыз, {best} чамасында; жөтөл чыкса — токтотуңуз.", sport_b: "Катуу машыгууну залга которуңуз. Сыртта {best} чамасында жеңил сейил гана.",
     asthma_g: "Тобокел аз. Ингаляторду адаттагыдай жаныңызда алып жүрүңүз.", asthma_m: "Этият болуңуз: ингалятор жаныңызда, сейил {best} чамасында, кечинде жүк көтөрбөңүз.", asthma_b: "Курчуп кетүү коркунучу жогору: үйдө калыңыз, терезелер жабык, аба тазалагыч күйүк. Начарласа — дарыгердин планы боюнча.",
@@ -115,7 +115,7 @@ const AD = {
     win_g: "Yes, air the room — the air is clean.", win_m: "Air briefly (5–10 min) around {best}. Keep windows shut in the evening.", win_b: "No, keep windows closed. Air for 3–5 minutes around {best} or use a HEPA purifier.",
     mask: "Get an <b>FFP2/KN95</b> respirator (FFP3 is better with asthma) with a tight fit; valve-free for kids. Surgical and cloth masks barely stop PM2.5. Replace after 1–2 days of wear.{x}", mask_b: " Today's AQI is {aqi} — wear a respirator outdoors.",
     coal_coal: "Switch plan: 1) insulate walls and attic — 30–40% less coal; 2) install a heat pump or split AC; 3) add solar panels. Take the quiz below in “Home heating” mode and I'll estimate the cost and payback. Team up with neighbours in “Together” — bulk buying saves up to 30%.",
-    coal_clean: "You already heat with {h} — great! Help neighbours: share your experience, join group purchases in “Together” and report smoke via “Complaints”.",
+    coal_clean: "You already heat with {h} — great! Help neighbours: share your experience and report smoke via “Complaints”.",
     school_g: "Yes, the air is clean — walking is healthy.", school_m: "Generally yes. Choose streets away from main roads and private-house areas; mornings are usually cleaner than evenings.", school_b: "Today it's better to drive them or walk in a kid-size FFP2 respirator by a short route away from roads. No outdoor PE at school.",
     sport_g: "Great day for running and cycling. Best time: {best}.", sport_m: "Train lighter and around {best}; stop if you start coughing.", sport_b: "Move intense training indoors. Outside, only a light walk around {best}.",
     asthma_g: "Low risk. Keep your inhaler with you as usual.", asthma_m: "Be careful: inhaler with you, walks around {best}, no exertion in the evening.", asthma_b: "High risk of a flare-up: stay indoors, windows shut, run an air purifier. If it gets worse, follow your doctor's plan.",
@@ -636,9 +636,9 @@ const NEWS_FEED = { kg: { url: "https://24.kg/rss/", name: "24.kg" }, tr: { url:
 const CTRY = { ru: { kg: "Кыргызстан", tr: "Турция", lbl: "Страна" }, ky: { kg: "Кыргызстан", tr: "Түркия", lbl: "Өлкө" }, en: { kg: "Kyrgyzstan", tr: "Turkey", lbl: "Country" } };
 const ctryName = k => CTRY[LANG][k];
 const CT_TR = {
-  ru: { countryTitle: "Воздух в Турции", countryBtn: "🇹🇷 Вся страна", countryNoteTR: "AQI — модель CAMS для центра каждого города (Open-Meteo). Координаты районов приблизительные; дома, закупки и цены — демо." },
-  ky: { countryTitle: "Түркиядагы аба", countryBtn: "🇹🇷 Бүт өлкө", countryNoteTR: "AQI — ар бир шаардын борбору үчүн CAMS модели (Open-Meteo). Райондордун координаттары болжолдуу; үйлөр, сатып алуулар жана баалар — демо." },
-  en: { countryTitle: "Air across Turkey", countryBtn: "🇹🇷 Whole country", countryNoteTR: "AQI = CAMS model for each city centre (Open-Meteo). District coordinates are approximate; homes, purchases and prices are demo." },
+  ru: { countryTitle: "Воздух в Турции", countryBtn: "🇹🇷 Вся страна", countryNoteTR: "AQI — модель CAMS для центра каждого города (Open-Meteo). Координаты районов приблизительные; цены — демо." },
+  ky: { countryTitle: "Түркиядагы аба", countryBtn: "🇹🇷 Бүт өлкө", countryNoteTR: "AQI — ар бир шаардын борбору үчүн CAMS модели (Open-Meteo). Райондордун координаттары болжолдуу; баалар — демо." },
+  en: { countryTitle: "Air across Turkey", countryBtn: "🇹🇷 Whole country", countryNoteTR: "AQI = CAMS model for each city centre (Open-Meteo). District coordinates are approximate; prices are demo." },
 };
 const ctryT = k => cityObj().country === "tr" && CT_TR[LANG][k] ? CT_TR[LANG][k] : t(k);
 function switchCountry(k) {

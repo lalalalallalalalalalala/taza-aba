@@ -29,7 +29,7 @@ const level = aqi => (aqi == null || !Number.isFinite(+aqi)) ? NO_LEVEL : AQI_LE
 /* ---------------- Город (Бишкек / Нарын) ---------------- */
 const CITY_STORE = "tazaAba.city";
 let CITY = CITIES[localStorage.getItem(CITY_STORE)] ? localStorage.getItem(CITY_STORE) : "bishkek";
-let DISTRICTS, DEMO_HOMES, DEMO_GROUPS, DEMO_LEADERBOARD, DEMO_AQI, DEMO_COMPLAINTS, ECO_ROUTES;
+let DISTRICTS, DEMO_AQI, DEMO_COMPLAINTS, ECO_ROUTES;
 const cityObj = () => CITIES[CITY];
 /* Подставляется в каждый t(): {city}, {cityGen} (род. падеж), {cityPrep} (предл. падеж / местный). */
 function CITY_VARS() { const c = CITIES[CITY]; let pvY = "1 350"; try { pvY = fmt(K.pvYield); } catch (e) { } return { city: tr(c.name), cityGen: tr(c.gen), cityPrep: tr(c.prep), pvY }; }
@@ -216,7 +216,7 @@ async function loadAirImpl() {
 }
 
 /* ---------------- Шапка, меню, язык ---------------- */
-const TAB_LABEL = { news: "tab_news", home: "tab_home", map: "tab_map", house: "tab_house", group: "tab_group", advisor: "tab_advisor", more: "tab_more" };
+const TAB_LABEL = { news: "tab_news", home: "tab_home", map: "tab_map", house: "tab_house", advisor: "tab_advisor", more: "tab_more" };
 const HOME_LBL = { ru: "Таза Аба — на главную", ky: "Таза Аба — башкы бетке", en: "Taza Aba — home", tr: "Taza Aba — ana sayfa" };
 function renderChrome() {
   const b = $("#dataBadge");
@@ -297,7 +297,7 @@ function switchCity(id) {
 function applyCity(id) {
   CITY = id; localStorage.setItem(CITY_STORE, id);
   const c = CITIES[id];
-  DISTRICTS = c.districts.filter(d => !d.far || c.farLoaded || d.id === state.district); DEMO_HOMES = c.homes; DEMO_GROUPS = c.groups; DEMO_LEADERBOARD = c.leaderboard;
+  DISTRICTS = c.districts.filter(d => !d.far || c.farLoaded || d.id === state.district);
   DEMO_AQI = c.demoAqi; DEMO_COMPLAINTS = c.complaints; ECO_ROUTES = c.routes;
   CITY_ORDER.splice(0, CITY_ORDER.length, ...(c.country === "tr" ? TR_ORDER : KG_ORDER));
   if (typeof countryAir !== "undefined" && countryAir.ctry !== c.country) { countryAir.status = "idle"; countryAir.byCity = {}; countryAir.ctry = c.country; }
@@ -310,12 +310,13 @@ function applyCity(id) {
 
 /* ---------------- Роутер ---------------- */
 let map = null;
-const views = { home: viewHome2, map: viewMap, house: viewHouse, group: viewGroup, advisor: el => viewAdvisor2(el), more: viewMore2,
+const views = { home: viewHome2, map: viewMap, house: viewHouse, advisor: el => viewAdvisor2(el), more: viewMore2,
   profile: viewProfile, complaints: el => viewComplaints2(el), routes: el => viewRoutes2(el), news: el => viewNews(el), weather: el => viewNews(el) };
-const TAB_OF = { house: "more", group: "more", profile: "more", complaints: "more", routes: "more", weather: "news", history: "more", schools: "more", cleanair: "more", traffic: "more", trees: "more" };
+const TAB_OF = { house: "more", profile: "more", complaints: "more", routes: "more", weather: "news", history: "more", schools: "more", cleanair: "more", traffic: "more", trees: "more" };
 function route(keepScroll, soft) {
   const [tab, anchor] = (location.hash || "#home").slice(1).split("/");
   const v = views[tab] ? tab : "home";
+  if (tab === "group") history.replaceState(null, "", location.pathname + location.search + "#home");   // v54: старый адрес удалённого раздела
   const activeTab = TAB_OF[v] || v;
   const hash = location.hash || "#home";
   document.querySelectorAll(".tabbar a").forEach(a => {
@@ -340,6 +341,8 @@ function route(keepScroll, soft) {
   else window.scrollTo(0, keepScroll === true ? y : 0);
 }
 window.addEventListener("hashchange", () => route());
+/* v54: удалённый раздел «Вместе» (#group) → главная, без ошибок */
+if (/^#group(\/|$)/.test(location.hash)) history.replaceState(null, "", location.pathname + location.search + "#home");
 
 function toast(msg) {
   const tt = $("#toast"); tt.textContent = msg; tt.classList.add("show");
@@ -576,7 +579,7 @@ function footer() {
 }
 
 /* ---------------- 2. Карта ---------------- */
-let mapLayers = { smog: true, homes: true, complaints: true, routes: false };
+let mapLayers = { smog: true, complaints: true, routes: false };
 const allComplaints = () => [...state.complaints.filter(inCity), ...DEMO_COMPLAINTS];
 const C_EMOJI = { chimney: "🏭", trash: "🔥", dump: "🗑️", car: "🚌", factory: "🏗️" };
 function complaintPopup(c) {
@@ -687,7 +690,6 @@ function viewMap(el) {
     <div id="mapEl"></div>
     <div class="toggles">
       <div class="toggle ${mapLayers.smog ? "on" : ""}" data-layer="smog">${t("layerSmog")}</div>
-      <div class="toggle ${mapLayers.homes ? "on" : ""}" data-layer="homes">${t("layerHomes")} <span class="chip demo" style="padding:1px 6px">${t("demoChip")}</span></div>
       <div class="toggle ${mapLayers.complaints ? "on" : ""}" data-layer="complaints">${t("layerComplaints")}</div>
       <div class="toggle ${mapLayers.routes ? "on" : ""}" data-layer="routes">${t("layerRoutes")}</div>
     </div>
@@ -705,7 +707,7 @@ function viewMap(el) {
   baseTiles(map);
   map.fitBounds(L.latLngBounds(DISTRICTS.map(d => [d.lat, d.lon])).pad(CITY === "bishkek" ? 0.04 : 0.3));
 
-  const layers = { smog: L.layerGroup(), homes: L.layerGroup(), complaints: L.layerGroup(), routes: L.layerGroup() };
+  const layers = { smog: L.layerGroup(), complaints: L.layerGroup(), routes: L.layerGroup() };
   // районы: круги-«пятна» (canvas) + метки AQI; кластеры пересчитываются только на zoomend/moveend (с задержкой) и только в видимой области
   const R0 = cityObj().radius || 900, M = map;
   const nn = d => { let m = 1e9; for (const x of DISTRICTS) if (x !== d) m = Math.min(m, kmDist(d, x) * 1000); return m; };
@@ -753,10 +755,6 @@ function viewMap(el) {
   { const items = distListHTML(true); let i = 0; const step = () => { const di = el.querySelector(".dl-items"); if (!di || M !== map || i >= items.length) return;
       di.insertAdjacentHTML("beforeend", items.slice(i, i += 25).join("")); idle(step, 400); }; idle(step, 300); }
   idle(() => { if (M !== map) return;
-  DEMO_HOMES.forEach(h => {
-    L.marker([h.lat, h.lon], { icon: window.MS_STYLE ? msHomeIcon() : L.divIcon({ className: "", html: `<div class="home-pin">🏡</div>`, iconSize: [30, 30], iconAnchor: [15, 15] }) })
-      .bindPopup(() => `<b>${esc(tr(h.who))}</b><br>✅ ${tr(HOME_WHAT[h.what])}<br>${t("popupSince", { y: h.since })}<br><span style="color:#9a4b12">${t("demoData")}</span>`).addTo(layers.homes);
-  });
   allComplaints().forEach(c => L.marker([c.lat, c.lon], { icon: complaintIcon(c) }).bindPopup(() => complaintPopup(c), { maxWidth: 220 }).addTo(layers.complaints));
   ECO_ROUTES.forEach(r => L.polyline(r.path, { color: r.color, weight: 6, opacity: 0.9, dashArray: r.mode === "bike" ? "1 10" : null, lineCap: "round" })
     .bindPopup(() => `<b>${tr(r.name)}</b><br>${r.mode === "walk" ? t("rWalk") : t("rBike")} · ${t("rKm", { n: fmt(routeKm(r), 1) })}`).addTo(layers.routes));
@@ -782,7 +780,7 @@ function viewMap(el) {
  *  Солнечные панели: площадь/20 кВт (3–10), 48 000 сом/кВт + 60 000 сом за 2 инверторных
  *   кондиционера на обогрев (COP 2.5, закрывают 50% тепла). Выработка 1350 кВт·ч/кВт/год,
  *   30% — в отопительный сезон; летом до 2500 кВт·ч идёт на нужды дома.
- *  Деревья: ≈22 кг CO₂ в год на одно взрослое дерево. Групповая закупка: −20%.
+ *  Деревья: ≈22 кг CO₂ в год на одно взрослое дерево.
  */
 const K = {
   heatPerT: 2.9, co2PerT: 1.8, pmPerT: 6, tariff: 2.0, gridCO2: 0.0001 /* т/кВт·ч */, treeKg: 22,
@@ -794,7 +792,7 @@ const K = {
 const K_BASE = { ...K };
 function calc(h) {
   const { area, coal, price } = h;
-  const disc = h.group ? 1 - K.groupDiscount : 1;
+  const disc = 1;
   const heatMWh = coal * K.heatPerT;
   const baseline = { cost: coal * price, co2: coal * K.co2PerT, pm: coal * K.pmPerT };
   const share = h.insulShare ?? K.insulShare;
@@ -834,16 +832,15 @@ function viewHouse(el) {
         <div><label for="coal">${t("coalLbl")}</label><input type="number" id="coal" min="0.5" max="30" step="0.5" value="${h.coal}"></div>
         <div><label for="price">${t("priceLbl")}</label><input type="number" id="price" min="1000" max="30000" step="100" value="${h.price}"></div>
       </div>
-      <label class="row" style="margin-top:14px;cursor:pointer;color:var(--ink)"><input type="checkbox" id="group" ${h.group ? "checked" : ""} style="width:20px;height:20px;accent-color:var(--green-500)"> ${t("groupChk")}</label>
     </div>
     <div id="results"></div>
     <details class="card how"><summary>${t("howTitle")}</summary><ul>${t("how").map(x => `<li>${x}</li>`).join("")}</ul></details>
   `;
   const upd = () => {
-    h.area = +$("#area").value; h.coal = Math.max(0, +$("#coal").value || 0); h.price = Math.max(0, +$("#price").value || 0); h.group = $("#group").checked;
+    h.area = +$("#area").value; h.coal = Math.max(0, +$("#coal").value || 0); h.price = Math.max(0, +$("#price").value || 0);
     $("#areaO").textContent = h.area + " " + t("u_insul"); save(); renderResults();
   };
-  ["area", "coal", "price", "group"].forEach(id => $("#" + id).addEventListener("input", upd));
+  ["area", "coal", "price"].forEach(id => $("#" + id).addEventListener("input", upd));
   renderResults();
 }
 function renderResults() {
@@ -879,97 +876,11 @@ function renderResults() {
         <button class="btn block ${state.plan === o.id ? "done" : ""}" style="margin-top:12px" data-plan="${o.id}">${state.plan === o.id ? t("myPlan") : t("choosePlan")}</button>
       </div>`;
     }).join("")}
-    <a href="#group" class="btn sun block" style="display:block;text-align:center;text-decoration:none;margin-bottom:14px">${t("findNeighbors")}</a>
   `;
   document.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => { state.plan = b.dataset.plan; save(); renderResults(); toast(t("planSaved")); });
 }
 
-/* ---------------- 4. Вместе дешевле ---------------- */
-let groupFilter = "all";
-const allGroups = () => [...state.customGroups.filter(inCity), ...DEMO_GROUPS];
-function groupPrice(g, n) { let p = g.basePrice; g.tiers.forEach(x => { if (n >= x.n) p = x.price; }); return p; }
-const AV_COLORS = ["#2e9e5b", "#ffb347", "#4aa3df", "#e5484d", "#8e44ad", "#1f7a4d"];
-/* Пользовательские закупки хранят ключи, чтобы переводиться на лету. */
-const gTitle = g => g.custom ? (g.userTitle || t("autoTitle", { n: g.target, in: dLoc(byId(g.district)), what: t("cs_" + g.cat) })) : tr(g.title);
-const gProduct = g => g.custom ? t("cat_" + g.cat) : tr(g.product);
-const gUnit = g => g.custom ? t("u_" + g.cat) : tr(g.unit);
-const gDeadline = g => g.custom ? t("in14") : tr(g.deadline);
-const gSupplier = g => g.custom ? t("supplierTBD") : tr(g.supplier);
-
-function viewGroup(el) {
-  const list = allGroups().filter(g => groupFilter === "all" || g.district === state.district);
-  const totalSaved = allGroups().filter(g => state.joined[g.id]).reduce((s, g) => s + (g.basePrice - groupPrice(g, g.joined + 1)), 0);
-  el.innerHTML = `
-    <h1>${t("groupTitle")}</h1>
-    <p class="sub">${t("groupSub")}</p>
-    <div class="card tip row between">
-      <div><b>${t("youJoined", { n: Object.values(state.joined).filter(Boolean).length })}</b><div class="small muted" style="font-weight:700">${t("savedPerUnit", { s: som(totalSaved) })}</div></div>
-      <button class="btn sun" id="newBtn">${t("create")}</button>
-    </div>
-    <div class="filters">
-      <div class="toggle ${groupFilter === "all" ? "on" : ""}" data-f="all">${t("allDistricts")}</div>
-      <div class="toggle ${groupFilter === "mine" ? "on" : ""}" data-f="mine">📍 ${esc(dName(byId(state.district)))}</div>
-    </div>
-    ${list.length ? "" : `<div class="card muted" style="text-align:center;font-weight:700">${t("noGroups")}</div>`}
-    ${list.map(g => {
-      const me = !!state.joined[g.id]; const n = g.joined + (me ? 1 : 0);
-      const p = groupPrice(g, n); const pct = Math.min(100, n / g.target * 100);
-      const nextTier = g.tiers.find(x => x.n > n);
-      return `<div class="card gcard">
-        <div class="top"><div class="ico">${g.icon}</div>
-          <div style="flex:1"><div class="t">${esc(gTitle(g))}</div><div class="small muted" style="font-weight:700">${gProduct(g)}</div></div></div>
-        <div class="progress"><div style="width:${pct}%"></div></div>
-        <div class="row between small" style="font-weight:800">
-          <div class="row" style="gap:8px"><div class="avatars">${Array.from({ length: Math.min(5, n) }, (_, i) => `<i style="background:${me && i === 0 ? "#4fc3f7" : AV_COLORS[i % 6]}">${me && i === 0 ? "★" : ""}</i>`).join("")}</div>
-            <span>${t("ofHomes", { n, t: g.target })}</span></div>
-          <span class="muted">${t("until", { d: gDeadline(g) })}</span>
-        </div>
-        <div class="tiers">${g.tiers.map(x => `<span class="${n >= x.n ? "hit" : ""}">${t("tierHomes", { n: x.n })}<br>${fmt(x.price)}</span>`).join("")}</div>
-        <div class="row between">
-          <div><div class="price"><span class="now">${som(p)}</span>${p < g.basePrice ? `<span class="old">${fmt(g.basePrice)}</span>` : ""}</div>
-            <div class="small muted" style="font-weight:700">${t("per", { u: gUnit(g) })} · ${nextTier ? t("moreTo", { n: nextTier.n - n, p: fmt(nextTier.price) }) : t("maxDisc")}</div></div>
-          <button class="btn ${me ? "done" : ""}" data-join="${g.id}">${me ? t("joinedBtn") : t("joinBtn")}</button>
-        </div>
-        <div class="small muted" style="font-weight:700;margin-top:8px">🏪 ${gSupplier(g)} · 📍 ${esc(dName(byId(g.district)))}</div>
-      </div>`;
-    }).join("")}
-    <div class="foot">${t("groupFoot")}</div>
-  `;
-  el.querySelectorAll("[data-join]").forEach(b => b.onclick = () => {
-    const id = b.dataset.join; state.joined[id] = !state.joined[id]; save();
-    toast(state.joined[id] ? t("joinedToast") : t("leftToast"));
-    const y = window.scrollY; viewGroup(el); window.scrollTo(0, y);
-  });
-  el.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { groupFilter = b.dataset.f; viewGroup(el); });
-  $("#newBtn").onclick = openNewGroup;
-}
-
-const CATS = { insul: { icon: "🧱", base: 1450 }, solar: { icon: "☀️", base: 285000 }, pump: { icon: "🌡️", base: 420000 }, trees: { icon: "🌳", base: 1800 } };
-function openNewGroup() {
-  const m = $("#modal");
-  m.innerHTML = `<div class="sheet">
-    <h3>${t("newGroup")}</h3><p class="sub" style="margin:0">${t("newGroupSub")}</p>
-    <label for="nCat">${t("whatBuy")}</label>
-    <select id="nCat">${Object.entries(CATS).map(([k, c]) => `<option value="${k}">${c.icon} ${t("cat_" + k)}</option>`).join("")}</select>
-    <label for="nDist">${t("district")}</label><select id="nDist">${districtOptions(state.district)}</select>
-    <label for="nTarget">${t("howMany")}</label><input type="number" id="nTarget" min="3" max="50" value="10">
-    <label for="nTitle">${t("titleLbl")}</label><input id="nTitle" placeholder="${t("titlePh")}">
-    <div class="row" style="margin-top:16px"><button class="btn ghost" id="nCancel" style="flex:1">${t("cancel")}</button><button class="btn" id="nSave" style="flex:2">${t("createBtn")}</button></div>
-  </div>`;
-  m.classList.remove("hidden");
-  const close = () => m.classList.add("hidden");
-  m.onclick = e => { if (e.target === m) close(); };
-  $("#nCancel").onclick = close;
-  $("#nSave").onclick = () => {
-    const cat = $("#nCat").value, c = CATS[cat], dist = $("#nDist").value;
-    const target = Math.max(3, Math.min(50, +$("#nTarget").value || 10));
-    const id = "c" + Date.now();
-    const tiers = [1, Math.ceil(target * 0.4), Math.ceil(target * 0.7), target].map((n, i) => ({ n, price: Math.round(c.base * [1, 0.9, 0.83, 0.76][i]) }));
-    state.customGroups.unshift({ id, city: CITY, custom: true, icon: c.icon, userTitle: $("#nTitle").value.trim(), district: dist, basePrice: c.base, target, joined: 0, tiers, cat });
-    state.joined[id] = true; save(); close(); toast(t("createdToast"));
-    viewGroup($("#view"));
-  };
-}
+/* v54: «Вместе дешевле» (групповые закупки) удалено — выдуманные данные без сервера. */
 
 /* ---------------- 5. ИИ-советник (правила, без ключа) ----------------
  * Движок: 4 ответа → расчёт через calc() + доп. правила:
@@ -1018,8 +929,7 @@ function recHTML(r) {
       <div>${t("n_coal", { v: fmt(x.coalSaved, 1), p: Math.round(x.coalSaved / r.ans.coal * 100) })}</div>
       <div>${t("n_trees", { v: fmt(x.trees) })}</div>
     </div>
-    <b>${t("stepsHdr")}</b><ol>${t("s_" + x.id).map(s => `<li>${s.replace("{kw}", x.kw)}</li>`).join("")}</ol>
-    ${t("groupTip", { v: som(x.cost * (1 - K.groupDiscount)) })}`;
+    <b>${t("stepsHdr")}</b><ol>${t("s_" + x.id).map(s => `<li>${s.replace("{kw}", x.kw)}</li>`).join("")}</ol>`;
 }
 const ADV_STEPS = [
   { key: "area", q: "qArea", opts: [60, 100, 150, 200].map(v => ({ v, l: () => `${v} ${t("u_insul")}` })) },
@@ -1150,10 +1060,8 @@ function viewProfile(el) {
   const { opts } = calc({ ...state.house });
   const plan = opts.find(o => o.id === state.plan) || opts[2];
   const k = state.switched ? 1 : 0;
-  const joinedN = Object.values(state.joined).filter(Boolean).length;
-  const lb = Object.entries(DEMO_LEADERBOARD).map(([id, v]) => ({ id, v })).sort((a, b) => b.v - a.v);
   const badges = [
-    { e: "🏡", n: t("b1"), on: state.switched }, { e: "👥", n: t("b2"), on: joinedN > 0 },
+    { e: "🏡", n: t("b1"), on: state.switched },
     { e: "🧮", n: t("b3"), on: !!state.plan }, { e: "🌳", n: t("b4"), on: state.switched && plan.trees >= 100 },
   ];
   const al = state.alerts;
@@ -1209,15 +1117,6 @@ function viewProfile(el) {
     <h2>${t("badgesT")}</h2>
     <div class="card badges">${badges.map(b => `<div class="${b.on ? "" : "off"}"><b>${b.e}</b>${b.n}</div>`).join("")}</div>
 
-    <h2>${t("leaderboard")} <span class="chip demo">${t("demoChip")}</span></h2>
-    <div class="card lb">
-      <div class="small muted" style="font-weight:700;margin-bottom:6px">${t("lbSub")}</div>
-      ${lb.map((r, i) => `<div class="item ${r.id === state.district ? "me" : ""}">
-        <div class="pos ${i < 3 ? "p" + (i + 1) : ""}">${i + 1}</div>
-        <div style="width:118px;font-weight:800;font-size:14px">${esc(dName(byId(r.id)).replace(/ \(.*\)/, ""))}${r.id === state.district ? " · " + t("you") : ""}</div>
-        <div class="bar"><div style="width:${r.v}%"></div></div>
-        <div style="width:40px;text-align:right;font-weight:900">${r.v}%</div></div>`).join("")}
-    </div>
 
     <div class="card">
       <label for="pName" style="margin-top:0">${t("nameLbl")}</label><input id="pName" value="${esc(state.name)}">
@@ -1229,7 +1128,7 @@ function viewProfile(el) {
   $("#swBtn").onclick = () => { state.switched = !state.switched; save(); viewProfile(el); if (state.switched) toast(t("badgeToast")); };
   $("#pName").onchange = e => { state.name = e.target.value.trim() || t("defaultName"); save(); viewProfile(el); };
   $("#pDist").onchange = e => { state.district = e.target.value; save(); viewProfile(el); };
-  $("#resetBtn").onclick = () => { localStorage.removeItem(STORE_KEY); phTx("readwrite", st => st.clear()).catch(() => { }); state = load(); groupFilter = "all"; viewProfile(el); toast(t("resetToast")); };
+  $("#resetBtn").onclick = () => { localStorage.removeItem(STORE_KEY); phTx("readwrite", st => st.clear()).catch(() => { }); state = load(); viewProfile(el); toast(t("resetToast")); };
   $("#alOn").onchange = async e => {
     state.alerts.on = e.target.checked; save();
     if (state.alerts.on && "Notification" in window && Notification.permission === "default") {

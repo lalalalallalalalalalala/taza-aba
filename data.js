@@ -91,57 +91,11 @@ const HOME_WHAT = {
   insul_solar: { ru: "Утепление + панели", ky: "Жылуулоо + панелдер", en: "Insulation + solar" },
   insul_pump:  { ru: "Утепление + насос", ky: "Жылуулоо + насос", en: "Insulation + heat pump" },
 };
-const BK_DEMO_HOMES = [
-  { lat: 42.9055, lon: 74.5385, what: "pump",  since: "2025", who: { ru: "Семья Асановых", ky: "Асановдордун үй-бүлөсү", en: "The Asanov family" } },
-  { lat: 42.8995, lon: 74.5490, what: "insul_solar", since: "2026", who: { ru: "Дом на ул. Ак-Орго, 14", ky: "Ак-Орго көч., 14-үй", en: "House at 14 Ak-Orgo St" } },
-  { lat: 42.9172, lon: 74.4950, what: "solar", since: "2026", who: { ru: "Семья Мамытовых", ky: "Мамытовдордун үй-бүлөсү", en: "The Mamytov family" } },
-  { lat: 42.9120, lon: 74.5070, what: "pump",  since: "2025", who: { ru: "Мечеть Арча-Бешик", ky: "Арча-Бешик мечити", en: "Archa-Beshik mosque" } },
-  { lat: 42.8905, lon: 74.4760, what: "insul", since: "2024", who: { ru: "Детсад «Балапан»", ky: "«Балапан» бала бакчасы", en: "“Balapan” kindergarten" } },
-  { lat: 42.8960, lon: 74.4860, what: "pump",  since: "2026", who: { ru: "Семья Токтогуловых", ky: "Токтогуловдордун үй-бүлөсү", en: "The Toktogulov family" } },
-  { lat: 42.9210, lon: 74.6500, what: "solar", since: "2025", who: { ru: "Дом на ул. Калыс, 7", ky: "Калыс көч., 7-үй", en: "House at 7 Kalys St" } },
-  { lat: 42.9150, lon: 74.6620, what: "insul", since: "2026", who: { ru: "Семья Исаевых", ky: "Исаевдердин үй-бүлөсү", en: "The Isaev family" } },
-  { lat: 42.8900, lon: 74.6420, what: "solar", since: "2025", who: { ru: "Школа №61", ky: "№61 мектеп", en: "School No. 61" } },
-  { lat: 42.8240, lon: 74.5700, what: "pump",  since: "2024", who: { ru: "Семья Абдыкадыровых", ky: "Абдыкадыровдордун үй-бүлөсү", en: "The Abdykadyrov family" } },
-  { lat: 42.8475, lon: 74.6560, what: "solar", since: "2026", who: { ru: "Кафе «Жашыл»", ky: "«Жашыл» кафеси", en: "“Jashyl” café" } },
-  { lat: 42.8610, lon: 74.6950, what: "insul_pump", since: "2025", who: { ru: "Семья Жумабековых", ky: "Жумабековдордун үй-бүлөсү", en: "The Zhumabekov family" } },
-];
+const BK_DEMO_HOMES = [];   // v54: демо-дома удалены (выдуманные данные)
 
-/* DEMO: групповые закупки. tiers — цена за единицу в зависимости от числа участников. */
-const BK_DEMO_GROUPS = [
-  { id: "g1", icon: "🧱", district: "akordo", cat: "insul", basePrice: 1450, target: 10, joined: 7,
-    title: { ru: "10 домов в Ак-Ордо — утеплитель", ky: "Ак-Ордодо 10 үй — жылуулагыч", en: "10 homes in Ak-Ordo — insulation" },
-    product: { ru: "Минвата 100 мм + монтаж, за м² стены", ky: "100 мм минвата + орнотуу, дубалдын м² үчүн", en: "100 mm mineral wool + installation, per m² of wall" },
-    unit: { ru: "м²", ky: "м²", en: "m²" }, deadline: { ru: "25 октября", ky: "25-октябрга", en: "Oct 25" },
-    supplier: { ru: "ОсОО «ЖылуУй» (демо)", ky: "«ЖылуУй» ЖЧК (демо)", en: "ZhyluUi LLC (demo)" },
-    tiers: [{ n: 1, price: 1450 }, { n: 5, price: 1250 }, { n: 8, price: 1120 }, { n: 10, price: 990 }] },
-  { id: "g2", icon: "☀️", district: "archa", cat: "solar", basePrice: 285000, target: 15, joined: 9,
-    title: { ru: "Солнечные панели для Арча-Бешика", ky: "Арча-Бешик үчүн күн панелдери", en: "Solar panels for Archa-Beshik" },
-    product: { ru: "Комплект 5 кВт: панели + инвертор", ky: "5 кВт комплект: панелдер + инвертор", en: "5 kW kit: panels + inverter" },
-    unit: { ru: "комплект", ky: "комплект", en: "kit" }, deadline: { ru: "1 ноября", ky: "1-ноябрга", en: "Nov 1" },
-    supplier: { ru: "«Күн Энерджи» (демо)", ky: "«Күн Энерджи» (демо)", en: "Kun Energy (demo)" },
-    tiers: [{ n: 1, price: 285000 }, { n: 5, price: 262000 }, { n: 10, price: 241000 }, { n: 15, price: 224000 }] },
-  { id: "g3", icon: "🌡️", district: "kalys", cat: "pump", basePrice: 420000, target: 8, joined: 3,
-    title: { ru: "Тепловые насосы — Калыс-Ордо", ky: "Жылуулук насостору — Калыс-Ордо", en: "Heat pumps — Kalys-Ordo" },
-    product: { ru: "Тепловой насос воздух-вода 12 кВт с монтажом", ky: "12 кВт аба-суу жылуулук насосу, орнотуусу менен", en: "12 kW air-to-water heat pump, installed" },
-    unit: { ru: "шт.", ky: "даана", en: "pcs" }, deadline: { ru: "10 ноября", ky: "10-ноябрга", en: "Nov 10" },
-    supplier: { ru: "«Эко Жылуулук» (демо)", ky: "«Эко Жылуулук» (демо)", en: "Eco Zhyluuluk (demo)" },
-    tiers: [{ n: 1, price: 420000 }, { n: 4, price: 389000 }, { n: 6, price: 365000 }, { n: 8, price: 345000 }] },
-  { id: "g4", icon: "🪟", district: "akorgo", cat: "insul", basePrice: 6200, target: 12, joined: 11,
-    title: { ru: "Энергосберегающие окна — Ак-Орго", ky: "Энергия үнөмдөөчү терезелер — Ак-Орго", en: "Energy-saving windows — Ak-Orgo" },
-    product: { ru: "Двухкамерный стеклопакет, за м²", ky: "Эки камералуу стеклопакет, м² үчүн", en: "Double-chamber glazing, per m²" },
-    unit: { ru: "м²", ky: "м²", en: "m²" }, deadline: { ru: "20 октября", ky: "20-октябрга", en: "Oct 20" },
-    supplier: { ru: "«Терезе Плюс» (демо)", ky: "«Терезе Плюс» (демо)", en: "Tereze Plus (demo)" },
-    tiers: [{ n: 1, price: 6200 }, { n: 6, price: 5600 }, { n: 9, price: 5200 }, { n: 12, price: 4800 }] },
-  { id: "g5", icon: "🌳", district: "dzhal", cat: "trees", basePrice: 1800, target: 40, joined: 26,
-    title: { ru: "Посадка 200 карагачей на Джале", ky: "Жалга 200 карагач отургузуу", en: "Planting 200 elms in Dzhal" },
-    product: { ru: "Саженец 2 м + посадка + полив первый год", ky: "2 м көчөт + отургузуу + биринчи жылы сугаруу", en: "2 m sapling + planting + first-year watering" },
-    unit: { ru: "дерево", ky: "дарак", en: "tree" }, deadline: { ru: "30 октября", ky: "30-октябрга", en: "Oct 30" },
-    supplier: { ru: "Зеленстрой (демо)", ky: "Зеленстрой (демо)", en: "Zelenstroy (demo)" },
-    tiers: [{ n: 1, price: 1800 }, { n: 15, price: 1500 }, { n: 30, price: 1300 }, { n: 40, price: 1100 }] },
-];
+const BK_DEMO_GROUPS = [];   // v54: групповые закупки удалены
 
-/* DEMO: доля домов, перешедших на чистое отопление, для рейтинга районов (%). */
-const BK_DEMO_LEADERBOARD = { center: 95, asanbay: 90, tunguch: 88, alamedin: 82, dzhal: 80, vostok5: 78, kalys: 42, akorgo: 38, akordo: 32, archa: 29 };
+const BK_DEMO_LEADERBOARD = {};   // v54: демо-рейтинг удалён
 
 /* Запасные ДЕМО-значения US AQI, если API недоступен (типичная картина ранней зимы). */
 const BK_DEMO_AQI = { center: 118, akorgo: 168, archa: 182, akordo: 175, kalys: 160, alamedin: 128, tunguch: 122, dzhal: 98, asanbay: 92, vostok5: 135 };
@@ -193,33 +147,9 @@ const NR_DISTRICTS = [
   { id: "n_north", lat: 41.4400, lon: 76.0050, factor: 1.25, coalShare: 0.66, type: "micro",
     name: { ru: "Северный склон", ky: "Түндүк бет", en: "North slope" }, loc: { ru: "на северном склоне", ky: "түндүк бетте", en: "on the north slope" } },
 ];
-const NR_DEMO_HOMES = [
-  { lat: 41.4300, lon: 75.9930, what: "solar", since: "2026", who: { ru: "Школа-гимназия (демо)", ky: "Мектеп-гимназия (демо)", en: "Gymnasium school (demo)" } },
-  { lat: 41.4335, lon: 75.9520, what: "insul", since: "2025", who: { ru: "Семья Осмоновых", ky: "Осмоновдордун үй-бүлөсү", en: "The Osmonov family" } },
-  { lat: 41.4245, lon: 76.0300, what: "insul_pump", since: "2026", who: { ru: "Семья Бейшеновых", ky: "Бейшеновдордун үй-бүлөсү", en: "The Beishenov family" } },
-  { lat: 41.4185, lon: 75.9810, what: "solar", since: "2025", who: { ru: "Гостевой дом «Тянь-Шань»", ky: "«Теңир-Тоо» конок үйү", en: "“Tian Shan” guesthouse" } },
-];
-const NR_DEMO_GROUPS = [
-  { id: "n1", icon: "🧱", district: "n_west", cat: "insul", basePrice: 1350, target: 12, joined: 8,
-    title: { ru: "12 домов в Западном массиве — утеплитель", ky: "Батыш массивинде 12 үй — жылуулагыч", en: "12 homes on the west side — insulation" },
-    product: { ru: "Минвата 150 мм + монтаж, за м² стены", ky: "150 мм минвата + орнотуу, дубалдын м² үчүн", en: "150 mm mineral wool + installation, per m² of wall" },
-    unit: { ru: "м²", ky: "м²", en: "m²" }, deadline: { ru: "28 октября", ky: "28-октябрга", en: "Oct 28" },
-    supplier: { ru: "«Нарын Курулуш» (демо)", ky: "«Нарын Курулуш» (демо)", en: "Naryn Kurulush (demo)" },
-    tiers: [{ n: 1, price: 1350 }, { n: 5, price: 1180 }, { n: 9, price: 1060 }, { n: 12, price: 940 }] },
-  { id: "n2", icon: "☀️", district: "n_center", cat: "solar", basePrice: 290000, target: 10, joined: 4,
-    title: { ru: "Солнечные панели для Нарына", ky: "Нарын үчүн күн панелдери", en: "Solar panels for Naryn" },
-    product: { ru: "Комплект 5 кВт: панели + инвертор", ky: "5 кВт комплект: панелдер + инвертор", en: "5 kW kit: panels + inverter" },
-    unit: { ru: "комплект", ky: "комплект", en: "kit" }, deadline: { ru: "5 ноября", ky: "5-ноябрга", en: "Nov 5" },
-    supplier: { ru: "«Күн Энерджи» (демо)", ky: "«Күн Энерджи» (демо)", en: "Kun Energy (demo)" },
-    tiers: [{ n: 1, price: 290000 }, { n: 4, price: 268000 }, { n: 7, price: 249000 }, { n: 10, price: 232000 }] },
-  { id: "n3", icon: "🪟", district: "n_east", cat: "insul", basePrice: 6500, target: 8, joined: 6,
-    title: { ru: "Тёплые окна — Восточный массив", ky: "Жылуу терезелер — Чыгыш массиви", en: "Warm windows — East side" },
-    product: { ru: "Трёхкамерный стеклопакет для морозов, за м²", ky: "Суукка чыдамдуу үч камералуу стеклопакет, м² үчүн", en: "Triple-chamber frost-proof glazing, per m²" },
-    unit: { ru: "м²", ky: "м²", en: "m²" }, deadline: { ru: "1 ноября", ky: "1-ноябрга", en: "Nov 1" },
-    supplier: { ru: "«Терезе Плюс» (демо)", ky: "«Терезе Плюс» (демо)", en: "Tereze Plus (demo)" },
-    tiers: [{ n: 1, price: 6500 }, { n: 4, price: 5900 }, { n: 6, price: 5500 }, { n: 8, price: 5100 }] },
-];
-const NR_DEMO_LEADERBOARD = { n_center: 55, n_north: 34, n_left: 30, n_east: 22, n_west: 20 };
+const NR_DEMO_HOMES = [];
+const NR_DEMO_GROUPS = [];
+const NR_DEMO_LEADERBOARD = {};
 const NR_DEMO_AQI = { n_center: 105, n_west: 152, n_east: 146, n_left: 128, n_north: 134 };
 const NR_DEMO_COMPLAINTS = [
   { id: "nd1", lat: 41.4340, lon: 75.9460, cat: "chimney", status: 1, date: "2026-10-16",
@@ -257,7 +187,7 @@ const CITIES = {
 /* ================= ДРУГИЕ ГОРОДА (DEMO-генератор) =================
  * Для Оша, Джалал-Абада, Каракола, Таласа, Баткена и Токмока реальные границы массивов не
  * используются: районы названы по сторонам света («Центр», «Северная часть» …), координаты —
- * смещения от центра города (приблизительно). Все дома, закупки, жалобы, маршруты и рейтинг — DEMO.
+ * смещения от центра города (приблизительно). Жалобы и маршруты — DEMO.
  */
 const SIDE = {
   center: { name: { ru: "Центр", ky: "Борбор", en: "Centre", tr: "Merkez" }, type: "apts", dlat: 0, dlon: 0 },
@@ -283,25 +213,9 @@ function makeCity(c) {
   });
   const D = i => districts[i % districts.length];
   const off = (d, a, b) => [+(d.lat + a).toFixed(4), +(d.lon + b).toFixed(4)];
-  const homes = ["pump", "solar", "insul"].map((what, i) => {
-    const [lat, lon] = off(D(i + 1), 0.002 * (i % 2 ? 1 : -1), 0.003);
-    return { lat, lon, what, since: String(2024 + i), who: SURNAMES[(c.seed + i) % SURNAMES.length] };
-  });
+  const homes = [];   // v54: без выдуманных домов
   const d1 = D(1), d2 = D(0);
-  const groups = [
-    { id: `${c.id}_g1`, icon: "🧱", district: d1.id, cat: "insul", basePrice: 1400, target: 10, joined: 3 + c.seed % 5,
-      title: { ru: `10 домов ${d1.loc.ru} — утеплитель`, ky: `${cap(d1.loc.ky)} 10 үй — жылуулагыч`, en: `10 homes ${d1.loc.en} — insulation`, tr: `${cap(d1.loc.tr || d1.loc.en)} 10 ev — yalıtım` },
-      product: { ru: "Минвата 100 мм + монтаж, за м² стены", ky: "100 мм минвата + орнотуу, дубалдын м² үчүн", en: "100 mm mineral wool + installation, per m² of wall", tr: "100 mm taş yünü + montaj, duvarın m² başına" },
-      unit: { ru: "м²", ky: "м²", en: "m²" }, deadline: { ru: "30 октября", ky: "30-октябрга", en: "Oct 30", tr: "30 Ekim" },
-      supplier: { ru: `«${c.name.ru} Курулуш» (демо)`, ky: `«${c.name.ky} Курулуш» (демо)`, en: `${c.name.en} Kurulush (demo)`, tr: `${c.name.en} İnşaat (demo)` },
-      tiers: [{ n: 1, price: 1400 }, { n: 4, price: 1230 }, { n: 7, price: 1110 }, { n: 10, price: 990 }] },
-    { id: `${c.id}_g2`, icon: "☀️", district: d2.id, cat: "solar", basePrice: 285000, target: 12, joined: 2 + c.seed % 6,
-      title: { ru: `Солнечные панели для ${c.gen.ru}`, ky: `${c.name.ky} үчүн күн панелдери`, en: `Solar panels for ${c.name.en}`, tr: `${c.name.en} için güneş panelleri` },
-      product: { ru: "Комплект 5 кВт: панели + инвертор", ky: "5 кВт комплект: панелдер + инвертор", en: "5 kW kit: panels + inverter", tr: "5 kW set: paneller + invertör" },
-      unit: { ru: "комплект", ky: "комплект", en: "kit", tr: "set" }, deadline: { ru: "10 ноября", ky: "10-ноябрга", en: "Nov 10", tr: "10 Kasım" },
-      supplier: { ru: "«Күн Энерджи» (демо)", ky: "«Күн Энерджи» (демо)", en: "Kun Energy (demo)", tr: "Kun Energy (demo)" },
-      tiers: [{ n: 1, price: 285000 }, { n: 4, price: 264000 }, { n: 8, price: 246000 }, { n: 12, price: 229000 }] },
-  ];
+  const groups = [];   // v54: без выдуманных закупок
   const [c1lat, c1lon] = off(D(1), 0.003, -0.004), [c2lat, c2lon] = off(D(2), -0.002, 0.004);
   const complaints = [
     { id: `${c.id}_c1`, lat: c1lat, lon: c1lon, cat: "chimney", status: 1, date: "2026-10-16",
@@ -321,7 +235,7 @@ function makeCity(c) {
       avoid: { ru: "объездную трассу", ky: "айланма жолду", en: "the bypass road" },
       path: [[la + 0.010, lo - 0.016], [la + 0.008, lo - 0.008], [la + 0.006, lo], [la + 0.005, lo + 0.008], [la + 0.004, lo + 0.016]] },
   ];
-  const leaderboard = Object.fromEntries(districts.map((d, i) => [d.id, Math.round((1 - d.coalShare) * 100)]));
+  const leaderboard = {};
   const demoAqi = Object.fromEntries(districts.map((d, i) => [d.id, Math.round(c.demoBase * d.factor)]));
   return { id: c.id, center: c.center, zoom: 13, radius: 700, defaultDistrict: districts[1].id, alertDistrict: districts[1].id,
     name: c.name, gen: c.gen, prep: c.prep, house: c.house, k: c.k || {}, emoji: c.emoji,
@@ -415,7 +329,6 @@ Object.entries(MORE_DISTRICTS).forEach(([cid, list]) => {
   list.forEach(([id, lat, lon, factor, coalShare, type, ru, ky, en]) => {
     C.districts.push({ id, lat, lon, factor, coalShare, type, approx: true, name: { ru, ky, en },
       loc: { ru: `в районе «${ru}»`, ky: `«${ky}» аймагында`, en: `in ${en}` } });
-    C.leaderboard[id] = Math.round((1 - coalShare) * 100);
     C.demoAqi[id] = Math.round(base * factor);
   });
 });
@@ -587,7 +500,7 @@ TR_CITIES.forEach(([id, emoji, center, ru, ky, en, gru, gky, pru, pky, rx, ds], 
   C.districts = ds.map(([did, lat, lon, dru, dky, den, type]) => ({ id: did, lat, lon, factor: 1, coalShare: 0.1, type, approx: true, name: { ru: dru, ky: dky, en: den },
     loc: { ru: `в районе ${dru}`, ky: `${dky} районунда`, en: `in ${den}`, tr: `${den} bölgesinde` } }));
   C.defaultDistrict = C.alertDistrict = C.districts[0].id;
-  C.leaderboard = Object.fromEntries(C.districts.map(d => [d.id, 90])); C.demoAqi = Object.fromEntries(C.districts.map(d => [d.id, 70]));
+  C.leaderboard = {}; C.demoAqi = Object.fromEntries(C.districts.map(d => [d.id, 70]));
   C.groups.forEach((g, k) => { g.district = C.districts[k % C.districts.length].id; });
   C.routes = (TR_ROUTES[id] || []).map(([rid, type, rru, rky, ren, path, far]) => ({ id: rid, type, mode: type === "bike" ? "bike" : "walk", color: RT_COLOR[type], far: !!far, approx: true, name: { ru: rru, ky: rky, en: ren, tr: TR_ROUTE_TR[rid] || ren }, path }));
   CITIES[id] = C;

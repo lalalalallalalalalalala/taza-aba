@@ -131,9 +131,6 @@ details.how summary{font-weight:900;cursor:pointer;color:var(--green-800);font-s
 details.how li{margin:5px 0}
 
 /* GROUP */
-.gcard .top{display:flex;gap:12px;align-items:center}
-.gcard .ico{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:var(--green-100);flex:0 0 50px}
-.gcard .t{font-weight:900;font-size:16px}
 .progress{height:12px;background:#eaf2ea;border-radius:999px;overflow:hidden;margin:12px 0 6px}
 .progress div{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--sun),var(--green-500));transition:width .6s cubic-bezier(.2,.8,.2,1)}
 .price{display:flex;align-items:baseline;gap:8px;margin-top:6px}
@@ -159,13 +156,6 @@ details.how li{margin:5px 0}
 .badges div{text-align:center;font-size:10px;font-weight:800;color:var(--muted)}
 .badges div b{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 4px;border-radius:16px;background:#fff;border:1px solid var(--line);font-size:24px}
 .badges div.off b{filter:grayscale(1);opacity:.4}
-.lb .item{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid var(--line)}
-.lb .item:last-child{border:0}
-.lb .pos{width:28px;height:28px;border-radius:10px;display:grid;place-items:center;font-weight:900;background:#f2f6f1;font-size:13px}
-.lb .pos.p1{background:#8fd8fa}.lb .pos.p2{background:#e5e9ee}.lb .pos.p3{background:#f4c9a5}
-.lb .bar{flex:1;height:8px;background:#eef3ee;border-radius:999px;overflow:hidden}
-.lb .bar div{height:100%;background:linear-gradient(90deg,var(--sun),var(--green-500))}
-.lb .me{background:var(--green-100);border-radius:12px;padding-left:6px;padding-right:6px}
 
 /* NAV */
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);z-index:1000;display:grid;grid-template-columns:repeat(5,1fr);
