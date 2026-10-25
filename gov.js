@@ -90,35 +90,7 @@ en: { gridNote: "Important: the CAMS model resolution is about 11 km in the Euro
   p5H: "5. Health protection & early warning", p5: "WHO (2021): PM2.5 guidelines are 15 µg/m³ (24-h) and 5 µg/m³ (annual). WHO (2020): risk communication and personal protection on high-pollution days. UNICEF (2023): 112 deaths and 3,568 DALYs lost in Bishkek from PM2.5 in July 2021 – June 2022; economic loss about 2 billion KGS (US$24.9 million).",
   pitchH: "How Taza Aba helps the state", pitch: ["Data transparency: AQI, PM2.5 and NO₂ for every district, open CSV/JSON export and a one-click printable report.", "Early warning: tomorrow's smog forecast (CAMS) with ready-made alert text and measures by level; Telegram alerts for residents.", "Citizen engagement: complaints with photo and location, tree planting, a map of places with clean indoor air.", "Free and serverless: open sources, works on a phone, 4 languages (Kyrgyz, Russian, English, Turkish)."],
   back: "← Decision dashboard" },
-tr: { gridNote: "Önemli: CAMS modelinin çözünürlüğü Avrupa alanında (Türkiye dahil) yaklaşık 11 km, diğer bölgelerde (Kırgızistan dahil) yaklaşık 40 km'dir; bu yüzden komşu semtler çoğu zaman aynı hücreye düşer ve aynı değerleri alır. Burada model {n} semt için {z} bölge ayırt ediyor. «Şimdi» sütunu yakındaki sensörleri içerebilir. Semt düzeyinde kararlar için yer sensörleri gerekir.", title: "Belediye ve devlet için", sub: "{city} için karar paneli: her semt için CAMS modeli verileri (Open-Meteo) — sensör ölçümü değil.",
-  print: "Rapor / PDF", csv: "CSV (30 gün)", json: "JSON", polLink: "Kanıta dayalı önlemler →", loading: "Semt verileri hesaplanıyor…", err: "Open-Meteo verileri yüklenemedi.", retry: "Tekrar dene",
-  tmrH: "Yarın için duman tahmini ({date})", tmrWorst: "En kötü: {d} — AQI {a}'e kadar", tmrCity: "Şehir genelinde günlük azami ortalaması: AQI {a}", tmrSrc: "Open-Meteo üzerinden CAMS (Copernicus) tahmini. Model tahmini yanılabilir.",
-  measH: "Bu seviye için önerilen önlemler", measNote: "AQI etkinlik rehberi (AirNow, ABD EPA) ve DSÖ risk iletişimi önerilerine dayanır. Bunlar mevzuat değildir; kararları yetkili kurumlar verir.", copyWarn: "📋 Uyarı metnini kopyala", warnTxt: "{date} için duman uyarısı ({city}): AQI {a}'e kadar bekleniyor — «{lvl}». En kötü: {d}.",
-  kNow: "Şu anki AQI (semt ortalaması)", k7: "7 günlük ortalama AQI", k30: "30 günlük ortalama AQI", kH: "PM2.5 > 15 µg/m³ olan saatler (30 gün)", kD: "DSÖ günlük sınırını aşan günler (30 gün)",
-  rankH: "Semt sıralaması (en kötüler üstte, 30 gün)", cD: "Semt", cNow: "Şimdi", c7: "7 gün", c30: "30 gün", cH: "Saat > DSÖ", cT: "Yarın azami",
-  whoNote: "DSÖ 2021 PM2.5 sınırı: 24 saatlik ortalama 15 µg/m³, yıllık 5 µg/m³. «Saat > DSÖ», PM2.5'in 15 µg/m³'ü aştığı saatlerdir (gösterge niteliğinde, çünkü sınır günlüktür).",
-  contH: "Isınma ve ulaşımın payı (tahmin)", contNote: "Bu bir TAHMİNDİR, ölçüm değildir: 72 saatlik NO₂ günlük döngüsü, NO₂/PM2.5 ve PM2.5/PM10 oranları ve sıcaklıktan. Yöntem: «Trafik ve duman» bölümü.", heat: "Isınma", trans: "Ulaşım", how: "Nasıl hesaplıyoruz →",
-  priH: "Müdahale için semt öncelikleri", priSub: "Şu an müdahalenin en çok fayda sağlayacağı yerler — açık bir formülle.",
-  fH: "Formül", fTxt: "Öncelik P = 100 × (0,5·a + 0,3·b + 0,2·c); a — semtin 30 günlük ortalama PM2.5 değerinin şehir azamisine oranı; b — 30 günde PM2.5 > 15 µg/m³ olan saatlerin payı; c — yarının tahmini azami AQI değerinin şehir azamisine oranı. Önlem: tahmini ısınma payı ≥ %70 ise «kömürü değiştirme»; ulaşım payı ≥ %25 ise «otobüs / ulaşım»; PM2.5/PM10 < 0,55 ise (çok iri toz) «ağaç ve toz kontrolü».",
-  mHeat: "Kömürü değiştirme: ısı pompası, gaz, yalıtım", mBus: "Otobüs ve temiz ulaşım", mTree: "Ağaç ve toz kontrolü", mNone: "Kaynağı tahmin etmek için veri yok", pts: "puan",
-  cmpH: "Semtlere göre vatandaş şikâyetleri", cmpNote: "Açıkçası: uygulamanın sunucusu yok, bu yüzden burada yalnızca bu cihazdan gönderilen şikâyetler var (örnek şikâyetler sayılmaz). Şehir geneli için ortak bir şikâyet kutusu gerekir.", cmpNone: "Bu cihazda bu şehir için henüz şikâyet yok.", cmpAll: "Toplam",
-  expH: "Açık veri", expTxt: "CSV/JSON: 30 gün boyunca her semt ve gün için ortalama ve azami AQI, ortalama PM2.5, PM2.5 > 15 µg/m³ olan saatler. Veri: Open-Meteo (CC BY 4.0), CAMS modeli (Copernicus).",
-  repH: "Hava kalitesi raporu", repGen: "Oluşturuldu: {t} · Taza Aba", srcH: "Kaynaklar",
-  meas: [["Kısıtlama gerekmez.", "Açık havada etkinlik için iyi bir zaman."],
-    ["Çok hassas kişileri (astım, kalp hastalığı) bilgilendirin.", "Okullar için kısıtlama gerekmez."],
-    ["Okullar ve kreşler: astımlı ve hassas çocuklar için uzun ve yoğun açık hava etkinliklerini kısaltın.", "Vatandaşlar ve sağlık ocakları için uyarı yayımlayın.", "Toplu taşımayı teşvik edin; çöp ve yaprak yakılmasın."],
-    ["Okullar: beden eğitimi ve teneffüsleri içeri alın.", "Açık havadaki kalabalık etkinlikleri erteleyin.", "Toplu taşıma seferlerini artırın; açıkta yakmaya karşı denetim.", "Sağlık ocakları başvuru artışına hazır olsun."],
-    ["Çocukların açık hava etkinliklerini iptal edin; herkes dışarıda kalma süresini sınırlasın.", "Dışarısı daha kötüyse pencereleri kapalı tutun; okul ve hastanelerde varsa hava temizleyicileri kullanın.", "Geniş uyarı: medya, SMS, Telegram."],
-    ["Tehlikeli seviye: dışarıda kalmayı en aza indirin, tüm etkinlikler içeride.", "Geniş uyarı ve öncelikle hassas grupların korunması."]],
-  pTitle: "Kanıta dayalı önlemler", pSub: "Uluslararası çalışmaların Kırgızistan şehirleri için önerileri. Yalnızca yayımlanmış kaynaklar, bağlantılarıyla.",
-  pTr: "Aşağıdaki kaynaklar Bişkek ve Kırgızistan ile ilgilidir; Türkiye şehirleri için yol gösterici olarak kullanılabilir. DSÖ sınırları her yerde geçerlidir.",
-  p1H: "1. Kömürle ısınmanın değiştirilmesi", p1: "Kışın PM2.5'in ana kaynağı evlerde kömürle ısınmadır. UNICEF (2023): kömür sobalı evlerdeki çocuklar kışın ortalama 17 µg/m³ daha fazla PM2.5 soluyor; kömürsüz bölgeler, pencere/duvar/çatı yalıtımı ve geçiş teşvikleri öneriyor. Dünya Bankası (2023): Bişkek'teki hanelerin ısı pompası, elektrikli kazan ve güneş enerjili su ısıtmaya geçişi için 32,3 milyon $ kredi (yaklaşık 13.000 ev). ADB (2023): gaz kirliliği azaltır ama uzun vadede daha pahalıdır ve sera gazı salımını sürdürür; öncelik yalıtım, ısı pompaları ve merkezi ısıtmanın genişletilmesidir.",
-  p2H: "2. Hava kalitesi yönetim sistemi", p2: "Dünya Bankası (Air Quality Improvement Projesi, 2023): hava verisi toplama ve analizini iyileştirme, denetim ve kurumlar arası koordinasyonu güçlendirme. UNICEF: karar alırken sağlık etkilerine dair bilimsel kanıtları daha çok kullanma.",
-  p3H: "3. Ulaşım", p3: "UNDP (2023): Bişkek'te en büyük NOx kaynağı karayolu ulaşımıdır. Modelleme çalışması (Air dergisi, 2024): ulaşım yıllık PM2.5'in yaklaşık %27'si, yazın ~%30'a kadar. Trafik emisyonlarını azaltan önlemler (toplu taşıma, egzoz denetimi) tam olarak bu kaynağı hedefler.",
-  p4H: "4. Yeşillendirme", p4: "Dünya Bankası (2023): hava kirliliğini azaltmak için tasarlanmış pilot «yeşil kuşak» ve kentsel sulamaya yatırım.",
-  p5H: "5. Sağlığın korunması ve erken uyarı", p5: "DSÖ (2021): PM2.5 sınırları 15 µg/m³ (24 saat) ve 5 µg/m³ (yıllık). DSÖ (2020): yüksek kirlilik günlerinde risk iletişimi ve kişisel korunma. UNICEF (2023): Temmuz 2021 – Haziran 2022 döneminde Bişkek'te PM2.5 nedeniyle 112 ölüm ve 3.568 sağlıklı yaşam yılı (DALY) kaybı; ekonomik kayıp yaklaşık 2 milyar som (24,9 milyon $).",
-  pitchH: "Taza Aba devlete nasıl yardımcı olur", pitch: ["Veri şeffaflığı: her semt için AQI, PM2.5 ve NO₂, açık CSV/JSON dışa aktarma ve tek tıkla yazdırılabilir rapor.", "Erken uyarı: yarının duman tahmini (CAMS), hazır uyarı metni ve seviyeye göre önlemler; vatandaşlara Telegram uyarıları.", "Vatandaş katılımı: fotoğraflı ve konumlu şikâyetler, ağaç dikimi, iç mekânı temiz havalı yerler haritası.", "Ücretsiz ve sunucusuz: açık kaynaklar, telefonda çalışır, 4 dil (Kırgızca, Rusça, İngilizce, Türkçe)."],
-  back: "← Karar paneli" },
+
 };
 /* v28: тренд 30 дней, зимы по годам, сравнение с прошлым годом, QR в отчёте */
 Object.assign(GV_S.ru, { trendMax: "Максимум: AQI {a} ({d}).", trendH: "30 дней по городу: средний AQI за сутки", trendNote: "Среднее по всем районам, модель CAMS (Open-Meteo). Цвет столбика — уровень AQI; пунктир — AQI 100.",
@@ -139,12 +111,6 @@ Object.assign(GV_S.en, { trendMax: "Peak: AQI {a} ({d}).", trendH: "30 days city
   yoyH: "Last 30 days vs the same period a year ago", yoy: "Mean PM2.5 now is {a} µg/m³, a year ago {b} µg/m³ ({c}). Days above the WHO guideline: {da} vs {db}.",
   winNote: "Modelled values (CAMS, ~11–40 km resolution), not sensor measurements: the model can differ substantially from ground measurements, especially during winter inversions, so compare years with each other rather than with guidelines. The model archive starts in winter 2022/23. Weather and model updates also affect the difference, so on its own it does not prove the effect of a specific measure.",
   winLoad: "Loading the winter archive…", winErr: "Couldn't load the Open-Meteo archive.", winPart: "in progress", qrCap: "Open the app" });
-Object.assign(GV_S.tr, { trendMax: "En yüksek: AQI {a} ({d}).", trendH: "Şehir genelinde 30 gün: günlük ortalama AQI", trendNote: "Tüm semtlerin ortalaması, CAMS modeli (Open-Meteo). Çubuk rengi AQI seviyesidir; kesikli çizgi AQI 100.",
-  winH: "Yıllara göre kışlar (Aralık–Şubat)", winSub: "Kışları karşılaştırmak, önlemlerden sonra durumun değişip değişmediğini gösterir. Şehir merkezi, CAMS modeli.",
-  cW: "Kış", cPm: "Ortalama PM2.5", cDw: "DSÖ üstü gün", cMx: "En kötü gün", cCh: "Önceki kışa göre", unit: "µg/m³",
-  yoyH: "Son 30 gün ve geçen yılın aynı dönemi", yoy: "Şu anki ortalama PM2.5 {a} µg/m³, bir yıl önce {b} µg/m³ ({c}). DSÖ sınırının üstündeki günler: {da} / {db}.",
-  winNote: "Model değerleridir (CAMS, ~11–40 km çözünürlük), sensör ölçümü değildir: model, özellikle kış inversiyonlarında yer ölçümlerinden belirgin biçimde farklı olabilir; bu yüzden yılları sınır değerlerle değil birbiriyle karşılaştırın. Model arşivi 2022/23 kışından başlar. Fark hava durumundan ve model güncellemelerinden de etkilenir, tek başına belirli bir önlemin etkisini kanıtlamaz.",
-  winLoad: "Kış arşivi yükleniyor…", winErr: "Open-Meteo arşivi yüklenemedi.", winPart: "devam ediyor", qrCap: "Uygulamayı aç" });
 const GV = (k, v) => { let s = (GV_S[LANG] || GV_S.ru)[k]; if (s == null) s = GV_S.ru[k]; if (v && typeof s === "string") for (const x in v) s = s.split("{" + x + "}").join(v[x]); return s; };
 const GV_SRC = {
   who21: ["https://www.who.int/publications/i/item/9789240034228", "WHO Global Air Quality Guidelines (2021)"],
@@ -348,7 +314,6 @@ window.viewGov = function (el) {
 window.viewGovPolicy = function (el) {
   const sec = (h, p, srcs) => `<div class="card gv-pol"><h3>${GV(h)}</h3><p>${esc(GV(p))}</p><p class="small">${srcs.map(gvA).join(" · ")}</p></div>`;
   el.innerHTML = `<p class="gv-noprint"><a href="#gov">${GV("back")}</a> · <a href="#govbrief">${GV("bLink")}</a></p><h1>${GV("pTitle")}</h1><p class="sub">${GV("pSub")}</p>
-    ${cityObj().country === "tr" ? `<div class="card small">${GV("pTr")}</div>` : ""}
     ${sec("p1H", "p1", ["unicef", "wbp", "wbh", "adb"])}${sec("p2H", "p2", ["wbp", "unicef"])}${sec("p3H", "p3", ["undp", "air24", "wb24"])}${sec("p4H", "p4", ["wbp"])}${sec("p5H", "p5", ["who21", "who20", "unicef"])}
     <div class="card gv-pitch"><h3>🤝 ${GV("pitchH")}</h3><ul>${GV("pitch").map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
     <div class="foot">${t("footProto")}</div>`;
@@ -388,17 +353,6 @@ Object.assign(GV_S.en, { bPri: "priority {p}/100", bZones: "Here the CAMS model 
     ["Data: collect and analyse air-quality data, inspections, cross-agency coordination.", ["wbp"]]],
   bSrcNote: "Sources for the measures cover Bishkek and Kyrgyzstan; for small towns they are a guide, not a regulation.", bTr: "Sources for the measures cover Bishkek and Kyrgyzstan.",
   bData: "Data: CAMS model (Copernicus) via Open-Meteo, CC BY 4.0 — modelled values, not sensor measurements. Heating/transport shares are estimates. Details: «For city hall & government».", bFull: "← Full dashboard", bCopied: "Brief text copied" });
-Object.assign(GV_S.tr, { bPri: "öncelik {p}/100", bZones: "CAMS modeli burada {n} semt için {z} bölge ayırt ediyor: aynı bölgedeki semtler aynı değerleri alır. Öncelik, tam paneldeki formülle hesaplanır.", bLink: "📄 Tek sayfalık özet", bTitle: "Belediye / akimlik için duman özeti", bSub: "{city} · {date}. Kısaca: durum, yarın ne yapılmalı, önce nereye odaklanmalı ve sezon önlemleri. Tek bir A4 sayfasına sığar.",
-  bPrint: "🖨️ Yazdır / PDF", bCopy: "📋 Metni kopyala", bS1: "1. Şu anki durum", bNow: "Şu anki AQI", b30: "30 günlük ortalama AQI", bDw: "DSÖ sınırını aşan günler (30 gün)", bTmr: "Yarın tahmini (azami)",
-  bWin: "Geçen kış ({w}, CAMS modeli, şehir merkezi): ortalama PM2.5 {pm} µg/m³, DSÖ sınırını aşan gün: {dw}/{n}{ch}.", bWinCh: "; bir önceki kışa göre {c}", bWinNone: "Kış arşivi şu anda kullanılamıyor — daha sonra tam panele bakın.",
-  bS2: "2. Yarın: AQI en fazla {a} — «{lvl}»", bS3: "3. Önce nereye", bOne: "CAMS modeli (~40 km) {city} semtlerini ayırt etmiyor — değerler tüm semtlerde aynı, bu yüzden buradaki önlemler şehrin tamamı için. Hedefli önlemler için yer sensörleri gerekir.",
-  bS4: "4. Isınma sezonu önlemleri", bM: [["Isınma kışın ana kaynaktır: evlerin yalıtımı, kömürden ısı pompası ve elektrikli ısıtmaya geçiş, kömürsüz bölgeler.", ["unicef", "adb", "wbp"]],
-    ["Erken uyarı: duman tahminini yayımlamak; dumanlı günlerde okul ve sağlık ocakları için önlemler (bölüm 2).", ["who20", "airnow"]],
-    ["Ulaşım: toplu taşıma ve egzoz denetimi.", ["undp", "air24"]],
-    ["Toza karşı yeşillendirme ve sulama.", ["wbp"]],
-    ["Veri: hava verisini toplamak ve analiz etmek, denetimler, kurumlar arası koordinasyon.", ["wbp"]]],
-  bSrcNote: "Önlem kaynakları Bişkek ve Kırgızistan ile ilgilidir; küçük şehirler için mevzuat değil, yol göstericidir.", bTr: "Önlem kaynakları Bişkek ve Kırgızistan ile ilgilidir; Türkiye şehirleri için mevzuat değil, yol göstericidir.",
-  bData: "Veri: Open-Meteo üzerinden CAMS (Copernicus) modeli, CC BY 4.0 — model değerleri, sensör ölçümü değil. Isınma/ulaşım payları tahmindir. Ayrıntılar: «Belediye ve devlet için».", bFull: "← Tam panel", bCopied: "Özet metni kopyalandı" });
 const GV_SHORT = { unicef: "UNICEF 2023", adb: "ADB 2023", wbp: "World Bank 2023", who20: "WHO 2020", who21: "WHO 2021", airnow: "AirNow (US EPA)", undp: "UNDP 2023", air24: "Air 2024", om: "Open-Meteo" };
 const gvAs = k => `<a href="${GV_SRC[k][0]}" target="_blank" rel="noopener" title="${esc(GV_SRC[k][1])}">${esc(GV_SHORT[k] || GV_SRC[k][1])}</a>`;
 function gvBriefData(G) {
@@ -440,7 +394,7 @@ function gvBriefRender(el, G) {
     <section class="card gb-s"><h3>${GV("bS3")}</h3>${B.top.length ? `<ol class="gb-top">${B.top.map(r => `<li><b>${esc(r.name)}</b> <span class="small muted">(${esc(GV("bPri", { p: r.P }))})</span> — ${r.meas.map(m => `<span class="gv-m gv-${m}">${esc(GV(m))}</span>`).join(" ")}</li>`).join("")}</ol>
       <p class="small muted">${esc(GV("bZones", { z: B.zones, n: G.rows.length }))}</p>` : `<p class="small gv-grid">${esc(GV("bOne", { city: c }))}</p>`}</section>
     <section class="card gb-s"><h3>${GV("bS4")}</h3><ol class="gb-m">${GV("bM").map(m => `<li>${esc(m[0])} <span class="small muted">${m[1].map(gvAs).join(", ")}</span></li>`).join("")}</ol>
-      <p class="small muted">${GV(cityObj().country === "tr" ? "bTr" : "bSrcNote")}</p></section>
+      <p class="small muted">${GV("bSrcNote")}</p></section>
     <p class="small muted gb-data">${GV("bData")} ${gvAs("om")}</p></div>`;
   $("#gbPrint").onclick = () => window.print();
   $("#gbCopy").onclick = () => copyText(gvBriefText(G, B, winLine));
@@ -476,13 +430,6 @@ Object.assign(GV_S.en, { arH: "Open daily archive", arSub: "Every night (around 
   arCols: "date — local date; aqi_mean / aqi_max — daily mean and max US AQI; pm2_5_mean / pm2_5_max, pm10_mean, no2_mean — µg/m³; hours_pm2_5_over_15 — hours with PM2.5 > 15; hours — hours with data (days with < 20 hours are not written).",
   arNote: "Modelled CAMS (Copernicus) values via Open-Meteo, CC BY 4.0 — not sensor measurements. The model can differ substantially from ground measurements, especially during winter inversions: compare days and years with each other, not with guidelines or other cities. History before {s} was loaded once from the Open-Meteo archive (from {f}).",
   gzLink: "🗞️ Kyrgyz A5 — for district newspapers", gzBack: "← A4 brief", gzPrint: "🖨️ Print A5 / PDF", gzCopy: "📋 Copy text (Kyrgyz)", gzHint: "An A5 sheet in Kyrgyz for a district newspaper or notice board: 30-day figures, the AQI scale with advice for residents and a QR to the live forecast. The text is always in Kyrgyz, whatever the app language." });
-Object.assign(GV_S.tr, { arH: "Günlük açık arşiv", arSub: "GitHub Actions her gece (Bişkek saatiyle yaklaşık 04:40) {n} şehir için günlük değerleri (şehir merkezi, CAMS modeli) herkese açık bir depoya kaydeder. Yazılmış günler değişmez; arşive atıf yapılabilir ve doğrulanabilir.",
-  arLoad: "Arşiv yükleniyor…", arErr: "Arşive şu anda ulaşılamıyor (GitHub). Daha sonra deneyin.", arNone: "Bu şehir için arşivde henüz veri yok.",
-  arStat: "{city}: {d} gün, {a} – {b}. Ortalama PM2.5'in DSÖ sınırını (15 µg/m³) aştığı gün: {w} (%{p}).", arUpd: "Güncellendi: {t}.", arChart: "Tüm arşiv boyunca günlük ortalama PM2.5, µg/m³; ince çizgi günlük, kalın çizgi 15 günlük ortalama; kesikli çizgi DSÖ sınırı 15",
-  arCsv: "CSV: {city}", arAll: "Tüm şehirler (index.json)", arGh: "GitHub'daki klasör ↗", arColsH: "CSV sütunları",
-  arCols: "date — yerel tarih; aqi_mean / aqi_max — günlük ortalama ve azami US AQI; pm2_5_mean / pm2_5_max, pm10_mean, no2_mean — µg/m³; hours_pm2_5_over_15 — PM2.5 > 15 olan saatler; hours — verili saatler (20 saatten az veri olan günler yazılmaz).",
-  arNote: "Open-Meteo üzerinden CAMS (Copernicus) model değerleri, CC BY 4.0 — sensör ölçümü değildir. Model, özellikle kış inversiyonlarında yer ölçümlerinden belirgin biçimde farklı olabilir: günleri ve yılları sınır değerlerle veya başka şehirlerle değil, birbiriyle karşılaştırın. {s} öncesi geçmiş, Open-Meteo arşivinden bir kez yüklendi ({f} itibarıyla).",
-  gzLink: "🗞️ Kırgızca A5 — ilçe gazeteleri için", gzBack: "← A4 özet", gzPrint: "🖨️ A5 yazdır / PDF", gzCopy: "📋 Metni kopyala (Kırgızca)", gzHint: "İlçe gazetesi veya ilan panosu için Kırgızca A5 sayfa: 30 günlük rakamlar, sakinlere önerilerle AQI ölçeği ve canlı tahmine QR. Metin, uygulama dili ne olursa olsun Kırgızcadır." });
 const GV_AR_REPO = (window.TAZA_CONFIG || {}).ARCHIVE_REPO || "zusenbaev7-cmd/taza-aba";
 const GV_AR_RAW = `https://raw.githubusercontent.com/${GV_AR_REPO}/main/archive/`, GV_AR_GH = `https://github.com/${GV_AR_REPO}/tree/main/archive`;
 const gvArCache = {};
@@ -562,7 +509,7 @@ function gvGzRender(el, G) {
   gvBriefRender = function (el, G) {
     if ((location.hash || "").slice(1).split("/")[1] === "gazeta") { el.classList.add("v-gazeta"); return gvGzRender(el, G); }
     el.classList.remove("v-gazeta"); _b(el, G);
-    const acts = el.querySelector(".gb-sheet .gv-acts"); if (acts && cityObj().country !== "tr") acts.insertAdjacentHTML("beforeend", `<a class="btn ghost" href="#govbrief/gazeta">${GV("gzLink")}</a>`); };
+    const acts = el.querySelector(".gb-sheet .gv-acts"); if (acts) acts.insertAdjacentHTML("beforeend", `<a class="btn ghost" href="#govbrief/gazeta">${GV("gzLink")}</a>`); };
 })();
 /* v47: «Тот же период в прошлые годы» — из открытого архива (те же календарные дни каждого года, модель CAMS). */
 Object.assign(GV_S.ru, { myH: "Тот же период в прошлые годы", mySub: "{per}: средний PM2.5 и число суток выше нормы ВОЗ (15 мкг/м³) за одни и те же календарные дни каждого года.",
@@ -577,10 +524,6 @@ Object.assign(GV_S.en, { myH: "Same period in earlier years", mySub: "{per}: mea
   myY: "Year", myPm: "Mean PM2.5", myW: "Days > 15", myN: "Days with data", mySum: "{y}: {per} — mean PM2.5 {a} µg/m³, {p}% {dir} than the {yy} average ({b} µg/m³).", myUp: "higher", myDn: "lower", mySame: "{y}: {per} — mean PM2.5 {a} µg/m³, about the same as the {yy} average ({b} µg/m³).",
   myNote: "CAMS model, city centre — not sensor measurements. Year-to-year differences also depend on the weather (wind, inversions, temperature), so on their own they do not prove the effect of specific measures. Years with data for fewer than 80% of the days are not shown.", myCopy: "📋 Copy for a report", myOk: "Copied",
   myMon: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], myPer: "{m} {a}–{b}", myPer1: "{m} {a}" });
-Object.assign(GV_S.tr, { myH: "Önceki yıllarda aynı dönem", mySub: "{per}: her yılın aynı takvim günlerinde ortalama PM2.5 ve DSÖ sınırını (15 µg/m³) aşan gün sayısı.",
-  myY: "Yıl", myPm: "Ortalama PM2.5", myW: "Gün > 15", myN: "Verili gün", mySum: "{y}: {per} — ortalama PM2.5 {a} µg/m³; {yy} ortalamasından ({b} µg/m³) %{p} {dir}.", myUp: "yüksek", myDn: "düşük", mySame: "{y}: {per} — ortalama PM2.5 {a} µg/m³; {yy} ortalamasıyla ({b} µg/m³) hemen hemen aynı.",
-  myNote: "CAMS modeli, şehir merkezi — sensör ölçümü değildir. Yıllar arasındaki fark hava koşullarına da (rüzgâr, inversiyon, sıcaklık) bağlıdır; tek başına belirli bir önlemin etkisini kanıtlamaz. Günlerin %80'inden azı için verisi olan yıllar gösterilmez.", myCopy: "📋 Rapor için kopyala", myOk: "Kopyalandı",
-  myMon: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"], myPer: "{a}–{b} {m}", myPer1: "{a} {m}" });
 function gvMyData(A) {
   const R = A.rows.filter(r => r.pm != null); if (R.length < 30) return null;
   const last = R[R.length - 1].d; let [Y, M, D] = last.split("-").map(Number);
@@ -618,8 +561,6 @@ Object.assign(GV_S.ky, { bMy: "Мурунку жылдардын ушул эле
   bMySame: "Мурунку жылдардын ушул эле күндөрү ({per}): {y}-жылы орточо PM2.5 {a} мкг/м³ — болжол менен {yy} ж. орточодой ({b}). CAMS модели, шаардын борбору; айырма аба ырайына да көз каранды." });
 Object.assign(GV_S.en, { bMy: "Same days in earlier years ({per}): mean PM2.5 in {y} was {a} µg/m³, {p}% {dir} than the {yy} average ({b}). CAMS model, city centre; the difference also depends on the weather.",
   bMySame: "Same days in earlier years ({per}): mean PM2.5 in {y} was {a} µg/m³, about the same as the {yy} average ({b}). CAMS model, city centre; the difference also depends on the weather." });
-Object.assign(GV_S.tr, { bMy: "Önceki yıllarda aynı günler ({per}): {y} yılında ortalama PM2.5 {a} µg/m³; {yy} ortalamasından ({b}) %{p} {dir}. CAMS modeli, şehir merkezi; fark hava koşullarına da bağlıdır.",
-  bMySame: "Önceki yıllarda aynı günler ({per}): {y} yılında ortalama PM2.5 {a} µg/m³; {yy} ortalamasıyla ({b}) hemen hemen aynı. CAMS modeli, şehir merkezi; fark hava koşullarına da bağlıdır." });
 function gvMyLine(A) {
   const Q = gvMyData(A); if (!Q) return null;
   const cur = Q.yrs[0], prev = Q.yrs.slice(1), avg = prev.reduce((s, r) => s + r.pm, 0) / prev.length, pc = Math.round(100 * (cur.pm - avg) / avg);

@@ -6,7 +6,7 @@
 
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const numLocale = () => (LANG === "en" ? "en-US" : LANG === "tr" ? "tr-TR" : "ru-RU");
+const numLocale = () => (LANG === "en" ? "en-US" : "ru-RU");
 const fmt = (n, d = 0) => { let v = Number(n); if (isFinite(v) && Math.abs(v) < 0.5 * 10 ** -d) v = 0; return v.toLocaleString(numLocale(), { maximumFractionDigits: d, minimumFractionDigits: d }); };   // v50: без «-0°»
 const som = n => fmt(Math.round(n)) + " " + t("som");
 const years = n => t("yearsN", { n: fmt(n, 1) });
@@ -20,16 +20,16 @@ const aqiOf = v => (v == null || !Number.isFinite(+v)) ? null : Math.round(+v);
 const aqiTxt = v => (v == null ? "—" : v);
 const byAqiDesc = (x, y) => (y == null ? -1 : y) - (x == null ? -1 : x);
 const NO_LEVEL = { max: Infinity, nodata: true, color: "#8f99a3", grad: "linear-gradient(135deg,#a3adb7,#7d8893 60%,#98a2ac)", emoji: "📡",
-  name: { ru: "Нет данных", ky: "Маалымат жок", en: "No data", tr: "Veri yok" }, short: { ru: "Нет данных", ky: "Маалымат жок", en: "No data", tr: "Veri yok" },
-  title: { ru: "Нет данных о воздухе", ky: "Аба тууралуу маалымат жок", en: "No air data right now", tr: "Şu an hava verisi yok" },
-  text: { ru: "Модель не вернула значение для этой точки. Это не значит, что воздух чистый — обновите позже.", ky: "Модель бул чекит үчүн маани берген жок. Бул аба таза дегенди билдирбейт — кийинчерээк жаңылаңыз.", en: "The model returned no value for this point. That does not mean the air is clean — try again later.", tr: "Model bu nokta için değer döndürmedi. Bu, havanın temiz olduğu anlamına gelmez — daha sonra yenileyin." },
-  tips: { ru: [], ky: [], en: [], tr: [] } };
+  name: { ru: "Нет данных", ky: "Маалымат жок", en: "No data" }, short: { ru: "Нет данных", ky: "Маалымат жок", en: "No data" },
+  title: { ru: "Нет данных о воздухе", ky: "Аба тууралуу маалымат жок", en: "No air data right now" },
+  text: { ru: "Модель не вернула значение для этой точки. Это не значит, что воздух чистый — обновите позже.", ky: "Модель бул чекит үчүн маани берген жок. Бул аба таза дегенди билдирбейт — кийинчерээк жаңылаңыз.", en: "The model returned no value for this point. That does not mean the air is clean — try again later." },
+  tips: { ru: [], ky: [], en: [] } };
 const level = aqi => (aqi == null || !Number.isFinite(+aqi)) ? NO_LEVEL : AQI_LEVELS.find(l => aqi <= l.max);
 
 /* ---------------- Город (Бишкек / Нарын) ---------------- */
 const CITY_STORE = "tazaAba.city";
 let CITY = CITIES[localStorage.getItem(CITY_STORE)] ? localStorage.getItem(CITY_STORE) : "bishkek";
-let DISTRICTS, DEMO_AQI, DEMO_COMPLAINTS, ECO_ROUTES;
+let DISTRICTS, ECO_ROUTES;
 const cityObj = () => CITIES[CITY];
 /* Подставляется в каждый t(): {city}, {cityGen} (род. падеж), {cityPrep} (предл. падеж / местный). */
 function CITY_VARS() { const c = CITIES[CITY]; let pvY = "1 350"; try { pvY = fmt(K.pvYield); } catch (e) { } return { city: tr(c.name), cityGen: tr(c.gen), cityPrep: tr(c.prep), pvY }; }
@@ -217,7 +217,7 @@ async function loadAirImpl() {
 
 /* ---------------- Шапка, меню, язык ---------------- */
 const TAB_LABEL = { news: "tab_news", home: "tab_home", map: "tab_map", house: "tab_house", advisor: "tab_advisor", more: "tab_more" };
-const HOME_LBL = { ru: "Таза Аба — на главную", ky: "Таза Аба — башкы бетке", en: "Taza Aba — home", tr: "Taza Aba — ana sayfa" };
+const HOME_LBL = { ru: "Таза Аба — на главную", ky: "Таза Аба — башкы бетке", en: "Taza Aba — home" };
 function renderChrome() {
   const b = $("#dataBadge");
   if (air.status === "loading") { b.className = "data-badge"; b.textContent = "…"; }
@@ -226,7 +226,7 @@ function renderChrome() {
   else if (air.status === "stale") { b.className = "data-badge demo"; b.innerHTML = `<span class="dot"></span>${Q("stBadge")}`; }
   else { b.className = "data-badge demo"; b.innerHTML = `<span class="dot"></span>${Q("nodata")}`; }
   $(".brand-sub").textContent = t("brandSub");
-  $(".brand-name").textContent = (LANG === "en" || LANG === "tr") ? "Taza Aba" : "Таза Аба";
+  $(".brand-name").textContent = LANG === "en" ? "Taza Aba" : "Таза Аба";
   document.querySelectorAll(".tabbar a").forEach(a => {
     const sp = $("span", a); if (!sp) return;
     const k = a.dataset.tab;
@@ -248,11 +248,11 @@ function renderChrome() {
   const cs = $("#citySel");
   cs.innerHTML = CITY_ORDER.map(id => `<option value="${id}" ${id === CITY ? "selected" : ""}>${CITIES[id].emoji} ${tr(CITIES[id].short || CITIES[id].name)}</option>`).join("");
   cs.setAttribute("aria-label", t("cityLbl"));
-  const fl = $(".ctry-flag"); if (fl) fl.textContent = cityObj().country === "tr" ? "🇹🇷" : "🇰🇬";
+  const fl = $(".ctry-flag"); if (fl) fl.textContent = "🇰🇬";
   const ks = $("#ctrySel"); if (ks) { ks.innerHTML = ["kg"].map(k => `<option value="${k}" ${k === cityObj().country ? "selected" : ""}>${k === "kg" ? "🇰🇬" : "🇹🇷"} ${ctryName(k)}</option>`).join(""); ks.setAttribute("aria-label", ctryName("lbl")); }
   applySeo();
   document.documentElement.lang = LANG;
-  const tb = $("#tabbar"); if (tb) tb.setAttribute("aria-label", { ru: "Навигация", ky: "Навигация", en: "Navigation", tr: "Gezinme" }[LANG] || "Навигация");
+  const tb = $("#tabbar"); if (tb) tb.setAttribute("aria-label", { ru: "Навигация", ky: "Навигация", en: "Navigation" }[LANG] || "Навигация");
   renderBanner();
 }
 /* v36: смена языка без «вспышки». Раньше route() перезапускал CSS-анимацию .view (opacity 0 → 1 + сдвиг 6px),
@@ -283,7 +283,6 @@ document.querySelectorAll(".home-link").forEach(a => { a.addEventListener("click
 setTimeout(() => { try { if (document.fonts && document.fonts.load) ["Manrope", "Unbounded"].forEach(f => ["700", "800"].forEach(w => document.fonts.load(`${w} 16px ${f}`, "ңөүҢӨҮğşıİçöüĞŞ").catch(() => {}))); } catch (e) {} }, 1200);
 $("#themeBtn").onclick = () => { cycleTheme(); renderChrome(); route(true, true); };
 $("#citySel").onchange = e => switchCity(e.target.value);
-$("#ctrySel").onchange = e => switchCountry(e.target.value);
 function switchCity(id) {
   if (id === CITY || !CITIES[id]) return;
   applyCity(id);
@@ -298,8 +297,8 @@ function applyCity(id) {
   CITY = id; localStorage.setItem(CITY_STORE, id);
   const c = CITIES[id];
   DISTRICTS = c.districts.filter(d => !d.far || c.farLoaded || d.id === state.district);
-  DEMO_AQI = c.demoAqi; DEMO_COMPLAINTS = c.complaints; ECO_ROUTES = c.routes;
-  CITY_ORDER.splice(0, CITY_ORDER.length, ...(c.country === "tr" ? TR_ORDER : KG_ORDER));
+  ECO_ROUTES = c.routes;
+  CITY_ORDER.splice(0, CITY_ORDER.length, ...KG_ORDER);
   if (typeof countryAir !== "undefined" && countryAir.ctry !== c.country) { countryAir.status = "idle"; countryAir.byCity = {}; countryAir.ctry = c.country; }
   Object.assign(K, K_BASE, c.k);   // поправки калькулятора (например, COP насоса в морозном Нарыне)
   const D_ALIAS = { bk_chon_aryk_village_lenins: "bk_chon_aryk_village_leninsx" };   // дубль одного села (OSM Q878489) убран
@@ -359,7 +358,7 @@ const districtOptions = sel => {
 /* Подложки карты: Схема (OSM) / Спутник (Esri World Imagery) / Гибрид (спутник + подписи и дороги Esri). Все без ключа.
  * Выбор хранится в localStorage; в тёмной теме фильтр затемнения применяется только к схеме (dark.css). */
 const BASE_KEY = "tazaAba.basemap";
-const BASE_T = { ru: ["Схема", "Спутник", "Гибрид", "Подложка карты"], ky: ["Схема", "Спутник", "Гибрид", "Картанын негизи"], en: ["Map", "Satellite", "Hybrid", "Base map"], tr: ["Harita", "Uydu", "Hibrit", "Altlık"] };
+const BASE_T = { ru: ["Схема", "Спутник", "Гибрид", "Подложка карты"], ky: ["Схема", "Спутник", "Гибрид", "Картанын негизи"], en: ["Map", "Satellite", "Hybrid", "Base map"] };
 const ESRI = p => `https://server.arcgisonline.com/ArcGIS/rest/services/${p}/MapServer/tile/{z}/{y}/{x}`;
 const ESRI_ATTR = 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community';
 /* Производительность карт: canvas-рендерер для кругов/линий, без анимаций на слабых устройствах и при prefers-reduced-motion */
@@ -489,8 +488,8 @@ function viewHome(el) {
         </div>
       </div>
       <div class="meta">
-        <span>PM2.5 ${fmt(a.pm25, 1)} ${(LANG === "en" || LANG === "tr") ? "µg/m³" : "мкг/м³"}</span>
-        ${w ? `<span>🌡️ ${fmt(w.temperature_2m, 0)}°C</span><span>💨 ${fmt(w.wind_speed_10m, 1)} ${(LANG === "en" || LANG === "tr") ? "m/s" : "м/с"}</span>` : ""}
+        <span>PM2.5 ${fmt(a.pm25, 1)} ${LANG === "en" ? "µg/m³" : "мкг/м³"}</span>
+        ${w ? `<span>🌡️ ${fmt(w.temperature_2m, 0)}°C</span><span>💨 ${fmt(w.wind_speed_10m, 1)} ${LANG === "en" ? "m/s" : "м/с"}</span>` : ""}
         ${a.pm10 != null ? `<span>PM10 ${fmt(a.pm10, 0)}</span>` : ""}${a.no2 != null ? `<span>NO₂ ${fmt(a.no2, 0)}</span>` : ""}
         <span>🕒 ${(a.currentTime || "").slice(11, 16)}</span>
       </div>
@@ -580,7 +579,7 @@ function footer() {
 
 /* ---------------- 2. Карта ---------------- */
 let mapLayers = { smog: true, complaints: true, routes: false };
-const allComplaints = () => [...state.complaints.filter(inCity), ...DEMO_COMPLAINTS];
+const allComplaints = () => state.complaints.filter(inCity);   // v58: только свои настоящие жалобы
 const C_EMOJI = { chimney: "🏭", trash: "🔥", dump: "🗑️", car: "🚌", factory: "🏗️" };
 function complaintPopup(c) {
   const st = [t("cStatusSent"), t("cStatusFwd"), t("cStatusDone")][c.status || 0];
@@ -634,12 +633,12 @@ function viewCountry(el) {
           <div style="flex:1"><div class="name">${c.emoji} ${tr(c.name)}</div><div class="small muted" style="font-weight:700">${tr(Lv.name)}</div></div>
           <span class="chip">${t("openCity")} →</span></div>`; }).join("")}
     </div></div></div>
-    <div class="foot">${countryAir.live ? (cityObj().country === "tr" ? ctryT("countryNoteTR") : t("countryNote")) : t("countryDemo")}</div>
+    <div class="foot">${countryAir.live ? t("countryNote") : t("countryDemo")}</div>
   `;
   map = mkMap("mapEl", { zoomControl: true, zoomSnap: 0.25 });
   baseTiles(map);
-  const M = map, isTr = cityObj().country === "tr";
-  const ctB = L.latLngBounds(isTr ? [[35.8, 25.9], [42.2, 44.6]] : CITY_ORDER.map(id => CITIES[id].center)).pad(isTr ? 0 : 0.06);
+  const M = map;
+  const ctB = L.latLngBounds(CITY_ORDER.map(id => CITIES[id].center)).pad(0.06);
   M.fitBounds(ctB, { padding: [8, 8] }); M.setMinZoom(Math.max(2, M.getBoundsZoom(ctB) - 1));
   M.setMaxBounds(ctB.pad(0.6));   // v56: карта страны — только Кыргызстан
   setTimeout(() => { if (map === M && mapMode === "country") { M.invalidateSize(); M.fitBounds(ctB, { padding: [8, 8] }); } }, 350);
@@ -713,7 +712,7 @@ function viewMap(el) {
   const R0 = cityObj().radius || 900, M = map;
   const nn = d => { let m = 1e9; for (const x of DISTRICTS) if (x !== d) m = Math.min(m, kmDist(d, x) * 1000); return m; };
   const pinIcon = (txt, c, sz, cl) => L.divIcon({ className: "", html: `<div class="aqi-pin${cl ? " aqi-cl" : ""}" style="width:${sz}px;height:${sz}px;background:${c}">${txt}</div>`, iconSize: [sz, sz], iconAnchor: [sz / 2, sz / 2] });
-  const popD = d => { const a = air.byDistrict[d.id], Lv = level(a.aqi); return `<b>${esc(dName(d))}</b>${d.grp && typeof GRP_NAME !== "undefined" ? `<br><small>${esc(tr(GRP_NAME[d.grp]))}</small>` : ""}<br>US AQI: <b style="color:${Lv.color}">${aqiTxt(a.aqi)}</b> — ${tr(Lv.name)}<br>PM2.5: ${fmt(a.pm25, 1)}<br>${t("popupCoal")}: ${d.coalShare == null ? "—" : Math.round(d.coalShare * 100) + "%"}${a.sDrop ? `<br><small style="color:#9a6b12">⚠️ ${({ ru: "датчик рядом исключён как сбойный", ky: "жакынкы датчик бузук катары эсепке алынган жок", en: "a nearby sensor was excluded as faulty", tr: "yakındaki bir sensör arızalı olarak çıkarıldı" })[LANG] || "датчик рядом исключён как сбойный"}</small>` : ""}`; };
+  const popD = d => { const a = air.byDistrict[d.id], Lv = level(a.aqi); return `<b>${esc(dName(d))}</b>${d.grp && typeof GRP_NAME !== "undefined" ? `<br><small>${esc(tr(GRP_NAME[d.grp]))}</small>` : ""}<br>US AQI: <b style="color:${Lv.color}">${aqiTxt(a.aqi)}</b> — ${tr(Lv.name)}<br>PM2.5: ${fmt(a.pm25, 1)}<br>${t("popupCoal")}: ${d.coalShare == null ? "—" : Math.round(d.coalShare * 100) + "%"}${a.sDrop ? `<br><small style="color:#9a6b12">⚠️ ${({ ru: "датчик рядом исключён как сбойный", ky: "жакынкы датчик бузук катары эсепке алынган жок", en: "a nearby sensor was excluded as faulty" })[LANG] || "датчик рядом исключён как сбойный"}</small>` : ""}`; };
   const MSu = window.MS_STYLE && typeof msSmog === "function" ? msSmog(M, layers.smog, popD) : null, smogT = MSu ? L.layerGroup() : layers.smog;   /* прототипы стилей ?mapstyle= */
   const circ = new Map(), pins = new Map(), pinG = L.layerGroup().addTo(smogT);
   let sat = baseMode() !== "osm";
@@ -1024,7 +1023,7 @@ function ruleAnswer(q) {
 async function answerFree(q) {
   const cfg = llmCfg();
   if (!cfg.key) { await new Promise(r => setTimeout(r, 500)); return ruleAnswer(q); }
-  const langName = { ru: "Russian", ky: "Kyrgyz (Cyrillic)", en: "English", tr: "Turkish" }[LANG];
+  const langName = { ru: "Russian", ky: "Kyrgyz (Cyrillic)", en: "English" }[LANG];
   const ctx = adv.result ? `User home: ${JSON.stringify(adv.result.ans)}; rule-based recommendation: ${adv.result.rec.id}, cost ${Math.round(adv.result.rec.cost)} som, savings ${Math.round(adv.result.rec.save)} som/yr.` : "No home data yet.";
   try {
     const ctl = new AbortController(); setTimeout(() => ctl.abort(), 20000);
@@ -1226,9 +1225,10 @@ function viewComplaints(el) {
       <button class="btn block" id="cSend" style="margin-top:10px">${t("cSubmit")}</button>
     </div>
     <h2>${t("cList")}</h2>
+    ${allComplaints().length ? "" : `<div class="card muted c-empty" style="text-align:center;font-weight:700">${Q("cmpEmpty")}</div>`}
     ${allComplaints().map(c => `<div class="card c-item">
       <div class="c-thumb">${hasPhoto(c) ? phImg(c, 'alt=""') : (C_EMOJI[c.cat] || "⚠️")}</div>
-      <div style="flex:1;min-width:0"><b>${t("cat_c_" + c.cat)}</b>${c.mine ? ` <span class="chip">${t("cMine")}</span>` : ` <span class="chip demo">${t("demoChip")}</span>`}
+      <div style="flex:1;min-width:0"><b>${t("cat_c_" + c.cat)}</b> <span class="chip">${t("cMine")}</span>
         <div class="small" style="font-weight:600;margin:2px 0">${esc(tr(c.text)) || "—"}</div>
         <div class="steps">${st.map((s, i) => `<span class="${i <= (c.status || 0) ? "on" : ""}">${s}</span>`).join("")}</div>
         <div class="small muted" style="font-weight:700;margin-top:4px">📍 ${esc(dName(nearestDistrict(c.lat, c.lon)))} · ${esc(fmtDay(c.date))}${c.mine ? ` · <a href="#" data-del="${c.id}" style="color:#c9303a">${t("cDelete")}</a>` : ""}</div>

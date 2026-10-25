@@ -19,10 +19,7 @@ const SRC_T = {
     emb: "US Embassy", measured: "Measured: {s}, {t}", agree: "Model vs measurements", agOk: "agree", agMid: "differ noticeably", agBad: "differ strongly", agHi: "model overestimates", agLo: "model underestimates",
     agNone: "nothing to compare: no fresh measurements near the districts", agPts: "{n} points, median difference {d} AQI", keys: "More sources turn on with a free key in config.js: {l}", stNone: "{s}: no fresh data (older than 3 h or station silent)",
     mg: "MoveGreen: no open API — not connected", layer: "📡 Measurements", stLbl: "station", ago: "{m} min ago", near: "nearest to the district: {k} km", far: "no sensors near the district", waqiAqi: "AQI as computed by WAQI" },
-  tr: { hMeas: "ABD Büyükelçiliği ölçümleri (AirNow), 7 gün: günlük PM2.5", hMeasSub: "çizgi — ölçüm, noktalar — semtiniz için CAMS modeli", hMeasNone: "AirNow: son 7 günde şehirde ölçüm yok (ABD büyükelçilik verisi paylaşımı Mart 2025'ten beri askıda).", hNoKey: "ABD Büyükelçiliği ölçüm geçmişi ücretsiz AirNow anahtarıyla eklenebilir (config.js → AIRNOW_KEY). WAQI geçmiş vermiyor; OpenAQ yalnızca kendi proxy'nizle.", hLoad: "AirNow ölçümleri yükleniyor…", hMeasErr: "AirNow yanıt vermedi", card: "Şu anki veri kaynakları", model: "CAMS modeli (Open-Meteo)", modelSub: "semt için hesap, ölçüm değil", sc: "Sensor.Community", scSub: "şehirde {n} sensör · medyan", scNone: "şehirde güncel sensör yok",
-    emb: "ABD Büyükelçiliği", measured: "Ölçüldü: {s}, {t}", agree: "Model ve ölçümler", agOk: "uyumlu", agMid: "belirgin farklı", agBad: "çok farklı", agHi: "model yüksek tahmin ediyor", agLo: "model düşük tahmin ediyor",
-    agNone: "karşılaştırılacak veri yok: semtlerin yakınında güncel ölçüm yok", agPts: "{n} nokta, fark medyanı {d} AQI", keys: "Diğer kaynaklar config.js'deki ücretsiz anahtarla açılır: {l}", stNone: "{s}: güncel veri yok (3 saatten eski veya istasyon sessiz)",
-    mg: "MoveGreen: açık API yok — bağlanmadı", layer: "📡 Ölçümler", stLbl: "istasyon", ago: "{m} dk önce", near: "semte en yakın: {k} km", far: "semtin yakınında sensör yok", waqiAqi: "WAQI'nin hesapladığı AQI" },
+  
 };
 const ST = (k, v = {}) => String((SRC_T[LANG] || SRC_T.ru)[k] ?? SRC_T.ru[k] ?? k).replace(/\{(\w+)\}/g, (m, x) => v[x] ?? m);
 const SRC_NAME = { airnow: "AirNow", waqi: "WAQI", openaq: "OpenAQ" };

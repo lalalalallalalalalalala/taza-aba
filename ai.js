@@ -34,19 +34,11 @@ const AI_T = {
     empty: "The model returned an empty answer.", clear: "🗑 Clear chat", stop: "■ Stop", stopped: "(stopped)", wait: "Thinking…",
     title: "⚙️ AI: free, your own key, or rules", sub: "Answers any question; for air, smog and health it uses your district's data",
     s: ["Write a short poem about the Ala-Too mountains", "What is the capital of Japan?", "What is PM2.5 in simple words?", "A quick dinner from what's at home", "Help me write a letter to the city hall about smoke", "What can kids do at home on a smoggy day?"] },
-  tr: { freeName: "Ücretsiz yapay zekâ (anahtarsız)", mChat: "Her şeyi sor", on: "🟢 Ücretsiz YZ: Pollinations.AI → LLM7.io → kurallar",
-    priv: "🔒 Sorular üçüncü taraf YZ hizmeti {svc}'ya (yedek: {svc2}) gönderilir ve hesabınızla ilişkilendirilmez. Kişisel bilgi yazmayın.",
-    privOwn: "🔒 Sorular kendi anahtarınızla {svc}'ya gider; hesap verisi gönderilmez.", privRules: "🔒 Kural modu: sorular hiçbir yere gönderilmez.",
-    hello: "Selam! Ben Taza Aba asistanıyım. Bana her şeyi sorabilirsiniz — dumandan ve sağlıktan şiire, derslere ve yemek tariflerine kadar. Bölgenizdeki hava hakkında güncel verilerim de var.",
-    suggL: "Her şeyi sorun", via: "yanıt: {svc} · YZ hata yapabilir", failNo: "Ücretsiz YZ hizmetleri şu an yanıt vermedi (sınır veya arıza). Yarım dakika sonra tekrar deneyin — ya da aşağıdaki hızlı sorulardan birine dokunun: onları YZ olmadan da yanıtlarım.", fail: "Ücretsiz YZ hizmetleri şu an yanıt vermedi (sınır veya arıza) — aşağıda kurallara dayalı yanıt var. Yarım dakika sonra tekrar deneyin.",
-    empty: "Model boş yanıt döndürdü.", clear: "🗑 Sohbeti temizle", stop: "■ Durdur", stopped: "(durduruldu)", wait: "Düşünüyorum…",
-    title: "⚙️ YZ: ücretsiz, kendi anahtarınız veya kurallar", sub: "Her soruyu yanıtlar; hava, duman ve sağlık için bölgenizin verilerini kullanır",
-    s: ["Dağlar hakkında kısa bir şiir yaz", "Japonya'nın başkenti neresi?", "PM2.5 basitçe nedir?", "Evdeki malzemelerle hızlı akşam yemeği", "Belediyeye duman hakkında mektup yazmama yardım et", "Dumanlı bir günde çocuklar evde ne yapabilir?"] },
+  
 };
 const AIT = (k, v = {}) => String((AI_T[LANG] || AI_T.en)[k] ?? AI_T.ru[k] ?? k).replace(/\{(\w+)\}/g, (m, x) => v[x] ?? m);
 if (typeof AD !== "undefined") Object.keys(AI_T).forEach(l => { if (AD[l]) AD[l].m_chat = AI_T[l].mChat; });
 ["ru", "ky", "en"].forEach(l => { if (DICT[l]) Object.assign(DICT[l], { llmTitle: AI_T[l].title, advSub: AI_T[l].sub }); });
-if (typeof DICT !== "undefined" && DICT.tr) Object.assign(DICT.tr, { llmTitle: AI_T.tr.title, advSub: AI_T.tr.sub });
 
 /* ---------- история чата в рамках вкладки (sessionStorage) ---------- */
 const AI_SS = "tazaAba.chat";
@@ -128,7 +120,7 @@ function aiContext() {
   return lines.join(" ");
 }
 function aiSystem() {
-  const lang = { ru: "Russian", ky: "Kyrgyz (Cyrillic script)", en: "English", tr: "Turkish" }[LANG] || "Russian";
+  const lang = { ru: "Russian", ky: "Kyrgyz (Cyrillic script)", en: "English" }[LANG] || "Russian";
   return `You are the assistant of «Taza Aba», a free air-quality web app for Kyrgyzstan. You are a friendly, knowledgeable general helper: answer ANY question on any topic (facts, writing, poems, study, coding, cooking, travel, everyday life) helpfully, accurately and concisely. You also have extra expertise in air quality, smog, PM2.5, protecting health, cleaner home heating (insulation, heat pumps, solar instead of coal) and this app's data. Use the live context below only when it is relevant; never invent measurements — AQI values come from the CAMS model and are estimates. If you are unsure, say so. Always reply in ${lang}, unless the user explicitly asks for another language. Format with simple Markdown only (paragraphs, **bold**, lists, \`code\`); never output HTML. Refuse only clearly harmful requests (weapons, violence, self-harm methods, illegal or hateful content) — briefly and kindly. For medical emergencies tell the user to call emergency services (103 in Kyrgyzstan).\nLive context: ${aiContext()}`;
 }
 function aiHistory() {

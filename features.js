@@ -7,7 +7,7 @@ const FT_T = {
   ru: {
     ca: "Чистый воздух внутри", caSub: "Кафе, коворкинги и ТЦ с очистителями воздуха, где можно переждать смог",
     tf: "Транспорт и смог", tfSub: "Главные дороги, NO₂ по районам и оценка вклада транспорта",
-    tr: "Где посадить деревья", trSub: "Кандидаты для посадки: много смога, мало зелени, рядом дороги и школы",
+    trSub: "Кандидаты для посадки: много смога, мало зелени, рядом дороги и школы",
     lCa: "Чистый воздух внутри", lTf: "Транспорт · NO₂", lTr: "Посадка деревьев", lTt: "🚦 Пробки (TomTom)",
     verified: "проверено", unverified: "не проверено", caEmptyH: "Проверенных мест пока нет",
     caEmpty: "Мы не выдумываем места. Знаете кафе, коворкинг или ТЦ, где работает очиститель воздуха (лучше HEPA H13/H14)? Предложите его — оно появится у вас на карте с пометкой «не проверено», а отправленное в проект после проверки попадёт в общий список.",
@@ -44,7 +44,7 @@ const FT_T = {
   ky: {
     ca: "Ичинде таза аба", caSub: "Аба тазалагычы бар кафе, коворкинг жана соода борборлору — смогду күтүп турууга",
     tf: "Транспорт жана смог", tfSub: "Негизги жолдор, райондогу NO₂ жана транспорттун үлүшүн баалоо",
-    tr: "Дарак кайда отургузуу керек", trSub: "Отургузууга талапкерлер: смог көп, жашыл аз, жанында жол жана мектеп",
+    trSub: "Отургузууга талапкерлер: смог көп, жашыл аз, жанында жол жана мектеп",
     lCa: "Ичинде таза аба", lTf: "Транспорт · NO₂", lTr: "Дарак отургузуу", lTt: "🚦 Тыгын (TomTom)",
     verified: "текшерилген", unverified: "текшерилген эмес", caEmptyH: "Азырынча текшерилген жер жок",
     caEmpty: "Биз жерлерди ойлоп чыгарбайбыз. Аба тазалагычы (жакшысы HEPA H13/H14) иштеген кафе, коворкинг же соода борборун билесизби? Сунуштаңыз — ал картаңызда «текшерилген эмес» белгиси менен чыгат, ал эми долбоорго жөнөтүлгөнү текшерүүдөн кийин жалпы тизмеге кошулат.",
@@ -81,7 +81,7 @@ const FT_T = {
   en: {
     ca: "Clean air indoors", caSub: "Cafés, coworkings and malls with air purifiers where you can wait out smog",
     tf: "Traffic and smog", tfSub: "Major roads, NO₂ by district and an estimate of traffic's share",
-    tr: "Where to plant trees", trSub: "Planting candidates: lots of smog, little greenery, near roads and schools",
+    trSub: "Planting candidates: lots of smog, little greenery, near roads and schools",
     lCa: "Clean air indoors", lTf: "Traffic · NO₂", lTr: "Tree planting", lTt: "🚦 Traffic jams (TomTom)",
     verified: "verified", unverified: "not verified", caEmptyH: "No verified places yet",
     caEmpty: "We don't make places up. Know a café, coworking or mall with a working air purifier (ideally HEPA H13/H14)? Suggest it — it appears on your map marked “not verified”, and once sent to the project and checked it can join the shared list.",
@@ -115,43 +115,7 @@ const FT_T = {
     noSnap: "There is no prepared OpenStreetMap snapshot for this city yet.", loadLive: "Load from OpenStreetMap now", roadsN: "Roads on the map: {n}",
     planted: "🌱 I planted a tree", plantedN: "You've planted: {n}", plantShare: "I've planted {n} tree(s). Join in — Taza Aba", srcLbl: "Source",
   },
-  tr: {
-    ca: "İç mekânda temiz hava", caSub: "Dumanı beklemek için hava temizleyicili kafe, ortak çalışma alanı ve AVM'ler",
-    tf: "Trafik ve duman", tfSub: "Ana yollar, semtlere göre NO₂ ve trafiğin payına dair tahmin",
-    tr: "Nereye ağaç dikilir", trSub: "Dikim adayları: duman çok, yeşil az, yol ve okullara yakın",
-    lCa: "İçeride temiz hava", lTf: "Trafik · NO₂", lTr: "Ağaç dikimi", lTt: "🚦 Trafik (TomTom)",
-    verified: "doğrulandı", unverified: "doğrulanmadı", caEmptyH: "Henüz doğrulanmış yer yok",
-    caEmpty: "Yer uydurmuyoruz. Hava temizleyicisi (tercihen HEPA H13/H14) çalışan bir kafe, ortak çalışma alanı veya AVM biliyor musunuz? Önerin — haritanızda “doğrulanmadı” işaretiyle görünür; projeye gönderilip kontrol edildikten sonra ortak listeye eklenebilir.",
-    suggest: "➕ Yer öner", myPlaces: "Önerilerim (bu cihazda)", vList: "Doğrulanmış yerler",
-    fName: "Ad", fType: "Tür", fAddr: "Adres veya yer tarifi", fPoint: "Haritada nokta — haritaya dokunun", fPur: "Temizleyici türü", fMeas: "İçeride kendi PM2.5 ölçümünüz, µg/m³ (isteğe bağlı)", fDev: "Cihaz (isteğe bağlı)", fNote: "Yorum",
-    tCafe: "Kafe", tCowork: "Ortak çalışma alanı", tMall: "AVM", tLib: "Kütüphane", tOther: "Diğer",
-    pH13: "HEPA H13/H14", pHepa: "HEPA (sınıfı bilinmiyor)", pOther: "Başka filtre", pUnk: "Bilmiyorum",
-    save: "Kaydet", cancel: "İptal", del: "Sil", needName: "Ad girin ve haritada nokta seçin", saved: "Bu cihaza kaydedildi",
-    send: "Projeye gönder:", copy: "Kopyala", copied: "Kopyalandı",
-    advCa: "AQI 150'nin üzerinde. Hava temizleyicili en yakın doğrulanmış yer: {n} ({k} km).",
-    plTxt: "“Taza Aba — içeride temiz hava” için yer öneriyorum",
-    roadsLoad: "Ana yollar OpenStreetMap'ten yükleniyor…", roadsErr: "OSM yolları yüklenemedi — daha sonra deneyin.",
-    roadsSrc: "Yollar: © OpenStreetMap (otoyol, ana ve ikincil yollar). Renk — en yakın semtteki CAMS modeli NO₂.",
-    no2: "NO₂ (model)", estH: "Trafik ve ısınmanın payı — tahmin", estNote: "Bu bir sezgisel tahmindir, ölçüm değil.", how: "Nasıl hesaplıyoruz?",
-    trans: "Trafik", heat: "Isınma ve diğer", inputs: "Girdiler (CAMS, son 3 gün, “{d}” semti):",
-    rush: "Yoğun saat / gece NO₂", ratioNP: "NO₂ / PM2.5", ratioPP: "PM2.5 / PM10", cold: "Ortalama sıcaklık",
-    loadingH: "Saatlik veriler yükleniyor…", noData: "Veri yok",
-    howH: "Trafiğin payını nasıl tahmin ediyoruz",
-    howTxt: "<p>NO₂ egzozun ana izidir. Semt için CAMS modelinin (Open-Meteo) 3 günlük saatlik değerlerini alıp üç işaret hesaplıyoruz:</p><ol><li><b>Yoğun saatler</b>: 7–10 ve 17–20'deki ortalama NO₂, gece (1–5) değerine bölünür. T₁ = (R−1)/1,5, 0…1 arasında.</li><li><b>NO₂/PM2.5</b>: egzozda yüksek, kömür dumanında düşük. T₂ = (x−0,3)/0,9.</li><li><b>PM2.5/PM10</b>: yanma dumanı ince (pay > 0,7), yol tozu daha iri. T₃ = (0,8−y)/0,4.</li></ol><p>Trafik = 0,45·T₁ + 0,35·T₂ + 0,20·T₃; ısınma = 0,5·(1−T₂) + 0,3·(1−T₃) + 0,2·soğuk (+10 °C altı). Paylar bu puanların oranıdır. Semtleri karşılaştırmak için kaba bir tahmindir, çalışmanın yerini tutmaz.</p>",
-    studies: "Bişkek için yayımlanmış çalışmalar",
-    st1: "WRF–CAMx modeli (Air dergisi, 2024): yıllık PM2.5 — konut ısınması ve yemek pişirme %29, ulaşım %27, termik santral %11, toz %9, sınır ötesi %21; kışın konut ısınması ~%40'a, yazın ulaşım ~%30'a kadar.",
-    st2: "Dünya Bankası (2024): “Air Quality Analysis for Bishkek — PM2.5 Source Apportionment and Emission Reduction Measures”.",
-    st3: "UNDP (Key Messages, 2023): karayolu ulaşımı en büyük NOx kaynağı; termik santralin yer seviyesindeki PM payı %1'in altında.",
-    cand: "aday — belediye onayı gerekir", candN: "{n} aday", whyH: "Neden burası:", wAqi: "semt AQI {a}", wGreen: "en yakın yeşile ~{m} m", wRoad: "yakında yol: {r}", wSchool: "yakında: {s}",
-    trLoad: "Parklar, okullar ve yollar OpenStreetMap'ten yükleniyor…", trNone: "Uygun aday bulunamadı — ya yeterince yeşil var ya da OSM verisi yok.",
-    trSrc: "Veri: © OpenStreetMap (parklar, meydanlar, ormanlar, çimler, okullar, anaokulları, hastaneler, ana yollar) + CAMS modeli AQI. Aday = ~400 m içinde yeşil yok, yakında ana yol veya okul/anaokulu/hastane var, semt AQI şehir medyanının üzerinde.",
-    spH: "Hangi ağaçlar dikilmeli", spBk: "Bişkek için Bishkekzelenstroy ve E. Gareev Botanik Bahçesi yaprak döken ağaçları öneriyor: karaağaç, gladiçya, meşe, akçaağaç, ıhlamur, kavak; yaşlı kavakların yerine Botanik Bahçesi Kırım çamı ve çınar yapraklı akçaağaç önerdi. Tam liste — Botanik Bahçesi önerilerinde (2017).",
-    spGen: "Şehriniz için doğrulanmış bir tür listemiz yok. Genel öneri: kuraklığa ve dona dayanıklı, geniş taçlı yerel yaprak döken ağaçlar ve yerel fidanlık fidanları seçin; mutlaka belediyeye veya orman müdürlüğüne danışın.",
-    seasH: "Ne zaman dikilir", seas: "İlkbahar ana dikim mevsimidir (Bişkek'te Zelenstroy sezonu baharla açar). Sonbahar dikimi (yaprak dökümünden sonra, dondan önce) genel uygulamadır — uzmanlara danışın.",
-    permH: "İzin nasıl alınır", permBk: "Şehir arazisine dikim yalnızca onayla yapılabilir. Bishkekzelenstroy bilgi için kendilerine başvurulmasını öneriyor; Bişkek belediyesine danışın.", permGen: "Belediyeye danışın.", permTr: "Belediyeye danışın.",
-    noSnap: "Bu şehir için henüz hazır bir OpenStreetMap kopyası yok.", loadLive: "Şimdi OpenStreetMap'ten yükle", roadsN: "Haritadaki yollar: {n}",
-    planted: "🌱 Ağaç diktim", plantedN: "Diktiğiniz: {n}", plantShare: "Şimdiye kadar {n} ağaç diktim. Sen de katıl — Taza Aba", srcLbl: "Kaynak",
-  },
+  
 };
 const FT = (k, v = {}) => String((FT_T[LANG] || FT_T.ru)[k] ?? FT_T.ru[k] ?? k).replace(/\{(\w+)\}/g, (m, x) => v[x] ?? m);
 const FCFG = () => window.TAZA_CONFIG || {};
@@ -406,7 +370,7 @@ function trLayer(onState) {
   return lg;
 }
 function viewTrees(el) {
-  const bk = CITY === "bishkek", trc = cityObj().country === "tr";
+  const bk = CITY === "bishkek";
   el.innerHTML = `<h1>${FT("tr")}</h1><p class="sub">${FT("trSub")}</p>
     <div class="map-grid"><div class="map-col"><div id="trMap" class="mini-map" style="height:400px"></div>
       <p class="small muted" id="trStat">${FT("trLoad")}</p><p class="small muted">${FT("trSrc")}</p></div>
@@ -415,7 +379,7 @@ function viewTrees(el) {
         <div class="share-row" style="margin-top:8px"><a class="sh-a" id="trShTg" target="_blank" rel="noopener">✈️ Telegram</a><a class="sh-a" id="trShWa" target="_blank" rel="noopener">💬 WhatsApp</a><button class="sh-a" id="trShCp" type="button">📋 ${FT("copy")}</button></div></div>
       <div class="card"><h3>🌿 ${FT("spH")}</h3><p>${FT(bk ? "spBk" : "spGen")}</p>${bk ? `<p class="small">${FT("srcLbl")}: ${ftLink(SRC_LINKS.zelen, "TopNews.kg — «Бишкекзеленстрой»")} · ${ftLink(SRC_LINKS.vesti, "Вести.kg — мэрия Бишкека")} · ${ftLink(SRC_LINKS.botsad, "Ботсад им. Э. Гареева (2017)")}</p>` : ""}</div>
       <div class="card"><h3>📅 ${FT("seasH")}</h3><p>${FT("seas")}</p>${bk ? `<p class="small">${FT("srcLbl")}: ${ftLink(SRC_LINKS.zelen, "TopNews.kg")}</p>` : ""}</div>
-      <div class="card"><h3>📝 ${FT("permH")}</h3><p>${FT(bk ? "permBk" : trc ? "permTr" : "permGen")}</p>${bk ? `<p class="small">${FT("srcLbl")}: ${ftLink(SRC_LINKS.zelen, "TopNews.kg")}</p>` : ""}</div>
+      <div class="card"><h3>📝 ${FT("permH")}</h3><p>${FT(bk ? "permBk" : "permGen")}</p>${bk ? `<p class="small">${FT("srcLbl")}: ${ftLink(SRC_LINKS.zelen, "TopNews.kg")}</p>` : ""}</div>
     </div></div><div class="foot">${t("footProto")}</div>`;
   const m = mkMap("trMap", { zoomControl: true }).setView(cityObj().center, cityObj().zoom || 12); map = m; baseTiles(m);
   trLayer(st => ftStat("#trStat", st, n => n ? "" + FT("candN", { n }) + " · " + FT("cand") : FT("trNone"))).addTo(m);

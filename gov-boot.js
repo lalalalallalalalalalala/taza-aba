@@ -4,7 +4,7 @@ const GVB = {
   ru: { gov: "Для мэрии и государства", govSub: "Панель решений, прогноз смога, отчёт и открытые данные", pol: "Меры с доказанной пользой", polSub: "Источники: Всемирный банк, ПРООН, ВОЗ, ЮНИСЕФ", br: "Памятка для акимата", brSub: "Смог в городе на 1 странице: ситуация, меры на завтра и на сезон" },
   ky: { gov: "Мэрия жана мамлекет үчүн", govSub: "Чечим панели, түтүн божомолу, отчёт жана ачык маалымат", pol: "Пайдасы далилденген чаралар", polSub: "Булактар: Дүйнөлүк банк, БУУӨП, ДССУ, ЮНИСЕФ", br: "Акимчилик үчүн эскертме", brSub: "Шаардагы түтүн 1 баракта: абал, эртеңки жана сезондук чаралар" },
   en: { gov: "For city hall & government", govSub: "Decision dashboard, smog forecast, report and open data", pol: "Evidence-based measures", polSub: "Sources: World Bank, UNDP, WHO, UNICEF", br: "Brief for the akimat", brSub: "City smog on one page: situation, measures for tomorrow and the season" },
-  tr: { gov: "Belediye ve devlet için", govSub: "Karar paneli, duman tahmini, rapor ve açık veri", pol: "Kanıta dayalı önlemler", polSub: "Kaynaklar: Dünya Bankası, UNDP, DSÖ, UNICEF", br: "Akimlik için özet", brSub: "Şehirde duman tek sayfada: durum, yarın ve sezon için önlemler" },
+  
 };
 const GB = k => (GVB[LANG] || GVB.ru)[k] || GVB.ru[k];
 if (typeof NAV_ICO !== "undefined") {

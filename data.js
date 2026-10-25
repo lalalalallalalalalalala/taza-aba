@@ -97,22 +97,9 @@ const BK_DEMO_GROUPS = [];   // v54: групповые закупки удал�
 
 const BK_DEMO_LEADERBOARD = {};   // v54: демо-рейтинг удалён
 
-/* Запасные ДЕМО-значения US AQI, если API недоступен (типичная картина ранней зимы). */
-const BK_DEMO_AQI = { center: 118, akorgo: 168, archa: 182, akordo: 175, kalys: 160, alamedin: 128, tunguch: 122, dzhal: 98, asanbay: 92, vostok5: 135 };
+const BK_DEMO_AQI = {};   // v58: без выдуманных AQI
 
-/* DEMO: жалобы на источники загрязнения. */
-const BK_DEMO_COMPLAINTS = [
-  { id: "d1", lat: 42.9068, lon: 74.5402, cat: "chimney", status: 1, date: "2026-10-16", emoji: "🏭",
-    text: { ru: "Котельная частного дома дымит чёрным с 6 утра", ky: "Жеке үйдүн казаны эртең мененки 6дан бери кара түтүн чыгарып жатат", en: "A private boiler has been puffing black smoke since 6 am" } },
-  { id: "d2", lat: 42.9135, lon: 74.5030, cat: "trash", status: 2, date: "2026-10-14", emoji: "🔥",
-    text: { ru: "Жгут листья и пластик у арыка", ky: "Арыктын жанында жалбырак менен пластик өрттөп жатышат", en: "Leaves and plastic burned next to the irrigation ditch" } },
-  { id: "d3", lat: 42.8925, lon: 74.4835, cat: "dump", status: 1, date: "2026-10-15", emoji: "🗑️",
-    text: { ru: "Стихийная свалка, иногда поджигают", ky: "Өз алдынча пайда болгон таштанды үйүндүсү, кээде өрттөп коюшат", en: "Illegal dump, sometimes set on fire" } },
-  { id: "d4", lat: 42.8745, lon: 74.6195, cat: "car", status: 0, date: "2026-10-17", emoji: "🚌",
-    text: { ru: "Маршрутка №110 сильно дымит", ky: "№110 маршруттук такси катуу түтүн чыгарат", en: "Minibus No. 110 emits heavy smoke" } },
-  { id: "d5", lat: 42.9195, lon: 74.6585, cat: "chimney", status: 2, date: "2026-10-12", emoji: "🏠",
-    text: { ru: "Топят шинами, дым на всю улицу", ky: "Дөңгөлөк менен жагышат, түтүн бүт көчөгө тарайт", en: "Burning tyres for heat, smoke over the whole street" } },
-];
+const BK_DEMO_COMPLAINTS = [];   // v58: без выдуманных жалоб
 
 /* DEMO: эко-маршруты (координаты проложены вручную, приблизительно). */
 const BK_ECO_ROUTES = [
@@ -150,15 +137,8 @@ const NR_DISTRICTS = [
 const NR_DEMO_HOMES = [];
 const NR_DEMO_GROUPS = [];
 const NR_DEMO_LEADERBOARD = {};
-const NR_DEMO_AQI = { n_center: 105, n_west: 152, n_east: 146, n_left: 128, n_north: 134 };
-const NR_DEMO_COMPLAINTS = [
-  { id: "nd1", lat: 41.4340, lon: 75.9460, cat: "chimney", status: 1, date: "2026-10-16",
-    text: { ru: "Котельная дымит с утра, весь двор в саже", ky: "Казан эртеден бери түтүндөп, короо толугу менен күйөгө толду", en: "A boiler smoking since morning, the whole yard covered in soot" } },
-  { id: "nd2", lat: 41.4170, lon: 75.9880, cat: "trash", status: 0, date: "2026-10-17",
-    text: { ru: "Жгут мусор у берега реки Нарын", ky: "Нарын дарыясынын жээгинде таштанды өрттөп жатышат", en: "Trash being burned on the Naryn riverbank" } },
-  { id: "nd3", lat: 41.4260, lon: 76.0380, cat: "dump", status: 2, date: "2026-10-11",
-    text: { ru: "Стихийная свалка на выезде из города", ky: "Шаардан чыга бериште өз алдынча пайда болгон таштанды үйүндүсү", en: "Illegal dump at the edge of town" } },
-];
+const NR_DEMO_AQI = {};
+const NR_DEMO_COMPLAINTS = [];
 const NR_ECO_ROUTES = [
   { id: "nr1", mode: "walk", color: "#2e9e5b",
     name: { ru: "Набережная реки Нарын", ky: "Нарын дарыясынын жээги", en: "Naryn river embankment" },
@@ -187,14 +167,14 @@ const CITIES = {
 /* ================= ДРУГИЕ ГОРОДА (DEMO-генератор) =================
  * Для Оша, Джалал-Абада, Каракола, Таласа, Баткена и Токмока реальные границы массивов не
  * используются: районы названы по сторонам света («Центр», «Северная часть» …), координаты —
- * смещения от центра города (приблизительно). Жалобы и маршруты — DEMO.
+ * смещения от центра города (приблизительно). Маршруты проложены вручную.
  */
 const SIDE = {
-  center: { name: { ru: "Центр", ky: "Борбор", en: "Centre", tr: "Merkez" }, type: "apts", dlat: 0, dlon: 0 },
-  north: { name: { ru: "Северная часть", ky: "Түндүк бөлүгү", en: "North side", tr: "Kuzey kesimi" }, loc: { ru: "в северной части", ky: "түндүк бөлүгүндө", en: "on the north side", tr: "kuzey kesiminde" }, type: "private", dlat: 0.013, dlon: 0.004 },
-  south: { name: { ru: "Южная часть", ky: "Түштүк бөлүгү", en: "South side", tr: "Güney kesimi" }, loc: { ru: "в южной части", ky: "түштүк бөлүгүндө", en: "on the south side", tr: "güney kesiminde" }, type: "private", dlat: -0.013, dlon: -0.003 },
-  east: { name: { ru: "Восточная часть", ky: "Чыгыш бөлүгү", en: "East side", tr: "Doğu kesimi" }, loc: { ru: "в восточной части", ky: "чыгыш бөлүгүндө", en: "on the east side", tr: "doğu kesiminde" }, type: "micro", dlat: 0.002, dlon: 0.02 },
-  west: { name: { ru: "Западная часть", ky: "Батыш бөлүгү", en: "West side", tr: "Batı kesimi" }, loc: { ru: "в западной части", ky: "батыш бөлүгүндө", en: "on the west side", tr: "batı kesiminde" }, type: "private", dlat: -0.002, dlon: -0.02 },
+  center: { name: { ru: "Центр", ky: "Борбор", en: "Centre" }, type: "apts", dlat: 0, dlon: 0 },
+  north: { name: { ru: "Северная часть", ky: "Түндүк бөлүгү", en: "North side" }, loc: { ru: "в северной части", ky: "түндүк бөлүгүндө", en: "on the north side" }, type: "private", dlat: 0.013, dlon: 0.004 },
+  south: { name: { ru: "Южная часть", ky: "Түштүк бөлүгү", en: "South side" }, loc: { ru: "в южной части", ky: "түштүк бөлүгүндө", en: "on the south side" }, type: "private", dlat: -0.013, dlon: -0.003 },
+  east: { name: { ru: "Восточная часть", ky: "Чыгыш бөлүгү", en: "East side" }, loc: { ru: "в восточной части", ky: "чыгыш бөлүгүндө", en: "on the east side" }, type: "micro", dlat: 0.002, dlon: 0.02 },
+  west: { name: { ru: "Западная часть", ky: "Батыш бөлүгү", en: "West side" }, loc: { ru: "в западной части", ky: "батыш бөлүгүндө", en: "on the west side" }, type: "private", dlat: -0.002, dlon: -0.02 },
 };
 const SURNAMES = [
   { ru: "Семья Абдраимовых", ky: "Абдраимовдордун үй-бүлөсү", en: "The Abdraimov family" },
@@ -209,20 +189,14 @@ function makeCity(c) {
     const S = SIDE[sd];
     return { id: `${c.id}_${sd}`, lat: +(c.center[0] + S.dlat).toFixed(4), lon: +(c.center[1] + S.dlon).toFixed(4),
       factor: c.factors[i], coalShare: c.coal[i], type: S.type, name: S.name,
-      loc: sd === "center" ? { ru: `в центре ${c.gen.ru}`, ky: `${c.gen.ky} борборунда`, en: `in central ${c.name.en}`, tr: `${c.name.en} merkezinde` } : S.loc };
+      loc: sd === "center" ? { ru: `в центре ${c.gen.ru}`, ky: `${c.gen.ky} борборунда`, en: `in central ${c.name.en}` } : S.loc };
   });
   const D = i => districts[i % districts.length];
   const off = (d, a, b) => [+(d.lat + a).toFixed(4), +(d.lon + b).toFixed(4)];
   const homes = [];   // v54: без выдуманных домов
   const d1 = D(1), d2 = D(0);
   const groups = [];   // v54: без выдуманных закупок
-  const [c1lat, c1lon] = off(D(1), 0.003, -0.004), [c2lat, c2lon] = off(D(2), -0.002, 0.004);
-  const complaints = [
-    { id: `${c.id}_c1`, lat: c1lat, lon: c1lon, cat: "chimney", status: 1, date: "2026-10-16",
-      text: { ru: "Чёрный дым из трубы частного дома каждый вечер", ky: "Жеке үйдүн морунан ар кечте кара түтүн чыгат", en: "Black smoke from a private chimney every evening" } },
-    { id: `${c.id}_c2`, lat: c2lat, lon: c2lon, cat: "trash", status: 0, date: "2026-10-17",
-      text: { ru: "Сжигают листья и мусор у дороги", ky: "Жолдун жээгинде жалбырак жана таштанды өрттөшөт", en: "Leaves and trash burned by the road" } },
-  ];
+  const complaints = [];
   const [la, lo] = c.center;
   const routes = [
     { id: `${c.id}_r1`, mode: "walk", color: "#2e9e5b",
@@ -236,7 +210,7 @@ function makeCity(c) {
       path: [[la + 0.010, lo - 0.016], [la + 0.008, lo - 0.008], [la + 0.006, lo], [la + 0.005, lo + 0.008], [la + 0.004, lo + 0.016]] },
   ];
   const leaderboard = {};
-  const demoAqi = Object.fromEntries(districts.map((d, i) => [d.id, Math.round(c.demoBase * d.factor)]));
+  const demoAqi = {};
   return { id: c.id, center: c.center, zoom: 13, radius: 700, defaultDistrict: districts[1].id, alertDistrict: districts[1].id,
     name: c.name, gen: c.gen, prep: c.prep, house: c.house, k: c.k || {}, emoji: c.emoji,
     districts, homes, groups, leaderboard, demoAqi, complaints, routes };
@@ -325,11 +299,10 @@ const MORE_DISTRICTS = {
   ],
 };
 Object.entries(MORE_DISTRICTS).forEach(([cid, list]) => {
-  const C = CITIES[cid]; const base = C.demoAqi[C.districts[0].id] / (C.districts[0].factor || 1);
+  const C = CITIES[cid];
   list.forEach(([id, lat, lon, factor, coalShare, type, ru, ky, en]) => {
     C.districts.push({ id, lat, lon, factor, coalShare, type, approx: true, name: { ru, ky, en },
       loc: { ru: `в районе «${ru}»`, ky: `«${ky}» аймагында`, en: `in ${en}` } });
-    C.demoAqi[id] = Math.round(base * factor);
   });
 });
 CITIES.bishkek.radius = 950;
@@ -407,5 +380,4 @@ Object.entries(MORE_ROUTES).forEach(([cid, list]) => list.forEach(([id, type, ru
 
 /* v56: Турция удалена — только Кыргызстан. */
 const KG_ORDER = CITY_ORDER.slice();
-const TR_ORDER = [];
 KG_ORDER.forEach(id => { CITIES[id].country = "kg"; });

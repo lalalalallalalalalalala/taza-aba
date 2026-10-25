@@ -15,7 +15,7 @@ ru: {
   bestTime: "🌿 Лучшее время гулять", peakSmog: "🔥 Пик смога",
   coalTip: "{In} {p}% домов ещё топят углём", coalTipSub: "Узнайте, сколько вы сэкономите, если перейти на чистое тепло.", calcBtn: "Посчитать для моего дома →",
   footLive: "Данные: модель CAMS через {link}, обновлено {t}. Значения по районам — модель × районный коэффициент (оценка).",
-  footDemo: "⚠️ Нет связи с Open-Meteo — показаны ДЕМО-данные для презентации.", footProto: "Прототип хакатона SolarPunk · Бишкек 2026",
+  footDemo: "⚠️ Нет данных: нет связи с Open-Meteo. Проверьте интернет и нажмите «Повторить».", footProto: "Прототип хакатона SolarPunk · Бишкек 2026",
   mapTitle: "Карта смога", mapSub: "Уровень воздуха по районам {cityGen} ",
   layerSmog: "💨 Смог по районам", demoChip: "демо", districtsList: "🏙️ Районы: от грязного к чистому",
   coalShareNote: "🔥 — доля домов на угле (демо-оценка)", popupCoal: "Домов на угле", demoData: "демо-данные",
@@ -105,7 +105,7 @@ ky: {
   bestTime: "🌿 Сейилдөөгө эң жакшы убакыт", peakSmog: "🔥 Смогдун чокусу",
   coalTip: "{In} үйлөрдүн {p}% дагы эле көмүр жагат", coalTipSub: "Таза жылуулукка өтсөңүз, канча үнөмдөй турганыңызды билиңиз.", calcBtn: "Үйүм үчүн эсептөө →",
   footLive: "Маалымат: CAMS модели, {link} аркылуу, жаңыланган убакыт {t}. Райондордогу маанилер — модель × райондук коэффициент (болжолдуу баа).",
-  footDemo: "⚠️ Open-Meteo менен байланыш жок — презентация үчүн ДЕМО-маалымат көрсөтүлүүдө.", footProto: "SolarPunk хакатонунун прототиби · Бишкек 2026",
+  footDemo: "⚠️ Маалымат жок: Open-Meteo менен байланыш жок. Интернетти текшерип, «Кайталоо» басыңыз.", footProto: "SolarPunk хакатонунун прототиби · Бишкек 2026",
   mapTitle: "Смог картасы", mapSub: "{cityGen} райондорундагы абанын абалы ",
   layerSmog: "💨 Райондордогу смог", demoChip: "демо", districtsList: "🏙️ Райондор: эң кирдүүдөн эң тазага",
   coalShareNote: "🔥 — көмүр жаккан үйлөрдүн үлүшү (демо-баа)", popupCoal: "Көмүр жаккан үйлөр", demoData: "демо-маалымат",
@@ -195,7 +195,7 @@ en: {
   bestTime: "🌿 Best time for a walk", peakSmog: "🔥 Smog peak",
   coalTip: "{p}% of homes {in} still burn coal", coalTipSub: "See how much you'd save by switching to clean heat.", calcBtn: "Calculate for my home →",
   footLive: "Data: CAMS model via {link}, updated {t}. District values = model × district factor (estimate).",
-  footDemo: "⚠️ No connection to Open-Meteo — showing DEMO data for the presentation.", footProto: "SolarPunk hackathon prototype · Bishkek 2026",
+  footDemo: "⚠️ No data: no connection to Open-Meteo. Check your internet and tap “Retry”.", footProto: "SolarPunk hackathon prototype · Bishkek 2026",
   mapTitle: "Smog map", mapSub: "Air quality across {city} districts",
   layerSmog: "💨 Smog by district", demoChip: "demo", districtsList: "🏙️ Districts: dirtiest to cleanest",
   coalShareNote: "🔥 — share of homes on coal (demo estimate)", popupCoal: "Homes on coal", demoData: "demo data",
@@ -281,7 +281,7 @@ en: {
 /* t("key", {vars}) — {In} подставляет значение {in} с заглавной буквы. */
 function t(key, vars = {}) {
   if (typeof CITY_VARS === "function") vars = Object.assign(CITY_VARS(), vars);
-  let s = (DICT[LANG] && DICT[LANG][key]) ?? (LANG === "tr" ? DICT.en[key] : undefined) ?? DICT.ru[key] ?? key;
+  let s = (DICT[LANG] && DICT[LANG][key]) ?? DICT.ru[key] ?? key;
   const sub = x => x.replace(/\{(\w+)\}/g, (_, k) => {
     if (k === "In" && vars.in != null) return String(vars.in).charAt(0).toUpperCase() + String(vars.in).slice(1);
     return vars[k] ?? "";
@@ -291,7 +291,7 @@ function t(key, vars = {}) {
   return sub(s);
 }
 /* tr({ru, ky, en}) — выбрать перевод для поля данных. */
-const tr = o => (o && typeof o === "object" && !Array.isArray(o)) ? (o[LANG] ?? (LANG === "tr" ? o.en : undefined) ?? o.ru) : o;
+const tr = o => (o && typeof o === "object" && !Array.isArray(o)) ? (o[LANG] ?? o.ru) : o;
 // SEO: заголовок, описание и canonical на языке интерфейса
 const SEO = {
   ru: { t: "Таза Аба — качество воздуха и смог в Бишкеке, AQI Кыргызстана", d: "Качество воздуха в Бишкеке и 39 городах Кыргызстана: AQI по районам, прогноз смога, PM2.5, эко-маршруты, ИИ-советник по здоровью. Бесплатно, 4 языка." },
@@ -306,7 +306,7 @@ function applySeo() {
     set('meta[name="description"]', "content", s.d);
     set('meta[property="og:title"]', "content", s.t); set('meta[property="og:description"]', "content", s.d);
     set('meta[name="twitter:title"]', "content", s.t); set('meta[name="twitter:description"]', "content", s.d);
-    set('meta[property="og:locale"]', "content", { ru: "ru_RU", ky: "ky_KG", en: "en_US", tr: "tr_TR" }[LANG] || "ru_RU");
+    set('meta[property="og:locale"]', "content", { ru: "ru_RU", ky: "ky_KG", en: "en_US" }[LANG] || "ru_RU");
     // canonical: язык из ссылки ?lang= — на свою версию; без параметра — корень
     const ql = new URLSearchParams(location.search).get("lang");
     set('link[rel="canonical"]', "href", "https://zusenbaev7-cmd.github.io/taza-aba/" + (SEO[ql] ? "?lang=" + ql : ""));
@@ -332,7 +332,7 @@ Object.assign(DICT.ru, {
   cMine: "моя", layerComplaints: "⚠️ Жалобы", cDelete: "Удалить",
   rTitle: "Эко-маршруты", rSub: "Чистые пешие и велосипедные пути через парки и зелёные зоны, в обход загруженных магистралей",
   rWalk: "🚶 Пешком", rBike: "🚲 Велосипед", rKm: "{n} км", rMin: "{n} мин", rCO2: "−{n} кг CO₂ vs авто", rAir: "Воздух на маршруте: AQI {aqi}",
-  rShow: "Показать на карте", rDemo: "Маршруты — демо: проложены вручную по паркам и бульварам. CO₂ считаем как ~170 г на км для легкового авто.",
+  rShow: "Показать на карте", rDemo: "Маршруты проложены вручную по паркам и бульварам. CO₂ считаем как ~170 г на км для легкового авто.",
   rBest: "🌿 Чище всего сейчас", rAvoid: "Обходит: {s}", layerRoutes: "🌳 Эко-маршруты", rTotal: "Пройдите все маршруты — сэкономите {n} кг CO₂",
 });
 Object.assign(DICT.ky, {
@@ -352,7 +352,7 @@ Object.assign(DICT.ky, {
   cMine: "меники", layerComplaints: "⚠️ Арыздар", cDelete: "Өчүрүү",
   rTitle: "Эко-маршруттар", rSub: "Парктар жана жашыл аймактар аркылуу, жүгү көп көчөлөрдү айланып өткөн таза жөө жана велосипед жолдору",
   rWalk: "🚶 Жөө", rBike: "🚲 Велосипед", rKm: "{n} км", rMin: "{n} мүн", rCO2: "унаага салыштырмалуу −{n} кг CO₂", rAir: "Маршруттагы аба: AQI {aqi}",
-  rShow: "Картадан көрсөтүү", rDemo: "Маршруттар — демо: парктар жана бульварлар боюнча кол менен түзүлгөн. CO₂ жеңил унаа үчүн ~170 г/км деп эсептелет.",
+  rShow: "Картадан көрсөтүү", rDemo: "Маршруттар парктар жана бульварлар боюнча кол менен түзүлгөн. CO₂ жеңил унаа үчүн ~170 г/км деп эсептелет.",
   rBest: "🌿 Азыр эң таза", rAvoid: "Айланып өтөт: {s}", layerRoutes: "🌳 Эко-маршруттар", rTotal: "Бардык маршруттарды басып өтсөңүз, {n} кг CO₂ үнөмдөйсүз",
 });
 Object.assign(DICT.en, {
@@ -372,7 +372,7 @@ Object.assign(DICT.en, {
   cMine: "mine", layerComplaints: "⚠️ Complaints", cDelete: "Delete",
   rTitle: "Eco-routes", rSub: "Clean walking and cycling paths through parks and green areas, avoiding busy roads",
   rWalk: "🚶 Walk", rBike: "🚲 Bike", rKm: "{n} km", rMin: "{n} min", rCO2: "−{n} kg CO₂ vs car", rAir: "Air on route: AQI {aqi}",
-  rShow: "Show on map", rDemo: "Routes are demo: drawn by hand along parks and boulevards. CO₂ assumes ~170 g per km for a car.",
+  rShow: "Show on map", rDemo: "Routes are drawn by hand along parks and boulevards. CO₂ assumes ~170 g per km for a car.",
   rBest: "🌿 Cleanest right now", rAvoid: "Avoids: {s}", layerRoutes: "🌳 Eco-routes", rTotal: "Do all routes and save {n} kg CO₂",
 });
 
@@ -381,10 +381,10 @@ Object.assign(DICT.ky, { cityChanged: "Шаар: {city} 🏔️" });
 Object.assign(DICT.en, { cityChanged: "City: {city} 🏔️" });
 Object.assign(DICT.ru, { countryBtn: "🇰🇬 Вся страна", countryTitle: "Воздух в Кыргызстане", countrySub: "Нажмите на город — приложение переключится на него",
   citiesList: "🏙️ Города: от грязного к чистому", countryNote: "AQI — модель CAMS для центра каждого города (Open-Meteo). Районы и маршруты новых городов — демо, названия массивов условные.",
-  countryDemo: "⚠️ Нет связи с Open-Meteo — показаны ДЕМО-значения.", openCity: "Открыть", cityLbl: "Город", backToCity: "🏙️ {city}" });
+  countryDemo: "⚠️ Нет данных: нет связи с Open-Meteo.", openCity: "Открыть", cityLbl: "Город", backToCity: "🏙️ {city}" });
 Object.assign(DICT.ky, { countryBtn: "🇰🇬 Бүт өлкө", countryTitle: "Кыргызстандагы аба", countrySub: "Шаарды басыңыз — колдонмо ошол шаарга өтөт",
   citiesList: "🏙️ Шаарлар: эң кирдүүдөн эң тазага", countryNote: "AQI — ар бир шаардын борбору үчүн CAMS модели (Open-Meteo). Жаңы шаарлардын райондору жана маршруттары — демо, массивдердин аттары шарттуу.",
-  countryDemo: "⚠️ Open-Meteo менен байланыш жок — ДЕМО-маанилер көрсөтүлүүдө.", openCity: "Ачуу", cityLbl: "Шаар", backToCity: "🏙️ {city}" });
+  countryDemo: "⚠️ Маалымат жок: Open-Meteo менен байланыш жок.", openCity: "Ачуу", cityLbl: "Шаар", backToCity: "🏙️ {city}" });
 Object.assign(DICT.en, { countryBtn: "🇰🇬 Whole country", countryTitle: "Air across Kyrgyzstan", countrySub: "Tap a city and the app switches to it",
   citiesList: "🏙️ Cities: dirtiest to cleanest", countryNote: "AQI = CAMS model for each city centre (Open-Meteo). Districts and routes for the new cities are demo; area names are approximate.",
-  countryDemo: "⚠️ No connection to Open-Meteo — showing DEMO values.", openCity: "Open", cityLbl: "City", backToCity: "🏙️ {city}" });
+  countryDemo: "⚠️ No data: no connection to Open-Meteo.", openCity: "Open", cityLbl: "City", backToCity: "🏙️ {city}" });

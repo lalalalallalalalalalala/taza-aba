@@ -27,7 +27,7 @@ const QD = {
     cmpHead: "Обращение о загрязнении воздуха", cmpType: "Тип", cmpDesc: "Описание", cmpPlace: "Район", cmpCoords: "Координаты", cmpTime: "Время", cmpAqi: "Текущий AQI в районе", cmpPhoto: "Фото: есть, прилагаю отдельно",
     cmpSubj: "Жалоба: {c} — {d}", cmpCopy: "Копировать", cmpMark: "Отметить как отправленное", cmpPhotoNote: "📎 Фото не прикрепляется автоматически: добавьте его в письмо/чат вручную.",
     cmpTo: "Куда обращаться (официальные источники)", cmpNoTo: "Официальные контакты для этого города не проверены — получатель не указан, впишите его сами.", cmpSrc: "источник",
-    cmpFoot: "Приложение ничего не отправляет само: обращение уходит только через выбранный вами мессенджер или почту. Демо-жалобы в списке выдуманы.",
+    cmpEmpty: "Пока жалоб нет — отправьте первую выше 👆", cmpFoot: "Приложение ничего не отправляет само: обращение уходит только через выбранный вами мессенджер или почту.",
     mi: "Муниципальная инспекция мэрии Бишкека", mnr: "Минприроды КР — горячая линия 24/7", mnrB: "Бишкекское ТУ Минприроды" },
   ky: { svcTitle: "Маалымат кызматы жооп берген жок", svcSub: "Тармак бар, бирок Open-Meteo өз убагында жооп берген жок. {s} секунддан кийин кайра аракет кылабыз.", svcBadge: "кызмат жооп бербеди — {t} маалыматы", svcNote: "⚠️ Маалымат кызматы жооп берген жок — акыркы чыныгы маалымат ({t}) көрсөтүлдү. {s} сек кийин кайталайбыз.",
     ndAdvHead: "Азыр аба тууралуу маалымат жок ({why}), ошондуктан сандарсыз — жалпы кеңештер:", whyOff: "тармак жок", whySvc: "маалымат кызматы жооп берген жок", whyLoad: "маалымат дагы жүктөлүүдө", ndUpd: "Маалымат келгенде жооп өзү жаңырат.",
@@ -50,7 +50,7 @@ const QD = {
     cmpHead: "Абанын булганышы тууралуу арыз", cmpType: "Түрү", cmpDesc: "Сүрөттөмө", cmpPlace: "Аймак", cmpCoords: "Координаттар", cmpTime: "Убакыт", cmpAqi: "Аймактагы учурдагы AQI", cmpPhoto: "Сүрөт: бар, өзүнчө тиркейм",
     cmpSubj: "Арыз: {c} — {d}", cmpCopy: "Көчүрүү", cmpMark: "Жөнөтүлдү деп белгилөө", cmpPhotoNote: "📎 Сүрөт автоматтык түрдө тиркелбейт: аны катка/чатка өзүңүз кошуңуз.",
     cmpTo: "Кайда кайрылуу (расмий булактар)", cmpNoTo: "Бул шаар үчүн расмий байланыштар текшерилген эмес — алуучуну өзүңүз жазыңыз.", cmpSrc: "булак",
-    cmpFoot: "Колдонмо өзү эч нерсе жөнөтпөйт: арыз сиз тандаган мессенджер же почта аркылуу гана кетет. Тизмедеги демо-арыздар ойдон чыгарылган.",
+    cmpEmpty: "Азырынча арыз жок — биринчисин жогоруда жөнөтүңүз 👆", cmpFoot: "Колдонмо өзү эч нерсе жөнөтпөйт: арыз сиз тандаган мессенджер же почта аркылуу гана кетет.",
     mi: "Бишкек мэриясынын муниципалдык инспекциясы", mnr: "КР Жаратылыш ресурстар министрлиги — 24/7 ышкын линия", mnrB: "Министрликтин Бишкек аймактык башкармалыгы" },
   en: { svcTitle: "The data service didn't respond", svcSub: "You're online, but Open-Meteo didn't respond in time. We'll retry automatically in {s} s.", svcBadge: "service didn't respond — data from {t}", svcNote: "⚠️ The data service didn't respond — showing the last real data from {t}. Retrying in {s} s.",
     ndAdvHead: "There's no air data right now ({why}), so here is general advice without numbers:", whyOff: "no network", whySvc: "the data service didn't respond", whyLoad: "data is still loading", ndUpd: "This answer will update by itself once data arrives.",
@@ -73,31 +73,9 @@ const QD = {
     cmpHead: "Air pollution complaint", cmpType: "Type", cmpDesc: "Description", cmpPlace: "District", cmpCoords: "Coordinates", cmpTime: "Time", cmpAqi: "Current AQI in the district", cmpPhoto: "Photo: available, attached separately",
     cmpSubj: "Complaint: {c} — {d}", cmpCopy: "Copy", cmpMark: "Mark as sent", cmpPhotoNote: "📎 The photo isn't attached automatically: add it to the email/chat yourself.",
     cmpTo: "Where to report (official sources)", cmpNoTo: "Official contacts for this city aren't verified — no recipient filled in, add it yourself.", cmpSrc: "source",
-    cmpFoot: "The app never sends anything itself: the complaint goes only through the messenger or email you choose. Demo complaints in the list are made up.",
+    cmpEmpty: "No complaints yet — send the first one above 👆", cmpFoot: "The app never sends anything itself: the complaint goes only through the messenger or email you choose.",
     mi: "Bishkek Mayor's Office Municipal Inspection", mnr: "Ministry of Natural Resources — 24/7 hotline", mnrB: "Ministry's Bishkek territorial office" },
-  tr: { svcTitle: "Veri servisi yanıt vermedi", svcSub: "İnternet var ama Open-Meteo zamanında yanıt vermedi. {s} sn sonra otomatik tekrar deneyeceğiz.", svcBadge: "servis yanıt vermedi — {t} verisi", svcNote: "⚠️ Veri servisi yanıt vermedi — {t} tarihli son gerçek veriler gösteriliyor. {s} sn sonra tekrar denenecek.",
-    ndAdvHead: "Şu an hava verisi yok ({why}); bu yüzden rakamsız genel öneriler:", whyOff: "internet yok", whySvc: "veri servisi yanıt vermedi", whyLoad: "veriler hâlâ yükleniyor", ndUpd: "Veriler gelince bu yanıt kendiliğinden güncellenecek.",
-    nd_walk: "Kışın duman genelde akşam ve gece (18:00–23:00) artar, gündüz hava daha temizdir — gündüz, yollardan ve dumandan uzakta yürüyün.", nd_windows: "Gündüz kısa (5–10 dakika) havalandırın; sobaların yandığı akşam ve gece pencereleri kapalı tutun.",
-    nd_mask: "Yoğun dumanda yalnızca sıkı oturan FFP2/KN95 maske işe yarar; cerrahi maske PM2.5'i neredeyse tutmaz.", nd_coal: "En etkilisi daha az kömür: yalıtım, elektrikli veya gazlı ısıtma, ısı pompası. Çöp yakmayın.",
-    nd_school: "Çocuğun nefes darlığı veya astımı varsa akşam yürüyüşlerini kısaltın; dumanlı günlerde spor kapalı alanda daha iyidir.", nd_gen: "Evde HEPA filtreli hava temizleyici yardımcı olur; astımlılar ilaçlarını yanında tutsun.",
-    lzLoad: "Bölüm yükleniyor…", lzErr: "Bölüm yüklenemedi", hist: "Geçmiş ve istatistik", histSub: "24 saat – 90 günlük grafikler, DSÖ sınırı", histHome: "📈 Hava geçmişi: 24 saat, 7, 30 ve 90 gün →",
-    today: "bugün", stTitle: "Güncel veri yok", stSub: "Son güncelleme 24 saatten eski. Eski değerler güncelmiş gibi gösterilmez — aşağıdaki arşiv yalnızca bilgi içindir.", archive: "{t} arşivi", stBadge: "güncel veri yok", obOffTitle: "Çevrimdışısınız", obOffSub: "Bağlantı gelince veriler yüklenecek. Otomatik olarak tekrar deneyeceğiz.", sentHint: "Gönderdiniz mi? «Gönderildi olarak işaretle»ye dokunun.", lastVia: "açıldı: {v}", mailTypo: "Belediye sitesindeki e-posta yazım hatalı: «{m}» — alıcı boş bırakıldı, adresi telefonla teyit edin.",
-    offline: "çevrimdışı — {t} verisi", nodata: "veri yok", ndTitle: "Hava verisi yok", ndSub: "Open-Meteo'ya ulaşılamadı ve bu şehir için cihazda kayıtlı veri yok. Uydurma rakam göstermiyoruz.", retry: "Tekrar dene",
-    offNote: "⚠️ Bağlantı yok — {t} tarihli son gerçek veri gösteriliyor", ctryNd: "Open-Meteo'ya bağlantı yok — şehir verileri alınamıyor.",
-    obTitle: "Taza Aba'ya hoş geldiniz", obSub: "Semtinizi seçin, havayı tam bulunduğunuz yerde gösterelim. İstediğiniz zaman değiştirebilirsiniz.", obLang: "Dil", obGeo: "Konumumu kullan", obOr: "veya elle seçin",
-    obCtry: "Ülke", obGo: "Tamam", obFound: "En yakın semt: {d}", obFar: "Uygulamadaki şehirlerden uzaktasınız — en yakını seçildi: {c}", obGeoErr: "Konum alınamadı — elle seçin",
-    share: "Havayı paylaş", copied: "Metin kopyalandı", shareTxt: "{In} şu an AQI {aqi} — {adv}.", shareOff: " ({t} verisi)",
-    shAdv0: "yürüyüş ve havalandırma uygun", shAdv1: "hassas kişiler yürüyüşü kısaltsın", shAdv2: "çocuklarla dışarı çıkmayın", shAdv3: "evde kalmak daha iyi, dışarıda maske takın", shAdv4: "zorunlu olmadıkça çıkmayın", shAdv5: "tehlikeli: evde kalın",
-    evTitle: "Akşam duman riski", ev0: "düşük", ev1: "orta", ev2: "yüksek", evLow: "Akşam hava daha temiz olacak — havalandırabilirsiniz.",
-    evBefore: "Şimdi havalandırın, {x} saatinden önce yürüyün; 18:00'den sonra pencereleri kapalı tutun.", evNow: "Sabaha kadar pencereleri kapalı tutun, yürüyüşü erteleyin.",
-    evF: "18–23: AQI en çok {a}", evFp: "18–23: PM2.5 en çok {p} µg/m³ (saatlik AQI {a})", evWind: "rüzgâr {w} m/s", evInv: "inversiyon", evNoInv: "inversiyon yok", evInvD: "inversiyon (~{m} m yükseklikte {d} °C daha sıcak)", evBlh: "karışım katmanı ~{m} m (model)", evSrc: "Open-Meteo tahmini (CAMS + hava)", evTomorrow: "yarın için",
-    mWeather: "Hava durumu", mWeatherSub: "7 günlük tahmin ve rüzgâr", mHouse: "Kömürden geçiş hesabı", 
-    cmpMake: "Şikâyeti hazırla", lsFull: "Bu site için tarayıcı belleği dolu — son değişiklikler kaydedilmeyebilir. Fotoğraflı eski şikâyetleri silin.", cmpQuota: "Şikâyet oluşturuldu ancak tarayıcı belleği dolu — yeniden yüklemede kaybolur. Fotoğraflı eski şikâyetleri silin.", cmpMade: "Şikâyet hazır — nasıl göndereceğinizi seçin", cmpDraft: "Taslak", cmpSentYou: "Sizin tarafınızdan gönderildi", cmpVia: "{v} ile, {t}",
-    cmpHead: "Hava kirliliği şikâyeti", cmpType: "Tür", cmpDesc: "Açıklama", cmpPlace: "Semt", cmpCoords: "Koordinatlar", cmpTime: "Zaman", cmpAqi: "Semtteki güncel AQI", cmpPhoto: "Fotoğraf: var, ayrıca ekliyorum",
-    cmpSubj: "Şikâyet: {c} — {d}", cmpCopy: "Kopyala", cmpMark: "Gönderildi olarak işaretle", cmpPhotoNote: "📎 Fotoğraf otomatik eklenmez: e-postaya/sohbete kendiniz ekleyin.",
-    cmpTo: "Nereye başvurulur (resmî kaynaklar)", cmpNoTo: "Bu şehir için resmî iletişim bilgileri doğrulanmadı — alıcı boş, kendiniz yazın.", cmpSrc: "kaynak",
-    cmpFoot: "Uygulama kendisi hiçbir şey göndermez: şikâyet yalnızca seçtiğiniz mesajlaşma uygulaması veya e-posta ile gider. Listedeki demo şikâyetler uydurmadır.",
-    mi: "Bişkek Belediyesi Belediye Denetimi", mnr: "Kırgızistan Doğal Kaynaklar Bakanlığı — 7/24 hat", mnrB: "Bakanlığın Bişkek bölge müdürlüğü" },
+  
 };
 const Q = (k, v = {}) => String((QD[LANG] || QD.en)[k] ?? QD.ru[k] ?? k).replace(/\{(\w+)\}/g, (m, x) => v[x] ?? m);
 const hhmm = ms => { const d = new Date(ms); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
@@ -177,7 +155,7 @@ function openOnboard() {
   let ctry = cityObj().country, city = CITY, dist = state.district;
   const LN = { ru: "Русский", ky: "Кыргызча", en: "English" };
   const draw = () => {
-    const order = ctry === "tr" ? TR_ORDER : KG_ORDER; if (!order.includes(city)) city = order[0];
+    const order = KG_ORDER; if (!order.includes(city)) city = order[0];
     const ds = CITIES[city].districts; if (!ds.some(d => d.id === dist)) dist = CITIES[city].defaultDistrict || ds[0].id;
     w.innerHTML = `<div class="ob-sheet" role="dialog" aria-modal="true" aria-labelledby="obT">
       <div class="ob-logo">🌻</div><h3 id="obT">${Q("obTitle")}</h3><p class="sub">${Q("obSub")}</p>
@@ -324,7 +302,7 @@ const mailTo = () => (cityContacts().find(c => c.mail) || {}).mail || "";
 const waTo = () => (cityContacts().find(c => c.wa) || {}).wa || "";
 function complaintText(c) {
   const d = nearestDistrict(c.lat, c.lon), a = air.byDistrict[d.id];
-  const when = c.ts ? new Date(c.ts).toLocaleString(LANG === "en" ? "en-GB" : LANG === "tr" ? "tr-TR" : "ru-RU") : c.date;
+  const when = c.ts ? new Date(c.ts).toLocaleString(LANG === "en" ? "en-GB" : "ru-RU") : c.date;
   const osm = `https://www.openstreetmap.org/?mlat=${c.lat.toFixed(5)}&mlon=${c.lon.toFixed(5)}#map=17/${c.lat.toFixed(5)}/${c.lon.toFixed(5)}`;
   return [Q("cmpHead"), `${Q("cmpType")}: ${t("cat_c_" + c.cat)}`, `${Q("cmpDesc")}: ${c.text || "—"}`, `${Q("cmpPlace")}: ${dName(d)}, ${tr(cityObj().name)}`,
     `${Q("cmpCoords")}: ${c.lat.toFixed(5)}, ${c.lon.toFixed(5)} — ${osm}`, `${Q("cmpTime")}: ${when}`,
@@ -366,9 +344,10 @@ function viewComplaints2(el) {
     </div>
     ${contactsHTML()}
     <h2>${t("cList")}</h2>
+    ${allComplaints().length ? "" : `<div class="card muted c-empty" style="text-align:center;font-weight:700">${Q("cmpEmpty")}</div>`}
     ${allComplaints().map(c => `<div class="card c-item ${c.id === lastMade ? "just" : ""}" id="c-${c.id}">
       <div class="c-thumb">${hasPhoto(c) ? phImg(c, 'alt=""') : (C_EMOJI[c.cat] || "⚠️")}</div>
-      <div style="flex:1;min-width:0"><b>${t("cat_c_" + c.cat)}</b>${c.mine ? ` <span class="chip">${t("cMine")}</span>` : ` <span class="chip demo">${t("demoChip")}</span>`}
+      <div style="flex:1;min-width:0"><b>${t("cat_c_" + c.cat)}</b> <span class="chip">${t("cMine")}</span>
         <div class="small" style="font-weight:600;margin:2px 0">${esc(tr(c.text)) || "—"}</div>
         ${c.mine ? `<div class="steps"><span class="on">${Q("cmpDraft")}</span><span class="${c.status ? "on" : ""}">${Q("cmpSentYou")}${c.status && c.via ? " " + Q("cmpVia", { v: c.via, t: hhmm(c.sentAt) }) : ""}</span></div>${sendLinks(c)}`
           : `<div class="steps">${stDemo.map((s, i) => `<span class="${i <= (c.status || 0) ? "on" : ""}">${s}</span>`).join("")}</div>`}

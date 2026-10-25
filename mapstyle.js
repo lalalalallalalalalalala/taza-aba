@@ -11,8 +11,7 @@ const msDark = () => document.documentElement.dataset.theme === "dark";
 const MS_T = {
   ru: { note: "Оценка: AQI сглажен между районами (модель CAMS + датчики)", lo: "Чище всего", hi: "Грязнее всего", all: "Везде", find: "Найти свой район, микрорайон, жилмассив…", none: "Ничего не найдено", area: "граница примерная" },
   ky: { note: "Баалоо: AQI райондордун ортосунда жылмаланган (CAMS модели + датчиктер)", lo: "Эң таза", hi: "Эң булганыч", all: "Бардык жерде", find: "Районуңузду, кичи районду, конушту табыңыз…", none: "Эч нерсе табылган жок", area: "чеги болжолдуу" },
-  en: { note: "Estimate: AQI smoothed between districts (CAMS model + sensors)", lo: "Cleanest", hi: "Most polluted", all: "Everywhere", find: "Find your district or neighbourhood…", none: "Nothing found", area: "approximate boundary" },
-  tr: { note: "Tahmin: AQI mahalleler arasında yumuşatıldı (CAMS modeli + sensörler)", lo: "En temiz", hi: "En kirli", all: "Her yerde", find: "Mahallenizi bulun…", none: "Sonuç yok", area: "sınır yaklaşık" } };
+  en: { note: "Estimate: AQI smoothed between districts (CAMS model + sensors)", lo: "Cleanest", hi: "Most polluted", all: "Everywhere", find: "Find your district or neighbourhood…", none: "Nothing found", area: "approximate boundary" } };
 const MST = k => (MS_T[LANG] || MS_T.ru)[k];
 function msBaseTile() { const k = msDark() ? "Dark" : "Light";
   return L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_${k}_Gray_Base/MapServer/tile/{z}/{y}/{x}`, { maxZoom: 18, maxNativeZoom: 16, keepBuffer: 2, className: "tl-ms", attribution: "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors" }); }

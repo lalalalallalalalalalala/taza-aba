@@ -24,13 +24,7 @@ const HIST_T = {   // v49: было HT — конфликт с const HT из her
     dist: "District comparison: 7-day average AQI", distNote: "{n} districts, CAMS model", you: "your district", days: "days", pm25: "PM2.5", pm10: "PM10", no2: "NO₂",
     loading: "Loading history…", err: "Couldn't load history", errSub: "Open-Meteo didn't respond. Please try again a bit later.", offline: "No network — history will load once you're back online.",
     cached: "Saved data from {t}", empty: "No data for this period.", retry: "Retry", wd: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], back: "← Home", noSc: "Sensor.Community sensors aren't used here: their daily archive is too heavy for a phone." },
-  tr: { distZones: "CAMS modeli (~11–40 km ızgara) şehri yalnızca {k} bölgeye ayırıyor — bir bölgedeki tüm semtler aynı değeri alıyor. Komşu semtler arasındaki farkı yalnızca yer sensörleri gösterebilir.", distGrp: "{c} semt", distSame: "CAMS modeli (~11–40 km ızgara) semtleri neredeyse ayırt etmiyor: 7 günlük ortalama AQI {n} semtin hepsinde {r}. Semtler arasındaki farkı yalnızca yer sensörleri gösterebilir.", distAll: "Tüm semtleri göster ({n})", title: "Geçmiş ve istatistik", sub: "{d} semtinde hava nasıl değişti", src: "CAMS modeli (Open-Meteo), sensör ölçümü değil · saatlik US AQI ve PM2.5", r24: "24 saat", r7: "7 gün", r30: "30 gün", r90: "90 gün",
-    avg: "Ortalama AQI", min: "En düşük", max: "En yüksek", chart24: "Son 24 saatte saatlik AQI", chartH: "Saatlik AQI", chartD: "Günlük ortalama AQI", cats: "Kategorilere göre günler (günlük ortalama AQI)",
-    byHour: "Günün en kötü saatleri (0–23 saatlerine göre ortalama AQI)", byWd: "Haftanın günlerine göre (ortalama AQI)", peak: "Ortalamada zirve {h}:00 civarında, en temiz saat {l}:00 civarında.",
-    who: "DSÖ PM2.5 sınırı", whoTxt: "DSÖ sınırının üzerindeki günler (günlük ortalama PM2.5 > 15 µg/m³): <b>{t} günün {n}'i</b>", whoAvg: "Dönem ortalaması PM2.5: {v} µg/m³ — DSÖ sınırının {x} katı", whoOk: "Dönem ortalaması PM2.5: {v} µg/m³ — DSÖ sınırı içinde",
-    dist: "Semt karşılaştırması: 7 günlük ortalama AQI", distNote: "{n} semt, CAMS modeli", you: "sizin semtiniz", days: "gün", pm25: "PM2.5", pm10: "PM10", no2: "NO₂",
-    loading: "Geçmiş yükleniyor…", err: "Geçmiş yüklenemedi", errSub: "Open-Meteo yanıt vermedi. Biraz sonra tekrar deneyin.", offline: "İnternet yok — bağlantı gelince geçmiş yüklenecek.",
-    cached: "{t} tarihli kayıtlı veri", empty: "Bu dönem için veri yok.", retry: "Tekrar dene", wd: ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"], back: "← Ana sayfa", noSc: "Sensor.Community sensörleri burada kullanılmıyor: günlük arşivleri telefon için çok ağır." },
+  
 };
 const H = (k, v = {}) => { const x = (HIST_T[LANG] || HIST_T.ru)[k] ?? HIST_T.ru[k] ?? k; return typeof x === "string" ? x.replace(/\{(\w+)\}/g, (m, y) => v[y] ?? m) : x; };
 const WHO_PM25 = 15, H_TTL = 3600e3;

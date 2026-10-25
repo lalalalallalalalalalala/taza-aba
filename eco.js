@@ -25,15 +25,7 @@ const ECO_T = {
     est: "Estimate: air along the route comes from the “Dymka” surface (CAMS model + sensors, smoothed between districts); dose = concentration × breathing ({v} m³/h) × time. Not a medical device.",
     eqAir: "Air data is per district, so nearby routes get similar estimates. Pick the most convenient.", fail: "Routing service didn't respond — showing a straight line (estimate).", lineEst: "straight line, estimate",
     ready: "Ready-made eco routes", readySub: "Parks, boulevards and riversides — routed along real paths with an air estimate", go: "Build", detour: "via {d}", none: "Nothing found", my: "My location", mapPt: "Point on map",
-    loc: "Locating…", locErr: "Couldn't get your location", src: "Routing: © OpenStreetMap, Valhalla/OSRM (FOSSGIS). Search: Photon (komoot).", fewer: "Remove point", near: "near “{d}”" },
-  tr: { title: "Eko rotalar", sub: "Havası daha temiz bir yol çizin: haritaya dokunun veya adres arayın", from: "Nereden", to: "Nereye", stop: "Durak", add: "Nokta ekle", swap: "Yer değiştir", me: "Konumum",
-    walk: "Yürüyüş", bike: "Bisiklet", car: "Araç", hint: "Haritaya dokunun: ilk nokta “Nereden”, ikinci “Nereye”. İşaretçiler sürüklenebilir.", build: "Rota çiz", building: "Rota hesaplanıyor…",
-    here: "Buradan", there: "Buraya", via: "Bu noktadan geç", min: "dk", h: "sa", km: "km", m: "m", aqi: "Ortalama AQI", dose: "PM2.5 dozu", cleanest: "En temiz", fastest: "En hızlı", balanced: "Önerilen",
-    cleaner: "%{p} daha temiz", dirtier: "%{p} daha kirli", same: "hava neredeyse aynı", nav3d: "3D navigasyon", pick: "Seç", bestC: "sensörlerle düzeltilmiş CAMS model tahmini", bestM: "CAMS model tahminine göre", best: "Bugün en iyi zaman", bestAt: "yaklaşık {t} — AQI ≈ {a}",
-    est: "Tahmin: rotadaki hava “Dymka” yüzeyinden (CAMS modeli + sensörler); doz = konsantrasyon × solunum ({v} m³/sa) × süre. Tıbbi cihaz değildir.",
-    eqAir: "Hava verisi mahalle bazında; yakın rotalar benzer tahmin alır. En uygununu seçin.", fail: "Rota servisi yanıt vermedi — düz çizgi gösteriliyor (tahmin).", lineEst: "düz çizgi, tahmin",
-    ready: "Hazır eko rotalar", readySub: "Parklar, bulvarlar, nehir kenarları — gerçek yollarla çizilir, hava tahminiyle", go: "Çiz", detour: "{d} üzerinden", none: "Sonuç yok", my: "Konumum", mapPt: "Haritadaki nokta",
-    loc: "Konum alınıyor…", locErr: "Konum alınamadı", src: "Rotalar: © OpenStreetMap, Valhalla/OSRM (FOSSGIS). Arama: Photon (komoot).", fewer: "Noktayı sil", near: "“{d}” yakını" } };
+    loc: "Locating…", locErr: "Couldn't get your location", src: "Routing: © OpenStreetMap, Valhalla/OSRM (FOSSGIS). Search: Photon (komoot).", fewer: "Remove point", near: "near “{d}”" } };
 const ET = (k, o) => { let s = (ECO_T[LANG] || ECO_T.ru)[k] ?? ECO_T.ru[k]; if (o) for (const [a, b] of Object.entries(o)) s = s.replace("{" + a + "}", b); return s; };
 const ECO_V = { walk: 1.4, bike: 2.2, car: 0.6 };            /* вентиляция лёгких, м³/ч (пешком / велосипед / в машине в покое) */
 const ECO_SPEED = { walk: 4.6, bike: 14, car: 30 };          /* для запасного варианта «по прямой», км/ч */
@@ -41,21 +33,21 @@ const ECO_ICON = { walk: '<svg viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/
 /* Готовые маршруты (точки — ориентиры, линия прокладывается по реальным дорожкам OSM) */
 const ECO_READY = {
   bishkek: [
-    { id: "e_phil", mode: "walk", n: { ru: "Ботсад КНУ → Филармония", ky: "КУУнун ботаникалык багы → Филармония", en: "KNU Botanical Garden → Philharmonic", tr: "KNU Botanik Bahçesi → Filarmoni" }, p: [[42.8857, 74.5887], [42.8783, 74.5876]] },
-    { id: "e_center", mode: "walk", n: { ru: "Филармония → Дубовый парк → Площадь Победы", ky: "Филармония → Эмен паркы → Жеңиш аянты", en: "Philharmonic → Oak Park → Victory Square", tr: "Filarmoni → Meşe Parkı → Zafer Meydanı" }, p: [[42.8783, 74.5876], [42.8768, 74.6060], [42.8792, 74.6162]] },
-    { id: "e_gar", mode: "walk", n: { ru: "Ботанический сад им. Гареева — круг", ky: "Гареев атындагы ботаникалык бак — айлана", en: "Gareev Botanical Garden loop", tr: "Gareev Botanik Bahçesi turu" }, p: [[42.8360, 74.6370], [42.8262, 74.6420], [42.8185, 74.6380], [42.8360, 74.6370]] },
-    { id: "e_oreh", mode: "walk", n: { ru: "Парк «Ореховая роща»", ky: "«Жаңгак токою» паркы", en: "Walnut Grove park", tr: "Ceviz Korusu parkı" }, p: [[42.8250, 74.6270], [42.8232, 74.6292], [42.8250, 74.6270]] },
-    { id: "e_south", mode: "bike", n: { ru: "Южные ворота → Ботсад Гареева", ky: "Түштүк дарбаза → Гареев ботаникалык багы", en: "Southern Gates → Gareev Garden", tr: "Güney Kapıları → Gareev Bahçesi" }, p: [[42.8291, 74.6073], [42.8262, 74.6390]] },
-    { id: "e_vict", mode: "bike", n: { ru: "Центр → Парк Победы (юг)", ky: "Борбор → Жеңиш паркы (түштүк)", en: "Centre → Victory Park (south)", tr: "Merkez → Zafer Parkı (güney)" }, p: [[42.8767, 74.6037], [42.8287, 74.6035]] } ],
+    { id: "e_phil", mode: "walk", n: { ru: "Ботсад КНУ → Филармония", ky: "КУУнун ботаникалык багы → Филармония", en: "KNU Botanical Garden → Philharmonic" }, p: [[42.8857, 74.5887], [42.8783, 74.5876]] },
+    { id: "e_center", mode: "walk", n: { ru: "Филармония → Дубовый парк → Площадь Победы", ky: "Филармония → Эмен паркы → Жеңиш аянты", en: "Philharmonic → Oak Park → Victory Square" }, p: [[42.8783, 74.5876], [42.8768, 74.6060], [42.8792, 74.6162]] },
+    { id: "e_gar", mode: "walk", n: { ru: "Ботанический сад им. Гареева — круг", ky: "Гареев атындагы ботаникалык бак — айлана", en: "Gareev Botanical Garden loop" }, p: [[42.8360, 74.6370], [42.8262, 74.6420], [42.8185, 74.6380], [42.8360, 74.6370]] },
+    { id: "e_oreh", mode: "walk", n: { ru: "Парк «Ореховая роща»", ky: "«Жаңгак токою» паркы", en: "Walnut Grove park" }, p: [[42.8250, 74.6270], [42.8232, 74.6292], [42.8250, 74.6270]] },
+    { id: "e_south", mode: "bike", n: { ru: "Южные ворота → Ботсад Гареева", ky: "Түштүк дарбаза → Гареев ботаникалык багы", en: "Southern Gates → Gareev Garden" }, p: [[42.8291, 74.6073], [42.8262, 74.6390]] },
+    { id: "e_vict", mode: "bike", n: { ru: "Центр → Парк Победы (юг)", ky: "Борбор → Жеңиш паркы (түштүк)", en: "Centre → Victory Park (south)" }, p: [[42.8767, 74.6037], [42.8287, 74.6035]] } ],
   osh: [
-    { id: "e_sul", mode: "walk", n: { ru: "Подъём на Сулайман-Тоо", ky: "Сулайман-Тоого чыгуу", en: "Up Sulaiman-Too", tr: "Süleyman Dağı'na çıkış" }, p: [[40.5262, 72.7905], [40.5274, 72.7856]] },
-    { id: "e_tokt", mode: "walk", n: { ru: "Парк Спутник → Парк им. Токтогула", ky: "Спутник паркы → Токтогул паркы", en: "Sputnik Park → Toktogul Park", tr: "Sputnik Parkı → Toktogul Parkı" }, p: [[40.5131, 72.8031], [40.5154, 72.8090]] },
-    { id: "e_oshu", mode: "bike", n: { ru: "ОшГУ → Сулайман-Тоо", ky: "ОшМУ → Сулайман-Тоо", en: "Osh State Univ. → Sulaiman-Too", tr: "Oş Devlet Üniv. → Süleyman Dağı" }, p: [[40.5372, 72.8052], [40.5280, 72.7880]] } ],
+    { id: "e_sul", mode: "walk", n: { ru: "Подъём на Сулайман-Тоо", ky: "Сулайман-Тоого чыгуу", en: "Up Sulaiman-Too" }, p: [[40.5262, 72.7905], [40.5274, 72.7856]] },
+    { id: "e_tokt", mode: "walk", n: { ru: "Парк Спутник → Парк им. Токтогула", ky: "Спутник паркы → Токтогул паркы", en: "Sputnik Park → Toktogul Park" }, p: [[40.5131, 72.8031], [40.5154, 72.8090]] },
+    { id: "e_oshu", mode: "bike", n: { ru: "ОшГУ → Сулайман-Тоо", ky: "ОшМУ → Сулайман-Тоо", en: "Osh State Univ. → Sulaiman-Too" }, p: [[40.5372, 72.8052], [40.5280, 72.7880]] } ],
   karakol: [
-    { id: "e_kvp", mode: "walk", n: { ru: "Парк Победы — круг", ky: "Жеңиш паркы — айлана", en: "Victory Park loop", tr: "Zafer Parkı turu" }, p: [[42.4858, 78.4050], [42.4830, 78.4090], [42.4858, 78.4050]] } ],
+    { id: "e_kvp", mode: "walk", n: { ru: "Парк Победы — круг", ky: "Жеңиш паркы — айлана", en: "Victory Park loop" }, p: [[42.4858, 78.4050], [42.4830, 78.4090], [42.4858, 78.4050]] } ],
   kochkor: [
-    { id: "e_kkpark", mode: "walk", n: { ru: "Центр (райадминистрация) → парк", ky: "Борбор (райадминистрация) → парк", en: "Centre (district office) → park", tr: "Merkez (ilçe yönetimi) → park" }, p: [[42.21309, 75.75381], [42.21547, 75.76153]] },
-    { id: "e_kktoo", mode: "bike", n: { ru: "Центр → айыл Кара-Тоо", ky: "Борбор → Кара-Тоо айылы", en: "Centre → Kara-Too village", tr: "Merkez → Kara-Too köyü" }, p: [[42.21309, 75.75381], [42.23048, 75.74424]] } ] };
+    { id: "e_kkpark", mode: "walk", n: { ru: "Центр (райадминистрация) → парк", ky: "Борбор (райадминистрация) → парк", en: "Centre (district office) → park" }, p: [[42.21309, 75.75381], [42.21547, 75.76153]] },
+    { id: "e_kktoo", mode: "bike", n: { ru: "Центр → айыл Кара-Тоо", ky: "Борбор → Кара-Тоо айылы", en: "Centre → Kara-Too village" }, p: [[42.21309, 75.75381], [42.23048, 75.74424]] } ] };
 
 const eco = { mode: "walk", pts: [null, null], routes: [], sel: 0, busy: false, note: "" };
 let ecoAbort = null;
@@ -263,10 +255,7 @@ const ECO_TT = {
     note: "Тыгындар — баалоо (модель): {t} саатка типтүү суткалык профиль × OSM көчөлөрүнүн түзүлүшү, жандуу маалымат эмес. Жүктүү көчөлөрдүн жанындагы түтүн жөө жүргөнгө жана велосипедчиге PM2.5ке +40 %га чейин, унаанын ичинде +30 %га чейин кошот; {t} саатка аба — райондор боюнча CAMS сааттык божомолу." },
   en: { pref: "Priority", pClean: "Clean air", pJam: "Avoid traffic", pBal: "Balanced", dep: "Depart", dNow: "now", d1: "in 1 h", dC: "at", tf: "Traffic", delay: "+{m} min in traffic", nojam: "Fewer jams", avoid: "around jams", quiet: "quiet streets",
     nearRd: "{p}% next to busy roads", exh: "exhaust +{p}% dose", tEst: "estimate (model)", leg: "Traffic (model)", free: "free", jam: "jam", tomorrow: "tomorrow",
-    note: "Traffic is an estimate (model): typical daily profile × OSM street structure at {t}, not live data. Exhaust next to congested streets adds up to +40% PM2.5 for pedestrians and cyclists (kerbside), up to +30% inside a car; air at {t} follows the CAMS hourly forecast for the districts." },
-  tr: { pref: "Öncelik", pClean: "Temiz hava", pJam: "Trafiksiz", pBal: "Denge", dep: "Çıkış", dNow: "şimdi", d1: "1 sa sonra", dC: "saatte", tf: "Trafik", delay: "trafikte +{m} dk", nojam: "Daha az trafik", avoid: "trafiği dolanarak", quiet: "sakin sokaklardan",
-    nearRd: "yolun %{p}'i yoğun caddelerin yanında", exh: "egzoz doza +%{p}", tEst: "tahmin (model)", leg: "Trafik (model)", free: "akıcı", jam: "sıkışık", tomorrow: "yarın",
-    note: "Trafik bir tahmindir (model): {t} için tipik günlük profil × OSM sokak yapısı, canlı veri değildir. Yoğun caddelerin yanındaki egzoz yaya ve bisikletliye PM2.5'te %40'a kadar (kaldırım kenarı), araç içinde %30'a kadar ek getirir; {t} havası semtlerin CAMS saatlik tahminine göredir." } };
+    note: "Traffic is an estimate (model): typical daily profile × OSM street structure at {t}, not live data. Exhaust next to congested streets adds up to +40% PM2.5 for pedestrians and cyclists (kerbside), up to +30% inside a car; air at {t} follows the CAMS hourly forecast for the districts." } };
 const ETT = (k, o) => { let s = (ECO_TT[LANG] || ECO_TT.ru)[k] ?? ECO_TT.ru[k]; if (o) for (const [a, b] of Object.entries(o)) s = s.split("{" + a + "}").join(b); return s; };
 const ECO_HAS_TF = () => typeof tf2Roads === "function" && typeof tf3C === "function";
 eco.pref = eco.pref || "bal"; eco.dep = eco.dep || "now"; eco.depH = eco.depH ?? 18;
@@ -353,7 +342,7 @@ function ecoTfDraw(L0) { const ix = ecoTfIx[CITY], hd = eco.hd; if (!ix || !hd |
 function ecoTfLegend() { if (!ECO_HAS_TF() || typeof tfCol !== "function") return ""; return `<div class="eco-legend eco-legend2"><span>${esc(ETT("free"))}</span>${[0.15, 0.35, 0.5, 0.65, 0.8, 0.92].map(c => `<i style="background:${tfCol(c)}"></i>`).join("")}<span>${esc(ETT("jam"))}</span><em>🚦 ${esc(ETT("leg"))}</em></div>`; }
 for (const l in ECO_TT) if (ECO_T[l]) ECO_T[l].nojam = ECO_TT[l].nojam;
 /* 3D-навигатор — отдельный модуль, грузится только по нажатию */
-const ECO_SAT3D = { ru: "3D-спутник", ky: "3D-спутник", en: "3D satellite", tr: "3D uydu" }; /* v44-sat: облёт маршрута над спутниковым снимком с рельефом */
+const ECO_SAT3D = { ru: "3D-спутник", ky: "3D-спутник", en: "3D satellite" }; /* v44-sat: облёт маршрута над спутниковым снимком с рельефом */
 function ecoOpen3d(r, o) { const go = () => window.eco3dOpen && window.eco3dOpen(r, eco.mode, o);
   if (window.eco3dOpen) return go(); const s = document.createElement("script"); s.src = "eco3d.js"; s.onload = go; s.onerror = () => toast("3D: load error"); document.head.appendChild(s); }
 if (typeof views !== "undefined") views.routes = el => viewEco(el);

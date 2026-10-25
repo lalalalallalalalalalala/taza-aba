@@ -10,9 +10,7 @@
     ky: { play: "Баштоо", pause: "Тыным", gps: "GPS", gpsOn: "GPS ээрчип жатам", gpsErr: "GPS жеткиликсиз", off: "Маршруттан {m} м алыстадыңыз", left: "калды", ahead: "Алдыда {d}", close: "Жабуу", sim: "Симуляция", est: "«Дымка» баалоосу", done: "Маршрут бүттү 🎉", speed: "Ылдамдык",
       sat: "Спутник", map: "Схема", fly: "Учуп көрүү", flyStop: "Токтотуу", flyHint: "Маршрутту учуп көрүү · токтотуу үчүн картаны басыңыз", layer: "Картанын көрүнүшү", relief: "рельеф ×{x}" },
     en: { play: "Start", pause: "Pause", gps: "GPS", gpsOn: "Following GPS", gpsErr: "GPS unavailable", off: "You are {m} m off the route", left: "left", ahead: "Next {d}", close: "Close", sim: "Simulation", est: "“Dymka” estimate", done: "Route complete 🎉", speed: "Speed",
-      sat: "Satellite", map: "Map", fly: "Fly-over", flyStop: "Stop", flyHint: "Route fly-over · tap the map to stop", layer: "Map view", relief: "terrain ×{x}" },
-    tr: { play: "Başlat", pause: "Duraklat", gps: "GPS", gpsOn: "GPS takip ediliyor", gpsErr: "GPS yok", off: "Rotadan {m} m uzaktasınız", left: "kaldı", ahead: "Sonraki {d}", close: "Kapat", sim: "Simülasyon", est: "“Dymka” tahmini", done: "Rota tamamlandı 🎉", speed: "Hız",
-      sat: "Uydu", map: "Harita", fly: "Uçuş", flyStop: "Durdur", flyHint: "Rota üzerinde uçuş · durdurmak için haritaya dokunun", layer: "Harita görünümü", relief: "arazi ×{x}" } };
+      sat: "Satellite", map: "Map", fly: "Fly-over", flyStop: "Stop", flyHint: "Route fly-over · tap the map to stop", layer: "Map view", relief: "terrain ×{x}" } };
   const tt = (k, o) => { let s = (T3[LANG] || T3.ru)[k] ?? T3.ru[k]; if (o) for (const [a, b] of Object.entries(o)) s = s.replace("{" + a + "}", b); return s; };
   const RM = (() => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } })();
   const WEAK = (typeof LOWEND !== "undefined" && LOWEND) || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 3;

@@ -5,7 +5,7 @@
 "use strict";
 (function () {
   const NS = "taza-aba-zusenbaev7", API = "https://abacus.jasoncameron.dev";
-  const T = { ru: "Посетителей: {v} · Открытий: {o}", ky: "Келгендер: {v} · Ачылыштар: {o}", en: "Visitors: {v} · Opens: {o}", tr: "Ziyaretçi: {v} · Açılış: {o}" };
+  const T = { ru: "Посетителей: {v} · Открытий: {o}", ky: "Келгендер: {v} · Ачылыштар: {o}", en: "Visitors: {v} · Opens: {o}" };
   const isExe = typeof window.NL_OS !== "undefined" || typeof window.Neutralino !== "undefined" || /Neutralino/i.test(navigator.userAgent);
   const isBot = navigator.webdriver === true || /bot|crawl|spider|slurp|headless|lighthouse|pagespeed|preview/i.test(navigator.userAgent);
   const isWeb = /^https?:$/.test(location.protocol), isLocal = /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname);

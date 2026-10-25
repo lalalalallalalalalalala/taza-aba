@@ -7,7 +7,7 @@ const GS_T = {
   ru: { ph: "Поиск района или города", btn: "Поиск", none: "Ничего не найдено", hint: "↑↓ — выбор · Enter — открыть · Esc — закрыть", city: "город", close: "Закрыть", more: "Язык и тема" },
   ky: { ph: "Район же шаарды издөө", btn: "Издөө", none: "Эч нерсе табылган жок", hint: "↑↓ — тандоо · Enter — ачуу · Esc — жабуу", city: "шаар", close: "Жабуу", more: "Тил жана тема" },
   en: { ph: "Search a district or city", btn: "Search", none: "Nothing found", hint: "↑↓ — select · Enter — open · Esc — close", city: "city", close: "Close", more: "Language & theme" },
-  tr: { ph: "Semt veya şehir ara", btn: "Ara", none: "Sonuç bulunamadı", hint: "↑↓ — seç · Enter — aç · Esc — kapat", city: "şehir", close: "Kapat", more: "Dil ve tema" },
+  
 };
 const GT = k => (GS_T[LANG] || GS_T.ru)[k] ?? GS_T.ru[k];
 const GS_CYR = { а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "e", ж: "j", з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", ң: "n", о: "o", ө: "o", п: "p", р: "r", с: "s", т: "t", у: "u", ү: "u", ф: "f", х: "h", ц: "ts", ч: "\u0002", ш: "\u0001", щ: "\u0001", ъ: "", ы: "y", ь: "", э: "e", ю: "yu", я: "ya", і: "i", ә: "a", ғ: "g", қ: "k", ұ: "u", һ: "h" };
@@ -33,7 +33,7 @@ function gsBuild() {
   GS_IDX = [];
   const add = (cid, did, nm) => { const names = [...new Set(Object.values(nm || {}).filter(Boolean))]; const keys = [...new Set(names.map(gsSkel))].filter(Boolean);
     GS_IDX.push({ cid, did, nm, keys, toks: keys.flatMap(k => k.split(" ")), flat: keys.map(k => k.replace(/ /g, "")) }); };
-  const ids = [...new Set([...(typeof KG_ORDER !== "undefined" ? KG_ORDER : []), ...(typeof TR_ORDER !== "undefined" ? TR_ORDER : []), ...Object.keys(CITIES)])];
+  const ids = [...new Set([...(typeof KG_ORDER !== "undefined" ? KG_ORDER : []), ...Object.keys(CITIES)])];
   ids.forEach(cid => { const c = CITIES[cid]; if (!c) return; add(cid, null, { ...c.name, tr2: c.trName });
     (c.districts || []).forEach(d => add(cid, d.id, d.name)); });
 }
@@ -53,7 +53,7 @@ function gsSearch(q) {
   }
   return out.sort((a, b) => b.sc - a.sc || (a.e.did ? 1 : 0) - (b.e.did ? 1 : 0)).slice(0, 40).map(x => x.e);
 }
-const gsNm = nm => (nm && (nm[LANG] || (LANG === "tr" && nm.en) || nm.ru || nm.en)) || "";
+const gsNm = nm => (nm && (nm[LANG] || nm.ru || nm.en)) || "";
 function gsAqi(e) {
   if (e.did) { const r = e.cid === CITY && air.byDistrict && air.byDistrict[e.did]; return r && r.aqi != null ? r.aqi : null; }
   const r = typeof countryAir !== "undefined" && countryAir.byCity && countryAir.byCity[e.cid]; return r && r.aqi != null ? r.aqi : (e.cid === CITY && air.byDistrict[state.district] ? null : null);
@@ -87,7 +87,7 @@ function gsRender() {
   gsSel = 0;
   ul.innerHTML = gsRes.length ? gsRes.map((e, i) => { const c = CITIES[e.cid], a = gsAqi(e), Lv = a != null ? level(a) : null;
     return `<li id="gs-o${i}" role="option" data-i="${i}" aria-selected="${i === 0}"><span class="gs-ic" aria-hidden="true">${e.did ? "📍" : c.emoji || "🏙️"}</span>
-      <span class="gs-tx"><b>${esc(e.did ? gsNm(e.nm) : tr(c.name))}</b><small>${e.did ? esc(tr(c.name)) + " · " : GT("city") + " · "}${c.country === "tr" ? "🇹🇷" : "🇰🇬"}</small></span>
+      <span class="gs-tx"><b>${esc(e.did ? gsNm(e.nm) : tr(c.name))}</b><small>${e.did ? esc(tr(c.name)) + " · " : GT("city") + " · "}🇰🇬</small></span>
       ${Lv ? `<span class="gs-aqi" style="background:${Lv.color}">${a}</span>` : ""}</li>`; }).join("") : `<li class="gs-none">${GT("none")}</li>`;
   gsMark();
 }

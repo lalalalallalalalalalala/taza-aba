@@ -48,3 +48,10 @@ html.hero-on .view h2{margin:24px 4px 12px;letter-spacing:-.015em}
 .col > .hr{min-height:0;padding:16px 12px 12px;gap:12px;border-radius:26px}
 .col > .hr .hr-card{padding:13px;font-size:13px}.col > .hr .hr-msgs{min-height:200px}
 .col > .hr .hr-di{width:36px;height:36px}.col > .hr .hr-dock{gap:4px;padding:6px}.col > .hr .hr-di svg{width:19px;height:19px}
+
+/* v58: подсказки вместо демо-диалога */
+.hr-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.hr-chip{display:inline-block;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;font-weight:700;font-size:13px;text-decoration:none}
+.hr-chip:hover,.hr-chip:focus-visible{background:rgba(255,255,255,.22)}
+.hr .hr-a.on{opacity:1}
+.hr .hr-msgs{min-height:0!important;height:auto!important}

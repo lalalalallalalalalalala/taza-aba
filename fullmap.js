@@ -9,8 +9,7 @@ window.FM_ON = (() => { try { const q = new URL(location.href).searchParams.get(
 const FM_T = {
   ru: { open: "Слои, легенда и время", close: "Свернуть", est: "оценка · модель", smog: "Карта смога", traffic: "Пробки", aqi: "AQI", panel: "Панель карты" },
   ky: { open: "Катмарлар, легенда жана убакыт", close: "Жыйноо", est: "баалоо · модель", smog: "Түтүн картасы", traffic: "Тыгындар", aqi: "AQI", panel: "Карта панели" },
-  en: { open: "Layers, legend and time", close: "Collapse", est: "estimate · model", smog: "Smog map", traffic: "Traffic", aqi: "AQI", panel: "Map panel" },
-  tr: { open: "Katmanlar, açıklama ve saat", close: "Daralt", est: "tahmin · model", smog: "Duman haritası", traffic: "Trafik", aqi: "AQI", panel: "Harita paneli" } };
+  en: { open: "Layers, legend and time", close: "Collapse", est: "estimate · model", smog: "Smog map", traffic: "Traffic", aqi: "AQI", panel: "Map panel" } };
 const FMT = k => (FM_T[LANG] || FM_T.ru)[k];
 const FM_IC = {
   smog: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h11a3 3 0 1 0-3-3"/><path d="M3 13h15a3 3 0 1 1-3 3"/><path d="M5 17h6"/></svg>',

@@ -45,15 +45,15 @@ function srcLabel(a, d) {
 }
 Object.assign(DICT.ru, {
   srcSensors: "Датчики Sensor.Community: {n} шт. рядом, {m} мин назад", srcModel: "Модель CAMS (Open-Meteo) для координат района — не измерение",
-  srcDemo: "Демо-данные: нет связи с источниками", coordApprox: "координаты района приблизительные",
+  srcDemo: "нет данных", coordApprox: "координаты района приблизительные",
 });
 Object.assign(DICT.ky, {
   srcSensors: "Sensor.Community датчиктери: жанында {n} даана, {m} мүн. мурун", srcModel: "CAMS модели (Open-Meteo) аймактын координаттары боюнча — өлчөө эмес",
-  srcDemo: "Демо-маалымат: булактар менен байланыш жок", coordApprox: "аймактын координаттары болжолдуу",
+  srcDemo: "маалымат жок", coordApprox: "аймактын координаттары болжолдуу",
 });
 Object.assign(DICT.en, {
   srcSensors: "Sensor.Community sensors: {n} nearby, {m} min ago", srcModel: "CAMS model (Open-Meteo) at district coordinates — not a measurement",
-  srcDemo: "Demo data: sources unavailable", coordApprox: "district coordinates are approximate",
+  srcDemo: "no data", coordApprox: "district coordinates are approximate",
 });
 
 /* ---------- 2. Расширенный советник ---------- */
@@ -185,7 +185,7 @@ async function answerFree2(q) {
   const c = airCtx(); if (!c) return { html: noDataAnswer(qk) };
   const P = c.P;
   const ctx = `Current district ${c.vars.d}, US AQI ${aqiTxt(c.a.aqi)} (source: ${c.a.src}), best hour today ${c.vars.best} (AQI ${c.vars.bv}), peak ${c.vars.worst} (AQI ${c.vars.wv}), tomorrow max ${c.vars.tm}. User profile: kids=${P.kids}, asthma=${P.asthma}, elderly=${P.elderly}, sport=${P.sport}, heating=${P.heat}. Advisor mode: ${adv.mode}.`;
-  const langName = { ru: "Russian", ky: "Kyrgyz (Cyrillic)", en: "English", tr: "Turkish" }[LANG];
+  const langName = { ru: "Russian", ky: "Kyrgyz (Cyrillic)", en: "English" }[LANG];
   try {
     const ctl = new AbortController(); setTimeout(() => ctl.abort(), 20000);
     const r = await fetch(cfg.url + "/chat/completions", { method: "POST", signal: ctl.signal,
@@ -312,7 +312,7 @@ function viewAdvisor2(el) {
   const mic = $("#micBtn");
   if (mic) mic.onclick = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition; const rec = new SR();
-    rec.lang = { ru: "ru-RU", ky: "ky-KG", en: "en-US", tr: "tr-TR" }[LANG]; rec.interimResults = false;
+    rec.lang = { ru: "ru-RU", ky: "ky-KG", en: "en-US" }[LANG]; rec.interimResults = false;
     mic.classList.add("rec"); $("#askIn").placeholder = A("listening");
     rec.onresult = ev => { $("#askIn").value = ev.results[0][0].transcript; $("#askForm").requestSubmit(); };
     rec.onerror = () => toast("🎤 ✕"); rec.onend = () => { mic.classList.remove("rec"); const i = $("#askIn"); if (i) i.placeholder = t("askPh"); };
@@ -363,10 +363,10 @@ function viewRoutes2(el) {
       return `<div class="card route ${selRoute === r.id ? "sel" : ""}" data-route="${r.id}" tabindex="0">
         <div class="row between"><b style="font-size:15.5px"><span class="rdot" style="background:${r.color}"></span>${tr(r.name)}</b>${r.id === cleanest ? `<span class="chip">${t("rBest")}</span>` : ""}</div>
         <div class="r-meta"><span>${RT_ICON[type]} ${RT(type)}</span><span>📏 ${r.far ? "≈" : ""}${t("rKm", { n: fmt(km, 1) })}</span><span>⏱️ ${t("rMin", { n: Math.max(5, Math.round(km / RT_SPEED[type] * 60)) })}</span>
-          ${aq ? `<span style="background:${Lv.color}22;color:${Lv.color}">AQI ${aq.v} · ${aq.src === "sensors" ? "📡" : aq.src === "model" ? "🛰️" : "⚠️ demo"}</span>` : `<span>AQI —</span>`}
+          ${aq ? `<span style="background:${Lv.color}22;color:${Lv.color}">AQI ${aq.v} · ${aq.src === "sensors" ? "📡" : "🛰️"}</span>` : `<span>AQI —</span>`}
           ${type !== "trip" ? `<span class="g">🌱 ${t("rCO2", { n: fmt(km * CAR_KG_PER_KM, 2) })}</span>` : ""}</div>
         ${r.avoid ? `<div class="small muted" style="font-weight:700;margin-top:6px">🚫 ${t("rAvoid", { s: tr(r.avoid) })}</div>` : ""}
-        ${r.via && r.via.length ? `<div class="small muted" style="margin-top:6px">🛣️ ${({ ru: "По улицам (OSM)", ky: "Көчөлөр (OSM)", en: "Via streets (OSM)", tr: "Sokaklar (OSM)" })[LANG] || "OSM"}: ${r.via.map(esc).join(", ")}</div>` : ""}
+        ${r.via && r.via.length ? `<div class="small muted" style="margin-top:6px">🛣️ ${({ ru: "По улицам (OSM)", ky: "Көчөлөр (OSM)", en: "Via streets (OSM)" })[LANG] || "OSM"}: ${r.via.map(esc).join(", ")}</div>` : ""}
       </div>`;
     }).join("")}
     </div></div>
@@ -471,7 +471,7 @@ async function loadWeather(force) {
 const NEWS_REPO = "zusenbaev7-cmd/taza-aba", NEWS_RAW = `https://raw.githubusercontent.com/${NEWS_REPO}/main/news/`;
 // набор лент по языку интерфейса: Kabar и 24.kg выпускают кыргызскую, русскую и английскую версии, Kloop — только русскую (в лентах).
 // Для турецкого интерфейса у КР-изданий нет турецких лент → русский набор (самый полный).
-const newsSet = ctry => ctry === "tr" ? "tr" : "kg-" + (LANG === "ky" ? "ky" : LANG === "en" ? "en" : "ru");
+const newsSet = ctry => "kg-" + (LANG === "ky" ? "ky" : LANG === "en" ? "en" : "ru");
 async function loadNews(force) {
   const ctry = cityObj().country || "kg", set = newsSet(ctry);
   const cur = newsState.news;
@@ -499,9 +499,9 @@ const newsTs = x => Date.parse(x.date || "") || 0;
 let newsSrcFilter = "all";
 const escRx = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 function cityNewsRx() {
-  const c = cityObj(), parts = [c.name.ru, c.name.ky, c.name.en, c.name.tr].filter((v, i, arr) => v && arr.indexOf(v) === i).map(escRx);
+  const c = cityObj(), parts = [c.name.ru, c.name.ky, c.name.en].filter((v, i, arr) => v && arr.indexOf(v) === i).map(escRx);
   const extra = CITY_RX[CITY] || c.newsRx;
-  const base = c.id === "osh" || (c.newsRx && c.country !== "tr") ? null : new RegExp(parts.join("|"), "i");   // у KG-городов с newsRx — только он (с границами слова: «Кант» ≠ «Кантор»)
+  const base = c.id === "osh" || c.newsRx ? null : new RegExp(parts.join("|"), "i");   // у KG-городов с newsRx — только он (с границами слова: «Кант» ≠ «Кантор»)
   return { test: s => (base ? base.test(s) : false) || (extra ? extra.test(s) : false) };
 }
 function newsHTML() {
@@ -517,7 +517,6 @@ function newsHTML() {
   const chips = `<div class="adv-modes nchips">${["all", ...S.sources].map(s => `<button class="${newsSrcFilter === s ? "on" : ""}" aria-pressed="${newsSrcFilter === s}" data-nsrc="${esc(s)}">${s === "all" ? "✨ " + R("all") : esc(s)}</button>`).join("")}</div>`;
   return `${chips}
     <p class="small muted">🕒 ${N("updN", { t: new Date(S.updated || S.at).toLocaleString(numLocale(), { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) })} · ${N("srcN", { n: S.sources.length })}</p>
-    ${LANG === "tr" && S.set === "kg-ru" && NW.tr.newsTrLang ? `<p class="small muted">ℹ️ ${NW.tr.newsTrLang}</p>` : ""}
     ${S.updated && Date.now() - S.updated > 6 * 3600e3 ? `<p class="small muted">⚠️ ${N("newsStale")}</p>` : ""}
     ${air.length ? `<h3 class="nh">💨 ${N("airNews")} · ${air.length}</h3>${air.slice(0, 6).map(li).join("")}` : ""}
     <h3 class="nh">${N("cityNews", { city: tr(cityObj().name) })} · ${mine.length}</h3>
@@ -596,7 +595,7 @@ function wxHTML() {
         <div class="wx-sun small"><div>🌅 ${N("sunrise")} <b>${dd.sunrise[0].slice(11, 16)}</b></div><div>🌇 ${N("sunset")} <b>${dd.sunset[0].slice(11, 16)}</b></div></div></div>
       <div class="wx-grid">
         <div><span>💧 ${N("hum")}</span><b>${c.relative_humidity_2m}%</b></div>
-        <div><span>💨 ${N("wind")}</span><b>${fmt(c.wind_speed_10m, 1)} ${(LANG === "en" || LANG === "tr") ? "m/s" : "м/с"} ${dirOf(c.wind_direction_10m)}</b></div>
+        <div><span>💨 ${N("wind")}</span><b>${fmt(c.wind_speed_10m, 1)} ${LANG === "en" ? "m/s" : "м/с"} ${dirOf(c.wind_direction_10m)}</b></div>
         <div><span>🧭 ${N("pres")}</span><b>${fmt(c.surface_pressure, 0)} ${N("hpa")}</b></div>
         <div><span>🌧️ ${N("prec")}</span><b>${fmt(c.precipitation, 1)} ${N("mm")}</b></div>
         <div><span>☁️ ${N("cloud")}</span><b>${c.cloud_cover}%</b></div>
@@ -608,7 +607,7 @@ function wxHTML() {
     <h2>🕒 ${N("h24")}</h2>
     <div class="wx-hours">${hrs.map(x => `<div><span>${x.tm.slice(11, 16)}</span><b>${WMO(x.wc)}</b><i>${fmt(x.T, 0)}°</i>${x.p != null ? `<small>${x.p}%</small>` : ""}</div>`).join("")}</div>
     <h2>📅 ${N("d7")}</h2>
-    <div class="card wx-days">${dd.time.map((tm, k) => `<div><span>${new Date(tm + "T12:00").toLocaleDateString(LANG === "en" ? "en-GB" : LANG === "tr" ? "tr-TR" : "ru-RU", { weekday: "short", day: "numeric" })}</span><b>${WMO(dd.weather_code[k])}</b><i>${fmt(dd.temperature_2m_min[k], 0)}° … <strong>${fmt(dd.temperature_2m_max[k], 0)}°</strong></i><small>${dd.precipitation_sum[k] ? fmt(dd.precipitation_sum[k], 1) + " " + N("mm") : ""}</small></div>`).join("")}</div>`;
+    <div class="card wx-days">${dd.time.map((tm, k) => `<div><span>${new Date(tm + "T12:00").toLocaleDateString(LANG === "en" ? "en-GB" : "ru-RU", { weekday: "short", day: "numeric" })}</span><b>${WMO(dd.weather_code[k])}</b><i>${fmt(dd.temperature_2m_min[k], 0)}° … <strong>${fmt(dd.temperature_2m_max[k], 0)}°</strong></i><small>${dd.precipitation_sum[k] ? fmt(dd.precipitation_sum[k], 1) + " " + N("mm") : ""}</small></div>`).join("")}</div>`;
 }
 function viewNews(el) {
   const paint = () => {
@@ -634,23 +633,13 @@ function viewNews(el) {
 /* ---------- 5. Страны: Кыргызстан / Турция ---------- */
 const NEWS_FEEDS = {
   kg: [{ url: "https://kabar.kg/rss/", name: "Kabar" }, { url: "https://24.kg/rss/", name: "24.kg" }, { url: "https://kloop.kg/feed/", name: "Kloop" }],
-  tr: [{ url: "https://www.aa.com.tr/tr/rss/default?cat=guncel", name: "Anadolu Ajansı" }, { url: "https://www.trthaber.com/sondakika.rss", name: "TRT Haber" }, { url: "https://www.hurriyet.com.tr/rss/anasayfa", name: "Hürriyet" }, { url: "https://www.sozcu.com.tr/feeds-rss-category-gundem", name: "Sözcü" }],
+  
 };
-const NEWS_SITES = { kg: [["Kabar", "https://kabar.kg/"], ["24.kg", "https://24.kg/"], ["Kloop", "https://kloop.kg/"]], tr: [["Anadolu Ajansı", "https://www.aa.com.tr/tr"], ["TRT Haber", "https://www.trthaber.com/"]] };
-const NEWS_FEED = { kg: { url: "https://24.kg/rss/", name: "24.kg" }, tr: { url: "https://www.aa.com.tr/tr/rss/default?cat=guncel", name: "Anadolu Ajansı" } };
-const CTRY = { ru: { kg: "Кыргызстан", tr: "Турция", lbl: "Страна" }, ky: { kg: "Кыргызстан", tr: "Түркия", lbl: "Өлкө" }, en: { kg: "Kyrgyzstan", tr: "Turkey", lbl: "Country" } };
+const NEWS_SITES = { kg: [["Kabar", "https://kabar.kg/"], ["24.kg", "https://24.kg/"], ["Kloop", "https://kloop.kg/"]] };
+const NEWS_FEED = { kg: { url: "https://24.kg/rss/", name: "24.kg" } };
+const CTRY = { ru: { kg: "Кыргызстан", lbl: "Страна" }, ky: { kg: "Кыргызстан", lbl: "Өлкө" }, en: { kg: "Kyrgyzstan", lbl: "Country" } };
 const ctryName = k => CTRY[LANG][k];
-const CT_TR = {
-  ru: { countryTitle: "Воздух в Турции", countryBtn: "🇹🇷 Вся страна", countryNoteTR: "AQI — модель CAMS для центра каждого города (Open-Meteo). Координаты районов приблизительные; цены — демо." },
-  ky: { countryTitle: "Түркиядагы аба", countryBtn: "🇹🇷 Бүт өлкө", countryNoteTR: "AQI — ар бир шаардын борбору үчүн CAMS модели (Open-Meteo). Райондордун координаттары болжолдуу; баалар — демо." },
-  en: { countryTitle: "Air across Turkey", countryBtn: "🇹🇷 Whole country", countryNoteTR: "AQI = CAMS model for each city centre (Open-Meteo). District coordinates are approximate; prices are demo." },
-};
-const ctryT = k => cityObj().country === "tr" && CT_TR[LANG][k] ? CT_TR[LANG][k] : t(k);
-function switchCountry(k) {
-  if (k === cityObj().country) return;
-  const list = k === "tr" ? TR_ORDER : KG_ORDER;
-  switchCity(list[0]);
-}
+const ctryT = k => t(k);   // v58: Турция удалена
 
 /* ---------- 6. Загрязнители и уровни ---------- */
 function pm10ToAqi(c) {
@@ -669,9 +658,7 @@ const POL = {
   en: { title: "Pollutants", sub: "Current concentrations and the US AQI sub-index for each pollutant", levels: "What the AQI levels mean", src_s: "sensors", src_m: "model", unit: "µg/m³", na: "no data",
     pm25: ["PM2.5", "fine dust: coal stoves, traffic"], pm10: ["PM10", "coarse dust: roads, construction"], no2: ["NO₂", "nitrogen dioxide: exhaust, power plants"], so2: ["SO₂", "sulphur dioxide: burning coal"], o3: ["O₃", "ground-level ozone: sunny summer days"], co: ["CO", "carbon monoxide: incomplete combustion"],
     main: "Main pollutant right now: {p}", note: "PM uses nearby sensors when available, otherwise the CAMS model; gases use the CAMS model (Open-Meteo)." },
-  tr: { title: "Kirleticiler", sub: "Her kirletici için anlık konsantrasyon ve US AQI alt endeksi", levels: "AQI seviyeleri ne anlama gelir", src_s: "sensörler", src_m: "model", unit: "µg/m³", na: "veri yok",
-    pm25: ["PM2.5", "ince toz: kömür sobaları, trafik"], pm10: ["PM10", "kaba toz: yollar, inşaatlar"], no2: ["NO₂", "azot dioksit: egzoz, santraller"], so2: ["SO₂", "kükürt dioksit: kömür yakma"], o3: ["O₃", "yer seviyesi ozon: güneşli yaz günleri"], co: ["CO", "karbon monoksit: eksik yanma"],
-    main: "Şu anki ana kirletici: {p}", note: "PM için yakında sensör varsa sensörler, yoksa CAMS modeli; gazlar için CAMS modeli (Open-Meteo)." },
+  
 };
 const P_ = k => (POL[LANG] || POL.en)[k];
 const LV_RANGE = ["0–50", "51–100", "101–150", "151–200", "201–300", "301+"];
@@ -709,11 +696,11 @@ function applyTheme() {
   const meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.content = d ? "#0E1A14" : "#EEF1DF";
 }
 const THEME_L = { ru: { auto: "Тема: авто (как в системе)", light: "Тема: светлая", dark: "Тема: тёмная" }, ky: { auto: "Тема: авто (системадагыдай)", light: "Тема: жарык", dark: "Тема: караңгы" },
-  en: { auto: "Theme: auto (system)", light: "Theme: light", dark: "Theme: dark" }, tr: { auto: "Tema: otomatik (sistem)", light: "Tema: açık", dark: "Tema: koyu" } };
+  en: { auto: "Theme: auto (system)", light: "Theme: light", dark: "Theme: dark" } };
 function renderThemeBtn() {
   const b = document.getElementById("themeBtn"); if (!b) return;
   const m = themeMode(), L = (THEME_L[LANG] || THEME_L.en)[m];
-  b.textContent = m === "auto" ? "🌓" : m === "dark" ? "🌙" : "☀️"; b.title = L; b.setAttribute("aria-label", L + " — " + ({ ru: "нажмите, чтобы сменить", ky: "алмаштыруу үчүн басыңыз", en: "tap to change", tr: "değiştirmek için dokunun" }[LANG] || "tap to change"));
+  b.textContent = m === "auto" ? "🌓" : m === "dark" ? "🌙" : "☀️"; b.title = L; b.setAttribute("aria-label", L + " — " + ({ ru: "нажмите, чтобы сменить", ky: "алмаштыруу үчүн басыңыз", en: "tap to change" }[LANG] || "tap to change"));
 }
 function cycleTheme() { const m = themeMode(); localStorage.setItem(THEME_KEY, m === "auto" ? "light" : m === "light" ? "dark" : "auto"); applyTheme(); renderThemeBtn(); }
 applyTheme();

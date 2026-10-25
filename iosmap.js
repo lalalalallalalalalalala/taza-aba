@@ -47,7 +47,6 @@
 
   const nameExpr = lang => lang === "ru" ? ["coalesce", ["get", "name:ru"], ["get", "name"]]
     : lang === "ky" ? ["coalesce", ["get", "name:ky"], ["get", "name"], ["get", "name:ru"]]
-    : lang === "tr" ? ["coalesce", ["get", "name:tr"], ["get", "name:en"], ["get", "name_int"], ["get", "name"]]
     : ["coalesce", ["get", "name:en"], ["get", "name_en"], ["get", "name_int"], ["get", "name"]];
   const W = (pairs) => ["interpolate", ["exponential", 1.5], ["zoom"], ...pairs.flat()];
   const F = { R: ["Noto Sans Regular"], B: ["Noto Sans Bold"], I: ["Noto Sans Italic"] };

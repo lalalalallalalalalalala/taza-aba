@@ -2,11 +2,11 @@
 "use strict";
 (function () {
   const G = {
-    main: { ru: "Главное", ky: "Негизги", en: "Main", tr: "Ana" },
-    tools: { ru: "Инструменты", ky: "Куралдар", en: "Tools", tr: "Araçlar" },
-    data: { ru: "Данные", ky: "Маалымат", en: "Data", tr: "Veriler" },
-    community: { ru: "Сообщество", ky: "Коомчулук", en: "Community", tr: "Topluluk" },
-    account: { ru: "Аккаунт", ky: "Аккаунт", en: "Account", tr: "Hesap" }
+    main: { ru: "Главное", ky: "Негизги", en: "Main" },
+    tools: { ru: "Инструменты", ky: "Куралдар", en: "Tools" },
+    data: { ru: "Данные", ky: "Маалымат", en: "Data" },
+    community: { ru: "Сообщество", ky: "Коомчулук", en: "Community" },
+    account: { ru: "Аккаунт", ky: "Аккаунт", en: "Account" }
   };
   const lang = () => { const l = (document.documentElement.lang || "ru").slice(0, 2); return G.main[l] ? l : "ru"; };
   function paint() {
