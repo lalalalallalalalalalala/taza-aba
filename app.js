@@ -7,7 +7,7 @@
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const numLocale = () => (LANG === "en" ? "en-US" : LANG === "tr" ? "tr-TR" : "ru-RU");
-const fmt = (n, d = 0) => Number(n).toLocaleString(numLocale(), { maximumFractionDigits: d, minimumFractionDigits: d });
+const fmt = (n, d = 0) => { let v = Number(n); if (isFinite(v) && Math.abs(v) < 0.5 * 10 ** -d) v = 0; return v.toLocaleString(numLocale(), { maximumFractionDigits: d, minimumFractionDigits: d }); };   // v50: без «-0°»
 const som = n => fmt(Math.round(n)) + " " + t("som");
 const years = n => t("yearsN", { n: fmt(n, 1) });
 /* ISO-дата «2026-10-20» → по локали интерфейса; всё остальное (демо-тексты) — как есть */
@@ -184,7 +184,7 @@ function loadFarAir() {
 async function loadAirImpl() {
   const reqCity = CITY, cc = cityObj().center;
   const farR = ECO_ROUTES.filter(r => r.far), pts = [...DISTRICTS.map(d => [d.lat, d.lon]), ...farR.map(r => r.path[r.path.length >> 1])];
-  const wurl = `https://api.open-meteo.com/v1/forecast?latitude=${cc[0]}&longitude=${cc[1]}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,wind_speed_10m,temperature_850hPa,boundary_layer_height&forecast_days=2&wind_speed_unit=ms&timezone=auto`;
+  const wurl = `https://api.open-meteo.com/v1/forecast?latitude=${cc[0]}&longitude=${cc[1]}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,wind_speed_10m,temperature_850hPa,temperature_700hPa,surface_pressure,boundary_layer_height&forecast_days=2&wind_speed_unit=ms&timezone=auto`;
   try {
     let [arr, w, sensors, stations] = await withTimeout(Promise.all([fetchAirPts(pts), fetchJSON(wurl).catch(() => null), loadSensors(cc).catch(() => []),
       (typeof loadStations === "function" ? loadStations(cc) : Promise.resolve([])).catch(() => [])]), 20000);
@@ -209,7 +209,7 @@ async function loadAirImpl() {
   // Перерисовываем только экраны, зависящие от данных о воздухе (чтобы не сбить ввод в формах).
   const cur = (location.hash || "#home").slice(1).split("/")[0];
   const advIdle = cur === "advisor" && !(document.getElementById("askIn") || {}).value && typeof adv !== "undefined" && adv.extra.some(m => m.quick);
-  if (["home", "map", "routes", "profile", ""].includes(cur) || !views[cur] || advIdle) route(true);
+  if (["home", "map", "routes", "profile", "weather", ""].includes(cur) || !views[cur] || advIdle) route(true);   // v50: + weather (риск смога как на главной)
   if (typeof refreshShareLinks === "function") refreshShareLinks();
   checkAlerts();
 }

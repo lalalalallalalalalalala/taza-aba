@@ -35,3 +35,16 @@
 [data-theme="dark"] .h-tabs button.on{background:#2c7a52}
 @media (max-width:600px){.h-tabs{flex-wrap:nowrap}.h-tabs button{flex:1;padding:8px 6px;font-size:13.5px}}
 .h-mdot{fill:#D9A400;stroke:#fff;stroke-width:1}
+/* v50: районы почти не различаются моделью */
+.h-same{margin:10px 0 4px;font-size:14px;line-height:1.45;font-weight:600}
+.h-all summary{cursor:pointer;font-weight:700;font-size:13.5px;padding:8px 0;color:var(--green-700,#1f6b45);min-height:32px}
+.h-all summary:focus-visible{outline:2px solid #38BDF8;outline-offset:2px;border-radius:6px}
+html[data-theme="dark"] .h-all summary{color:#8EDCB0}
+.h-grp{list-style:none;margin:8px 0 4px;padding:0;display:flex;flex-direction:column;gap:8px}
+.h-grp li{display:flex;gap:12px;align-items:center;padding:8px 10px;border-radius:12px;background:#0000000a}
+.h-grp li.me{outline:1.5px solid #38BDF8}
+.h-grp li>b{flex:0 0 auto;min-width:46px;text-align:center;font-size:20px;padding:4px 8px;border-radius:10px;border:3px solid var(--c);color:inherit}
+.h-grp li span{display:flex;flex-direction:column;gap:2px;font-size:13.5px;min-width:0}
+.h-grp li small{opacity:.8;font-size:12px;overflow-wrap:anywhere}
+html[data-theme="dark"] .h-grp li{background:#ffffff0d}
+.h-grp .h-gt{font-style:normal}

@@ -101,3 +101,6 @@ html[data-theme="dark"] .src-list li{background:#ffffff08;border-color:#ffffff14
 html[data-theme="dark"] .more-tile .mt-e{background:#1a2a21;color:#9fd4a8}
 /* v29: в тёмной теме общее правило цвета ссылок перекрывало белый текст кнопок WhatsApp/Telegram на карточке AQI (низкий контраст) */
 html[data-theme] a.sh-a[data-sh]{color:#fff}
+/* v50: «Погода» — тот же риск вечернего смога, что на главной + ночь */
+.smog-note .wx-ev-f{font-weight:500;font-size:12px;opacity:.85;margin-top:4px}
+.smog-note.wx-night{margin-top:8px}

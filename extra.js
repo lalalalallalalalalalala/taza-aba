@@ -416,22 +416,35 @@ const NW = {
     news: "News", newsSrc: "Source: publishers' RSS · refreshed hourly", cityNews: "About {city}", kgNews: "Kyrgyzstan — latest", noCity: "No fresh items about {city} in the feed right now — showing general Kyrgyzstan news.",
     fail: "Failed to load", retry: "Retry", loading: "Loading…", hpa: "hPa", mm: "mm" },
 };
-Object.assign(NW.ru, { wxTab: "Погода", updN: "Новости обновлены {t}", srcN: "источников: {n}", noCity2: "Свежих новостей про {city} в лентах сейчас нет.", ctryNews: "Новости страны — {c}", newsSrc2: "Источники: публичные RSS-ленты изданий (заголовки и ссылки на оригинал), сервер приложения забирает их раз в час: {s}", newsFail: "в последний раз не ответили (показаны прошлые заголовки): {s}", airNews: "Экология: воздух, смог, уголь", newsNone: "Новости сейчас недоступны: файл с заголовками не загрузился (нет сети или лента ещё не обновилась).", newsDirect: "Сайты изданий:", newsStale: "Ленты давно не обновлялись — заголовки могут быть устаревшими." });
-Object.assign(NW.ky, { wxTab: "Аба ырайы", updN: "Жаңылыктар жаңыланды {t}", srcN: "булактар: {n}", noCity2: "Тасмаларда азыр {city} тууралуу жаңы кабар жок.", ctryNews: "Өлкөнүн жаңылыктары — {c}", newsSrc2: "Булактар: басылмалардын ачык RSS тасмалары (аталыштар жана түпнускага шилтемелер), колдонмонун сервери саатына бир жолу алат: {s}", newsFail: "акыркы жолу жооп бербеди (мурунку аталыштар көрсөтүлдү): {s}", airNews: "Экология: аба, түтүн, көмүр", newsNone: "Жаңылыктар азыр жеткиликсиз: аталыштар файлы жүктөлгөн жок (тармак жок же тасма али жаңыланган жок).", newsDirect: "Басылмалардын сайттары:", newsStale: "Тасмалар көптөн бери жаңыланган жок — аталыштар эскирген болушу мүмкүн." });
-Object.assign(NW.en, { wxTab: "Weather", updN: "News updated {t}", srcN: "sources: {n}", noCity2: "No fresh items about {city} in the feeds right now.", ctryNews: "Country news — {c}", newsSrc2: "Sources: publishers' public RSS feeds (headlines and links to the original), fetched hourly by the app's server: {s}", newsFail: "did not respond last time (showing earlier headlines): {s}", airNews: "Environment: air, smog, coal", newsNone: "News is unavailable right now: the headlines file did not load (no connection or the feed has not been updated yet).", newsDirect: "Publisher websites:", newsStale: "The feeds have not been updated for a while — headlines may be outdated." });
+Object.assign(NW.ru, { invZ: " и температурная инверсия (примерно в {z} км над городом теплее, чем у земли — оценка)", nightHi: "🌙 Ночью ({h}): {f} — дым от печей может застаиваться до утра. Проветривайте днём.", nightW: "почти штиль (ветер до {w} м/с)", nightInv: "инверсия (примерно в {z} км над городом теплее, чем у земли)", wxTab: "Погода", updN: "Новости обновлены {t}", srcN: "источников: {n}", noCity2: "Свежих новостей про {city} в лентах сейчас нет.", ctryNews: "Новости страны — {c}", newsSrc2: "Источники: публичные RSS-ленты изданий (заголовки и ссылки на оригинал), сервер приложения забирает их раз в час: {s}", newsFail: "в последний раз не ответили (показаны прошлые заголовки): {s}", airNews: "Экология: воздух, смог, уголь", newsNone: "Новости сейчас недоступны: файл с заголовками не загрузился (нет сети или лента ещё не обновилась).", newsDirect: "Сайты изданий:", newsStale: "Ленты давно не обновлялись — заголовки могут быть устаревшими." });
+Object.assign(NW.ky, { invZ: " жана температуралык инверсия (шаардан болжол менен {z} км бийиктикте жерге караганда жылуу — баалоо)", nightHi: "🌙 Түнкүсүн ({h}): {f} — мештердин түтүнү эртең мененге чейин туруп калышы мүмкүн. Күндүзү желдетиңиз.", nightW: "дээрлик шамалсыз (шамал {w} м/с чейин)", nightInv: "инверсия (шаардан болжол менен {z} км бийиктикте жерге караганда жылуу)", wxTab: "Аба ырайы", updN: "Жаңылыктар жаңыланды {t}", srcN: "булактар: {n}", noCity2: "Тасмаларда азыр {city} тууралуу жаңы кабар жок.", ctryNews: "Өлкөнүн жаңылыктары — {c}", newsSrc2: "Булактар: басылмалардын ачык RSS тасмалары (аталыштар жана түпнускага шилтемелер), колдонмонун сервери саатына бир жолу алат: {s}", newsFail: "акыркы жолу жооп бербеди (мурунку аталыштар көрсөтүлдү): {s}", airNews: "Экология: аба, түтүн, көмүр", newsNone: "Жаңылыктар азыр жеткиликсиз: аталыштар файлы жүктөлгөн жок (тармак жок же тасма али жаңыланган жок).", newsDirect: "Басылмалардын сайттары:", newsStale: "Тасмалар көптөн бери жаңыланган жок — аталыштар эскирген болушу мүмкүн." });
+Object.assign(NW.en, { invZ: " and a temperature inversion (about {z} km above the city it is warmer than at ground level — estimate)", nightHi: "🌙 At night ({h}): {f} — stove smoke may stagnate until morning. Air out during the day.", nightW: "almost calm (wind up to {w} m/s)", nightInv: "an inversion (about {z} km above the city it is warmer than at ground level)", wxTab: "Weather", updN: "News updated {t}", srcN: "sources: {n}", noCity2: "No fresh items about {city} in the feeds right now.", ctryNews: "Country news — {c}", newsSrc2: "Sources: publishers' public RSS feeds (headlines and links to the original), fetched hourly by the app's server: {s}", newsFail: "did not respond last time (showing earlier headlines): {s}", airNews: "Environment: air, smog, coal", newsNone: "News is unavailable right now: the headlines file did not load (no connection or the feed has not been updated yet).", newsDirect: "Publisher websites:", newsStale: "The feeds have not been updated for a while — headlines may be outdated." });
 const N = (k, v = {}) => String(NW[LANG][k] ?? NW.ru[k]).replace(/\{(\w+)\}/g, (m, x) => v[x] ?? m);
 Object.assign(DICT.ru, { tab_news: "Новости", q_news: "Новости" }); Object.assign(DICT.ky, { tab_news: "Жаңылык", q_news: "Жаңылыктар" }); Object.assign(DICT.en, { tab_news: "News", q_news: "News" });
 const WMO = c => c === 0 ? "☀️" : c <= 2 ? "🌤️" : c === 3 ? "☁️" : c <= 48 ? "🌁" : c <= 57 ? "🌦️" : c <= 67 ? "🌧️" : c <= 77 ? "🌨️" : c <= 82 ? "🌧️" : c <= 86 ? "❄️" : "⛈️";
 const DIRS = { ru: ["С", "СВ", "В", "ЮВ", "Ю", "ЮЗ", "З", "СЗ"], ky: ["Т", "ТЧ", "Ч", "ТшЧ", "Тш", "ТшБ", "Б", "ТБ"], en: ["N", "NE", "E", "SE", "S", "SW", "W", "NW"] };
 const dirOf = d => DIRS[LANG][Math.round(d / 45) % 8];
 const CITY_RX = { bishkek: /Бишкек/i, osh: /(^|[^А-Яа-яЁё])Ош(а|е|ом|ск|ской|скую)?([^А-Яа-яЁё]|$)/, naryn: /Нарын/i, jalal: /Джалал-Абад|Жалал-Абад/i, karakol: /Каракол|Иссык-Кул/i, talas: /Талас/i, batken: /Баткен/i, tokmok: /Токмок/i };
+/* v50: температурная инверсия — сравниваем T у земли с уровнем давления, который ВЫШЕ рельефа (≥ ~50 гПа над поверхностью).
+ * 850 гПа ≈ 1,5 км над морем: в Нарыне (≈2 км), Кочкоре, Караколе этот уровень под землёй — Open-Meteo экстраполирует,
+ * и раньше там «инверсия» показывалась почти всегда. Высота уровня над городом — по барометрической формуле (оценка). */
+function invAt(H, i) {
+  const T = H && H.temperature_2m ? H.temperature_2m[i] : null, ps = H && H.surface_pressure ? H.surface_pressure[i] : null;
+  if (T == null || ps == null) return null;
+  for (const p of [850, 700]) {
+    const Tp = H["temperature_" + p + "hPa"] ? H["temperature_" + p + "hPa"][i] : null;
+    if (Tp == null || p > ps - 50) continue;
+    return { inv: Tp > T, dz: 29.27 * (273.15 + (T + Tp) / 2) * Math.log(ps / p) / 1000, p };
+  }
+  return null;
+}
 const newsState = { wx: {}, news: null, newsErr: false, wxErr: {}, timer: null };
 async function loadWeather(force) {
   const id = CITY, c = cityObj().center, cur = newsState.wx[id];
   if (!force && cur && Date.now() - cur.at < 15 * 60e3) return;
   try {
     const u = `https://api.open-meteo.com/v1/forecast?latitude=${c[0]}&longitude=${c[1]}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,wind_direction_10m,surface_pressure,precipitation,cloud_cover,weather_code` +
-      `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability,temperature_850hPa&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&wind_speed_unit=ms&timezone=auto&forecast_days=7`;
+      `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability,temperature_850hPa,temperature_700hPa,surface_pressure&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&wind_speed_unit=ms&timezone=auto&forecast_days=7`;
     newsState.wx[id] = { at: Date.now(), d: await fetchJSON(u) }; newsState.wxErr[id] = false;
   } catch (e) { newsState.wxErr[id] = true; }
 }
@@ -494,16 +507,38 @@ function newsHTML() {
     ${mine.length < 3 ? `<h3 class="nh">🗞️ ${N("ctryNews", { c: cn })}</h3>${rest.slice(0, 12).map(li).join("")}` : ""}
     <p class="small muted">${N("newsSrc2", { s: S.sources.join(", ") })}${S.failed.length ? " · " + N("newsFail", { s: S.failed.join(", ") }) : ""}</p>`;
 }
+/* v50: на «Погоде» — тот же «Риск вечернего смога», что на главной (раньше здесь была своя формула только по ветру,
+ * и экраны противоречили друг другу: «можно проветривать» / «держите окна закрытыми»). Отдельной строкой — ночь (0–8 ч). */
+function wxSmogNote(h, hrs) {
+  try {
+    if (typeof eveningRisk !== "function" || typeof air === "undefined" || !air.live || !air.wxH || !state.district) return "";
+    const r = eveningRisk(air.byDistrict[state.district]); if (!r) return "";
+    const f = [Q("evF", { a: r.aqMax })]; if (r.wind != null) f.push(Q("evWind", { w: fmt(r.wind, 1) })); if (r.inv != null) f.push(r.inv ? Q("evInv") : Q("evNoInv"));
+    let out = `<div class="smog-note wx-ev ${r.risk ? "hi" : ""}"><div>${r.risk ? "⚠️" : "✅"} ${Q("evTitle")}${r.tomorrow ? " (" + Q("evTomorrow") + ")" : ""}: ${Q("ev" + r.risk)}. ${r.adv}</div>
+      <div class="wx-ev-f">${f.join(" · ")} · ${Q("evSrc")}</div></div>`;
+    // ночь: первый непрерывный отрезок 00–08 ч в ближайших 24 ч
+    const nh = []; for (const x of hrs) { const hh = +x.tm.slice(11, 13); if (hh <= 8) nh.push(x); else if (nh.length) break; }
+    if (nh.length >= 3) {
+      const nw = Math.min(...nh.map(x => x.w).filter(v => v != null)), ni = nh.map(x => invAt(h, x.k)).filter(v => v && v.inv);
+      const parts = []; if (isFinite(nw) && nw < 1) parts.push(N("nightW", { w: fmt(nw, 1) }));
+      if (ni.length) parts.push(N("nightInv", { z: fmt(ni.reduce((s, v) => s + v.dz, 0) / ni.length, 1) }));
+      if (parts.length) out += `<div class="smog-note wx-night hi">${N("nightHi", { h: nh[0].tm.slice(11, 16) + "–" + nh[nh.length - 1].tm.slice(11, 13) + ":59", f: parts.join(", ") })}</div>`;
+    }
+    return out;
+  } catch (e) { return ""; }
+}
 function wxHTML() {
   const W = newsState.wx[CITY];
   if (!W) return newsState.wxErr[CITY] ? `<div class="card fail">⚠️ ${N("fail")} <button class="btn ghost" data-retry="wx">${N("retry")}</button></div>` : `<div class="card skeleton" style="height:180px"></div>`;
   const d = W.d, c = d.current, h = d.hourly;
   const i0 = Math.max(0, h.time.findIndex(tm => tm >= c.time.slice(0, 13)));
-  const hrs = h.time.slice(i0, i0 + 24).map((tm, k) => ({ tm, T: h.temperature_2m[i0 + k], wc: h.weather_code[i0 + k], p: h.precipitation_probability?.[i0 + k], w: h.wind_speed_10m[i0 + k], t850: h.temperature_850hPa?.[i0 + k] }));
+  const hrs = h.time.slice(i0, i0 + 24).map((tm, k) => ({ tm, T: h.temperature_2m[i0 + k], wc: h.weather_code[i0 + k], p: h.precipitation_probability?.[i0 + k], w: h.wind_speed_10m[i0 + k], k: i0 + k }));
   const night = hrs.filter(x => { const hh = +x.tm.slice(11, 13); return hh >= 18 || hh <= 8; }).slice(0, 12);
   const minW = Math.min(c.wind_speed_10m, ...night.map(x => x.w));
-  const inv = night.some(x => x.t850 != null && x.t850 > x.T);
+  const invs = night.map(x => invAt(h, x.k)).filter(v => v && v.inv), inv = invs.length > 0;
+  const zOf = a => fmt(a.reduce((s, v) => s + v.dz, 0) / a.length, 1);
   const risk = minW < 2 || inv && minW < 3.5;
+  const smogNote = wxSmogNote(h, hrs) || `<div class="smog-note ${risk ? "hi" : ""}">${risk ? N("smogHi", { w: fmt(minW, 1), inv: inv ? N("invZ", { z: zOf(invs) }) : "" }) : N("smogLo", { w: fmt(minW, 1) })}</div>`;
   const dd = d.daily;
   return `
     <div class="card wx-now">
@@ -517,7 +552,7 @@ function wxHTML() {
         <div><span>🌧️ ${N("prec")}</span><b>${fmt(c.precipitation, 1)} ${N("mm")}</b></div>
         <div><span>☁️ ${N("cloud")}</span><b>${c.cloud_cover}%</b></div>
       </div>
-      <div class="smog-note ${risk ? "hi" : ""}">${risk ? N("smogHi", { w: fmt(minW, 1), inv: inv ? N("inv") : "" }) : N("smogLo", { w: fmt(minW, 1) })}</div>
+      ${smogNote}
       <div class="small muted" style="margin-top:8px">🛰️ Open-Meteo · ${N("upd", { t: new Date(W.at).toLocaleTimeString(numLocale(), { hour: "2-digit", minute: "2-digit" }) })}</div>
     </div>
     <h2>🕒 ${N("h24")}</h2>

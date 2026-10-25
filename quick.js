@@ -254,7 +254,7 @@ function eveningRisk(a) {
   if (W && W.time) {
     const ix = W.time.map((tm, i) => inEv(tm) ? i : -1).filter(i => i >= 0);
     const ws = ix.map(i => W.wind_speed_10m?.[i]).filter(v => v != null); if (ws.length) wind = ws.reduce((s, v) => s + v, 0) / ws.length;
-    const dt = ix.map(i => (W.temperature_850hPa?.[i] ?? NaN) - (W.temperature_2m?.[i] ?? NaN)).filter(v => !isNaN(v)); if (dt.length) inv = dt.some(v => v > 0);
+    const iv = ix.map(i => typeof invAt === "function" ? invAt(W, i) : null).filter(Boolean); if (iv.length) inv = iv.some(v => v.inv);   // v50: уровень выше рельефа (850/700 гПа)
     const bl = ix.map(i => W.boundary_layer_height?.[i]).filter(v => v != null); if (bl.length) blh = Math.min(...bl);
   }
   let sc = aqMax >= 201 ? 4 : aqMax >= 151 ? 3 : aqMax >= 101 ? 2 : aqMax >= 76 ? 1 : 0;
