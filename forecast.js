@@ -13,19 +13,19 @@
   let C = DEF;
   /* коэффициенты обновляет GitHub Actions в репозитории Pages; с других хостов (Surge, приложения) берём их оттуда, иначе — локальную копию */
   const PAGES = "https://zusenbaev7-cmd.github.io/taza-aba/forecast/coeffs.json", gj = u => fetch(u, { cache: "no-cache" }).then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)));
-  (/github\.io$/.test(location.hostname) ? gj("forecast/coeffs.json") : gj(PAGES).catch(() => gj("forecast/coeffs.json"))).then(j => { if (j && j.cities) C = j; }).catch(() => {});
+  (/github\.io$/.test(location.hostname) ? gj("forecast/coeffs.json") : gj(PAGES).catch(() => gj("forecast/coeffs.json"))).then(j => { if (j && j.cities && j.updated !== C.updated) { C = j; reapply(); } }).catch(() => {});
   const fresh = () => Date.now() - Date.parse(C.updated) < 72 * 36e5;
   const L1 = x => Math.log(Math.max(0, x) + 1), ex1 = y => Math.max(0, Math.exp(y) - 1);
   const TX = {
     ru: { sens: "Модель CAMS с поправкой по датчикам города ({n} шт.) — оценка", stove: "Оценка (модель + поправка на печной дым)", range: "PM2.5 вероятно {a}–{b} мкг/м³",
       noS: "датчиков рядом нет — вечером модель может занижать дым печей", acc: "Точность за {d} дн. (на сутки вперёд): ошибка ±{e} мкг/м³, без поправки было ±{r} · оценка (модель)",
-      band: "Полоса — вероятный диапазон", noWx: "без поправки на печной дым — нет данных погоды", accS: "Без датчиков точность проверить нельзя: печной дым оценён по холоду, ветру и слою перемешивания (калибровка по Бишкеку)" },
+      band: "Полоса — вероятный диапазон", noSens: "без поправки по датчикам — датчики сейчас не ответили", noWx: "без поправки на печной дым — нет данных погоды", accS: "Без датчиков точность проверить нельзя: печной дым оценён по холоду, ветру и слою перемешивания (калибровка по Бишкеку)" },
     ky: { sens: "CAMS модели шаардын датчиктери боюнча оңдолгон ({n} даана) — баалоо", stove: "Баалоо (модель + меш түтүнүнө оңдоо)", range: "PM2.5 болжол менен {a}–{b} мкг/м³",
       noS: "жакын жерде датчик жок — кечинде модель меш түтүнүн азайтып көрсөтүшү мүмкүн", acc: "{d} күндөгү тактык (бир сутка алдыга): ката ±{e} мкг/м³, оңдоосуз ±{r} болчу · баалоо (модель)",
-      band: "Тилке — болжолдуу диапазон", noWx: "меш түтүнүнө оңдоосуз — аба ырайы маалыматы жок", accS: "Датчик жок болгондуктан тактыкты текшерүүгө болбойт: меш түтүнү суукка, шамалга жана аралашуу катмарына жараша бааланды (Бишкек боюнча калибровка)" },
+      band: "Тилке — болжолдуу диапазон", noSens: "датчиктер боюнча оңдоосуз — датчиктер азыр жооп берген жок", noWx: "меш түтүнүнө оңдоосуз — аба ырайы маалыматы жок", accS: "Датчик жок болгондуктан тактыкты текшерүүгө болбойт: меш түтүнү суукка, шамалга жана аралашуу катмарына жараша бааланды (Бишкек боюнча калибровка)" },
     en: { sens: "CAMS model corrected by the city's sensors ({n}) — estimate", stove: "Estimate (model + stove-smoke correction)", range: "PM2.5 likely {a}–{b} µg/m³",
       noS: "no sensors nearby — in the evening the model may underestimate stove smoke", acc: "Accuracy over {d} days (24 h ahead): error ±{e} µg/m³, ±{r} without correction · estimate (model)",
-      band: "Band = likely range", noWx: "no stove-smoke correction — weather data unavailable", accS: "No sensors, so accuracy can't be checked: stove smoke is estimated from cold, wind and mixing height (calibrated on Bishkek)" } };
+      band: "Band = likely range", noSens: "no sensor correction — sensors did not respond", noWx: "no stove-smoke correction — weather data unavailable", accS: "No sensors, so accuracy can't be checked: stove smoke is estimated from cold, wind and mixing height (calibrated on Bishkek)" } };
   const T = (k, p) => { const L = (typeof LANG !== "undefined" && TX[LANG]) ? LANG : "ru"; let s = TX[L][k] || TX.ru[k]; Object.entries(p || {}).forEach(([a, b]) => { s = s.split("{" + a + "}").join(b); }); return s; };
   const f1 = v => (Math.round(v * 10) / 10).toLocaleString((typeof LANG !== "undefined" && LANG === "en") ? "en" : "ru");
   const f0 = v => String(Math.round(v));
@@ -70,7 +70,9 @@
     const cc0 = C.cities && C.cities[cid], useInc = cc0 && fresh() ? cc0.bInc : null;
     const band = (cc0 && cc0.band) || DEF.cities.bishkek.band;
     const ds = Object.entries(air.byDistrict).filter(([, r]) => r && (!r.fc || r.fc.kind === "nowx") && Array.isArray(r.pmH) && r.time);
-    if (!ds.length) return;
+    if (!ds.length) return 0;
+    const sensCity = !!(C.cities && C.cities[cid]) || !!(DEF.cities[cid]);
+    let nNew = 0;
     let e0c = null;
     if (sens.length) {   // городское отклонение: медиана датчиков против модели (+поправка) в ближайших районах
       const r0 = ds[0][1], tm0 = (r0.currentTime || "").slice(0, 13) + ":00", X0 = useInc ? wxX(W, tm0) : null, s0 = X0 ? dot(X0.x, useInc) : 0;
@@ -81,6 +83,9 @@
     ds.forEach(([id, r]) => {
       const d = typeof byId === "function" ? byId(id) : null, tm0 = (r.currentTime || "").slice(0, 13) + ":00", i0 = r.time.indexOf(tm0);
       if (i0 < 0) return;
+      /* v65: исходные значения модели — чтобы поправку можно было пересчитать (пришли коэффициенты/датчики), не применяя её дважды */
+      if (!r._raw) r._raw = { pmH: r.pmH.slice(), pm25: r.pm25, aqi: r.aqi, pm10: r.pm10, p25: r.pol && r.pol.pm25 ? r.pol.pm25.slice() : null, p10: r.pol && r.pol.pm10 ? r.pol.pm10.slice() : null };
+      r.fcNote = !sens.length && sensCity ? "nosens" : null;
       const P = r.pmH.slice(), lo = [], hi = [];
       if (sens.length) {
         let e0 = null, w = 1;
@@ -91,16 +96,16 @@
         const out = r.pmH.map((_, i) => { const b = base(i); if (b == null) return null; const L = i - i0; return ex1(L1(b) + (L >= 0 && e0 != null ? e0 * Math.exp(-L / (C.tau || 6)) : 0)); });
         out.forEach((v, i) => { const L = i - i0, q = L < 0 ? null : band[L <= 2 ? "a" : L <= 6 ? "b" : L <= 24 ? "c" : "d"] || band.d; lo[i] = v == null || !q ? null : ex1(L1(v) + q[0]); hi[i] = v == null || !q ? null : ex1(L1(v) + q[1]); });
         r.pmH = out.map(v => v == null ? null : Math.round(v * 10) / 10);
-        r.fc = { kind: "sens", n: sens.length, w: Math.round(w * 100) / 100, inc: !!useInc };
+        r.fc = { kind: "sens", n: sens.length, w: Math.round(w * 100) / 100, inc: !!useInc }; nNew++;
       } else {
-        if (!W || !W.time) { r.fc = { kind: "nowx" }; return; }   // нет погоды — значение модели как есть, с видимой пометкой
+        if (!W || !W.time) { if (!r.fc) nNew++; r.fc = { kind: "nowx" }; return; }   // нет погоды — значение модели как есть, с видимой пометкой
         let any = false;
         const out = P.map((v, i) => { if (v == null) return null; const X = wxX(W, r.time[i]); if (!X || X.H <= 0) { lo[i] = hi[i] = v; return v; }
           const b = tr.bBg.slice(); b[0] *= Math.min(1, X.H / 0.3); const s = Math.min(60, Math.max(0, smooth(W, r.time[i], b))); if (s >= 1) any = true;
           lo[i] = v + (tr.lo || 0.35) * s; hi[i] = v + (tr.hi || 1.6) * s; return v + (tr.f || 0.8) * s; });
         if (!any) return;
         r.pmH = out.map(v => v == null ? null : Math.round(v * 10) / 10);
-        r.fc = { kind: "stove" };
+        r.fc = { kind: "stove" }; nNew++;
       }
       r.fcLo = lo.map(v => v == null ? null : Math.round(v * 10) / 10); r.fcHi = hi.map(v => v == null ? null : Math.round(v * 10) / 10);
       if (r.src === "model" && r.pmH[i0] != null) {   // текущее значение района (без своих датчиков) — тоже с поправкой
@@ -110,13 +115,40 @@
         if (r.pm10 != null) { r.pm10 = Math.round(Math.max(r.pm25, r.pm10 + dP) * 10) / 10; if (r.pol && r.pol.pm10 && typeof pm10ToAqi === "function") r.pol.pm10 = [r.pm10, pm10ToAqi(r.pm10), "model"]; }
         r.fc.lo = r.fcLo[i0]; r.fc.hi = r.fcHi[i0];
       }
+      /* hAqi() кэширует почасовой ряд в неизменяемом свойстве — подменяем запись копией, чтобы график взял исправленные значения */
+      if (Object.prototype.hasOwnProperty.call(r, "_hA")) air.byDistrict[id] = Object.assign({}, r);
     });
+    return nNew;
+  }
+  const rerender = () => { try { if (typeof renderChrome === "function") renderChrome(); const cur = (location.hash || "#home").slice(1).split("/")[0];
+    if (typeof route === "function" && ["home", "map", "weather", "routes", "profile", ""].includes(cur)) route(true); } catch (e) { console.warn("fc rerender:", e.message); } };
+  /* пересчитать поправку с нуля (из r._raw): новые коэффициенты или датчики ответили позже */
+  function reapply() {
+    try {
+      if (typeof air === "undefined" || !air.byDistrict) return;
+      let n = 0;
+      Object.keys(air.byDistrict).forEach(id => { const r = air.byDistrict[id]; if (!r || !r._raw) return; const s = r._raw;
+        const c = Object.assign({}, r, { pmH: s.pmH.slice(), pm25: s.pm25, aqi: s.aqi, pm10: s.pm10 });
+        if (r.pol) { c.pol = Object.assign({}, r.pol); if (s.p25) c.pol.pm25 = s.p25.slice(); if (s.p10) c.pol.pm10 = s.p10.slice(); }
+        delete c.fc; delete c.fcLo; delete c.fcHi; delete c.fcNote; air.byDistrict[id] = c; n++; });
+      if (!n) return;
+      apply(); if (typeof saveAirCache === "function") saveAirCache(); rerender();
+    } catch (e) { console.warn("fc reapply:", e.message); }
+  }
+  window.tazaFcReapply = reapply;
+  /* датчики не ответили в городе, где они есть: две повторные попытки через полную перезагрузку данных (честная пометка до тех пор) */
+  let sensRetryN = 0;
+  function sensRetry() {
+    if (sensRetryN >= 2 || typeof loadAir !== "function") return;
+    const c = cityId(); if (!((C.cities && C.cities[c]) || DEF.cities[c]) || (air.sensors || []).length || !air.live) return;
+    sensRetryN++; setTimeout(() => { if (cityId() === c && !(air.sensors || []).length) loadAir(); }, sensRetryN === 1 ? 8000 : 30000);
   }
   window.tazaFcApply = apply;
-  if (typeof saveAirCache === "function") { const o = saveAirCache; window.saveAirCache = function () { try { apply(); } catch (e) { console.warn("forecast fc:", e.message); } return o.apply(this, arguments); }; }
-  if (typeof srcLabel === "function") { const o = srcLabel; window.srcLabel = function (a, d) { const s = o(a, d); if (!a || !a.fc || a.src !== "model") return s;
+  if (typeof saveAirCache === "function") { const o = saveAirCache; window.saveAirCache = function () { try { apply(); sensRetry(); } catch (e) { console.warn("forecast fc:", e.message); } return o.apply(this, arguments); }; }
+  if (typeof srcLabel === "function") { const o = srcLabel; window.srcLabel = function (a, d) { const s0 = o(a, d), ns = a && a.fcNote === "nosens" && a.src === "model" ? " · " + T("noSens") : ""; const s = s0 + (a && a.fc && a.fc.kind !== "nowx" ? "" : ns);
+    if (!a || !a.fc || a.src !== "model") return s;
     if (a.fc.kind === "nowx") return s + " · ⚠️ " + T("noWx");
-    if (a.fc.kind === "stove") return "🔥 " + T("stove") + (a.fc.lo != null ? " · " + T("range", { a: f0(a.fc.lo), b: f0(a.fc.hi) }) : "") + " · " + T("noS") + (d && d.approx && typeof t === "function" ? " · " + t("coordApprox") : "");
+    if (a.fc.kind === "stove") return "🔥 " + T("stove") + (a.fc.lo != null ? " · " + T("range", { a: f0(a.fc.lo), b: f0(a.fc.hi) }) : "") + " · " + (ns ? T("noSens") : T("noS")) + (d && d.approx && typeof t === "function" ? " · " + t("coordApprox") : "");
     return "📡 " + T("sens", { n: a.fc.n }) + (a.fc.lo != null ? " · " + T("range", { a: f0(a.fc.lo), b: f0(a.fc.hi) }) : "") + (d && d.approx && typeof t === "function" ? " · " + t("coordApprox") : ""); }; }
   /* полоса неопределённости на почасовом графике главной + честная строка точности */
   function decorate(el) {
@@ -136,5 +168,8 @@
         ax.after(p); }
     } catch (e) { console.warn("fc band:", e.message); }
   }
+  /* v65: app.js запускает loadAir() раньше, чем загружен этот файл; если данные успели прийти до обёртки saveAirCache —
+   * поправка не применялась и главная показывала «сырую» модель. Применяем сразу и перерисовываем. */
+  try { if (typeof air !== "undefined" && air.byDistrict && Object.keys(air.byDistrict).length && apply() > 0) { if (typeof saveAirCache === "function") saveAirCache(); rerender(); } sensRetry(); } catch (e) { console.warn("forecast late apply:", e.message); }
   if (typeof views !== "undefined" && views.home) { const o = views.home; views.home = function (el) { const r = o.apply(this, arguments); requestAnimationFrame(() => decorate(el || document.getElementById("view"))); return r; }; }
 })();
