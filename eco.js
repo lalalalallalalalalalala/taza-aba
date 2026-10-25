@@ -400,3 +400,5 @@ function ecoOpen3d(r, o) { const go = () => window.eco3dOpen && window.eco3dOpen
   if (window.eco3dOpen) return go(); const s = document.createElement("script"); s.src = "eco3d.js"; s.onload = go; s.onerror = () => toast("3D: load error"); document.head.appendChild(s); }
 if (typeof views !== "undefined") views.routes = el => viewEco(el);
 if (location.hash.startsWith("#routes")) setTimeout(() => { try { route(true); } catch (e) {} }, 0);
+/* v70: Leaflet: отложенная перерисовка canvas после удаления карты (быстрый переход с главной) → «reading 'save'». Пропускаем её. */
+if (window.L && L.Canvas && !L.Canvas.prototype.__tzSafe) { const r0 = L.Canvas.prototype._redraw; L.Canvas.prototype._redraw = function () { if (!this._map || !this._ctx) return; return r0.apply(this, arguments); }; L.Canvas.prototype.__tzSafe = 1; }
