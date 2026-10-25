@@ -24,10 +24,14 @@ const msPts = () => DISTRICTS.map(d => ({ d, a: air.byDistrict[d.id] && air.byDi
 const MsCanvas = L.Layer.extend({
   initialize(draw) { this._draw = draw; },
   onAdd(m) { this._c = L.DomUtil.create("canvas", "ms-cv leaflet-zoom-animated"); this._c.style.pointerEvents = "none"; m.getPane("overlayPane").appendChild(this._c);
-    m.on("moveend zoomend resize", this._redraw, this); m.on("zoomanim", this._anim, this); this._redraw(); },
-  onRemove(m) { this._c.remove(); m.off("moveend zoomend resize", this._redraw, this); m.off("zoomanim", this._anim, this); },
+    m.on("moveend zoomend resize", this._redraw, this); m.on("zoomanim", this._anim, this); m.on("zoom viewreset", this._reset, this); this._redraw(); },
+  onRemove(m) { this._c.remove(); m.off("moveend zoomend resize", this._redraw, this); m.off("zoomanim", this._anim, this); m.off("zoom viewreset", this._reset, this); },
+  /* v58: щипок (pinch) на телефоне шлёт «zoom» без zoomanim — растягиваем холст по его географическим границам, как ImageOverlay,
+   * иначе «Дымка» оставалась на месте экрана и отрывалась от карты */
+  _reset() { const m = this._map; if (!m || !this._b) return; const tl = m.latLngToLayerPoint(this._b.getNorthWest()), br = m.latLngToLayerPoint(this._b.getSouthEast()), c = this._c;
+    c.style.transform = ""; L.DomUtil.setPosition(c, tl); c.style.width = (br.x - tl.x) + "px"; c.style.height = (br.y - tl.y) + "px"; },
   _anim(e) { if (!this._b) return; const s = this._map.getZoomScale(e.zoom), o = this._map._latLngBoundsToNewLayerBounds(this._b, e.zoom, e.center).min; L.DomUtil.setTransform(this._c, o, s); },
-  _redraw() { const m = this._map; if (!m) return; const sz = m.getSize(), pad = sz.multiplyBy(0.15), tl = m.containerPointToLayerPoint([0, 0]).subtract(pad), w = sz.x + 2 * pad.x, h = sz.y + 2 * pad.y;
+  _redraw() { const m = this._map; if (!m) return; const sz = m.getSize(), pad = sz.multiplyBy(0.35), tl = m.containerPointToLayerPoint([0, 0]).subtract(pad), w = sz.x + 2 * pad.x, h = sz.y + 2 * pad.y;
     this._b = L.latLngBounds(m.layerPointToLatLng(tl), m.layerPointToLatLng(tl.add([w, h])));
     const c = this._c; c.width = w; c.height = h; c.style.width = w + "px"; c.style.height = h + "px"; L.DomUtil.setPosition(c, tl);
     this._draw(c.getContext("2d"), tl, m, w, h); } });

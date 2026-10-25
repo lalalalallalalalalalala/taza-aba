@@ -87,7 +87,10 @@
       }
       r.fcLo = lo.map(v => v == null ? null : Math.round(v * 10) / 10); r.fcHi = hi.map(v => v == null ? null : Math.round(v * 10) / 10);
       if (r.src === "model" && r.pmH[i0] != null) {   // текущее значение района (без своих датчиков) — тоже с поправкой
+        const dP = r.pmH[i0] - (r.pm25 != null ? r.pm25 : r.pmH[i0]);
         r.pm25 = r.pmH[i0]; r.aqi = pm25ToAqi(r.pm25); if (r.pol && r.pol.pm25) r.pol.pm25 = [r.pm25, r.aqi, "model"];
+        /* v58: дым — мелкие частицы, они входят и в PM10: та же добавка к PM10 модели, и PM10 никогда не меньше PM2.5 */
+        if (r.pm10 != null) { r.pm10 = Math.round(Math.max(r.pm25, r.pm10 + dP) * 10) / 10; if (r.pol && r.pol.pm10 && typeof pm10ToAqi === "function") r.pol.pm10 = [r.pm10, pm10ToAqi(r.pm10), "model"]; }
         r.fc.lo = r.fcLo[i0]; r.fc.hi = r.fcHi[i0];
       }
     });
