@@ -173,15 +173,52 @@ function tfeTap(m, st, R) {
   m._tfeShow = show;
   m._tfeTapOff = () => { m.off("click", onClick); clear(); m.removeLayer(hl); m.getContainer().classList.remove("tfe-tap"); m._tfeTapOff = null; };
 }
+/* v64 производительность: размытое свечение рисуется в canvas пониженного разрешения (0,5×) и размывается один раз при перерисовке
+ * (ctx.filter), а не CSS-фильтром на каждом кадре панорамы/зума. Где ctx.filter нет (старый Safari) — остаётся CSS blur(5px). */
+const TF_CFILT = (() => { try { return typeof CanvasRenderingContext2D !== "undefined" && "filter" in CanvasRenderingContext2D.prototype; } catch (e) { return false; } })();
+function tfLoCanvas(opts, ratio, blurPx) {
+  const r = L.canvas(opts);
+  r._update = function () {
+    if (this._map._animatingZoom && this._bounds) return;
+    L.Renderer.prototype._update.call(this);
+    const b = this._bounds, c = this._container, s = b.getSize();
+    L.DomUtil.setPosition(c, b.min);
+    c.width = Math.max(1, Math.round(s.x * ratio)); c.height = Math.max(1, Math.round(s.y * ratio));
+    c.style.width = s.x + "px"; c.style.height = s.y + "px";
+    this._ctx.setTransform(ratio, 0, 0, ratio, -b.min.x * ratio, -b.min.y * ratio);
+    if (blurPx && TF_CFILT) this._ctx.filter = "blur(" + (blurPx * ratio) + "px)";
+    this.fire("update");
+  };
+  return r;
+}
+/* группировка линий одного стиля в одну мультилинию: вместо ~10 000 отдельных слоёв Leaflet — сотня-другая (те же цвета, толщины, порядок) */
+function tfGroups(G, list, renderer, base) {
+  G.clearLayers();
+  list.sort((a, b) => a.ord - b.ord).forEach(g => L.polyline(g.ll, Object.assign({ renderer, color: g.col, weight: g.wt, opacity: g.op, lineCap: "round", lineJoin: "round", interactive: false, smoothFactor: 1 }, base)).addTo(G));
+}
 function tf2Layer(onState, ctl) {
   const lg = L.layerGroup(); let built = false; const st = { h: null, dt: null, N: null, lines: [], mode: "cong", R: null };
   const S = TF_STYLE, RED = typeof RED_MOTION !== "undefined" && RED_MOTION;
   let svgR = null, caseR = null, glowR = null, minR = null, lineR = null;
-  const glowG = L.layerGroup(), caseG = L.layerGroup(), lineG = L.layerGroup(), labG = L.layerGroup(); [caseG, glowG, lineG, labG].forEach(g => g.addTo(lg));
+  const glowG = L.layerGroup(), caseG = L.layerGroup(), lineG = L.layerGroup(), labG = L.layerGroup(), minG = L.layerGroup(); [minG, caseG, glowG, lineG, labG].forEach(g => g.addTo(lg));
   const colorOf = (r, h, dt) => { if (st.mode === "load") return tf2Col(r.load); if (st.mode === "no2") { const v = tf2Val(st.N, r.d, st.h); return tf2Col(v == null ? null : r.load * v / 25 * (TF3_P[dt][h] / 0.75)); } return tfCol(tf3C(r, h, dt)); };
   let raf = 0; const paint = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { const m = lg._map; if (!m) return; const nd = tf3NowHD(), h = st.h == null ? nd.h : st.h, dt = st.dt == null ? nd.dt : st.dt, z = m.getZoom();
     glowG.clearLayers(); labG.clearLayers();
     const jams = [];
+    if (S === "e") {   // v64: стиль E — группами (вид тот же), жилые улицы при зуме < 14 не рисуются вовсе (панель всё равно скрыта)
+      const pm = m.getPane("tfMinor"); if (pm) { pm.style.opacity = z >= 15 ? 0.85 : z >= 14 ? 0.5 : 0; pm.style.visibility = z >= 14 ? "visible" : "hidden"; }
+      const gL = new Map(), gM = new Map(), gC = new Map(), gG = new Map();
+      const put = (M, key, ll, col, wt, op, ord) => { let g = M.get(key); if (!g) M.set(key, g = { ll: [], col, wt, op, ord }); g.ll.push(ll); };
+      st.lines.forEach(o => { const r = o.r, c0 = tf3C(r, h, dt), c = o.lf ? Math.max(0.03, Math.min(0.98, c0 * o.lf)) : c0, minor = TF_MINOR(r.k), mj = TF_MAJOR(r.k), sec = r.k === "secondary";
+        const q = Math.round(c * 50) / 50, col = st.mode === "cong" ? tfCol(q) : colorOf(r, h, dt), ord = (TF2_W[r.k] || 0) * 100 + q;
+        const wt = (mj ? 3.4 : sec ? 2.5 : r.k === "tertiary" ? 1.8 : 1.2) * (z >= 16 ? 1.6 : z >= 15 ? 1.35 : z >= 14 ? 1.15 : z <= 12 ? 0.8 : 1), op = c >= 0.6 ? 1 : c >= 0.45 ? 0.9 : mj || sec ? 0.75 : 0.55;
+        if (st.mode === "cong" && c >= 0.5 && r.n && !o.part) jams.push({ r, c, dl: tfDelay(r, c0) });
+        if (o.kind === "m") { if (z >= 14) put(gM, col + "|" + wt + "|" + op, r.p, col, wt, op, ord); return; }
+        if (o.kind === "c") { const cop = mj || sec ? 0.42 : 0.2; put(gC, wt + "|" + cop, r.p, "#06121c", wt + 2.6, cop, (TF2_W[r.k] || 0) * 100); }
+        else put(gL, col + "|" + wt + "|" + op, o.pp, col, wt, op, ord);
+        if (st.mode === "cong" && c >= 0.66 && !minor && r.k !== "tertiary") put(gG, o.kind + col + "|" + wt, o.pp || r.p, col, wt + 7, 0.5, (o.kind === "c" ? 0 : 1000) + ord); });
+      tfGroups(minG, [...gM.values()], minR); tfGroups(caseG, [...gC.values()], caseR); tfGroups(lineG, [...gL.values()], lineR); tfGroups(glowG, [...gG.values()], glowR);
+    } else {
     if (S === "e" && m.getPane("tfMinor")) { const pm = m.getPane("tfMinor"); pm.style.opacity = z >= 15 ? 0.85 : z >= 14 ? 0.5 : 0; pm.style.visibility = z >= 14 ? "visible" : "hidden"; }
     st.lines.forEach(o => { const { pl, cs, r } = o, c0 = tf3C(r, h, dt), c = o.lf ? Math.max(0.03, Math.min(0.98, c0 * o.lf)) : c0, col = st.mode === "cong" ? tfCol(c) : colorOf(r, h, dt), w = tfW(r.k, z);
       let show = true, op = 0.95, wt = w;
@@ -200,6 +237,7 @@ function tf2Layer(onState, ctl) {
       if ((S === "b" || S === "c") && st.mode === "cong" && c >= 0.65 && !TF_MINOR(r.k)) L.polyline(r.p, { renderer: glowR, color: col, weight: wt + (S === "c" ? 9 : 7), opacity: S === "c" ? 0.22 : 0.18, lineCap: "round", interactive: false }).addTo(glowG);
       if ((S === "c" || S === "e") && st.mode === "cong" && c >= 0.5 && r.n && !o.part) jams.push({ r, c, dl: tfDelay(r, c0) });
     });
+    }
     if (S === "e") tfeCard(m, st, h, dt, jams);
     if ((S === "c" || S === "e") && jams.length) { const by = {}; jams.forEach(j => { const k = j.r.n; if (!by[k]) by[k] = { n: k, dl: 0, c: 0, km: 0, best: j }; by[k].dl += j.dl; by[k].km += j.r.km; by[k].c = Math.max(by[k].c, j.c); if (j.r.km > by[k].best.r.km) by[k].best = j; });
       if (S === "e") Object.values(by).forEach(g => { g.dl = st.R.filter(x => x.n === g.n && !TF_MINOR(x.k)).reduce((a, x) => a + tfDelay(x, tf3C(x, h, dt)), 0); });   // как в подсказке улицы
@@ -212,18 +250,18 @@ function tf2Layer(onState, ctl) {
   lg.on("remove", () => { const m = lg._mapRef; if (!m) return; m.off("zoomend", paint); const c = m.getContainer(); c.classList.remove("tfs-" + S); const k = (m._tfeHost || c).querySelector(".tfe-card") || c.querySelector(".tfe-card"); if (k) k.remove(); if (m._tfeTapOff) m._tfeTapOff(); });
   lg.on("add", async () => { const m = lg._map; lg._mapRef = m; if (m) { m.on("zoomend", paint); m.getContainer().classList.add("tfs-" + S);
       if (!m.getPane("tfCase")) { m.createPane("tfCase").style.zIndex = 396; m.createPane("tfGlow").style.zIndex = 398; m.createPane("tfMinor").style.zIndex = 395; m.getPane("tfGlow").classList.add("tf-glowpane"); m.getPane("tfMinor").classList.add("tf-minorpane"); }
-      caseR = caseR || L.canvas({ pane: "tfCase", padding: 0.3 }); glowR = glowR || L.canvas({ pane: "tfGlow", padding: 0.3 }); minR = minR || L.canvas({ pane: "tfMinor", padding: 0.3 }); lineR = lineR || L.canvas({ padding: 0.3 }); if (S === "d") svgR = svgR || L.svg({ padding: 0.3 }); }
+      caseR = caseR || (S === "e" ? tfLoCanvas({ pane: "tfCase", padding: 0.3 }, 1) : L.canvas({ pane: "tfCase", padding: 0.3 })); /* обводка: 1× достаточно */ glowR = glowR || (S === "e" ? tfLoCanvas({ pane: "tfGlow", padding: 0.3 }, 0.5, 5) : L.canvas({ pane: "tfGlow", padding: 0.3 })); if (S === "e" && TF_CFILT) m.getPane("tfGlow").classList.add("tf-glow-baked"); minR = minR || L.canvas({ pane: "tfMinor", padding: 0.3 }); lineR = lineR || L.canvas({ padding: 0.3 }); if (S === "d") svgR = svgR || L.svg({ padding: 0.3 }); }
     if (built) return; built = true;
     try { const [R, N] = await Promise.all([tf2Roads(), tf2No2().catch(e => { console.warn("no2:", e.message); return null; })]); if (!ftAlive(lg)) { built = false; return; }
       st.N = N; st.R = R; if (ctl) ctl(N);
       if (S === "e") { const cc = R.cc, Rs = R.Rs || 3, cf = p => 0.55 + 0.45 * Math.exp(-tf2Km(p, cc) / Rs);
         R.slice().sort((a, b) => (TF2_W[a.k] || 0) - (TF2_W[b.k] || 0) || a.F - b.F).forEach(r => { const minor = TF_MINOR(r.k), pop = () => tf2Pop(r, st.N, st.h, st.dt);
-          if (minor) { const pl = L.polyline(r.p, { renderer: minR, color: "#9aa", weight: 1.2, opacity: 0.5, lineCap: "round", lineJoin: "round", interactive: false }); st.lines.push({ pl, r }); return; }
-          const cs = L.polyline(r.p, { renderer: caseR, color: "#06121c", weight: 5, opacity: 0.4, lineCap: "round", lineJoin: "round", interactive: false }); st.lines.push({ pl: L.polyline([], { opacity: 0, interactive: false }), cs, r, part: 1 });
+          if (minor) { st.lines.push({ r, kind: "m" }); return; }
+          st.lines.push({ r, part: 1, kind: "c" });
           /* градиент вдоль улицы: кусочки по 3 отрезка, локальный множитель близости к центру (та же модель) */
           const base = cf(r.mid); let first = true;
           for (let i = 0; i < r.p.length - 1; i += 3) { const pp = r.p.slice(i, Math.min(r.p.length, i + 4)), lf = Math.max(0.8, Math.min(1.2, cf(pp[Math.floor(pp.length / 2)]) / base));
-            const pl = L.polyline(pp, { renderer: lineR, color: "#9aa", weight: 2, opacity: 0.9, lineCap: "round", lineJoin: "round", interactive: false }); st.lines.push({ pl, r, lf, pp, part: first ? 0 : 1 }); first = false; } });
+            st.lines.push({ r, lf, pp, part: first ? 0 : 1, kind: "l" }); first = false; } });
         tfeTap(m, st, R); paint(); onState && onState(R.length); return; }
       R.slice().sort((a, b) => (TF2_W[a.k] || 0) - (TF2_W[b.k] || 0) || a.F - b.F).forEach(r => { const rr = S === "d" && !TF_MINOR(r.k) ? svgR : undefined;
         const cs = S === "a" ? L.polyline(r.p, { renderer: caseR, color: "#0b1a24", weight: 4, opacity: 0.5, lineCap: "round", lineJoin: "round", interactive: false }) : null;

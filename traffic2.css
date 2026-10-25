@@ -14,7 +14,7 @@ html:not([data-theme=dark]) .tfs-d .tl-osm{filter:grayscale(1) brightness(.98)}
 .tf-still{animation:none}
 @keyframes tfFlow{to{stroke-dashoffset:-32}}
 @media (prefers-reduced-motion:reduce){.tf-flow{animation:none}}
-.tf-jamlab{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transform:translate(-50%,-140%);background:rgba(15,23,32,.82);color:#fff;border:1px solid rgba(125,211,252,.45);border-radius:999px;padding:3px 10px 3px 4px;font:600 12px/1.3 Inter,system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);backdrop-filter:blur(4px)}
+.tf-jamlab{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transform:translate(-50%,-140%);background:rgba(15,23,32,.82);color:#fff;border:1px solid rgba(125,211,252,.45);border-radius:999px;padding:3px 10px 3px 4px;font:600 12px/1.3 Inter,system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 .tf-jamlab i{font-style:normal;color:#fca5a5;font-weight:700}
 .tf-jl-n{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#7dd3fc;color:#0b1a24;font-size:11px}
 
@@ -22,6 +22,7 @@ html:not([data-theme=dark]) .tfs-d .tl-osm{filter:grayscale(1) brightness(.98)}
 .tfs-e .tl-sat{filter:grayscale(.92) brightness(.5) contrast(.92) sepia(.12) hue-rotate(170deg)}
 html:not([data-theme=dark]) .tfs-e .tl-osm{filter:grayscale(1) brightness(1.03) contrast(.82) opacity(.9)}
 .tfs-e .tf-glowpane{filter:blur(5px);opacity:.75;pointer-events:none}
+.tfs-e .tf-glowpane.tf-glow-baked{filter:none}   /* v64: размытие уже в canvas (ctx.filter) — без CSS-фильтра на каждом кадре */
 .tfs-e .tf-minorpane{transition:opacity .45s ease}
 .tfs-e .leaflet-overlay-pane{transition:opacity .3s ease}
 .tfe-card{position:absolute;left:12px;bottom:26px;z-index:800;width:236px;padding:14px 16px 12px;border-radius:16px;color:#eaf6ff;
@@ -38,11 +39,12 @@ html:not([data-theme=dark]) .tfs-e .tl-osm{filter:grayscale(1) brightness(1.03) 
 .tfe-bl{display:flex;justify-content:space-between;font-size:11px;opacity:.7;margin-top:3px}
 .tfe-m{margin-top:8px;font-size:11px;opacity:.65;border-top:1px solid rgba(125,211,252,.18);padding-top:6px}
 .tfe-pill{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transform:translate(-50%,-150%);padding:5px 11px 5px 9px;border-radius:999px;
-  background:rgba(14,24,34,.6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#f1f8ff;border:1px solid rgba(255,255,255,.14);
+  background:rgba(14,24,34,.76);color:#f1f8ff;   /* v64: без backdrop-filter — подписи движутся с картой, размытие фона под ними пересчитывалось каждый кадр */
+  border:1px solid rgba(255,255,255,.14);
   box-shadow:0 6px 18px rgba(0,0,0,.3);font:600 12px/1.2 Inter,system-ui,sans-serif;letter-spacing:.01em}
 .tfe-pill i{font-style:normal;font-weight:700;color:#ffb08a;font-variant-numeric:tabular-nums}
 .tfe-dot{width:8px;height:8px;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,.12),0 0 10px currentColor}
-.leaflet-container:not(.map-sat) .tfe-pill{background:rgba(255,255,255,.7);color:#0f2230;border-color:rgba(15,34,48,.1);box-shadow:0 6px 18px rgba(15,34,48,.15)}
+.leaflet-container:not(.map-sat) .tfe-pill{background:rgba(255,255,255,.86);color:#0f2230;border-color:rgba(15,34,48,.1);box-shadow:0 6px 18px rgba(15,34,48,.15)}
 .leaflet-container:not(.map-sat) .tfe-pill i{color:#b4233c}
 @media (prefers-reduced-motion:reduce){.tfs-e .tf-minorpane{transition:none}}
 @media (max-width:600px){.tfe-card{left:8px;bottom:22px;width:172px;padding:9px 11px 8px;border-radius:14px;font-size:12px}
