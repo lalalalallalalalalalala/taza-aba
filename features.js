@@ -11,7 +11,6 @@ const FT_T = {
     lCa: "Чистый воздух внутри", lTf: "Транспорт · NO₂", lTr: "Посадка деревьев", lTt: "🚦 Пробки (TomTom)",
     verified: "проверено", unverified: "не проверено", caEmptyH: "Проверенных мест пока нет",
     caEmpty: "Мы не выдумываем места. Знаете кафе, коворкинг или ТЦ, где работает очиститель воздуха (лучше HEPA H13/H14)? Предложите его — оно появится у вас на карте с пометкой «не проверено», а отправленное в проект после проверки попадёт в общий список.",
-    caOwner: "Для владельца проекта: проверенные места добавляются в файл data/clean-places.json.",
     suggest: "➕ Предложить место", myPlaces: "Мои предложения (на этом устройстве)", vList: "Проверенные места",
     fName: "Название", fType: "Тип", fAddr: "Адрес или ориентир", fPoint: "Точка на карте — нажмите на карту", fPur: "Какой очиститель", fMeas: "Своё измерение PM2.5 внутри, µg/m³ (необязательно)", fDev: "Прибор (необязательно)", fNote: "Комментарий",
     tCafe: "Кафе", tCowork: "Коворкинг", tMall: "Торговый центр", tLib: "Библиотека", tOther: "Другое",
@@ -32,7 +31,6 @@ const FT_T = {
     st1: "Модель WRF–CAMx (журнал Air, 2024): за год PM2.5 — бытовое отопление и приготовление пищи 29 %, транспорт 27 %, ТЭЦ 11 %, пыль 9 %, трансграничный перенос 21 %; зимой бытовое отопление до ~40 %, летом транспорт до ~30 %.",
     st2: "Всемирный банк (2024): «Air Quality Analysis for Bishkek — PM2.5 Source Apportionment and Emission Reduction Measures».",
     st3: "ПРООН (Key Messages, 2023): автотранспорт — крупнейший источник NOx; вклад ТЭЦ в приземный PM — менее 1 %.",
-    ttKey: "Живые пробки включаются бесплатным ключом TomTom (TOMTOM_KEY в config.js): developer.tomtom.com",
     cand: "кандидат — нужно согласование с мэрией", candN: "{n} кандидатов", whyH: "Почему здесь:", wAqi: "AQI района {a}", wGreen: "до ближайшей зелени ~{m} м", wRoad: "рядом дорога: {r}", wSchool: "рядом: {s}",
     trLoad: "Загружаем парки, школы и дороги из OpenStreetMap…", trNone: "Подходящих кандидатов не нашлось — или зелени достаточно, или нет данных OSM.",
     trSrc: "Данные: © OpenStreetMap (парки, скверы, леса, газоны, школы, детсады, больницы, главные дороги) + AQI модели CAMS. Кандидат = зелени нет ближе ~400 м, рядом главная дорога или школа/детсад/больница, AQI района выше медианы города.",
@@ -50,7 +48,6 @@ const FT_T = {
     lCa: "Ичинде таза аба", lTf: "Транспорт · NO₂", lTr: "Дарак отургузуу", lTt: "🚦 Тыгын (TomTom)",
     verified: "текшерилген", unverified: "текшерилген эмес", caEmptyH: "Азырынча текшерилген жер жок",
     caEmpty: "Биз жерлерди ойлоп чыгарбайбыз. Аба тазалагычы (жакшысы HEPA H13/H14) иштеген кафе, коворкинг же соода борборун билесизби? Сунуштаңыз — ал картаңызда «текшерилген эмес» белгиси менен чыгат, ал эми долбоорго жөнөтүлгөнү текшерүүдөн кийин жалпы тизмеге кошулат.",
-    caOwner: "Долбоордун ээси үчүн: текшерилген жерлер data/clean-places.json файлына кошулат.",
     suggest: "➕ Жер сунуштоо", myPlaces: "Менин сунуштарым (ушул түзмөктө)", vList: "Текшерилген жерлер",
     fName: "Аталышы", fType: "Түрү", fAddr: "Дареги же белгиси", fPoint: "Картадагы чекит — картаны басыңыз", fPur: "Кандай тазалагыч", fMeas: "Ичиндеги PM2.5 өз өлчөөңүз, µg/m³ (милдеттүү эмес)", fDev: "Прибор (милдеттүү эмес)", fNote: "Комментарий",
     tCafe: "Кафе", tCowork: "Коворкинг", tMall: "Соода борбору", tLib: "Китепкана", tOther: "Башка",
@@ -71,7 +68,6 @@ const FT_T = {
     st1: "WRF–CAMx модели (Air журналы, 2024): жылына PM2.5 — үй жылытуу жана тамак бышыруу 29 %, транспорт 27 %, ЖЭБ 11 %, чаң 9 %, чек арадан тышкаркы 21 %; кышында үй жылытуу ~40 %га чейин, жайында транспорт ~30 %га чейин.",
     st2: "Дүйнөлүк банк (2024): «Air Quality Analysis for Bishkek — PM2.5 Source Apportionment and Emission Reduction Measures».",
     st3: "БУУӨП (Key Messages, 2023): автотранспорт — NOxтун эң ири булагы; ЖЭБдин жер бетиндеги PMге үлүшү — 1 %дан аз.",
-    ttKey: "Тирүү тыгындар акысыз TomTom ачкычы менен күйөт (config.js ичинде TOMTOM_KEY): developer.tomtom.com",
     cand: "талапкер — мэрия менен макулдашуу керек", candN: "{n} талапкер", whyH: "Эмне үчүн бул жерде:", wAqi: "райондун AQI {a}", wGreen: "эң жакын жашылга чейин ~{m} м", wRoad: "жанында жол: {r}", wSchool: "жанында: {s}",
     trLoad: "OpenStreetMap'тан парктарды, мектептерди жана жолдорду жүктөп жатабыз…", trNone: "Ылайыктуу талапкер табылган жок — же жашыл жетиштүү, же OSM маалыматы жок.",
     trSrc: "Маалымат: © OpenStreetMap (парктар, скверлер, токойлор, газондор, мектептер, бала бакчалар, ооруканалар, негизги жолдор) + CAMS моделинин AQI. Талапкер = ~400 м жакын жашыл жок, жанында негизги жол же мектеп/бала бакча/оорукана, райондун AQI шаардын медианасынан жогору.",
@@ -89,7 +85,6 @@ const FT_T = {
     lCa: "Clean air indoors", lTf: "Traffic · NO₂", lTr: "Tree planting", lTt: "🚦 Traffic jams (TomTom)",
     verified: "verified", unverified: "not verified", caEmptyH: "No verified places yet",
     caEmpty: "We don't make places up. Know a café, coworking or mall with a working air purifier (ideally HEPA H13/H14)? Suggest it — it appears on your map marked “not verified”, and once sent to the project and checked it can join the shared list.",
-    caOwner: "For the project owner: verified places go into data/clean-places.json.",
     suggest: "➕ Suggest a place", myPlaces: "My suggestions (on this device)", vList: "Verified places",
     fName: "Name", fType: "Type", fAddr: "Address or landmark", fPoint: "Point on the map — tap the map", fPur: "Purifier type", fMeas: "Your own indoor PM2.5 reading, µg/m³ (optional)", fDev: "Device (optional)", fNote: "Comment",
     tCafe: "Café", tCowork: "Coworking", tMall: "Shopping mall", tLib: "Library", tOther: "Other",
@@ -110,7 +105,6 @@ const FT_T = {
     st1: "WRF–CAMx model (Air journal, 2024): annual PM2.5 — residential heating and cooking 29%, transport 27%, CHP 11%, dust 9%, transboundary 21%; in winter residential heating up to ~40%, in summer transport up to ~30%.",
     st2: "World Bank (2024): “Air Quality Analysis for Bishkek — PM2.5 Source Apportionment and Emission Reduction Measures”.",
     st3: "UNDP (Key Messages, 2023): road transport is the largest NOx source; the CHP plant contributes under 1% of ground-level PM.",
-    ttKey: "Live traffic turns on with a free TomTom key (TOMTOM_KEY in config.js): developer.tomtom.com",
     cand: "candidate — needs approval from the city hall", candN: "{n} candidates", whyH: "Why here:", wAqi: "district AQI {a}", wGreen: "~{m} m to the nearest greenery", wRoad: "road nearby: {r}", wSchool: "nearby: {s}",
     trLoad: "Loading parks, schools and roads from OpenStreetMap…", trNone: "No suitable candidates found — either there's enough greenery or no OSM data.",
     trSrc: "Data: © OpenStreetMap (parks, squares, forests, lawns, schools, kindergartens, hospitals, major roads) + CAMS model AQI. Candidate = no greenery within ~400 m, a major road or school/kindergarten/hospital nearby, district AQI above the city median.",
@@ -128,7 +122,6 @@ const FT_T = {
     lCa: "İçeride temiz hava", lTf: "Trafik · NO₂", lTr: "Ağaç dikimi", lTt: "🚦 Trafik (TomTom)",
     verified: "doğrulandı", unverified: "doğrulanmadı", caEmptyH: "Henüz doğrulanmış yer yok",
     caEmpty: "Yer uydurmuyoruz. Hava temizleyicisi (tercihen HEPA H13/H14) çalışan bir kafe, ortak çalışma alanı veya AVM biliyor musunuz? Önerin — haritanızda “doğrulanmadı” işaretiyle görünür; projeye gönderilip kontrol edildikten sonra ortak listeye eklenebilir.",
-    caOwner: "Proje sahibi için: doğrulanmış yerler data/clean-places.json dosyasına eklenir.",
     suggest: "➕ Yer öner", myPlaces: "Önerilerim (bu cihazda)", vList: "Doğrulanmış yerler",
     fName: "Ad", fType: "Tür", fAddr: "Adres veya yer tarifi", fPoint: "Haritada nokta — haritaya dokunun", fPur: "Temizleyici türü", fMeas: "İçeride kendi PM2.5 ölçümünüz, µg/m³ (isteğe bağlı)", fDev: "Cihaz (isteğe bağlı)", fNote: "Yorum",
     tCafe: "Kafe", tCowork: "Ortak çalışma alanı", tMall: "AVM", tLib: "Kütüphane", tOther: "Diğer",
@@ -149,7 +142,6 @@ const FT_T = {
     st1: "WRF–CAMx modeli (Air dergisi, 2024): yıllık PM2.5 — konut ısınması ve yemek pişirme %29, ulaşım %27, termik santral %11, toz %9, sınır ötesi %21; kışın konut ısınması ~%40'a, yazın ulaşım ~%30'a kadar.",
     st2: "Dünya Bankası (2024): “Air Quality Analysis for Bishkek — PM2.5 Source Apportionment and Emission Reduction Measures”.",
     st3: "UNDP (Key Messages, 2023): karayolu ulaşımı en büyük NOx kaynağı; termik santralin yer seviyesindeki PM payı %1'in altında.",
-    ttKey: "Canlı trafik ücretsiz TomTom anahtarıyla açılır (config.js içinde TOMTOM_KEY): developer.tomtom.com",
     cand: "aday — belediye onayı gerekir", candN: "{n} aday", whyH: "Neden burası:", wAqi: "semt AQI {a}", wGreen: "en yakın yeşile ~{m} m", wRoad: "yakında yol: {r}", wSchool: "yakında: {s}",
     trLoad: "Parklar, okullar ve yollar OpenStreetMap'ten yükleniyor…", trNone: "Uygun aday bulunamadı — ya yeterince yeşil var ya da OSM verisi yok.",
     trSrc: "Veri: © OpenStreetMap (parklar, meydanlar, ormanlar, çimler, okullar, anaokulları, hastaneler, ana yollar) + CAMS modeli AQI. Aday = ~400 m içinde yeşil yok, yakında ana yol veya okul/anaokulu/hastane var, semt AQI şehir medyanının üzerinde.",
@@ -288,7 +280,7 @@ async function viewCleanAir(el) {
       <div class="toggles"><button class="btn" id="caAdd" type="button">${FT("suggest")}</button></div></div>
     <div class="list-col">
       <h2>✓ ${FT("vList")} <span class="chip">${V.length}</span></h2>
-      ${V.length ? V.map(p => `<div class="card ca-item ver">${caPop(p, true)}</div>`).join("") : `<div class="card ca-empty"><b>${FT("caEmptyH")}</b><p>${FT("caEmpty")}</p><p class="small muted">${FT("caOwner")}</p></div>`}
+      ${V.length ? V.map(p => `<div class="card ca-item ver">${caPop(p, true)}</div>`).join("") : `<div class="card ca-empty"><b>${FT("caEmptyH")}</b><p>${FT("caEmpty")}</p></div>`}
       <h2>${FT("myPlaces")} <span class="chip">${mine.length}</span></h2>
       ${mine.map(p => `<div class="card ca-item" id="ca-${p.id}">${caPop(p, false)}${caSendRow(p)}</div>`).join("")}
     </div></div><div class="foot">${t("footProto")}</div>`;
@@ -370,8 +362,7 @@ function viewTraffic(el) {
   el.innerHTML = `<h1>${FT("tf")}</h1><p class="sub">${FT("tfSub")}</p>
     <div class="map-grid"><div class="map-col"><div id="tfMap" class="mini-map" style="height:400px"></div>
       <div class="legend tf-leg">${[[5, "<10"], [15, "10–25"], [30, "25–40"], [50, "40–60"], [70, "60+"]].map(([v, l]) => `<span style="background:${no2Col(v)}">NO₂ ${l}</span>`).join("")}</div>
-      <p class="small muted" id="tfStat">${FT("roadsLoad")}</p><p class="small muted">${FT("roadsSrc")}</p>
-      ${FCFG().TOMTOM_KEY ? "" : `<p class="small muted">🚦 ${FT("ttKey")}</p>`}</div>
+      <p class="small muted" id="tfStat">${FT("roadsLoad")}</p><p class="small muted">${FT("roadsSrc")}</p></div>
     <div class="list-col"><div class="card tf-card"><div class="row between"><h3 style="margin:0">${FT("estH")}</h3><button class="btn ghost" id="tfHow" type="button">❓ ${FT("how")}</button></div>
       <label for="tfD" class="small">${t("district")}</label><select id="tfD">${districtOptions(d.id)}</select><div id="tfBox"></div></div>
       <div class="card small">📚 ${FT("studies")}: ${ftLink(SRC_LINKS.air2024, "Air 2024")} · ${ftLink(SRC_LINKS.wb2024, "World Bank 2024")} · ${ftLink(SRC_LINKS.undp2023, "UNDP 2023")}</div>

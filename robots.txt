@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zusenbaev7-cmd.github.io/taza-aba/sitemap.xml

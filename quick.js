@@ -3,7 +3,7 @@
 /* адрес сайта: из config.js (SITE_URL) или текущая страница без #хэша и имени файла — работает и в подпапке (GitHub Pages /taza-aba/) */
 const SITE_URL = (() => { const c = (window.TAZA_CONFIG || {}).SITE_URL; if (c) return c.endsWith("/") ? c : c + "/";
   return /^https?:$/.test(location.protocol) ? location.href.split(/[?#]/)[0].replace(/[^/]*$/, "") : ""; })();
-if (SITE_URL) { [["og:url", ""], ["og:image", "icons/og.png"]].forEach(([k, v]) => { const m = document.querySelector(`meta[property="${k}"]`); if (m) m.content = SITE_URL + v; });
+if (SITE_URL) { [["og:image", "icons/og.png"]].forEach(([k, v]) => { const m = document.querySelector(`meta[property="${k}"]`); if (m) m.content = SITE_URL + v; });
   const tw = document.querySelector('meta[name="twitter:image"]'); if (tw) tw.content = SITE_URL + "icons/og.png"; }
 const QD = {
   ru: { svcTitle: "Сервис данных не ответил", svcSub: "Сеть есть, но Open-Meteo не ответил вовремя. Повторим автоматически через {s} с.", svcBadge: "сервис не ответил — данные от {t}", svcNote: "⚠️ Сервис данных не ответил — показаны последние реальные данные от {t}. Повторим через {s} с.",
@@ -21,7 +21,7 @@ const QD = {
     shAdv0: "можно гулять и проветривать", shAdv1: "чувствительным лучше сократить прогулки", shAdv2: "не гуляйте с детьми", shAdv3: "лучше остаться дома, на улице — маска", shAdv4: "не выходите без необходимости", shAdv5: "опасно: оставайтесь дома",
     evTitle: "Риск вечернего смога", ev0: "низкий", ev1: "средний", ev2: "высокий", evLow: "Вечером воздух ожидается чище — можно проветривать.",
     evBefore: "Проветрите сейчас и гуляйте до {x}; после 18:00 держите окна закрытыми.", evNow: "Держите окна закрытыми до утра, прогулки перенесите.",
-    evF: "18–23 ч: AQI до {a}", evFp: "18–23 ч: PM2.5 до {p} мкг/м³ (AQI {a} за час)", evWind: "ветер {w} м/с", evInv: "инверсия", evNoInv: "без инверсии", evInvD: "инверсия (на ~{m} м теплее на {d} °C)", evBlh: "слой перемешивания ~{m} м (модель)", evSrc: "прогноз Open-Meteo (CAMS + погода)", evTomorrow: "на завтра",
+    evF: "18–23 ч: AQI до {a}", evFp: "18–23 ч: PM2.5 до {p} мкг/м³ (AQI {a} за час)", evWind: "вечером ветер {w} м/с", evInv: "инверсия", evNoInv: "без инверсии", evInvD: "инверсия (на ~{m} м теплее на {d} °C)", evBlh: "слой перемешивания ~{m} м (модель)", evSrc: "прогноз Open-Meteo (CAMS + погода)", evTomorrow: "на завтра",
     mWeather: "Погода", mWeatherSub: "Прогноз и ветер на 7 дней", mHouse: "Расчёт перехода с угля", 
     cmpMake: "Сформировать обращение", lsFull: "Память браузера для сайта переполнена — последние изменения могут не сохраниться. Удалите старые жалобы с фото или лишние данные.", cmpQuota: "Обращение создано, но память браузера переполнена — после перезагрузки оно пропадёт. Удалите старые жалобы с фото.", cmpMade: "Обращение готово — выберите, как отправить", cmpDraft: "Черновик", cmpSentYou: "Отправлено вами", cmpVia: "через {v}, {t}",
     cmpHead: "Обращение о загрязнении воздуха", cmpType: "Тип", cmpDesc: "Описание", cmpPlace: "Район", cmpCoords: "Координаты", cmpTime: "Время", cmpAqi: "Текущий AQI в районе", cmpPhoto: "Фото: есть, прилагаю отдельно",
@@ -44,7 +44,7 @@ const QD = {
     shAdv0: "сейилдеп, желдетсе болот", shAdv1: "сезгич адамдар сейилдөөнү кыскартсын", shAdv2: "балдар менен сейилдебеңиз", shAdv3: "үйдө калган жакшы, сыртта — маска", shAdv4: "зарылчылыксыз чыкпаңыз", shAdv5: "коркунучтуу: үйдө калыңыз",
     evTitle: "Кечки түтүн тобокели", ev0: "төмөн", ev1: "орточо", ev2: "жогору", evLow: "Кечинде аба тазараак болот — желдетсе болот.",
     evBefore: "Азыр желдетиңиз, {x} чейин сейилдеңиз; 18:00дөн кийин терезелерди жабык кармаңыз.", evNow: "Эртеңге чейин терезелерди жабык кармаңыз, сейилдөөнү кийинкиге калтырыңыз.",
-    evF: "18–23: AQI {a} чейин", evFp: "18–23: PM2.5 {p} мкг/м³ чейин (саатына AQI {a})", evWind: "шамал {w} м/с", evInv: "инверсия", evNoInv: "инверсия жок", evInvD: "инверсия (~{m} м бийиктикте {d} °C жылуу)", evBlh: "аралашуу катмары ~{m} м (модель)", evSrc: "Open-Meteo божомолу (CAMS + аба ырайы)", evTomorrow: "эртеңге",
+    evF: "18–23: AQI {a} чейин", evFp: "18–23: PM2.5 {p} мкг/м³ чейин (саатына AQI {a})", evWind: "кечинде шамал {w} м/с", evInv: "инверсия", evNoInv: "инверсия жок", evInvD: "инверсия (~{m} м бийиктикте {d} °C жылуу)", evBlh: "аралашуу катмары ~{m} м (модель)", evSrc: "Open-Meteo божомолу (CAMS + аба ырайы)", evTomorrow: "эртеңге",
     mWeather: "Аба ырайы", mWeatherSub: "7 күнгө божомол жана шамал", mHouse: "Көмүрдөн өтүү эсеби", 
     cmpMake: "Арызды түзүү", lsFull: "Браузердин сайт үчүн эси толду — акыркы өзгөрүүлөр сакталбашы мүмкүн. Сүрөттүү эски арыздарды өчүрүңүз.", cmpQuota: "Арыз түзүлдү, бирок браузердин эси толду — кайра жүктөгөндө жоголот. Сүрөттүү эски арыздарды өчүрүңүз.", cmpMade: "Арыз даяр — кантип жөнөтүүнү тандаңыз", cmpDraft: "Долбоор", cmpSentYou: "Сиз жөнөттүңүз", cmpVia: "{v} аркылуу, {t}",
     cmpHead: "Абанын булганышы тууралуу арыз", cmpType: "Түрү", cmpDesc: "Сүрөттөмө", cmpPlace: "Аймак", cmpCoords: "Координаттар", cmpTime: "Убакыт", cmpAqi: "Аймактагы учурдагы AQI", cmpPhoto: "Сүрөт: бар, өзүнчө тиркейм",
@@ -67,7 +67,7 @@ const QD = {
     shAdv0: "fine to walk and air out", shAdv1: "sensitive people should cut walks short", shAdv2: "don't take kids for a walk", shAdv3: "better stay inside, wear a mask outdoors", shAdv4: "don't go out unless necessary", shAdv5: "hazardous: stay indoors",
     evTitle: "Evening smog risk", ev0: "low", ev1: "medium", ev2: "high", evLow: "The evening air should be cleaner — fine to air out.",
     evBefore: "Air out now and walk before {x}; keep windows closed after 18:00.", evNow: "Keep windows closed until morning and postpone walks.",
-    evF: "18–23h: AQI up to {a}", evFp: "18–23h: PM2.5 up to {p} µg/m³ (hourly AQI {a})", evWind: "wind {w} m/s", evInv: "inversion", evNoInv: "no inversion", evInvD: "inversion ({d} °C warmer at ~{m} m)", evBlh: "mixing layer ~{m} m (model)", evSrc: "Open-Meteo forecast (CAMS + weather)", evTomorrow: "for tomorrow",
+    evF: "18–23h: AQI up to {a}", evFp: "18–23h: PM2.5 up to {p} µg/m³ (hourly AQI {a})", evWind: "evening wind {w} m/s", evInv: "inversion", evNoInv: "no inversion", evInvD: "inversion ({d} °C warmer at ~{m} m)", evBlh: "mixing layer ~{m} m (model)", evSrc: "Open-Meteo forecast (CAMS + weather)", evTomorrow: "for tomorrow",
     mWeather: "Weather", mWeatherSub: "7-day forecast and wind", mHouse: "Coal switch calculator", 
     cmpMake: "Prepare complaint", lsFull: "Browser storage for this site is full — recent changes may not be saved. Delete old complaints with photos.", cmpQuota: "Complaint created, but browser storage is full — it will be lost after reload. Delete old complaints with photos.", cmpMade: "Complaint ready — choose how to send it", cmpDraft: "Draft", cmpSentYou: "Sent by you", cmpVia: "via {v}, {t}",
     cmpHead: "Air pollution complaint", cmpType: "Type", cmpDesc: "Description", cmpPlace: "District", cmpCoords: "Coordinates", cmpTime: "Time", cmpAqi: "Current AQI in the district", cmpPhoto: "Photo: available, attached separately",
@@ -175,7 +175,7 @@ function openOnboard() {
   let w = document.getElementById("obWrap");
   if (!w) { w = document.createElement("div"); w.id = "obWrap"; w.className = "ob-wrap"; document.body.appendChild(w); }
   let ctry = cityObj().country, city = CITY, dist = state.district;
-  const LN = { ru: "Русский", ky: "Кыргызча", en: "English", tr: "Türkçe" };
+  const LN = { ru: "Русский", ky: "Кыргызча", en: "English" };
   const draw = () => {
     const order = ctry === "tr" ? TR_ORDER : KG_ORDER; if (!order.includes(city)) city = order[0];
     const ds = CITIES[city].districts; if (!ds.some(d => d.id === dist)) dist = CITIES[city].defaultDistrict || ds[0].id;
@@ -185,7 +185,7 @@ function openOnboard() {
       <button type="button" class="btn sun block" id="obGeo" style="margin-top:14px">📍 ${Q("obGeo")}</button>
       <div class="ob-or">${Q("obOr")}</div>
       <div class="ob-sels">
-        <label>${Q("obCtry")}<select id="obCtry">${["kg", "tr"].map(k => `<option value="${k}" ${k === ctry ? "selected" : ""}>${k === "kg" ? "🇰🇬" : "🇹🇷"} ${ctryName(k)}</option>`).join("")}</select></label>
+        <label hidden>${Q("obCtry")}<select id="obCtry">${["kg"].map(k => `<option value="${k}" ${k === ctry ? "selected" : ""}>${k === "kg" ? "🇰🇬" : "🇹🇷"} ${ctryName(k)}</option>`).join("")}</select></label>
         <label>${t("cityLbl")}<select id="obCity">${order.map(id => `<option value="${id}" ${id === city ? "selected" : ""}>${CITIES[id].emoji} ${tr(CITIES[id].name)}</option>`).join("")}</select></label>
         <label>${t("district")}<select id="obDist">${ds.map(d => `<option value="${d.id}" ${d.id === dist ? "selected" : ""}>${esc(dName(d))}</option>`).join("")}</select></label>
       </div>

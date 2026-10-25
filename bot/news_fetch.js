@@ -11,7 +11,6 @@ const SETS = {
   "kg-ru": [["Kabar", "https://ru.kabar.kg/rss/"], ["24.kg", "https://24.kg/rss/"], ["Kloop", "https://kloop.kg/feed/"]],
   "kg-ky": [["Kabar", "https://kabar.kg/rss/"], ["24.kg", "https://24.kg/kyrgyzcha/rss/"]],
   "kg-en": [["Kabar", "https://en.kabar.kg/rss/"], ["24.kg", "https://24.kg/english/rss/"]],
-  "tr": [["Anadolu Ajansı", "https://www.aa.com.tr/tr/rss/default?cat=guncel"], ["TRT Haber", "https://www.trthaber.com/sondakika.rss"], ["Hürriyet", "https://www.hurriyet.com.tr/rss/anasayfa"], ["Sözcü", "https://www.sozcu.com.tr/feeds-rss-category-gundem"]],
 };
 const MAX = 30;
 const ENT = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", laquo: "«", raquo: "»", mdash: "—", ndash: "–", hellip: "…" };

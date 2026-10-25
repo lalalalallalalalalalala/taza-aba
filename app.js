@@ -249,7 +249,7 @@ function renderChrome() {
   cs.innerHTML = CITY_ORDER.map(id => `<option value="${id}" ${id === CITY ? "selected" : ""}>${CITIES[id].emoji} ${tr(CITIES[id].short || CITIES[id].name)}</option>`).join("");
   cs.setAttribute("aria-label", t("cityLbl"));
   const fl = $(".ctry-flag"); if (fl) fl.textContent = cityObj().country === "tr" ? "🇹🇷" : "🇰🇬";
-  const ks = $("#ctrySel"); if (ks) { ks.innerHTML = ["kg", "tr"].map(k => `<option value="${k}" ${k === cityObj().country ? "selected" : ""}>${k === "kg" ? "🇰🇬" : "🇹🇷"} ${ctryName(k)}</option>`).join(""); ks.setAttribute("aria-label", ctryName("lbl")); }
+  const ks = $("#ctrySel"); if (ks) { ks.innerHTML = ["kg"].map(k => `<option value="${k}" ${k === cityObj().country ? "selected" : ""}>${k === "kg" ? "🇰🇬" : "🇹🇷"} ${ctryName(k)}</option>`).join(""); ks.setAttribute("aria-label", ctryName("lbl")); }
   applySeo();
   document.documentElement.lang = LANG;
   const tb = $("#tabbar"); if (tb) tb.setAttribute("aria-label", { ru: "Навигация", ky: "Навигация", en: "Navigation", tr: "Gezinme" }[LANG] || "Навигация");
@@ -624,7 +624,7 @@ function viewCountry(el) {
     <div class="row between" style="align-items:flex-end"><div><h1>${ctryT("countryTitle")}</h1><p class="sub" style="margin-bottom:10px">${t("countrySub")}</p></div></div>
     <div class="map-grid"><div class="map-col">
     <div id="mapEl"></div>
-    <div class="toggles"><div class="toggle" id="backCity">${t("backToCity")}</div><div class="toggle" id="ctryToggle" role="button" tabindex="0">${cityObj().country === "tr" ? "🇰🇬 " + ctryName("kg") : "🇹🇷 " + ctryName("tr")}</div></div>
+    <div class="toggles"><div class="toggle" id="backCity">${t("backToCity")}</div></div>
     <div class="legend">${AQI_LEVELS.slice(0, 5).map(l => `<span style="background:${l.color}">${tr(l.name)}</span>`).join("")}</div>
     </div><div class="list-col">
     <h2>${t("citiesList")}</h2>
@@ -641,6 +641,8 @@ function viewCountry(el) {
   const M = map, isTr = cityObj().country === "tr";
   const ctB = L.latLngBounds(isTr ? [[35.8, 25.9], [42.2, 44.6]] : CITY_ORDER.map(id => CITIES[id].center)).pad(isTr ? 0 : 0.06);
   M.fitBounds(ctB, { padding: [8, 8] }); M.setMinZoom(Math.max(2, M.getBoundsZoom(ctB) - 1));
+  M.setMaxBounds(ctB.pad(0.6));   // v56: карта страны — только Кыргызстан
+  setTimeout(() => { if (map === M && mapMode === "country") { M.invalidateSize(); M.fitBounds(ctB, { padding: [8, 8] }); } }, 350);
   /* пины городов: приоритет — текущий город, затем порядок списка (крупные первыми). При наложении пинов младшие
    * объединяются в старший (бейдж «+n», по нажатию — список городов); подписи, которые пересекаются, скрываются до приближения. */
   const sz = () => (M.getSize().x < 560 ? 26 : 32);
@@ -662,7 +664,6 @@ function viewCountry(el) {
       const n = cp.querySelector(".cp-n"); n.hidden = !o.grp.length; n.textContent = "+" + o.grp.length; }); };
   let lt = 0; M.on("zoomend moveend resize", () => { clearTimeout(lt); lt = setTimeout(layout, 60); }); M.whenReady(layout); setTimeout(layout, 80);
   $("#backCity").onclick = () => { mapMode = "city"; route(true); };
-  $("#ctryToggle").onclick = () => { mapMode = "country"; switchCountry(cityObj().country === "tr" ? "kg" : "tr"); };
   el.querySelectorAll("[data-city]").forEach(x => x.onclick = () => { window.scrollTo(0, 0); openCityFromCountry(x.dataset.city); });
   setTimeout(() => map && map.invalidateSize(), 50);
 }
@@ -1095,13 +1096,11 @@ function viewProfile(el) {
       ${tomorrow != null ? `<div class="small" style="font-weight:800;margin-top:10px;color:${level(tomorrow).color}">📅 ${t("tomorrowFc", { in: dLoc(byId(al.district)), aqi: tomorrow })}</div>` : ""}
       <button class="btn sun block" id="alTest" style="margin-top:12px">${t("testBtn")}</button>
       <div class="small muted" style="font-weight:700;margin-top:8px">${t("checkNote")}</div>
-      <hr style="border:0;border-top:1px dashed var(--line);margin:14px 0">
-      <b style="font-size:15px">✈️ ${t("tgAlert")}</b>
-      <div class="small muted" style="font-weight:700;margin:4px 0 8px">${t("tgAlertSub")}</div>
       ${(() => { const bot = (window.TAZA_CONFIG && TAZA_CONFIG.TELEGRAM_BOT || "").replace(/^@/, "");
-        if (!bot) return `<p class="small muted" style="font-weight:700">${t("tgAlertNeed")}</p>`;
+        if (!bot) return "";   // v56: без бота блок скрыт (никаких инструкций владельцу)
+        const head = `<hr style="border:0;border-top:1px dashed var(--line);margin:14px 0"><b style="font-size:15px">✈️ ${t("tgAlert")}</b><div class="small muted" style="font-weight:700;margin:4px 0 8px">${t("tgAlertSub")}</div>`;
         const start = encodeURIComponent(al.district || state.district);
-        return `<a class="btn block" id="tgSub" href="https://t.me/${bot}?start=${start}" target="_blank" rel="noopener">${t("tgAlertGo")}</a>
+        return head + `<a class="btn block" id="tgSub" href="https://t.me/${bot}?start=${start}" target="_blank" rel="noopener">${t("tgAlertGo")}</a>
           <div class="small muted" style="font-weight:700;margin-top:6px">${t("tgAlertHint")}</div>`; })()}
     </div>
 

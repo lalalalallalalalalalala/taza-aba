@@ -114,7 +114,7 @@ function aiContext() {
   const c = cityObj(), lines = [];
   const now = new Date();
   lines.push(`Local date/time: ${now.toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}.`);
-  lines.push(`App city: ${tr(c.name)} (${c.country === "tr" ? "Turkey" : "Kyrgyzstan"}).`);
+  lines.push(`App city: ${tr(c.name)} (Kyrgyzstan).`);
   try {
     const d = byId(state.district), a = air.byDistrict[d.id];
     if (a) {
@@ -129,7 +129,7 @@ function aiContext() {
 }
 function aiSystem() {
   const lang = { ru: "Russian", ky: "Kyrgyz (Cyrillic script)", en: "English", tr: "Turkish" }[LANG] || "Russian";
-  return `You are the assistant of «Taza Aba», a free air-quality web app for Kyrgyzstan and Turkey. You are a friendly, knowledgeable general helper: answer ANY question on any topic (facts, writing, poems, study, coding, cooking, travel, everyday life) helpfully, accurately and concisely. You also have extra expertise in air quality, smog, PM2.5, protecting health, cleaner home heating (insulation, heat pumps, solar instead of coal) and this app's data. Use the live context below only when it is relevant; never invent measurements — AQI values come from the CAMS model and are estimates. If you are unsure, say so. Always reply in ${lang}, unless the user explicitly asks for another language. Format with simple Markdown only (paragraphs, **bold**, lists, \`code\`); never output HTML. Refuse only clearly harmful requests (weapons, violence, self-harm methods, illegal or hateful content) — briefly and kindly. For medical emergencies tell the user to call emergency services (103 in Kyrgyzstan, 112 in Turkey).\nLive context: ${aiContext()}`;
+  return `You are the assistant of «Taza Aba», a free air-quality web app for Kyrgyzstan. You are a friendly, knowledgeable general helper: answer ANY question on any topic (facts, writing, poems, study, coding, cooking, travel, everyday life) helpfully, accurately and concisely. You also have extra expertise in air quality, smog, PM2.5, protecting health, cleaner home heating (insulation, heat pumps, solar instead of coal) and this app's data. Use the live context below only when it is relevant; never invent measurements — AQI values come from the CAMS model and are estimates. If you are unsure, say so. Always reply in ${lang}, unless the user explicitly asks for another language. Format with simple Markdown only (paragraphs, **bold**, lists, \`code\`); never output HTML. Refuse only clearly harmful requests (weapons, violence, self-harm methods, illegal or hateful content) — briefly and kindly. For medical emergencies tell the user to call emergency services (103 in Kyrgyzstan).\nLive context: ${aiContext()}`;
 }
 function aiHistory() {
   return adv.extra.filter(m => (m.me && m.text) || (m.ai && m.text && !m.pending)).slice(-12).map(m => ({ role: m.me ? "user" : "assistant", content: String(m.text).slice(0, 4000) }));

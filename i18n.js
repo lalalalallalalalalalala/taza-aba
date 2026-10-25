@@ -1,9 +1,9 @@
 /* Таза Аба — переводы интерфейса: ru (по умолчанию), ky (кыргызча), en. */
-const LANGS = { ru: "RU", ky: "KG", en: "EN", tr: "TR" };
+const LANGS = { ru: "RU", ky: "KG", en: "EN" };
 let LANG = localStorage.getItem("tazaAba.lang") || "ru";
 // ?lang=ru|ky|en|tr — для ссылок hreflang и поисковиков (выбор запоминается)
-try { const ql = new URLSearchParams(location.search).get("lang"); if (["ru", "ky", "en", "tr"].includes(ql)) { LANG = ql; localStorage.setItem("tazaAba.lang", ql); } } catch (e) {}
-if (!LANGS[LANG] && LANG !== "tr") LANG = "ru";
+try { const ql = new URLSearchParams(location.search).get("lang"); if (["ru", "ky", "en"].includes(ql)) { LANG = ql; localStorage.setItem("tazaAba.lang", ql); } } catch (e) {}
+if (!LANGS[LANG]) { LANG = "ru"; try { localStorage.setItem("tazaAba.lang", "ru"); } catch (e) {} }   // v56: турецкий удалён → ru
 
 const DICT = {
 ru: {
@@ -294,10 +294,9 @@ function t(key, vars = {}) {
 const tr = o => (o && typeof o === "object" && !Array.isArray(o)) ? (o[LANG] ?? (LANG === "tr" ? o.en : undefined) ?? o.ru) : o;
 // SEO: заголовок, описание и canonical на языке интерфейса
 const SEO = {
-  ru: { t: "Таза Аба — качество воздуха и смог в Бишкеке, AQI Кыргызстана", d: "Качество воздуха в Бишкеке и 59 городах Кыргызстана и Турции: AQI по районам, прогноз смога, PM2.5, эко-маршруты, ИИ-советник по здоровью. Бесплатно, 4 языка." },
-  ky: { t: "Таза Аба — Бишкектеги абанын сапаты жана түтүн, AQI Кыргызстан", d: "Бишкекте жана Кыргызстан менен Түркиянын 59 шаарында абанын сапаты: райондор боюнча AQI, түтүн (смог) божомолу, PM2.5, эко-маршруттар, ЖИ-кеңешчи. Акысыз." },
-  en: { t: "Taza Aba — Bishkek air quality & smog, live AQI for Kyrgyzstan", d: "Air quality in Bishkek and 59 cities of Kyrgyzstan and Turkey: AQI by district, smog forecast, PM2.5, eco-routes and a free AI health advisor. 4 languages." },
-  tr: { t: "Taza Aba — Bişkek ve Türkiye'de hava kalitesi, canlı AQI", d: "Bişkek ile Kırgızistan ve Türkiye'nin 59 şehrinde hava kalitesi: semt bazında AQI, duman (smog) tahmini, PM2.5, eko rotalar ve ücretsiz YZ danışman." }
+  ru: { t: "Таза Аба — качество воздуха и смог в Бишкеке, AQI Кыргызстана", d: "Качество воздуха в Бишкеке и 39 городах Кыргызстана: AQI по районам, прогноз смога, PM2.5, эко-маршруты, ИИ-советник по здоровью. Бесплатно, 4 языка." },
+  ky: { t: "Таза Аба — Бишкектеги абанын сапаты жана түтүн, AQI Кыргызстан", d: "Бишкекте жана Кыргызстандын 39 шаарында абанын сапаты: райондор боюнча AQI, түтүн (смог) божомолу, PM2.5, эко-маршруттар, ЖИ-кеңешчи. Акысыз." },
+  en: { t: "Taza Aba — Bishkek air quality & smog, live AQI for Kyrgyzstan", d: "Air quality in Bishkek and 39 cities of Kyrgyzstan: AQI by district, smog forecast, PM2.5, eco-routes and a free AI health advisor. 4 languages." },
 };
 function applySeo() {
   try {
@@ -320,7 +319,7 @@ Object.assign(DICT.ru, {
   tab_more: "Ещё", moreTitle: "Ещё", moreSub: "Все разделы «Таза Аба»",
   m_profile: "Профиль и бейджи", m_profileSub: "Мой вклад и бейджи", m_complaints: "Жалобы", m_complaintsSub: "Сообщить о дыме или сжигании мусора",
   m_routes: "Эко-маршруты", m_routesSub: "Чистые пути через парки", m_alerts: "Уведомления о смоге", m_alertsSub: "Предупреждение заранее",
-  tgAlert: "Telegram-алерты", tgAlertSub: "Сообщение в Telegram, когда AQI в районе выше порога — даже если вкладка закрыта.", tgAlertGo: "Подписаться в Telegram", tgAlertNeed: "Бот ещё не подключён. Владельцу: создать бота у @BotFather, указать TELEGRAM_BOT в config.js и секрет TELEGRAM_BOT_TOKEN в GitHub Actions.", tgAlertHint: "Откроется Telegram. Нажмите Start — подписка на выбранный выше район.",
+  tgAlert: "Telegram-алерты", tgAlertSub: "Сообщение в Telegram, когда AQI в районе выше порога — даже если вкладка закрыта.", tgAlertGo: "Подписаться в Telegram", tgAlertHint: "Откроется Telegram. Нажмите Start — подписка на выбранный выше район.",
   quick: "⚡ Быстрые действия", q_complain: "Жалоба", q_routes: "Маршруты", q_advisor: "Советник", q_alerts: "Уведомления",
   cTitle: "Жалобы", cSub: "Увидели чёрный дым из трубы или горящий мусор? Сообщите — соседи и службы узнают.",
   cPhoto: "📷 Сделать или загрузить фото", cPhotoChange: "📷 Заменить фото", cCategory: "Что происходит?",
@@ -340,7 +339,7 @@ Object.assign(DICT.ky, {
   tab_more: "Дагы", moreTitle: "Дагы", moreSub: "«Таза Аба» бөлүмдөрүнүн баары",
   m_profile: "Профиль жана бейджилер", m_profileSub: "Менин салымым жана бейджилер", m_complaints: "Арыздар", m_complaintsSub: "Түтүн же таштанды өрттөө тууралуу кабарлоо",
   m_routes: "Эко-маршруттар", m_routesSub: "Парктар аркылуу таза жолдор", m_alerts: "Смог эскертүүлөрү", m_alertsSub: "Алдын ала эскертүү",
-  tgAlert: "Telegram эскертүүлөрү", tgAlertSub: "Райондун AQI босогодон жогору болгондо Telegram билдирүүсү — вкладка жабык болсо да.", tgAlertGo: "Telegram'га жазылуу", tgAlertNeed: "Бот азырынча туташкан эмес. Ээси: @BotFather'ден бот түзүп, config.js'ке TELEGRAM_BOT жана GitHub Actions'ка TELEGRAM_BOT_TOKEN жазыңыз.", tgAlertHint: "Telegram ачылат. Start басыңыз — жогоруда тандалган районго жазыласыз.",
+  tgAlert: "Telegram эскертүүлөрү", tgAlertSub: "Райондун AQI босогодон жогору болгондо Telegram билдирүүсү — вкладка жабык болсо да.", tgAlertGo: "Telegram'га жазылуу", tgAlertHint: "Telegram ачылат. Start басыңыз — жогоруда тандалган районго жазыласыз.",
   quick: "⚡ Тез аракеттер", q_complain: "Арыз", q_routes: "Маршруттар", q_advisor: "Кеңешчи", q_alerts: "Эскертүүлөр",
   cTitle: "Арыздар", cSub: "Мордон кара түтүн чыгып же таштанды күйүп жатканын көрдүңүзбү? Кабарлаңыз — коңшулар жана тиешелүү кызматтар билишет.",
   cPhoto: "📷 Сүрөткө тартуу же жүктөө", cPhotoChange: "📷 Сүрөттү алмаштыруу", cCategory: "Эмне болуп жатат?",
@@ -360,7 +359,7 @@ Object.assign(DICT.en, {
   tab_more: "More", moreTitle: "More", moreSub: "All Taza Aba sections",
   m_profile: "Profile & badges", m_profileSub: "My impact and badges", m_complaints: "Complaints", m_complaintsSub: "Report smoke or burning trash",
   m_routes: "Eco-routes", m_routesSub: "Clean paths through parks", m_alerts: "Smog alerts", m_alertsSub: "Get warned in advance",
-  tgAlert: "Telegram alerts", tgAlertSub: "A Telegram message when district AQI is above the threshold — even with the tab closed.", tgAlertGo: "Subscribe in Telegram", tgAlertNeed: "Bot not connected yet. Owner: create a bot with @BotFather, set TELEGRAM_BOT in config.js and the TELEGRAM_BOT_TOKEN secret in GitHub Actions.", tgAlertHint: "Telegram will open. Tap Start to subscribe to the district selected above.",
+  tgAlert: "Telegram alerts", tgAlertSub: "A Telegram message when district AQI is above the threshold — even with the tab closed.", tgAlertGo: "Subscribe in Telegram", tgAlertHint: "Telegram will open. Tap Start to subscribe to the district selected above.",
   quick: "⚡ Quick actions", q_complain: "Report", q_routes: "Routes", q_advisor: "Advisor", q_alerts: "Alerts",
   cTitle: "Complaints", cSub: "Seen black smoke from a chimney or burning trash? Report it so neighbours and city services know.",
   cPhoto: "📷 Take or upload a photo", cPhotoChange: "📷 Replace photo", cCategory: "What's happening?",

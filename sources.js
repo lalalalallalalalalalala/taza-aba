@@ -128,7 +128,7 @@ function sourcesCardHTML(d) {
   const k = CFG(), miss = [!k.AIRNOW_KEY && "AirNow", !k.WAQI_TOKEN && "WAQI", !k.OPENAQ_KEY && "OpenAQ"].filter(Boolean);
   const kg = CITIES[CITY] && CITIES[CITY].country === "kg";
   return `<div class="card src-card"><h3>${ST("card")}</h3><ul class="src-list">${rows.join("")}</ul>${live ? agreementHTML() : ""}
-    <div class="small muted src-foot">${miss.length ? ST("keys", { l: miss.join(", ") }) + "<br>" : ""}${kg ? ST("mg") : ""}</div></div>`;
+    <div class="small muted src-foot">${kg ? ST("mg") : ""}</div></div>`;
 }
 /* Слой карты «Измерения»: датчики SC (квадрат) и станции (ромб) */
 let stOn = localStorage.getItem("tazaAba.stLayer") === "1";   /* по умолчанию выключен (производительность) */

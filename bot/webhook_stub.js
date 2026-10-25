@@ -30,7 +30,7 @@ async function handle(u) {
     if (!dist) { await api("sendMessage", { chat_id: chat, text: "Откройте ссылку из приложения «Таза Аба» (кнопка подписки на район), или: /start <id_района>" }); return; }
     const i = list.findIndex(s => s.chat_id === chat);
     const row = { chat_id: chat, district: dist, lang: (msg.from && msg.from.language_code || "ru").slice(0, 2), threshold: j.defaultThreshold || 100, since: new Date().toISOString().slice(0, 10) };
-    if (!["ru", "ky", "en", "tr"].includes(row.lang)) row.lang = "ru";
+    if (!["ru", "ky", "en"].includes(row.lang)) row.lang = "ru";
     if (i >= 0) list[i] = { ...list[i], ...row }; else list.push(row);
     save(j);
     await api("sendMessage", { chat_id: chat, text: `Подписка на район «${dist}» оформлена. Порог AQI ≥ ${row.threshold}. /stop — отписаться.` });

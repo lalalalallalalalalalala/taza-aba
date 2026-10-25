@@ -89,3 +89,4 @@ html.lowend[data-theme="dark"] .leaflet-container{background:#0b1510}
 /* Safari: единый вид выпадающего списка города (без серой системной «плашки») */
 .cityrow #citySel{-webkit-appearance:none;appearance:none;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 6px center/10px 6px;padding-right:22px!important;border-radius:8px}
 @media (max-width:600px){.bm-ctl button{padding:5px 7px!important;font-size:11.5px!important}}
+.ctry-wrap[hidden]{display:none!important}
