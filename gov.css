@@ -146,3 +146,16 @@ html[data-theme="dark"] .gz-t td{border-color:rgba(255,255,255,.1)}
 .gv-my tr.gv-my-cur td{font-weight:700;background:color-mix(in srgb,var(--accent,#0ea5e9) 12%,transparent)}
 .gv-my .gv-t th{white-space:normal;vertical-align:bottom;font-size:.82rem}.gv-my .gv-t td{white-space:nowrap}
 .gv-my .gv-tw{max-width:640px}
+/* v72: зоны модели вместо рейтинга одинаковых районов */
+.gv-zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:8px 0 10px}
+.gv-zone{border:1px solid rgba(127,127,127,.2);border-left:6px solid #999;border-radius:12px;padding:10px 12px;min-width:0}
+.gv-zh{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.gv-zs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0 6px}
+.gv-zs>span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.gv-zs small{font-size:11px;opacity:.75;line-height:1.2}
+.gv-zs .gv-chip{align-self:flex-start}
+.gv-zone p{margin:4px 0 0;overflow-wrap:anywhere}
+.gv-zall summary{cursor:pointer;font-weight:700;margin:4px 0 8px}
+.gv-zex{margin:2px 0 0;overflow-wrap:anywhere}
+html[data-theme="dark"] .gv-zone{border-color:rgba(255,255,255,.12)}
+@media print{.gv-zall:not([open]){display:none}}

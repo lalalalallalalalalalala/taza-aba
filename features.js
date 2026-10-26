@@ -7,7 +7,7 @@ const FT_T = {
   ru: {
     ca: "Чистый воздух внутри", caSub: "Кафе, коворкинги и ТЦ с очистителями воздуха, где можно переждать смог",
     tf: "Транспорт и смог", tfSub: "Главные дороги, NO₂ по районам и оценка вклада транспорта",
-    trSub: "Кандидаты для посадки: много смога, мало зелени, рядом дороги и школы",
+    tr: "Где посадить деревья", trSub: "Кандидаты для посадки: много смога, мало зелени, рядом дороги и школы",
     lCa: "Чистый воздух внутри", lTf: "Транспорт · NO₂", lTr: "Посадка деревьев", lTt: "🚦 Пробки (TomTom)",
     verified: "проверено", unverified: "не проверено", caEmptyH: "Проверенных мест пока нет",
     caEmpty: "Мы не выдумываем места. Знаете кафе, коворкинг или ТЦ, где работает очиститель воздуха (лучше HEPA H13/H14)? Предложите его — оно появится у вас на карте с пометкой «не проверено», а отправленное в проект после проверки попадёт в общий список.",
@@ -44,7 +44,7 @@ const FT_T = {
   ky: {
     ca: "Ичинде таза аба", caSub: "Аба тазалагычы бар кафе, коворкинг жана соода борборлору — смогду күтүп турууга",
     tf: "Транспорт жана смог", tfSub: "Негизги жолдор, райондогу NO₂ жана транспорттун үлүшүн баалоо",
-    trSub: "Отургузууга талапкерлер: смог көп, жашыл аз, жанында жол жана мектеп",
+    tr: "Дарак кайда отургузуу керек", trSub: "Отургузууга талапкерлер: смог көп, жашыл аз, жанында жол жана мектеп",
     lCa: "Ичинде таза аба", lTf: "Транспорт · NO₂", lTr: "Дарак отургузуу", lTt: "🚦 Тыгын (TomTom)",
     verified: "текшерилген", unverified: "текшерилген эмес", caEmptyH: "Азырынча текшерилген жер жок",
     caEmpty: "Биз жерлерди ойлоп чыгарбайбыз. Аба тазалагычы (жакшысы HEPA H13/H14) иштеген кафе, коворкинг же соода борборун билесизби? Сунуштаңыз — ал картаңызда «текшерилген эмес» белгиси менен чыгат, ал эми долбоорго жөнөтүлгөнү текшерүүдөн кийин жалпы тизмеге кошулат.",
@@ -81,7 +81,7 @@ const FT_T = {
   en: {
     ca: "Clean air indoors", caSub: "Cafés, coworkings and malls with air purifiers where you can wait out smog",
     tf: "Traffic and smog", tfSub: "Major roads, NO₂ by district and an estimate of traffic's share",
-    trSub: "Planting candidates: lots of smog, little greenery, near roads and schools",
+    tr: "Where to plant trees", trSub: "Planting candidates: lots of smog, little greenery, near roads and schools",
     lCa: "Clean air indoors", lTf: "Traffic · NO₂", lTr: "Tree planting", lTt: "🚦 Traffic jams (TomTom)",
     verified: "verified", unverified: "not verified", caEmptyH: "No verified places yet",
     caEmpty: "We don't make places up. Know a café, coworking or mall with a working air purifier (ideally HEPA H13/H14)? Suggest it — it appears on your map marked “not verified”, and once sent to the project and checked it can join the shared list.",

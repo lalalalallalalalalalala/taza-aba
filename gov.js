@@ -3,7 +3,7 @@
  * всё, что показано, посчитано из ответа API; вклад отопления/транспорта — помеченная оценка (tfEstimate из features.js). */
 "use strict";
 const GV_S = {
-ru: { gridNote: "Важно: разрешение модели CAMS — около 11 км в европейской зоне и около 40 км в остальных регионах (включая Кыргызстан), поэтому соседние районы часто попадают в одну ячейку и получают одинаковые значения. Здесь модель различает {z} зон(ы) на {n} районов. Колонка «Сейчас» может учитывать ближайшие датчики. Для решений по отдельным районам нужны наземные датчики.", title: "Для мэрии и государства", sub: "Панель решений по {city}: данные модели CAMS (Open-Meteo) по каждому району — не измерения датчиков.",
+ru: { gridNote: "Важно: разрешение модели CAMS — около 11 км в европейской зоне и около 40 км в остальных регионах (включая Кыргызстан), поэтому соседние районы часто попадают в одну ячейку и получают одинаковые значения. Здесь модель различает {zw} на {n} районов. Колонка «Сейчас» может учитывать ближайшие датчики. Для решений по отдельным районам нужны наземные датчики.", title: "Для мэрии и государства", sub: "Панель решений по {city}: данные модели CAMS (Open-Meteo) по каждому району — не измерения датчиков.",
   print: "Отчёт / PDF", csv: "CSV (30 дней)", json: "JSON", polLink: "Меры с доказанной пользой →", loading: "Считаю данные по районам…", err: "Не удалось загрузить данные Open-Meteo.", retry: "Повторить",
   tmrH: "Прогноз смога на завтра ({date})", tmrWorst: "Хуже всего: {d} — до AQI {a}", tmrCity: "Среднесуточный максимум по городу: AQI {a}", tmrSrc: "Прогноз CAMS (Copernicus) через Open-Meteo. Прогноз модели может ошибаться.",
   measH: "Рекомендуемые меры для этого уровня", measNote: "Рекомендации по шкале AQI (AirNow, US EPA) и ВОЗ по информированию о рисках. Это не нормативные акты; решения принимают уполномоченные органы.", copyWarn: "📋 Скопировать текст предупреждения", warnTxt: "Предупреждение о смоге на {date} ({city}): ожидается AQI до {a} — «{lvl}». Хуже всего: {d}.",
@@ -61,7 +61,7 @@ ky: { gridNote: "Маанилүү: CAMS моделинин тактыгы евр
   p5H: "5. Ден соолукту коргоо жана алдын ала эскертүү", p5: "ДССУ (2021): PM2.5 ченемдери — суткасына 15 мкг/м³, жылына 5 мкг/м³. ДССУ (2020): катуу булганган күндөрү тобокелдик тууралуу маалымдоо жана жеке коргонуу чаралары. ЮНИСЕФ (2023): 2021-жылдын июлу – 2022-жылдын июну аралыгында Бишкекте PM2.5тен улам 112 өлүм жана 3 568 дени сак жашоо жылы (DALY) жоголгон; экономикалык зыян — 2 млрд сомго жакын (24,9 млн $).",
   pitchH: "«Таза Аба» мамлекетке кантип жардам берет", pitch: ["Маалыматтын ачыктыгы: ар бир район боюнча AQI, PM2.5 жана NO₂, ачык CSV/JSON жүктөө жана бир басуу менен басма отчёт.", "Алдын ала эскертүү: эртеңки түтүн божомолу (CAMS), даяр эскертүү тексти жана деңгээлдер боюнча чаралар; тургундарга Telegram-эскертүүлөр.", "Жарандарды тартуу: сүрөт жана геобелги менен даттануулар, дарак отургузуу, ичинде абасы таза жерлердин картасы.", "Акысыз жана серверсиз: ачык булактар, телефондо иштейт, 4 тил (кыргыз, орус, англис, түрк)."],
   back: "← Чечим панели" },
-en: { gridNote: "Important: the CAMS model resolution is about 11 km in the European domain and about 40 km elsewhere (including Kyrgyzstan), so neighbouring districts often fall into the same grid cell and get identical values. Here the model distinguishes {z} zone(s) across {n} districts. The \"Now\" column may include nearby sensors. District-level decisions need ground sensors.", title: "For city hall & government", sub: "Decision dashboard for {city}: CAMS model data (Open-Meteo) for every district — not sensor measurements.",
+en: { gridNote: "Important: the CAMS model resolution is about 11 km in the European domain and about 40 km elsewhere (including Kyrgyzstan), so neighbouring districts often fall into the same grid cell and get identical values. Here the model distinguishes {zw} across {n} districts. The \"Now\" column may include nearby sensors. District-level decisions need ground sensors.", title: "For city hall & government", sub: "Decision dashboard for {city}: CAMS model data (Open-Meteo) for every district — not sensor measurements.",
   print: "Report / PDF", csv: "CSV (30 days)", json: "JSON", polLink: "Evidence-based measures →", loading: "Crunching district data…", err: "Couldn't load Open-Meteo data.", retry: "Retry",
   tmrH: "Smog forecast for tomorrow ({date})", tmrWorst: "Worst: {d} — up to AQI {a}", tmrCity: "City average of daily maxima: AQI {a}", tmrSrc: "CAMS (Copernicus) forecast via Open-Meteo. Model forecasts can be wrong.",
   measH: "Suggested measures for this level", measNote: "Based on AQI activity guidance (AirNow, US EPA) and WHO risk-communication guidance. These are not regulations; decisions rest with the competent authorities.", copyWarn: "📋 Copy warning text", warnTxt: "Smog warning for {date} ({city}): AQI up to {a} expected — \"{lvl}\". Worst: {d}.",
@@ -175,21 +175,48 @@ function gvDistrict(d, r, W, now) {
 }
 const gvLvlIdx = a => Math.max(0, AQI_LEVELS.findIndex(l => a <= l.max) === -1 ? AQI_LEVELS.length - 1 : AQI_LEVELS.findIndex(l => a <= l.max));
 const gvDate = s => { const [y, m, d] = s.split("-"); return `${d}.${m}.${y}`; };
+/* v72: зоны модели — CAMS (~11–40 км) даёт по городу 1–3 разных значения; не ранжируем 128 одинаковых районов */
+Object.assign(GV_S.ru, { zH: "Зоны модели (худшие сверху, по 30 дням)", zNote: "Модель CAMS (ячейка ~11–40 км) делит город {city} всего на {zw} — у всех районов внутри зоны одинаковые значения за 7 и 30 дней и одинаковый прогноз. Рейтинг отдельных районов по модели был бы случайным порядком; разницу между соседними районами покажут только наземные датчики.",
+  zN: "Зона {i}", zEx: "Например: {ex}", zAll: "Показать все районы ({n})", zMore: "и ещё {n}", zWorst: "зона модели из {nd} ({ex} и др.)", zYou: "ваш район" });
+Object.assign(GV_S.ky, { zH: "Модель зоналары (начарлары жогоруда, 30 күн)", zNote: "CAMS модели (тор ~11–40 км) {city} шаарын болгону {zw} бөлөт — зонанын ичиндеги бардык райондордо 7 жана 30 күндүк маанилер жана божомол бирдей. Модель боюнча айрым райондордун рейтинги кокустук тартип болуп калмак; коңшу райондордун айырмасын жер үстүндөгү датчиктер гана көрсөтөт.",
+  zN: "{i}-зона", zEx: "Мисалы: {ex}", zAll: "Бардык райондорду көрсөтүү ({n})", zMore: "жана дагы {n}", zWorst: "{nd} турган модель зонасы ({ex} ж.б.)", zYou: "сиздин район" });
+Object.assign(GV_S.en, { zH: "Model zones (worst first, 30 days)", zNote: "The CAMS model (~11–40 km grid) splits {city} into only {zw} — every district inside a zone has the same 7- and 30-day values and the same forecast. Ranking individual districts by the model would be an arbitrary order; only ground sensors can show differences between neighbouring districts.",
+  zN: "Zone {i}", zEx: "For example: {ex}", zAll: "Show all districts ({n})", zMore: "and {n} more", zWorst: "a model zone of {nd} ({ex} etc.)", zYou: "your district" });
+const gvPl = (n, f) => { const a = n % 10, b = n % 100; return f[a === 1 && b !== 11 ? 0 : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 1 : 2]; };
+/* «N районов» в нужной форме: kind "nom" — 5 районов, "gen" — из 5 районов; zw — «2 зоны» (вин. падеж) */
+const gvNd = (n, kind) => LANG === "ky" ? (kind === "gen" ? `${n} райондон` : `${n} район`) : LANG === "en" ? `${n} district${n === 1 ? "" : "s"}`
+  : `${n} ${gvPl(n, kind === "gen" ? ["района", "районов", "районов"] : ["район", "района", "районов"])}`;
+const gvZw = z => LANG === "ky" ? `${z} зонага` : LANG === "en" ? `${z} zone${z === 1 ? "" : "s"}` : `${z} ${gvPl(z, ["зону", "зоны", "зон"])}`;
+const gvZoneKey = r => (r.a30 || 0).toFixed(2) + "|" + (r.pm30 || 0).toFixed(2);
+function gvZones(R) {
+  const m = new Map(); R.forEach(r => { const k = gvZoneKey(r); (m.get(k) || m.set(k, []).get(k)).push(r); });
+  return [...m.values()].map(rs => { rs = rs.slice().sort((a, b) => (b.now || 0) - (a.now || 0) || a.name.localeCompare(b.name)); const f = rs[0];
+    return { rows: rs, n: rs.length, a7: gvMean(rs.map(r => r.a7)), a30: f.a30, hOver: f.hOver, hN: f.hN, tmrMax: gvMax(rs.map(r => r.tmrMax)), P: Math.max(...rs.map(r => r.P || 0)), meas: f.meas, E: f.E }; })
+    .sort((a, b) => (b.a30 || 0) - (a.a30 || 0) || b.n - a.n);
+}
+const gvZoneMode = R => R.length > 3 && new Set(R.map(gvZoneKey)).size <= 3;
+const gvEx = (rs, k = 3) => rs.slice(0, k).map(r => r.name).join(", ") + (rs.length > k ? " " + GV("zMore", { n: rs.length - k }) : "");
+/* «Хуже всего завтра»: если максимум у многих районов одной ячейки — честно называем зону, а не первый попавшийся район */
+function gvWorst(R) {
+  const Rt = R.filter(r => r.tmrMax != null); if (!Rt.length) return null;
+  const a = Math.round(Math.max(...Rt.map(r => r.tmrMax))), ties = Rt.filter(r => Math.round(r.tmrMax) === a).sort((x, y) => (y.now || 0) - (x.now || 0));
+  return { a, label: ties.length > 1 ? GV("zWorst", { nd: gvNd(ties.length, "gen"), ex: ties.slice(0, 3).map(r => r.name).join(", ") }) : ties[0].name };
+}
 function gvBanner(G) {
   const R = G.rows.filter(r => r.tmrMax != null); if (!R.length) return "";
-  const w = R.reduce((b, r) => r.tmrMax > b.tmrMax ? r : b), cityA = Math.round(gvMean(R.map(r => r.tmrMax)));
-  const a = Math.round(w.tmrMax), L = level(a), li = gvLvlIdx(a), ms = GV("meas")[Math.min(li, 5)];
+  const W = gvWorst(R), cityA = Math.round(gvMean(R.map(r => r.tmrMax)));
+  const a = W.a, L = level(a), li = gvLvlIdx(a), ms = GV("meas")[Math.min(li, 5)];
   return `<div class="card gv-banner" style="border-left:6px solid ${L.color}">
     <div class="gv-bh"><span class="aqi-pin gv-pin" style="background:${L.color}">${a}</span><div><h3>⚠️ ${GV("tmrH", { date: gvDate(G.tmrDate) })}</h3>
-    <b>${esc(tr(L.name))}</b> · ${esc(GV("tmrWorst", { d: w.name, a }))}<br><span class="small">${esc(GV("tmrCity", { a: cityA }))}</span></div></div>
+    <b>${esc(tr(L.name))}</b> · ${esc(GV("tmrWorst", { d: W.label, a }))}<br><span class="small">${esc(GV("tmrCity", { a: cityA }))}</span></div></div>
     <h4>${GV("measH")}</h4><ul class="gv-meas">${ms.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
     <p class="small muted">${GV("measNote")} ${gvA("airnow")} · ${gvA("flag")} · ${gvA("who20")}</p><p class="small muted">${GV("tmrSrc")}</p>
     <button class="btn ghost gv-noprint" id="gvCopy" type="button">${GV("copyWarn")}</button></div>`;
 }
 function gvWarnText(G) {
   const R = G.rows.filter(r => r.tmrMax != null); if (!R.length) return "";
-  const w = R.reduce((b, r) => r.tmrMax > b.tmrMax ? r : b), a = Math.round(w.tmrMax), li = gvLvlIdx(a);
-  return GV("warnTxt", { date: gvDate(G.tmrDate), city: tr(cityObj().name), a, lvl: tr(level(a).name), d: w.name }) + "\n" + GV("meas")[Math.min(li, 5)].map(x => "• " + x).join("\n") + "\n" + SITE_URL;
+  const W = gvWorst(R), a = W.a, li = gvLvlIdx(a);
+  return GV("warnTxt", { date: gvDate(G.tmrDate), city: tr(cityObj().name), a, lvl: tr(level(a).name), d: W.label }) + "\n" + GV("meas")[Math.min(li, 5)].map(x => "• " + x).join("\n") + "\n" + SITE_URL;
 }
 function gvCmpHTML() {
   const C = (state.complaints || []).filter(inCity);
@@ -265,6 +292,9 @@ function gvRender(el, G) {
   const pin = a => a == null ? "—" : `<span class="gv-chip" style="background:${level(a).color}">${Math.round(a)}</span>`;
   const hS = gvMean(R.map(r => r.hOver)), hN = gvMean(R.map(r => r.hN)), dO = gvMean(R.map(r => r.dOver)), dN = gvMean(R.map(r => r.dN));
   const Es = R.map(r => r.E).filter(Boolean), tp = Es.length ? Math.round(gvMean(Es.map(e => e.tp))) : null;
+  const zm = gvZoneMode(R), Z = zm ? gvZones(R) : [], myD = R.find(r => r.id === state.district) || null, myZ = myD ? Z.find(z => z.rows.includes(myD)) : null;
+  const TBL = `<div class="gv-tw"><table class="gv-t"><thead><tr><th>#</th><th>${GV("cD")}</th><th>${GV("cNow")}</th><th>${GV("c7")}</th><th>${GV("c30")}</th><th>${GV("cH")}</th><th>${GV("cT")}</th></tr></thead>
+      <tbody>${by30.map((r, i) => `<tr><td>${i + 1}</td><td>${esc(r.name)}</td><td>${pin(r.now)}</td><td>${pin(r.a7)}</td><td>${pin(r.a30)}</td><td>${r.hOver}<span class="muted">/${r.hN}</span></td><td>${pin(r.tmrMax)}</td></tr>`).join("")}</tbody></table></div>`;
   el.innerHTML = `<div class="gv-print-h"><div><b>Таза Аба · ${esc(GV("repH"))} · ${esc(tr(cityObj().name))}</b><br><span class="small">${esc(GV("repGen", { t: new Date(G.at).toLocaleString(numLocale()) }))} · ${esc(SITE_URL)}</span></div><figure class="gv-qr"><img src="icons/qr-site.svg" alt="QR: https://taza-aba.surge.sh/" width="76" height="76"><figcaption>${GV("qrCap")}<br>taza-aba.surge.sh</figcaption></figure></div>
     <h1>${GV("title")}</h1><p class="sub">${esc(GV("sub", { city: tr(cityObj().name) }))}</p>
     <div class="gv-acts gv-noprint"><button class="btn" id="gvPrint" type="button">🖨️ ${GV("print")}</button><button class="btn ghost" id="gvCsv" type="button">⬇️ ${GV("csv")}</button><button class="btn ghost" id="gvJson" type="button">⬇️ ${GV("json")}</button><a class="btn ghost" href="#govbrief">${GV("bLink")}</a><a class="btn ghost" href="#govpolicy">${GV("polLink")}</a></div>
@@ -276,16 +306,19 @@ function gvRender(el, G) {
       <div class="card gv-k"><small>${GV("kH")}</small><b>${gvF(hS)}</b><span class="small muted"> / ${gvF(hN)}</span></div>
       <div class="card gv-k"><small>${GV("kD")}</small><b>${gvF(dO)}</b><span class="small muted"> / ${gvF(dN)}</span></div></div>
     ${gvTrendHTML(G)}
-    <div class="card"><h3>📊 ${GV("rankH")}</h3><div class="gv-tw"><table class="gv-t"><thead><tr><th>#</th><th>${GV("cD")}</th><th>${GV("cNow")}</th><th>${GV("c7")}</th><th>${GV("c30")}</th><th>${GV("cH")}</th><th>${GV("cT")}</th></tr></thead>
-      <tbody>${by30.map((r, i) => `<tr><td>${i + 1}</td><td>${esc(r.name)}</td><td>${pin(r.now)}</td><td>${pin(r.a7)}</td><td>${pin(r.a30)}</td><td>${r.hOver}<span class="muted">/${r.hN}</span></td><td>${pin(r.tmrMax)}</td></tr>`).join("")}</tbody></table></div>
-      <p class="small muted">${GV("whoNote")} ${gvA("who21")}</p><p class="small gv-grid">${esc(GV("gridNote", { z: new Set(R.map(r => (r.a30 || 0).toFixed(2) + "|" + (r.pm30 || 0).toFixed(2))).size, n: R.length }))}</p></div>
+    <div class="card"><h3>📊 ${GV(zm ? "zH" : "rankH")}</h3>${zm ? `<p class="small gv-grid">${esc(GV("zNote", { city: tr(cityObj().name), zw: gvZw(Z.length) }))}</p>
+      <div class="gv-zones">${Z.map((z, i) => `<div class="gv-zone" style="border-left-color:${level(z.a30).color}"><div class="gv-zh"><b>${esc(GV("zN", { i: i + 1 }))}</b><span class="muted">${esc(gvNd(z.n, "nom"))}</span></div>
+        <div class="gv-zs"><span><small>${GV("c30")}</small>${pin(z.a30)}</span><span><small>${GV("c7")}</small>${pin(z.a7)}</span><span><small>${GV("cH")}</small><span><b>${z.hOver}</b><span class="muted small">/${z.hN}</span></span></span><span><small>${GV("cT")}</small>${pin(z.tmrMax)}</span></div>
+        <p class="small">${esc(GV("zEx", { ex: gvEx(z.rows, 4) }))}${myZ === z ? ` · <b>${esc(GV("zYou"))}: ${esc(myD.name)}</b>` : ""}</p></div>`).join("")}</div>
+      <details class="gv-zall"><summary>${esc(GV("zAll", { n: R.length }))}</summary>${TBL}</details>` : TBL}
+      <p class="small muted">${GV("whoNote")} ${gvA("who21")}</p><p class="small gv-grid">${esc(GV("gridNote", { z: new Set(R.map(gvZoneKey)).size, zw: gvZw(new Set(R.map(gvZoneKey)).size), n: R.length }))}</p></div>
     <div class="card gv-win"><h3>❄️ ${GV("winH")}</h3><p class="small">${GV("winSub")}</p><div id="gvWin"><p class="small muted">${GV("winLoad")}</p></div></div>
     <div class="card"><h3>🔥🚗 ${GV("contH")}</h3>${tp == null ? `<p class="small muted">${GV("mNone")}</p>` : `<div class="tf-bar" role="img" aria-label="${GV("trans")} ${tp}% / ${GV("heat")} ${100 - tp}%"><span class="tf-t" style="width:${tp}%">${tp}%</span><span class="tf-h" style="width:${100 - tp}%">${100 - tp}%</span></div>
       <div class="row between small" style="margin-top:4px"><span>${GV("trans")}</span><span>${GV("heat")}</span></div>`}
       <p class="small muted"><b>${GV("contNote")}</b> <a href="#traffic" class="gv-noprint">${GV("how")}</a></p><p class="small muted">${gvA("air24")} · ${gvA("wb24")} · ${gvA("undp")}</p></div>
     <div class="card"><h3>🎯 ${GV("priH")}</h3><p class="small">${GV("priSub")}</p>
-      <ol class="gv-pri">${byP.map(r => `<li><div class="gv-pr"><b>${esc(r.name)}</b><span class="gv-pp">${r.P} ${GV("pts")}</span></div><div class="gv-bar"><i style="width:${Math.max(2, Math.min(100, r.P))}%"></i></div>
-        <div class="gv-ms">${r.meas.map(m => `<span class="gv-m gv-${m}">${esc(GV(m))}</span>`).join("")}${r.E ? `<span class="small muted">${GV("heat")} ${r.E.hp}% · ${GV("trans")} ${r.E.tp}%</span>` : ""}</div></li>`).join("")}</ol>
+      <ol class="gv-pri">${(zm ? Z.slice().sort((a, b) => b.P - a.P).map(z => ({ name: GV("zN", { i: Z.indexOf(z) + 1 }) + " · " + gvNd(z.n, "nom"), ex: gvEx(z.rows, 4), P: z.P, meas: z.meas, E: z.E })) : byP).map(r => `<li><div class="gv-pr"><b>${esc(r.name)}</b><span class="gv-pp">${r.P} ${GV("pts")}</span></div><div class="gv-bar"><i style="width:${Math.max(2, Math.min(100, r.P))}%"></i></div>
+        <div class="gv-ms">${r.meas.map(m => `<span class="gv-m gv-${m}">${esc(GV(m))}</span>`).join("")}${r.E ? `<span class="small muted">${GV("heat")} ${r.E.hp}% · ${GV("trans")} ${r.E.tp}%</span>` : ""}</div>${r.ex ? `<p class="small muted gv-zex">${esc(GV("zEx", { ex: r.ex }))}</p>` : ""}</li>`).join("")}</ol>
       <details class="gv-f" open><summary>${GV("fH")}</summary><p class="small">${GV("fTxt")}</p></details></div>
     <div class="card"><h3>📸 ${GV("cmpH")}</h3><p class="small muted">${GV("cmpNote")}</p>${gvCmpHTML()}</div>
     <div class="card"><h3>🗂️ ${GV("expH")}</h3><p class="small">${GV("expTxt")}</p><p class="small">${gvA("om")}</p></div>
@@ -320,7 +353,7 @@ window.viewGovPolicy = function (el) {
 };
 /* v29: «Памятка на 1 страницу» (#govbrief) — короткий лист для акимата / мэрии: ситуация, мера на завтра, где в первую очередь, меры на сезон.
  * Только данные, уже посчитанные в панели (gvLoad / gvWinLoad), и источники со страницы «Меры с доказанной пользой». */
-Object.assign(GV_S.ru, { bPri: "приоритет {p}/100", bZones: "Модель CAMS различает здесь {z} зон(ы) на {n} районов: районы одной зоны получают одинаковые значения. Приоритет — по формуле из полной панели.", bLink: "📄 Памятка на 1 страницу", bTitle: "Памятка по смогу для акимата / мэрии", bSub: "{city} · {date}. Коротко: ситуация, что сделать завтра, где в первую очередь и меры на сезон. Помещается на один лист A4.",
+Object.assign(GV_S.ru, { bPri: "приоритет {p}/100", bZones: "Модель CAMS различает здесь {zw} на {n} районов: районы одной зоны получают одинаковые значения. Приоритет — по формуле из полной панели.", bLink: "📄 Памятка на 1 страницу", bTitle: "Памятка по смогу для акимата / мэрии", bSub: "{city} · {date}. Коротко: ситуация, что сделать завтра, где в первую очередь и меры на сезон. Помещается на один лист A4.",
   bPrint: "🖨️ Печать / PDF", bCopy: "📋 Скопировать текст", bS1: "1. Ситуация сейчас", bNow: "AQI сейчас", b30: "Средний AQI за 30 дней", bDw: "Дней выше нормы ВОЗ за 30 дней", bTmr: "Прогноз на завтра (макс.)",
   bWin: "Прошлая зима ({w}, модель CAMS, центр города): средний PM2.5 {pm} мкг/м³, суток выше нормы ВОЗ — {dw} из {n}{ch}.", bWinCh: "; к зиме до этого {c}", bWinNone: "Архив зим сейчас недоступен — см. полную панель позже.",
   bS2: "2. Завтра: AQI до {a} — «{lvl}»", bS3: "3. Где в первую очередь", bOne: "Модель CAMS (~40 км) не различает районы города {city} — данные одинаковы для всех районов, поэтому меры здесь — для всего города. Для адресных мер нужны наземные датчики.",
@@ -342,7 +375,7 @@ Object.assign(GV_S.ky, { bPri: "артыкчылык {p}/100", bZones: "CAMS м�
     ["Маалымат: аба тууралуу маалыматты чогултуу жана талдоо, текшерүүлөр, ведомстволордун координациясы.", ["wbp"]]],
   bSrcNote: "Чаралардын булактары Бишкек жана Кыргызстан боюнча; чакан шаарлар үчүн бул ченем эмес, багыт.", bTr: "Чаралардын булактары Бишкек жана Кыргызстан боюнча.",
   bData: "Маалымат: Open-Meteo аркылуу CAMS (Copernicus) модели, CC BY 4.0 — моделдик маанилер, датчиктердин өлчөөлөрү эмес. Жылытуу менен транспорттун үлүшү — баалоо. Толугу: «Мэрия жана мамлекет үчүн» бөлүмү.", bFull: "← Толук панель", bCopied: "Эскертменин тексти көчүрүлдү" });
-Object.assign(GV_S.en, { bPri: "priority {p}/100", bZones: "Here the CAMS model distinguishes {z} zone(s) across {n} districts: districts in the same zone get identical values. Priority uses the formula from the full dashboard.", bLink: "📄 One-page brief", bTitle: "Smog brief for the akimat / city hall", bSub: "{city} · {date}. In short: the situation, what to do tomorrow, where to act first and measures for the season. Fits on one A4 page.",
+Object.assign(GV_S.en, { bPri: "priority {p}/100", bZones: "Here the CAMS model distinguishes {zw} across {n} districts: districts in the same zone get identical values. Priority uses the formula from the full dashboard.", bLink: "📄 One-page brief", bTitle: "Smog brief for the akimat / city hall", bSub: "{city} · {date}. In short: the situation, what to do tomorrow, where to act first and measures for the season. Fits on one A4 page.",
   bPrint: "🖨️ Print / PDF", bCopy: "📋 Copy text", bS1: "1. Situation now", bNow: "AQI now", b30: "30-day average AQI", bDw: "Days above WHO guideline (30 d)", bTmr: "Tomorrow's forecast (max)",
   bWin: "Last winter ({w}, CAMS model, city centre): mean PM2.5 {pm} µg/m³, days above the WHO guideline — {dw} of {n}{ch}.", bWinCh: "; vs the winter before {c}", bWinNone: "The winter archive is unavailable right now — check the full dashboard later.",
   bS2: "2. Tomorrow: AQI up to {a} — \"{lvl}\"", bS3: "3. Where to act first", bOne: "The CAMS model (~40 km) does not distinguish districts of {city} — values are the same for all districts, so the measures here apply citywide. Targeted measures need ground sensors.",
@@ -360,7 +393,8 @@ function gvBriefData(G) {
   const Rt = R.filter(r => r.tmrMax != null), w = Rt.length ? Rt.reduce((b, r) => r.tmrMax > b.tmrMax ? r : b) : null;
   const top = R.slice().sort((a, b) => b.P - a.P || (b.now || 0) - (a.now || 0)).slice(0, 3);
   return { now: gvMean(R.map(r => r.now)), a30: gvMean(R.map(r => r.a30)), dO: gvMean(R.map(r => r.dOver)), dN: gvMean(R.map(r => r.dN)),
-    tmr: w ? Math.round(w.tmrMax) : null, worst: w, zones, top: zones > 1 && R.length > 1 ? top : [] };
+    tmr: w ? Math.round(w.tmrMax) : null, worst: w, zones,
+    top: zones > 1 && R.length > 1 ? (gvZoneMode(R) ? gvZones(R).map((z, i) => ({ name: GV("zN", { i: i + 1 }) + " — " + gvNd(z.n, "nom") + " (" + gvEx(z.rows, 3) + ")", P: z.P, meas: z.meas })).sort((a, b) => b.P - a.P) : top) : [] };
 }
 function gvBriefWin(W) {
   const ws = (W && W.winters || []).filter(x => !x.part); if (!ws.length) return null;
@@ -392,7 +426,7 @@ function gvBriefRender(el, G) {
     ${L ? `<section class="card gb-s" style="border-left:6px solid ${L.color}"><h3>${esc(GV("bS2", { a: B.tmr, lvl: tr(L.name) }))}</h3><ul class="gv-meas">${GV("meas")[Math.min(li, 5)].map(x => `<li>${esc(x)}</li>`).join("")}</ul>
       <p class="small muted">${GV("tmrSrc")} ${gvAs("airnow")} · ${gvAs("who20")}</p></section>` : ""}
     <section class="card gb-s"><h3>${GV("bS3")}</h3>${B.top.length ? `<ol class="gb-top">${B.top.map(r => `<li><b>${esc(r.name)}</b> <span class="small muted">(${esc(GV("bPri", { p: r.P }))})</span> — ${r.meas.map(m => `<span class="gv-m gv-${m}">${esc(GV(m))}</span>`).join(" ")}</li>`).join("")}</ol>
-      <p class="small muted">${esc(GV("bZones", { z: B.zones, n: G.rows.length }))}</p>` : `<p class="small gv-grid">${esc(GV("bOne", { city: c }))}</p>`}</section>
+      <p class="small muted">${esc(GV("bZones", { z: B.zones, zw: gvZw(B.zones), n: G.rows.length }))}</p>` : `<p class="small gv-grid">${esc(GV("bOne", { city: c }))}</p>`}</section>
     <section class="card gb-s"><h3>${GV("bS4")}</h3><ol class="gb-m">${GV("bM").map(m => `<li>${esc(m[0])} <span class="small muted">${m[1].map(gvAs).join(", ")}</span></li>`).join("")}</ol>
       <p class="small muted">${GV("bSrcNote")}</p></section>
     <p class="small muted gb-data">${GV("bData")} ${gvAs("om")}</p></div>`;
