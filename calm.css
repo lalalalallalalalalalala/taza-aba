@@ -90,6 +90,9 @@ html body .hr-dock{background:var(--c-surface)!important;border:1px solid var(--
 html body .hr-di{background:transparent!important;background-image:none!important;color:var(--c-muted)!important}
 html body .hr-di:hover,html body .hr-di:focus-visible{background:var(--c-accent-soft)!important;color:var(--c-accent-ink)!important;transform:none!important}
 .hr-st{display:none!important}
+/* v71: подсказки-вопросы ИИ были белыми на белом в светлой теме */
+html body .hr-chip{background:var(--c-surface-2)!important;border:1px solid var(--c-line)!important;color:var(--c-text)!important;font-weight:500!important}
+html body .hr-chip:hover,html body .hr-chip:focus-visible{background:var(--c-accent-soft)!important;color:var(--c-accent-ink, var(--c-text))!important}
 
 /* 8. quick actions / tiles / icon wells: one tint */
 html body .quick a b,html body :is(.more-tile,.card) > :first-child:is(.ic,.ico,.mt-ic,.fm-ic){background:var(--c-surface-2)!important;color:var(--c-accent)!important}

@@ -178,3 +178,9 @@ html body .rule-note{background:var(--c-surface-2)!important;border:1px solid va
 html body .v-complaints span.on{background:var(--c-accent-soft)!important;color:var(--c-accent-ink)!important;border-color:transparent!important}
 html body :is(.btn,a.btn,label.btn):not([hidden]):not([style*="display:none"]):not([style*="display: none"]){display:inline-flex!important}
 html body .btn[style*="padding"]{padding-top:0!important;padding-bottom:0!important}
+
+/* v71: «Послезавтра» и подписи быстрых действий переносятся только по слогу (мягкий перенос), а не посреди буквы */
+html body .fday .d{overflow-wrap:normal!important;word-break:normal!important;hyphens:manual!important}
+@media (max-width:420px){html body .fday{padding-left:8px!important;padding-right:8px!important}}
+/* v71: советы дня читались плохо в тёмной теме (тёмно-зелёный текст на тёмном) */
+html[data-theme="dark"] body .advice ul{color:var(--c-text)!important;opacity:.86}

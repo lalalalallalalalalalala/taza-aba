@@ -57,7 +57,7 @@ html[data-accent="blue"][data-theme="dark"] .topbar.more-open .hdr-right{backgro
 html[data-accent="blue"] .gs-list li.on,html[data-accent="blue"] .gs-list li:hover{background:rgba(29,79,122,.1)}
 html[data-accent="blue"] .city-pin .cp-n{background:#1d4f7a}
 /* quick.css */
-html[data-accent="blue"][data-theme="dark"] .ev-v{color:#6cb6ea}
+html[data-accent="blue"][data-theme="dark"] .ev-0 .ev-v{color:#6cb6ea}
 html[data-accent="blue"] .ob-langs button.on{background:var(--felt-red,#1e6aa0)}
 html[data-accent="blue"][data-theme="dark"] .ob-sheet{background:#121f2c}
 html[data-accent="blue"][data-theme="dark"] .send-row .sh-a{background:#162433}

@@ -458,7 +458,6 @@ function viewHome(el) {
   const d = byId(state.district);
   const a = air.byDistrict[d.id];
   const Lv = level(a.aqi);
-  const pin = Math.min(a.aqi || 0, 300) / 300 * 100;
   const days = dailyForecast(a);
   const today = days[0]?.date;
   const next = days.slice(1, 4);
@@ -468,9 +467,14 @@ function viewHome(el) {
   const maxBar = Math.max(60, ...todayIdx.map(([, i]) => HA[i] || 0));
   // v52: высота столбика — концентрация PM2.5 (мкг/м³, линейно), цвет — уровень AQI этого часа
   const pmBar = Array.isArray(a.pmH) && todayIdx.some(([, i]) => a.pmH[i] != null), pmMaxBar = pmBar ? Math.max(15, ...todayIdx.map(([, i]) => a.pmH[i] || 0)) : 1;
-  const worst = todayIdx.reduce((m, [tm, i]) => (HA[i] > (m.v ?? -1) ? { tm, v: HA[i] } : m), {});
-  const best = todayIdx.filter(([tm]) => +tm.slice(11, 13) >= 7 && +tm.slice(11, 13) <= 21)
-    .reduce((m, [tm, i]) => (HA[i] != null && HA[i] < (m.v ?? 1e9) ? { tm, v: HA[i] } : m), {});
+  // v71: «лучшее время» и «пик» — только из оставшихся часов (не советуем уже прошедшее утро); после 21:00 — завтра 07–21
+  const nowH = nowHour ? nowHour + ":00" : "";
+  const dayH = ([tm]) => +tm.slice(11, 13) >= 7 && +tm.slice(11, 13) <= 21;
+  const minBy = arr => arr.reduce((m, [tm, i]) => (HA[i] != null && HA[i] < (m.v ?? 1e9) ? { tm, v: HA[i] } : m), {});
+  let best = minBy(todayIdx.filter(x => dayH(x) && (!nowH || x[0] >= nowH))), bestTmr = false;
+  if (!best.tm && nowH) { const tmrD = a.time.find(tm => tm.slice(0, 10) > today); if (tmrD) { best = minBy(a.time.map((tm, i) => [tm, i]).filter(x => x[0].startsWith(tmrD.slice(0, 10)) && dayH(x))); bestTmr = !!best.tm; } }
+  const restIdx = todayIdx.filter(([tm]) => !nowH || tm >= nowH);
+  const worst = (restIdx.length ? restIdx : todayIdx).reduce((m, [tm, i]) => (HA[i] > (m.v ?? -1) ? { tm, v: HA[i] } : m), {});
   const w = air.weather;
   const days7 = t("days");
 
@@ -499,13 +503,6 @@ function viewHome(el) {
       ${DISTRICTS.length > 15 && typeof KP === "function" ? `<div class="d-search"><input id="dSearch" type="search" list="dList" autocomplete="off" placeholder="🔎 ${KP("dSearch", { n: DISTRICTS.length })}" aria-label="${KP("dSearch", { n: DISTRICTS.length })}"><datalist id="dList">${DISTRICTS.map(x => `<option value="${esc(dName(x))}">`).join("")}</datalist></div>` : ""}
     </div>
 
-    <div class="card">
-      <div class="scale-wrap">
-        <div class="scale">${AQI_LEVELS.slice(0, 5).map(l => `<div style="background:${l.color}"></div>`).join("")}</div>
-        <div class="scale-pin" style="left:${pin}%;border-color:${Lv.color}"></div>
-      </div>
-      <div class="scale-labels"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span><span>300+</span></div>
-    </div>
 
     ${pollutantsHTML(a)}
     <div class="card advice-card">
@@ -550,7 +547,7 @@ function viewHome(el) {
       }).join("")}</div>
       <div class="bars-x"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div>
       <div class="stat-grid" style="margin-top:12px">
-        <div class="stat"><div class="k">${t("bestTime")}</div><div class="v">${(best.tm || "").slice(11, 16) || "—"}</div><div class="small muted">AQI ${best.v ?? "—"}${a.pmH && best.tm && a.pmH[a.time.indexOf(best.tm)] != null ? " · PM2.5 " + fmt(a.pmH[a.time.indexOf(best.tm)], 1) : ""}</div></div>
+        <div class="stat"><div class="k">${t("bestTime")}${bestTmr ? " · " + t("tomorrow").toLowerCase() : ""}</div><div class="v">${(best.tm || "").slice(11, 16) || "—"}</div><div class="small muted">AQI ${best.v ?? "—"}${a.pmH && best.tm && a.pmH[a.time.indexOf(best.tm)] != null ? " · PM2.5 " + fmt(a.pmH[a.time.indexOf(best.tm)], 1) : ""}</div></div>
         <div class="stat"><div class="k">${t("peakSmog")}</div><div class="v">${(worst.tm || "").slice(11, 16) || "—"}</div><div class="small muted">AQI ${worst.v ?? "—"}${a.pmH && worst.tm && a.pmH[a.time.indexOf(worst.tm)] != null ? " · PM2.5 " + fmt(a.pmH[a.time.indexOf(worst.tm)], 1) : ""}</div></div>
       </div>
       ${a.pmH ? `<p class="small muted hour-note">ℹ️ ${t("hourNote")}</p>` : ""}
@@ -678,7 +675,7 @@ function distListHTML(arr) {
     const Lv = level(a);
     return `<div class="item"><div class="badge" style="background:${Lv.color}">${aqiTxt(a)}</div>
       <div style="flex:1"><div class="name">${esc(dName(d))}</div><div class="small muted" style="font-weight:700">${tr(Lv.name)} · ${tr(DTYPE[d.type])}</div></div>
-      <div class="small muted" style="font-weight:800">🔥 ${d.coalShare == null ? "—" : Math.round(d.coalShare * 100) + "%"}</div></div>`;
+      ${d.coalShare == null ? "" : `<div class="small muted" style="font-weight:800">🔥 ${Math.round(d.coalShare * 100)}%</div>`}</div>`;
   });
   return arr ? r : r.join("");
 }
@@ -699,7 +696,7 @@ function viewMap(el) {
     <h2>${t("districtsList")}</h2>
     <div class="card dlist">
       <div class="dl-items"></div>
-      <div class="small muted" style="font-weight:700;margin-top:6px">${t("coalShareNote")}</div>
+      ${DISTRICTS.some(d => d.coalShare != null) ? `<div class="small muted" style="font-weight:700;margin-top:6px">${t("coalShareNote")}</div>` : ""}
     </div></div></div>
     ${footer()}
   `;
@@ -713,7 +710,7 @@ function viewMap(el) {
   const R0 = cityObj().radius || 900, M = map;
   const nn = d => { let m = 1e9; for (const x of DISTRICTS) if (x !== d) m = Math.min(m, kmDist(d, x) * 1000); return m; };
   const pinIcon = (txt, c, sz, cl) => L.divIcon({ className: "", html: `<div class="aqi-pin${cl ? " aqi-cl" : ""}" style="width:${sz}px;height:${sz}px;background:${c}">${txt}</div>`, iconSize: [sz, sz], iconAnchor: [sz / 2, sz / 2] });
-  const popD = d => { const a = air.byDistrict[d.id], Lv = level(a.aqi); return `<b>${esc(dName(d))}</b>${d.grp && typeof GRP_NAME !== "undefined" ? `<br><small>${esc(tr(GRP_NAME[d.grp]))}</small>` : ""}<br>US AQI: <b style="color:${Lv.color}">${aqiTxt(a.aqi)}</b> — ${tr(Lv.name)}<br>PM2.5: ${fmt(a.pm25, 1)}<br>${t("popupCoal")}: ${d.coalShare == null ? "—" : Math.round(d.coalShare * 100) + "%"}${a.sDrop ? `<br><small style="color:#9a6b12">⚠️ ${({ ru: "датчик рядом исключён как сбойный", ky: "жакынкы датчик бузук катары эсепке алынган жок", en: "a nearby sensor was excluded as faulty" })[LANG] || "датчик рядом исключён как сбойный"}</small>` : ""}`; };
+  const popD = d => { const a = air.byDistrict[d.id], Lv = level(a.aqi); return `<b>${esc(dName(d))}</b>${d.grp && typeof GRP_NAME !== "undefined" ? `<br><small>${esc(tr(GRP_NAME[d.grp]))}</small>` : ""}<br>US AQI: <b style="color:${Lv.color}">${aqiTxt(a.aqi)}</b> — ${tr(Lv.name)}<br>PM2.5: ${fmt(a.pm25, 1)}${d.coalShare == null ? "" : `<br>${t("popupCoal")}: ${Math.round(d.coalShare * 100)}%`}${a.sDrop ? `<br><small style="color:#9a6b12">⚠️ ${({ ru: "датчик рядом исключён как сбойный", ky: "жакынкы датчик бузук катары эсепке алынган жок", en: "a nearby sensor was excluded as faulty" })[LANG] || "датчик рядом исключён как сбойный"}</small>` : ""}`; };
   const MSu = window.MS_STYLE && typeof msSmog === "function" ? msSmog(M, layers.smog, popD) : null, smogT = MSu ? L.layerGroup() : layers.smog;   /* прототипы стилей ?mapstyle= */
   const circ = new Map(), pins = new Map(), pinG = L.layerGroup().addTo(smogT);
   let sat = baseMode() !== "osm";

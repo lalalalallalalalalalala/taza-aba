@@ -250,10 +250,8 @@ function eveningRisk(a) {
   return { risk, aqMax, pmMax, wind, inv, invD, blh, adv, tomorrow };
 }
 /* inline SVG вместо эмодзи (🌫️ на iOS рисуется серым размытым квадратом) */
-const EV_ICO = [
-  `<svg viewBox="0 0 36 36"><path d="M24.5 25.5A11 11 0 0 1 14 7.6a11 11 0 1 0 14.4 14.6 11 11 0 0 1-3.9 3.3z" fill="#38BDF8"/><circle cx="27" cy="9" r="1.4" fill="#38BDF8"/><circle cx="31" cy="15" r="1" fill="#38BDF8"/></svg>`,
-  `<svg viewBox="0 0 36 36" fill="none" stroke-linecap="round"><path d="M9 17a6 6 0 0 1 11.3-2.8A4.6 4.6 0 1 1 25.5 21H10.5A4 4 0 0 1 9 17z" fill="#9AA7A0" stroke="#6E7C75" stroke-width="1.5"/><path d="M5 25h20M10 29h21" stroke="#0EA5E9" stroke-width="2.6"/></svg>`,
-  `<svg viewBox="0 0 36 36"><path d="M4 31V17l7 4v-4l7 4v-4l7 4V7h5v24z" fill="#8A5A44"/><rect x="8" y="24" width="3" height="3" fill="#FFD27A"/><rect x="15" y="24" width="3" height="3" fill="#FFD27A"/><rect x="22" y="24" width="3" height="3" fill="#FFD27A"/><path d="M27 6c0-2 2-3 4-3M30 5c1-1 3-1 4 0" stroke="#7d7d7d" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`];
+/* v71: линейные иконки Lucide через polish.js (луна · туман · завод) вместо цветных картинок */
+const EV_ICO = ["🌙", "🌫️", "🏭"];
 function evFactors(r) {
   const f = [r.pmMax != null ? Q("evFp", { a: r.aqMax, p: fmt(r.pmMax, 0) }) : Q("evF", { a: r.aqMax })]; if (r.wind != null) f.push(Q("evWind", { w: fmt(r.wind, 1) }));
   if (r.inv != null) f.push(r.inv && r.invD ? Q("evInvD", { d: fmt(r.invD.dT, 1), m: typeof mRound === "function" ? mRound(r.invD.z) : Math.round(r.invD.z * 1000) }) : r.inv ? Q("evInv") : Q("evNoInv"));

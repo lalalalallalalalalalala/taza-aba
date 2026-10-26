@@ -5,7 +5,7 @@
  * factor — поправочный коэффициент к модельному значению Open-Meteo (сетка CAMS ~0.1°, ≈10 км,
  *   поэтому внутри города модель почти не различает районы). Это наша ОЦЕНКА локального вклада:
  *   частный сектор с угольным отоплением ×1.3–1.5, предгорный продуваемый юг ×0.8–0.85.
- * coalShare — DEMO: доля домов, всё ещё отапливаемых углём.
+ * coalShare — v71: не показывается (была выдуманная демо-доля домов на угле; официальных данных по районам нет) → null.
  * loc — форма «в районе» для фраз (в Ак-Орго / Ак-Оргодо / in Ak-Orgo).
  */
 const DTYPE = {
@@ -176,12 +176,6 @@ const SIDE = {
   east: { name: { ru: "Восточная часть", ky: "Чыгыш бөлүгү", en: "East side" }, loc: { ru: "в восточной части", ky: "чыгыш бөлүгүндө", en: "on the east side" }, type: "micro", dlat: 0.002, dlon: 0.02 },
   west: { name: { ru: "Западная часть", ky: "Батыш бөлүгү", en: "West side" }, loc: { ru: "в западной части", ky: "батыш бөлүгүндө", en: "on the west side" }, type: "private", dlat: -0.002, dlon: -0.02 },
 };
-const SURNAMES = [
-  { ru: "Семья Абдраимовых", ky: "Абдраимовдордун үй-бүлөсү", en: "The Abdraimov family" },
-  { ru: "Семья Сыдыковых", ky: "Сыдыковдордун үй-бүлөсү", en: "The Sydykov family" },
-  { ru: "Семья Турдубаевых", ky: "Турдубаевдердин үй-бүлөсү", en: "The Turdubaev family" },
-  { ru: "Школа №1 (демо)", ky: "№1 мектеп (демо)", en: "School No. 1 (demo)" },
-];
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 function makeCity(c) {
   const sides = ["center", ...c.sides];
@@ -242,6 +236,8 @@ const EXTRA_CITIES = [
     house: { area: 100, coal: 5, price: 7000 }, k: {} },
 ];
 EXTRA_CITIES.forEach(c => { CITIES[c.id] = makeCity(c); });
+/* v71: без выдуманной доли угля — официальной статистики по районам нет (правило «никаких демо-данных») */
+Object.values(CITIES).forEach(c => (c.districts || []).forEach(d => { d.coalShare = null; }));
 Object.assign(CITIES.bishkek, { emoji: "🏙️", zoom: 12, radius: 1300 });
 Object.assign(CITIES.naryn, { emoji: "🏔️", zoom: 13, radius: 800 });
 /* Порядок в переключателе. */
