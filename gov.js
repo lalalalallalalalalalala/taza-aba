@@ -290,6 +290,58 @@ function gvTrendHTML(G) {
     <text x="4" y="${Hd - 3}" class="gv-svt">${gvDate(ds[0].k).slice(0, 5)}</text><text x="${Wd - 4}" y="${Hd - 3}" text-anchor="end" class="gv-svt">${gvDate(ds[ds.length - 1].k).slice(0, 5)}</text></svg>
     <p class="small muted">${GV("trendNote")} ${esc(GV("trendMax", { a: Math.round(worst.a), d: gvDate(worst.k) }))}</p></div>`;
 }
+/* v74: «Модель и датчики сейчас» — честная сверка CAMS с датчиками Sensor.Community (только реальные замеры ≤ 60 мин) */
+GV_SRC.sc = ["https://sensor.community/", "Sensor.Community"];
+Object.assign(GV_S.ru, { sH: "Модель и датчики сейчас", sSub: "Модель CAMS рядом с открытыми датчиками жителей Sensor.Community (до 25 км от центра, последний замер не старше 60 минут): {n}.",
+  sMed: "Медиана по датчикам — {s} мкг/м³ PM2.5, модель в тех же местах — {m} мкг/м³.", sHi: "Сейчас датчики показывают в {k} раза больше модели.", sLo: "Сейчас датчики показывают в {k} раза меньше модели.", sEq: "Сейчас модель и датчики близки (разница меньше 20 %).",
+  sSpread: "Разброс между датчиками — от {a} до {b} мкг/м³, а модель делит город всего на {zw}.", cS: "Район рядом", cSv: "Датчик", cMv: "Модель", cDf: "Разница",
+  sAcc: "Прогноз на сутки с поправкой по датчикам за последние {d} дн.: средняя ошибка ±{e} мкг/м³ вместо ±{r} мкг/м³ у модели без поправки (пересчёт {t}).",
+  sNote: "Sensor.Community — недорогие датчики жителей без официальной поверки; в туман и при высокой влажности они могут завышать PM2.5. Это не официальные измерения, но они видят то, чего не видит модель с ячейкой ~40 км: разницу между районами и вечерний дым печей.", sQC: "Исключены как сбой (во много раз выше соседей): {x}.",
+  sNone: "Рядом с городом сейчас нет открытых датчиков, поэтому все цифры этой панели — модель CAMS. Даже несколько датчиков (например, на школах или поликлиниках) позволят сверять модель с реальным воздухом.", sWait: "Датчики ещё не ответили — сверка появится после обновления данных." });
+Object.assign(GV_S.ky, { sH: "Модель жана датчиктер азыр", sSub: "Sensor.Community тургундарынын ачык датчиктеринин жанындагы CAMS модели (борбордон 25 км чейин, акыркы өлчөө 60 мүнөттөн эски эмес): {n}.",
+  sMed: "Датчиктердин медианасы — {s} мкг/м³ PM2.5, ошол эле жерлерде модель — {m} мкг/м³.", sHi: "Азыр датчиктер моделден {k} эсе көп көрсөтүүдө.", sLo: "Азыр датчиктер моделден {k} эсе аз көрсөтүүдө.", sEq: "Азыр модель менен датчиктер жакын (айырма 20 %дан аз).",
+  sSpread: "Датчиктердин көрсөткүчтөрү — {a}–{b} мкг/м³, ал эми модель шаарды болгону {zw} бөлөт.", cS: "Жакынкы район", cSv: "Датчик", cMv: "Модель", cDf: "Айырма",
+  sAcc: "Датчиктер боюнча оңдолгон бир суткалык божомол, акыркы {d} күн: орточо ката ±{e} мкг/м³, оңдоосуз модельде ±{r} мкг/м³ (кайра эсептелди {t}).",
+  sNote: "Sensor.Community — тургундардын расмий текшерүүсүз арзан датчиктери; туманда жана нымдуулук жогору болгондо PM2.5ти ашыра көрсөтүшү мүмкүн. Бул расмий өлчөө эмес, бирок алар ~40 км торчолуу модель көрбөгөндү көрөт: райондордун айырмасын жана кечки меш түтүнүн.", sQC: "Бузулган катары чыгарылды (кошуналарынан бир нече эсе жогору): {x}.",
+  sNone: "Азыр шаардын жанында ачык датчиктер жок, ошондуктан бул панелдеги бардык сандар — CAMS модели. Бир нече датчик (мисалы, мектептерде же ооруканаларда) моделди чыныгы аба менен салыштырууга мүмкүндүк берет.", sWait: "Датчиктер азырынча жооп бере элек — салыштыруу маалымат жаңыргандан кийин чыгат." });
+Object.assign(GV_S.en, { sH: "Model and sensors now", sSub: "The CAMS model next to open citizen sensors from Sensor.Community (within 25 km of the centre, last reading no older than 60 minutes): {n}.",
+  sMed: "Sensor median is {s} µg/m³ PM2.5; the model at the same places gives {m} µg/m³.", sHi: "Right now sensors read {k} times higher than the model.", sLo: "Right now sensors read {k} times lower than the model.", sEq: "Right now the model and sensors are close (less than 20% apart).",
+  sSpread: "Sensors range from {a} to {b} µg/m³, while the model splits the city into only {zw}.", cS: "Nearest district", cSv: "Sensor", cMv: "Model", cDf: "Difference",
+  sAcc: "24-hour forecast corrected by sensors over the last {d} days: mean error ±{e} µg/m³ instead of ±{r} µg/m³ for the uncorrected model (recalculated {t}).",
+  sNote: "Sensor.Community devices are low-cost citizen sensors without official calibration; in fog and high humidity they can overstate PM2.5. They are not official measurements, but they see what a ~40 km model grid cannot: differences between districts and evening stove smoke.", sQC: "Excluded as faulty (many times above neighbours): {x}.",
+  sNone: "There are no open sensors near this city right now, so every figure on this dashboard is the CAMS model. Even a few sensors (for example at schools or clinics) would let the city check the model against real air.", sWait: "Sensors have not responded yet; the comparison will appear after the next data update." });
+const gvSensN = n => LANG === "ky" ? `${n} датчик` : LANG === "en" ? `${n} sensor${n === 1 ? "" : "s"}` : `${n} ${gvPl(n, ["датчик", "датчика", "датчиков"])}`;
+function gvSensData() {
+  const S = (air && air.sensors) || [], byD = (air && air.byDistrict) || {};
+  const rows = S.map(s => { const d = nearestDistrict(s.lat, s.lon), r = d && byD[d.id], m = r && r.model ? r.model.pm25 : null;
+    return d && m != null && s.p2 != null ? { d, s: s.p2, m, age: s.age } : null; }).filter(Boolean).sort((a, b) => b.s - a.s);
+  if (!rows.length) return { rows, bad: ((air && air.sensorsBad) || []).length };
+  const ms = median(rows.map(r => r.s)), mm = median(rows.map(r => r.m));
+  return { rows, ms, mm, k: mm > 0 ? ms / mm : null, lo: rows[rows.length - 1].s, hi: rows[0].s, bad: ((air && air.sensorsBad) || []).length };
+}
+let gvCoefP = null;
+const gvCoef = () => gvCoefP || (gvCoefP = fetch(/github\.io$/.test(location.hostname) ? "forecast/coeffs.json" : "https://zusenbaev7-cmd.github.io/taza-aba/forecast/coeffs.json", { cache: "no-cache", signal: AbortSignal.timeout(12000) })
+  .then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status))).catch(e => { gvCoefP = null; throw e; }));
+function gvSensHTML(nZ) {
+  const D = gvSensData(), f1 = v => gvF(v, 1);
+  if (!D.rows.length) return `<div class="card gv-sens"><h3>📡 ${GV("sH")}</h3><p class="small">${esc(GV(air && air.live && air.status === "ok" ? "sNone" : "sWait"))}</p></div>`;
+  const k = D.k, ratio = k == null ? "" : k >= 1.2 ? GV("sHi", { k: fmt(k, 1) }) : k <= 1 / 1.2 ? GV("sLo", { k: fmt(1 / k, 1) }) : GV("sEq");
+  const pin = v => `<span class="gv-chip" style="background:${level(pm25ToAqi(v)).color}">${f1(v)}</span>`;
+  const sg = v => (v > 0 ? "+" : v < 0 ? "−" : "") + f1(Math.abs(v));
+  return `<div class="card gv-sens"><h3>📡 ${GV("sH")}</h3><p class="small">${esc(GV("sSub", { n: gvSensN(D.rows.length) }))}</p>
+    <p><b>${esc(GV("sMed", { s: f1(D.ms), m: f1(D.mm) }))}</b> ${esc(ratio)}</p>
+    ${D.rows.length > 1 && nZ ? `<p class="small">${esc(GV("sSpread", { a: f1(D.lo), b: f1(D.hi), zw: gvZw(nZ) }))}</p>` : ""}
+    <div class="gv-tw"><table class="gv-t"><thead><tr><th>${GV("cS")}</th><th>${GV("cSv")}</th><th>${GV("cMv")}</th><th>${GV("cDf")}</th></tr></thead>
+      <tbody>${D.rows.map(r => `<tr><td>${esc(dName(r.d))}</td><td>${pin(r.s)}</td><td>${pin(r.m)}</td><td>${sg(r.s - r.m)}</td></tr>`).join("")}</tbody></table></div>
+    <p class="small muted">PM2.5, ${LANG === "en" ? "µg/m³" : "мкг/м³"} · ${gvA("sc")} · ${gvA("om")}</p>
+    <p class="small" id="gvSensAcc"></p>
+    <p class="small muted">${esc(GV("sNote"))}${D.bad ? " " + esc(GV("sQC", { x: D.bad })) : ""}</p></div>`;
+}
+function gvSensAccMount() {
+  const c = CITY; gvCoef().then(j => { const e = $("#gvSensAcc"), x = j && j.cities && j.cities[c], ck = x && x.check; if (!e || CITY !== c || !ck || ck.maeNew == null) return;
+    const t = j.updated ? new Date(j.updated).toLocaleString(numLocale(), { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
+    e.textContent = GV("sAcc", { d: ck.days, e: gvF(ck.maeNew, 1), r: gvF(ck.maeRaw, 1), t }); }).catch(e => console.warn("gov coeffs:", e.message));
+}
 function gvRender(el, G) {
   const R = G.rows, by30 = R.slice().sort((a, b) => (b.a30 || 0) - (a.a30 || 0) || (b.now || 0) - (a.now || 0)), byP = R.slice().sort((a, b) => b.P - a.P || (b.now || 0) - (a.now || 0)).slice(0, 10);
   const pin = a => a == null ? "—" : `<span class="gv-chip" style="background:${level(a).color}">${Math.round(a)}</span>`;
@@ -315,6 +367,7 @@ function gvRender(el, G) {
         <p class="small">${esc(GV("zEx", { ex: gvEx(z.rows, 4) }))}${myZ === z ? ` · <b>${esc(GV("zYou"))}: ${esc(myD.name)}</b>` : ""}</p></div>`).join("")}</div>
       <details class="gv-zall"><summary>${esc(GV("zAll", { n: R.length }))}</summary>${TBL}</details>` : TBL}
       <p class="small muted">${GV("whoNote")} ${gvA("who21")}</p><p class="small gv-grid">${esc(GV("gridNote", { z: new Set(R.map(gvZoneKey)).size, zw: gvZw(new Set(R.map(gvZoneKey)).size), n: R.length }))}</p></div>
+    ${gvSensHTML(new Set(R.map(gvZoneKey)).size)}
     <div class="card gv-win"><h3>❄️ ${GV("winH")}</h3><p class="small">${GV("winSub")}</p><div id="gvWin"><p class="small muted">${GV("winLoad")}</p></div></div>
     <div class="card"><h3>🔥🚗 ${GV("contH")}</h3>${tp == null ? `<p class="small muted">${GV("mNone")}</p>` : `<div class="tf-bar" role="img" aria-label="${GV("trans")} ${tp}% / ${GV("heat")} ${100 - tp}%"><span class="tf-t" style="width:${tp}%">${tp}%</span><span class="tf-h" style="width:${100 - tp}%">${100 - tp}%</span></div>
       <div class="row between small" style="margin-top:4px"><span>${GV("trans")}</span><span>${GV("heat")}</span></div>`}
@@ -329,6 +382,7 @@ function gvRender(el, G) {
   $("#gvPrint").onclick = () => window.print();
   $("#gvCsv").onclick = () => gvExport(G, "csv"); $("#gvJson").onclick = () => gvExport(G, "json");
   const cb = $("#gvCopy"); if (cb) cb.onclick = () => copyText(gvWarnText(G));
+  gvSensAccMount();
   const wc = CITY; gvWinLoad().then(R => { const w = $("#gvWin"); if (w && CITY === wc) w.innerHTML = gvWinHTML(R); })
     .catch(e => { console.warn("gov winters:", e.message); const w = $("#gvWin"); if (w) w.innerHTML = `<p class="small muted">${GV("winErr")}</p>`; });
   const me = $("#gvCmpMap");
@@ -404,10 +458,15 @@ function gvBriefWin(W) {
   const l = ws[ws.length - 1], p = ws[ws.length - 2], ch = p ? Math.round((l.pm / p.pm - 1) * 100) : null;
   return GV("bWin", { w: `${l.y}/${String(l.y + 1).slice(2)}`, pm: fmt(l.pm, 1), dw: l.dw, n: l.n, ch: ch == null ? "" : GV("bWinCh", { c: (ch > 0 ? "+" : ch < 0 ? "−" : "") + Math.abs(ch) + "%" }) });
 }
+Object.assign(GV_S.ru, { bSens: "Датчики Sensor.Community сейчас ({n}): медиана PM2.5 {s} мкг/м³, модель CAMS в тех же местах {m} мкг/м³ (недорогие датчики жителей, не официальные измерения)." });
+Object.assign(GV_S.ky, { bSens: "Sensor.Community датчиктери азыр ({n}): PM2.5 медианасы {s} мкг/м³, ошол эле жерлерде CAMS модели {m} мкг/м³ (тургундардын арзан датчиктери, расмий өлчөө эмес)." });
+Object.assign(GV_S.en, { bSens: "Sensor.Community sensors now ({n}): median PM2.5 {s} µg/m³, CAMS model at the same places {m} µg/m³ (low-cost citizen sensors, not official measurements)." });
+function gvSensLine() { const D = gvSensData(); return D.rows.length ? GV("bSens", { n: gvSensN(D.rows.length), s: gvF(D.ms, 1), m: gvF(D.mm, 1) }) : null; }
 function gvBriefText(G, B, winLine) {
   const c = tr(cityObj().name), L = [GV("bTitle") + " — " + c + ", " + new Date(G.at).toLocaleDateString(numLocale()), "",
     GV("bS1") + ": " + GV("bNow") + " " + gvF(B.now) + "; " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + "."];
   if (winLine) L.push(winLine);
+  { const sl = gvSensLine(); if (sl) L.push(sl); }
   if (B.tmr != null) { const li = gvLvlIdx(B.tmr); L.push("", GV("bS2", { a: B.tmr, lvl: tr(level(B.tmr).name) }), ...GV("meas")[Math.min(li, 5)].map(x => "• " + x)); }
   L.push("", GV("bS3") + ":"); if (B.top.length) B.top.forEach((r, i) => L.push(`${i + 1}) ${r.name} (${GV("bPri", { p: r.P })}) — ${r.meas.map(m => GV(m)).join("; ")}`)); else L.push(GV("bOne", { city: c }));
   L.push("", GV("bS4") + ":", ...GV("bM").map(m => "• " + m[0] + " (" + m[1].map(k => GV_SHORT[k]).join(", ") + ")"), "", GV("bData"), SITE_URL);
@@ -425,7 +484,7 @@ function gvBriefRender(el, G) {
     <section class="card gb-s"><h3>${GV("bS1")}</h3><div class="gb-k">
       <div><small>${GV("bNow")}</small>${pin(B.now)}</div><div><small>${GV("b30")}</small>${pin(B.a30)}</div>
       <div><small>${GV("bDw")}</small><span><b>${gvF(B.dO)}</b><span class="small muted"> / ${gvF(B.dN)}</span></span></div><div><small>${GV("bTmr")}</small>${pin(B.tmr)}</div></div>
-      <p class="small" id="gbWin">❄️ ${esc(winLine || GV("winLoad"))}</p></section>
+      <p class="small" id="gbWin">❄️ ${esc(winLine || GV("winLoad"))}</p>${(() => { const sl = gvSensLine(); return sl ? `<p class="small gb-sens">📡 ${esc(sl)}</p>` : ""; })()}</section>
     ${L ? `<section class="card gb-s" style="border-left:6px solid ${L.color}"><h3>${esc(GV("bS2", { a: B.tmr, lvl: tr(L.name) }))}</h3><ul class="gv-meas">${GV("meas")[Math.min(li, 5)].map(x => `<li>${esc(x)}</li>`).join("")}</ul>
       <p class="small muted">${GV("tmrSrc")} ${gvAs("airnow")} · ${gvAs("who20")}</p></section>` : ""}
     <section class="card gb-s"><h3>${GV("bS3")}</h3>${B.top.length ? `<ol class="gb-top">${B.top.map(r => `<li><b>${esc(r.name)}</b> <span class="small muted">(${esc(GV("bPri", { p: r.P }))})</span> — ${r.meas.map(m => `<span class="gv-m gv-${m}">${esc(GV(m))}</span>`).join(" ")}</li>`).join("")}</ol>

@@ -159,3 +159,10 @@ html[data-theme="dark"] .gz-t td{border-color:rgba(255,255,255,.1)}
 .gv-zex{margin:2px 0 0;overflow-wrap:anywhere}
 html[data-theme="dark"] .gv-zone{border-color:rgba(255,255,255,.12)}
 @media print{.gv-zall:not([open]){display:none}}
+/* v74: «Модель и датчики сейчас» — таблица помещается в 390 px */
+.gv-sens .gv-t td:nth-child(2){min-width:0}
+.gv-sens .gv-t td:first-child{white-space:normal}
+.gv-sens .gv-t th{white-space:normal;vertical-align:bottom}
+.gv-sens .gv-t td:not(:first-child),.gv-sens .gv-t th:not(:first-child){text-align:right;padding-left:4px;padding-right:4px}
+.gv-sens .gv-tw{max-width:640px}
+.gb-sens{margin-top:4px}
