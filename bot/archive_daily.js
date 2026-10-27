@@ -34,7 +34,7 @@ function days(r) {
   const idxPath = path.join(DIR, "index.json");
   const idx = fs.existsSync(idxPath) ? JSON.parse(fs.readFileSync(idxPath, "utf8")) : {};
   const out = { title: "Taza Aba — open daily air-quality archive (city centres)", source: "Open-Meteo Air Quality API — CAMS model (Copernicus Atmosphere Monitoring Service)",
-    license: "CC BY 4.0 (Open-Meteo); contains modified Copernicus Atmosphere Monitoring Service information", note: "Modelled values at the city centre point, not ground sensor measurements. Rows already written are never changed. Grid ~11 km (Europe/Türkiye), ~40 km (Kyrgyzstan).",
+    license: "CC BY 4.0 (Open-Meteo); contains modified Copernicus Atmosphere Monitoring Service information", note: "Modelled values at the city centre point, not ground sensor measurements. Rows already written are never changed. Grid ~40 km (Kyrgyzstan).",
     units: { aqi: "US AQI (Open-Meteo)", pm2_5: "µg/m³", pm10: "µg/m³", no2: "µg/m³" }, whoGuidelinePm25_24h: 15, columns: COLS, started: idx.started || new Date().toISOString().slice(0, 10), updated: null, cities: {} };
   let added = 0, fail = 0;
   const merge = (c, r) => { const file = path.join(DIR, c.id + ".csv"); if (!r || !r.hourly) { fail++; return; }

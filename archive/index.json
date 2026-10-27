@@ -2,7 +2,7 @@
  "title": "Taza Aba — open daily air-quality archive (city centres)",
  "source": "Open-Meteo Air Quality API — CAMS model (Copernicus Atmosphere Monitoring Service)",
  "license": "CC BY 4.0 (Open-Meteo); contains modified Copernicus Atmosphere Monitoring Service information",
- "note": "Modelled values at the city centre point, not ground sensor measurements. Rows already written are never changed. Grid ~11 km (Europe/Türkiye), ~40 km (Kyrgyzstan).",
+ "note": "Modelled values at the city centre point, not ground sensor measurements. Rows already written are never changed. Grid ~40 km (Kyrgyzstan).",
  "units": {
   "aqi": "US AQI (Open-Meteo)",
   "pm2_5": "µg/m³",
