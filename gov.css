@@ -165,7 +165,8 @@ html[data-theme="dark"] .gv-zone{border-color:rgba(255,255,255,.12)}
 .gv-sens .gv-t th{white-space:normal;vertical-align:bottom}
 .gv-sens .gv-t td:not(:first-child),.gv-sens .gv-t th:not(:first-child){text-align:right;padding-left:4px;padding-right:4px}
 .gv-sens .gv-tw{max-width:640px}
-.gb-sens{margin-top:4px}
+.gb-sens,.gb-div{margin-top:4px}
+.gb-div[hidden]{display:none}
 
 /* v75: датчики/модель по часам суток */
 .gv-dv{margin-top:12px;padding-top:10px;border-top:1px solid rgba(127,127,127,.18)}

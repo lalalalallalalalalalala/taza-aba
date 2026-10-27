@@ -354,7 +354,7 @@ function viewRoutes2(el) {
     <h1>🌳 ${t("rTitle")}</h1>
     <p class="sub">${t("rSub")}</p>
     ${!all.length ? `<div class="card soon">🛤️ ${R("soon")}</div>` : ""}
-    <div class="adv-modes">${types.map(ty => `<button class="${rtFilter === ty ? "on" : ""}" aria-pressed="${rtFilter === ty}" data-rt="${ty}">${ty === "all" ? "✨ " + R("all") : RT_ICON[ty] + " " + RT(ty)} <small>${ty === "all" ? all.length : all.filter(x => x.type === ty).length}</small></button>`).join("")}</div>
+    <div class="adv-modes">${types.map(ty => `<button class="${rtFilter === ty ? "on" : ""}" aria-pressed="${rtFilter === ty}" data-rt="${ty}">${ty === "all" ? R("all") : RT_ICON[ty] + " " + RT(ty)} <small>${ty === "all" ? all.length : all.filter(x => x.type === ty).length}</small></button>`).join("")}</div>
     <div class="seg rsort"><button data-sort="clean" class="${rtSort === "clean" ? "on" : ""}" aria-pressed="${rtSort === "clean"}">🌿 ${R("sClean")}</button><button data-sort="short" class="${rtSort === "short" ? "on" : ""}" aria-pressed="${rtSort === "short"}">📏 ${R("sShort")}</button></div>
     <div class="map-grid r-grid"><div class="map-col"><div id="rMap" class="mini-map" style="height:300px"></div></div>
     <div class="list-col">
@@ -514,7 +514,7 @@ function newsHTML() {
   const mine = items.filter(x => !air.includes(x) && rx.test(x.title + " " + x.text)), rest = items.filter(x => !mine.includes(x) && !air.includes(x));
   const dt = x => { const d = new Date(newsTs(x)); return !newsTs(x) ? "" : d.toLocaleString(numLocale(), { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }); };
   const li = x => `<${x.link ? "a" : "div"} class="card news-item"${x.link ? ` href="${esc(x.link)}" target="_blank" rel="noopener noreferrer"` : ""}><b>${NEWS_AIR_RX.test(x.title) ? "💨 " : ""}${esc(x.title)}</b><div class="small muted"><span class="nsrc">${esc(x.src)}</span> · ${esc(dt(x))}</div></${x.link ? "a" : "div"}>`;
-  const chips = `<div class="adv-modes nchips">${["all", ...S.sources].map(s => `<button class="${newsSrcFilter === s ? "on" : ""}" aria-pressed="${newsSrcFilter === s}" data-nsrc="${esc(s)}">${s === "all" ? "✨ " + R("all") : esc(s)}</button>`).join("")}</div>`;
+  const chips = `<div class="adv-modes nchips">${["all", ...S.sources].map(s => `<button class="${newsSrcFilter === s ? "on" : ""}" aria-pressed="${newsSrcFilter === s}" data-nsrc="${esc(s)}">${s === "all" ? R("all") : esc(s)}</button>`).join("")}</div>`;
   return `${chips}
     <p class="small muted">🕒 ${N("updN", { t: new Date(S.updated || S.at).toLocaleString(numLocale(), { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) })} · ${N("srcN", { n: S.sources.length })}</p>
     ${S.updated && Date.now() - S.updated > 6 * 3600e3 ? `<p class="small muted">⚠️ ${N("newsStale")}</p>` : ""}

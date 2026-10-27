@@ -504,12 +504,31 @@ function gvBriefWin(W) {
 Object.assign(GV_S.ru, { bSens: "Датчики Sensor.Community сейчас ({n}): медиана PM2.5 {s} мкг/м³, модель CAMS в тех же местах {m} мкг/м³ (недорогие датчики жителей, не официальные измерения)." });
 Object.assign(GV_S.ky, { bSens: "Sensor.Community датчиктери азыр ({n}): PM2.5 медианасы {s} мкг/м³, ошол эле жерлерде CAMS модели {m} мкг/м³ (тургундардын арзан датчиктери, расмий өлчөө эмес)." });
 Object.assign(GV_S.en, { bSens: "Sensor.Community sensors now ({n}): median PM2.5 {s} µg/m³, CAMS model at the same places {m} µg/m³ (low-cost citizen sensors, not official measurements)." });
+/* v76: строка в памятке A4 — как модель расходится с датчиками вечером (18–23 ч) за 7 дней (forecast/coeffs.json → div, GitHub Actions) */
+Object.assign(GV_S.ru, { bDivHi: "Вечером (18–23 ч) за последние {d} дн. модель CAMS занижает в {k} раза: датчики в среднем {s}, модель {m} мкг/м³ ({a}–{b}).",
+  bDivLo: "Вечером (18–23 ч) за последние {d} дн. модель CAMS завышает в {k} раза: датчики в среднем {s}, модель {m} мкг/м³ ({a}–{b}).",
+  bDivEq: "Вечером (18–23 ч) за последние {d} дн. модель CAMS и датчики близки: датчики в среднем {s}, модель {m} мкг/м³ ({a}–{b})." });
+Object.assign(GV_S.ky, { bDivHi: "Кечинде (18–23) акыркы {d} күндө CAMS модели {k} эсе төмөндөтөт: датчиктер орточо {s}, модель {m} мкг/м³ ({a}–{b}).",
+  bDivLo: "Кечинде (18–23) акыркы {d} күндө CAMS модели {k} эсе жогорулатат: датчиктер орточо {s}, модель {m} мкг/м³ ({a}–{b}).",
+  bDivEq: "Кечинде (18–23) акыркы {d} күндө CAMS модели менен датчиктер жакын: датчиктер орточо {s}, модель {m} мкг/м³ ({a}–{b})." });
+Object.assign(GV_S.en, { bDivHi: "In the evening (18–23 h) over the last {d} days the CAMS model underestimates {k}-fold: sensors average {s}, model {m} µg/m³ ({a}–{b}).",
+  bDivLo: "In the evening (18–23 h) over the last {d} days the CAMS model overestimates {k}-fold: sensors average {s}, model {m} µg/m³ ({a}–{b}).",
+  bDivEq: "In the evening (18–23 h) over the last {d} days the CAMS model and sensors are close: sensors average {s}, model {m} µg/m³ ({a}–{b})." });
+function gvDivLine(dv) {
+  const ev = (dv && dv.h || []).map((x, i) => ({ i, n: x[0], s: x[1], m: x[2] })).filter(x => x.i >= 18 && x.n >= 3 && x.s != null && x.m != null);
+  if (ev.length < 4) return null;
+  const s = gvMean(ev.map(x => x.s)), m = gvMean(ev.map(x => x.m)); if (!(m > 0) || !(s > 0)) return null;
+  const k = s / m, ld = z => z ? new Date(new Date(z).getTime() + 6 * 36e5).toISOString().slice(0, 10).split("-").reverse().slice(0, 2).join(".") : "—";
+  const o = { d: dv.days || 7, s: gvF(s, 1), m: gvF(m, 1), a: ld(dv.from), b: ld(dv.to) };
+  return k >= 1.2 ? GV("bDivHi", { ...o, k: fmt(k, 1) }) : k <= 1 / 1.2 ? GV("bDivLo", { ...o, k: fmt(1 / k, 1) }) : GV("bDivEq", o);
+}
 function gvSensLine() { const D = gvSensData(); return D.rows.length ? GV("bSens", { n: gvSensN(D.rows.length), s: gvF(D.ms, 1), m: gvF(D.mm, 1) }) : null; }
-function gvBriefText(G, B, winLine) {
+function gvBriefText(G, B, winLine, divLine) {
   const c = tr(cityObj().name), L = [GV("bTitle") + " — " + c + ", " + new Date(G.at).toLocaleDateString(numLocale()), "",
     GV("bS1") + ": " + GV("bNow") + " " + gvF(B.now) + "; " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + "."];
   if (winLine) L.push(winLine);
   { const sl = gvSensLine(); if (sl) L.push(sl); }
+  if (divLine) L.push(divLine);
   if (B.tmr != null) { const li = gvLvlIdx(B.tmr); L.push("", GV("bS2", { a: B.tmr, lvl: tr(level(B.tmr).name) }), ...GV("meas")[Math.min(li, 5)].map(x => "• " + x)); }
   L.push("", GV("bS3") + ":"); if (B.top.length) B.top.forEach((r, i) => L.push(`${i + 1}) ${r.name} (${GV("bPri", { p: r.P })}) — ${r.meas.map(m => GV(m)).join("; ")}`)); else L.push(GV("bOne", { city: c }));
   L.push("", GV("bS4") + ":", ...GV("bM").map(m => "• " + m[0] + " (" + m[1].map(k => GV_SHORT[k]).join(", ") + ")"), "", GV("bData"), SITE_URL);
@@ -527,7 +546,7 @@ function gvBriefRender(el, G) {
     <section class="card gb-s"><h3>${GV("bS1")}</h3><div class="gb-k">
       <div><small>${GV("bNow")}</small>${pin(B.now)}</div><div><small>${GV("b30")}</small>${pin(B.a30)}</div>
       <div><small>${GV("bDw")}</small><span><b>${gvF(B.dO)}</b><span class="small muted"> / ${gvF(B.dN)}</span></span></div><div><small>${GV("bTmr")}</small>${pin(B.tmr)}</div></div>
-      <p class="small" id="gbWin">❄️ ${esc(winLine || GV("winLoad"))}</p>${(() => { const sl = gvSensLine(); return sl ? `<p class="small gb-sens">📡 ${esc(sl)}</p>` : ""; })()}</section>
+      <p class="small" id="gbWin">❄️ ${esc(winLine || GV("winLoad"))}</p>${(() => { const sl = gvSensLine(); return sl ? `<p class="small gb-sens">📡 ${esc(sl)}</p>` : ""; })()}<p class="small gb-div" id="gbDiv" hidden></p></section>
     ${L ? `<section class="card gb-s" style="border-left:6px solid ${L.color}"><h3>${esc(GV("bS2", { a: B.tmr, lvl: tr(L.name) }))}</h3><ul class="gv-meas">${GV("meas")[Math.min(li, 5)].map(x => `<li>${esc(x)}</li>`).join("")}</ul>
       <p class="small muted">${GV("tmrSrc")} ${gvAs("airnow")} · ${gvAs("who20")}</p></section>` : ""}
     <section class="card gb-s"><h3>${GV("bS3")}</h3>${B.top.length ? `<ol class="gb-top">${B.top.map(r => `<li><b>${esc(r.name)}</b> <span class="small muted">(${esc(GV("bPri", { p: r.P }))})</span> — ${r.meas.map(m => `<span class="gv-m gv-${m}">${esc(GV(m))}</span>`).join(" ")}</li>`).join("")}</ol>
@@ -536,7 +555,10 @@ function gvBriefRender(el, G) {
       <p class="small muted">${GV("bSrcNote")}</p></section>
     <p class="small muted gb-data">${GV("bData")} ${gvAs("om")}</p></div>`;
   $("#gbPrint").onclick = () => window.print();
-  $("#gbCopy").onclick = () => copyText(gvBriefText(G, B, winLine));
+  let divLine = null;
+  $("#gbCopy").onclick = () => copyText(gvBriefText(G, B, winLine, divLine));
+  { const dc = CITY; gvCoef().then(j => { const x = j && j.cities && j.cities[dc], p = $("#gbDiv"); if (!p || CITY !== dc || !x || !x.div) return;
+    divLine = gvDivLine(x.div); if (divLine) { p.textContent = "🌙 " + divLine; p.hidden = false; } }).catch(e => console.warn("brief div:", e.message)); }
   if (!winLine) { const wc = CITY; gvWinLoad().then(W => { winLine = gvBriefWin(W); const p = $("#gbWin"); if (p && CITY === wc) p.textContent = "❄️ " + (winLine || GV("bWinNone")); }).catch(e => { console.warn("brief winters:", e.message); const p = $("#gbWin"); if (p) p.textContent = "❄️ " + GV("bWinNone"); }); }
 }
 window.viewGovBrief = function (el) {
@@ -709,7 +731,7 @@ function gvMyLine(A) {
 const gvMyLn = {};   // CITY|lang → строка (для текста «Скопировать»)
 (function () { const _r = gvBriefRender, _bt = gvBriefText, _gt = gvGzText;
   const ins = (s, line, after) => { if (!line) return s; const L = s.split("\n"), i = after ? L.indexOf(after) : -1; L.splice(i >= 0 ? i + 1 : 3, 0, line); return L.join("\n"); };
-  gvBriefText = function (G, B, winLine) { return ins(_bt(G, B, winLine), gvMyLn[CITY + "|" + LANG], winLine); };
+  gvBriefText = function (G, B, winLine, divLine) { return ins(_bt(G, B, winLine, divLine), gvMyLn[CITY + "|" + LANG], winLine); };
   gvGzText = function (P) { return gvWithLang("ky", () => ins(_gt(P), gvMyLn[CITY + "|ky"], P.winLine)); };   // и подписи «30 күн» всегда на кыргызском (раньше — на языке интерфейса)
   gvBriefRender = function (el, G) { _r(el, G);
     const gz = el.classList.contains("v-gazeta"), anchor = el.querySelector(gz ? "#gzWin" : "#gbWin"); if (!anchor) return;
