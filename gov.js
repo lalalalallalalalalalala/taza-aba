@@ -15,7 +15,7 @@ ru: { gridNote: "Важно: разрешение модели CAMS — окол
   fH: "Формула", fTxt: "Приоритет P = 100 × (0,5·a + 0,3·b + 0,2·c), где a — средний PM2.5 района за 30 дней, делённый на максимум по городу; b — доля часов с PM2.5 > 15 мкг/м³ за 30 дней; c — прогнозный максимум AQI на завтра, делённый на максимум по городу. Мера: «замена угля», если оценка вклада отопления ≥ 70 %; «автобусы / транспорт», если вклад транспорта ≥ 25 %; «деревья и пылеподавление», если PM2.5/PM10 < 0,55 (много крупной пыли).",
   mHeat: "Замена угля: тепловые насосы, газ, утепление", mBus: "Автобусы и чистый транспорт", mTree: "Деревья и пылеподавление", mNone: "Нет данных для оценки источника", pts: "балл",
   cmpH: "Жалобы жителей по районам", cmpNote: "Честно: у приложения нет сервера, поэтому здесь только жалобы, отправленные с этого устройства (примерные жалобы-образцы не учитываются). Для городской картины нужен общий приёмник жалоб.", cmpNone: "На этом устройстве пока нет жалоб по этому городу.", cmpAll: "Всего",
-  expH: "Открытые данные", expTxt: "CSV/JSON: по каждому району и дню за 30 дней — средний и максимальный AQI, средний PM2.5, часы с PM2.5 > 15 мкг/м³ и зона модели (районы в одной ячейке модели получают одинаковые значения). Данные: Open-Meteo (CC BY 4.0), модель CAMS (Copernicus).",
+  expH: "Открытые данные", expTxt: "CSV/JSON: по каждому району и дню за 30 дней — средний и максимальный AQI, средний PM2.5, часы с PM2.5 > 15 мкг/м³ и зона модели (районы в одной ячейке модели получают одинаковые значения); в строке последнего дня — текущая медиана датчиков жителей Sensor.Community и их число (недорогие датчики без поверки). Данные: Open-Meteo (CC BY 4.0), модель CAMS (Copernicus).",
   repH: "Отчёт по качеству воздуха", repGen: "Сформировано {t} · Таза Аба", srcH: "Источники",
   meas: [["Ограничений не требуется.", "Хорошее время для занятий на улице."],
     ["Предупредить особо чувствительных людей (астма, болезни сердца).", "Ограничений для школ не требуется."],
@@ -44,7 +44,7 @@ ky: { gridNote: "Маанилүү: CAMS моделинин тактыгы евр
   fH: "Формула", fTxt: "Артыкчылык P = 100 × (0,5·a + 0,3·b + 0,2·c), мында a — райондун 30 күндүк орточо PM2.5, шаардагы максимумга бөлүнгөн; b — 30 күндө PM2.5 > 15 мкг/м³ болгон сааттардын үлүшү; c — эртеңки AQI божомолунун максимуму, шаардагы максимумга бөлүнгөн. Чара: жылытуунун баалоо үлүшү ≥ 70 % болсо — «көмүрдү алмаштыруу»; транспорттуку ≥ 25 % болсо — «автобустар / транспорт»; PM2.5/PM10 < 0,55 болсо (ири чаң көп) — «дарактар жана чаңды басуу».",
   mHeat: "Көмүрдү алмаштыруу: жылуулук насостору, газ, жылуулоо", mBus: "Автобустар жана таза транспорт", mTree: "Дарактар жана чаңды басуу", mNone: "Булакты баалоо үчүн маалымат жок", pts: "упай",
   cmpH: "Тургундардын даттануулары райондор боюнча", cmpNote: "Чынын айтканда: тиркеменин сервери жок, ошондуктан бул жерде ушул түзмөктөн жөнөтүлгөн даттануулар гана (үлгү даттануулар эсептелбейт). Шаардык сүрөт үчүн жалпы кабыл алгыч керек.", cmpNone: "Бул түзмөктө бул шаар боюнча азырынча даттануу жок.", cmpAll: "Бардыгы",
-  expH: "Ачык маалымат", expTxt: "CSV/JSON: ар бир район жана 30 күндүн ар бир күнү боюнча — орточо жана максималдуу AQI, орточо PM2.5, PM2.5 > 15 мкг/м³ болгон сааттар жана модель зонасы (моделдин бир уячасындагы райондордо маанилер бирдей). Маалымат: Open-Meteo (CC BY 4.0), CAMS модели (Copernicus).",
+  expH: "Ачык маалымат", expTxt: "CSV/JSON: ар бир район жана 30 күндүн ар бир күнү боюнча — орточо жана максималдуу AQI, орточо PM2.5, PM2.5 > 15 мкг/м³ болгон сааттар жана модель зонасы (моделдин бир уячасындагы райондордо маанилер бирдей); акыркы күндүн сабында — Sensor.Community тургундарынын датчиктеринин азыркы медианасы жана саны (текшерүүсүз арзан датчиктер). Маалымат: Open-Meteo (CC BY 4.0), CAMS модели (Copernicus).",
   repH: "Абанын сапаты боюнча отчёт", repGen: "Түзүлгөн убакыт {t} · Таза Аба", srcH: "Булактар",
   meas: [["Чектөө талап кылынбайт.", "Сыртта машыгууга жакшы убакыт."],
     ["Өтө сезгич адамдарга (астма, жүрөк оорулары) эскертүү.", "Мектептер үчүн чектөө талап кылынбайт."],
@@ -73,7 +73,7 @@ en: { gridNote: "Important: the CAMS model resolution is about 11 km in the Euro
   fH: "Formula", fTxt: "Priority P = 100 × (0.5·a + 0.3·b + 0.2·c), where a is the district's 30-day mean PM2.5 divided by the city maximum; b is the share of hours with PM2.5 > 15 µg/m³ over 30 days; c is tomorrow's forecast maximum AQI divided by the city maximum. Measure: \"replace coal\" if the estimated heating share is ≥ 70%; \"buses / transport\" if the transport share is ≥ 25%; \"trees & dust control\" if PM2.5/PM10 < 0.55 (lots of coarse dust).",
   mHeat: "Replace coal: heat pumps, gas, insulation", mBus: "Buses & clean transport", mTree: "Trees & dust control", mNone: "Not enough data to estimate the source", pts: "pts",
   cmpH: "Residents' complaints by district", cmpNote: "Honestly: the app has no server, so this shows only complaints sent from this device (sample complaints are excluded). A city-wide picture needs a shared complaint inbox.", cmpNone: "No complaints for this city on this device yet.", cmpAll: "Total",
-  expH: "Open data", expTxt: "CSV/JSON: for each district and day over 30 days — mean and max AQI, mean PM2.5, hours with PM2.5 > 15 µg/m³ and the model zone (districts in one model cell get identical values). Data: Open-Meteo (CC BY 4.0), CAMS model (Copernicus).",
+  expH: "Open data", expTxt: "CSV/JSON: for each district and day over 30 days — mean and max AQI, mean PM2.5, hours with PM2.5 > 15 µg/m³ and the model zone (districts in one model cell get identical values); the latest-day row also has the current median and count of Sensor.Community citizen sensors (low-cost, uncalibrated). Data: Open-Meteo (CC BY 4.0), CAMS model (Copernicus).",
   repH: "Air quality report", repGen: "Generated {t} · Taza Aba", srcH: "Sources",
   meas: [["No restrictions needed.", "A good time for outdoor activities."],
     ["Inform unusually sensitive people (asthma, heart disease).", "No restrictions for schools needed."],
@@ -233,13 +233,18 @@ function gvExport(G, kind) {
   /* v73: зона модели — районы с одинаковыми 30-дневными значениями (одна ячейка CAMS); номер как в карточках «Зоны модели» */
   const ZS = gvZones(G.rows), zOf = new Map(); ZS.forEach((z, i) => z.rows.forEach(r => zOf.set(r, i + 1)));
   meta.modelZones = { count: ZS.length, note: "model_zone groups districts whose 30-day values are identical (same CAMS grid cell, ~11-40 km); differences between neighbouring districts can only be shown by ground sensors" };
+  /* v75: текущие датчики Sensor.Community по ближайшему району (медиана, число) — только в строке последнего дня; недорогие датчики без поверки */
+  const SD = gvSensData(), sBy = {}; SD.rows.forEach(r => (sBy[r.d.id] = sBy[r.d.id] || []).push(r.s));
+  const sNow = r => sBy[r.id] ? { pm2_5_median: +median(sBy[r.id]).toFixed(1), n: sBy[r.id].length } : null;
+  meta.sensorsNow = { at: new Date().toISOString(), source: "Sensor.Community (open citizen sensors, after outlier QC, readings no older than 60 min, assigned to the nearest district)", count: SD.rows.length,
+    note: "low-cost citizen sensors without official calibration; can overstate PM2.5 in fog and high humidity; not official measurements. In CSV, sensor_pm25_now and sensor_n_now are filled only in the latest-date row of each district" };
   let blob, name = `taza-aba-${CITY}-aqi-30d`;
   if (kind === "csv") {
-    const q = s => `"${String(s).replace(/"/g, '""')}"`, L = ["date,district_id,district_name,model_zone,aqi_mean,aqi_max,pm2_5_mean,hours_pm2_5_over_15,hours"];
-    G.rows.forEach(r => r.days.forEach(x => L.push([x.date, r.id, q(r.name), zOf.get(r), x.aqiMean == null ? "" : x.aqiMean.toFixed(1), x.aqiMax == null ? "" : Math.round(x.aqiMax), x.pmMean == null ? "" : x.pmMean.toFixed(1), x.hOver, x.n].join(","))));
+    const q = s => `"${String(s).replace(/"/g, '""')}"`, L = ["date,district_id,district_name,model_zone,aqi_mean,aqi_max,pm2_5_mean,hours_pm2_5_over_15,hours,sensor_pm25_now,sensor_n_now"];
+    G.rows.forEach(r => { const sn = sNow(r), last = r.days.length - 1; r.days.forEach((x, i) => L.push([x.date, r.id, q(r.name), zOf.get(r), x.aqiMean == null ? "" : x.aqiMean.toFixed(1), x.aqiMax == null ? "" : Math.round(x.aqiMax), x.pmMean == null ? "" : x.pmMean.toFixed(1), x.hOver, x.n, i === last && sn ? sn.pm2_5_median : "", i === last && sn ? sn.n : ""].join(","))); });
     blob = new Blob(["\ufeff" + L.join("\n")], { type: "text/csv;charset=utf-8" }); name += ".csv";
   } else {
-    blob = new Blob([JSON.stringify({ ...meta, districts: G.rows.map(r => ({ id: r.id, name: r.name, lat: r.d.lat, lon: r.d.lon, model_zone: zOf.get(r), priority: r.P, days: r.days.map(x => ({ date: x.date, aqi_mean: x.aqiMean == null ? null : +x.aqiMean.toFixed(1), aqi_max: x.aqiMax == null ? null : Math.round(x.aqiMax), pm2_5_mean: x.pmMean == null ? null : +x.pmMean.toFixed(1), hours_pm2_5_over_15: x.hOver, hours: x.n })) })) }, null, 1)], { type: "application/json" }); name += ".json";
+    blob = new Blob([JSON.stringify({ ...meta, districts: G.rows.map(r => ({ id: r.id, name: r.name, lat: r.d.lat, lon: r.d.lon, model_zone: zOf.get(r), priority: r.P, sensors_now: sNow(r), days: r.days.map(x => ({ date: x.date, aqi_mean: x.aqiMean == null ? null : +x.aqiMean.toFixed(1), aqi_max: x.aqiMax == null ? null : Math.round(x.aqiMax), pm2_5_mean: x.pmMean == null ? null : +x.pmMean.toFixed(1), hours_pm2_5_over_15: x.hOver, hours: x.n })) })) }, null, 1)], { type: "application/json" }); name += ".json";
   }
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
 }
@@ -324,7 +329,7 @@ const gvCoef = () => gvCoefP || (gvCoefP = fetch(/github\.io$/.test(location.hos
   .then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status))).catch(e => { gvCoefP = null; throw e; }));
 function gvSensHTML(nZ) {
   const D = gvSensData(), f1 = v => gvF(v, 1);
-  if (!D.rows.length) return `<div class="card gv-sens"><h3>📡 ${GV("sH")}</h3><p class="small">${esc(GV(air && air.live && air.status === "ok" ? "sNone" : "sWait"))}</p></div>`;
+  if (!D.rows.length) return `<div class="card gv-sens"><h3>📡 ${GV("sH")}</h3><p class="small">${esc(GV(air && air.live && air.status === "ok" ? "sNone" : "sWait"))}</p><div id="gvSensDiv"></div></div>`;
   const k = D.k, ratio = k == null ? "" : k >= 1.2 ? GV("sHi", { k: fmt(k, 1) }) : k <= 1 / 1.2 ? GV("sLo", { k: fmt(1 / k, 1) }) : GV("sEq");
   const pin = v => `<span class="gv-chip" style="background:${level(pm25ToAqi(v)).color}">${f1(v)}</span>`;
   const sg = v => (v > 0 ? "+" : v < 0 ? "−" : "") + f1(Math.abs(v));
@@ -334,13 +339,51 @@ function gvSensHTML(nZ) {
     <div class="gv-tw"><table class="gv-t"><thead><tr><th>${GV("cS")}</th><th>${GV("cSv")}</th><th>${GV("cMv")}</th><th>${GV("cDf")}</th></tr></thead>
       <tbody>${D.rows.map(r => `<tr><td>${esc(dName(r.d))}</td><td>${pin(r.s)}</td><td>${pin(r.m)}</td><td>${sg(r.s - r.m)}</td></tr>`).join("")}</tbody></table></div>
     <p class="small muted">PM2.5, ${LANG === "en" ? "µg/m³" : "мкг/м³"} · ${gvA("sc")} · ${gvA("om")}</p>
-    <p class="small" id="gvSensAcc"></p>
+    <p class="small" id="gvSensAcc"></p><div id="gvSensDiv"></div>
     <p class="small muted">${esc(GV("sNote"))}${D.bad ? " " + esc(GV("sQC", { x: D.bad })) : ""}</p></div>`;
 }
 function gvSensAccMount() {
   const c = CITY; gvCoef().then(j => { const e = $("#gvSensAcc"), x = j && j.cities && j.cities[c], ck = x && x.check; if (!e || CITY !== c || !ck || ck.maeNew == null) return;
     const t = j.updated ? new Date(j.updated).toLocaleString(numLocale(), { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
     e.textContent = GV("sAcc", { d: ck.days, e: gvF(ck.maeNew, 1), r: gvF(ck.maeRaw, 1), t }); }).catch(e => console.warn("gov coeffs:", e.message));
+  gvCoef().then(j => { const e = $("#gvSensDiv"), x = j && j.cities && j.cities[c]; if (!e || CITY !== c || !x || !x.div) return; e.innerHTML = gvDivHTML(x.div); }).catch(() => {});
+}
+/* v75: расхождение датчики/модель по часам суток за 7 дней (forecast/coeffs.json → cities[c].div, считает GitHub Actions каждые 6 ч) */
+Object.assign(GV_S.ru, { dH: "По часам суток, последние 7 дней", dSub: "Медиана датчиков и модели CAMS в тех же местах для каждого часа (местное время), {a}–{b}. Пересчитывается автоматически каждые 6 часов.",
+  dP: ["Ночь (0–5 ч)", "Утро (6–10 ч)", "День (11–17 ч)", "Вечер (18–23 ч)"], dRow: "{p}: датчики {s}, модель {m} мкг/м³ — {r}.", rHi: "датчики в {k} раза выше", rLo: "датчики в {k} раза ниже", rEq: "близко (разница меньше 20 %)",
+  dPeak: "Сильнее всего модель занижает в {h}: датчики {s}, модель {m} мкг/м³ (медиана за {n} дн.).", dUse: "В эти часы для оповещений и мер полезнее опираться на датчики, а не только на модель.",
+  dLs: "Датчики", dLm: "Модель", dTbl: "Таблица по часам", cH: "Час", cN: "Дней" });
+Object.assign(GV_S.ky, { dH: "Сутканын сааттары боюнча, акыркы 7 күн", dSub: "Ар бир саат үчүн (жергиликтүү убакыт) датчиктердин медианасы жана ошол эле жерлердеги CAMS модели, {a}–{b}. Ар 6 саатта автоматтык түрдө кайра эсептелет.",
+  dP: ["Түн (0–5)", "Эртең менен (6–10)", "Күндүз (11–17)", "Кечинде (18–23)"], dRow: "{p}: датчиктер {s}, модель {m} мкг/м³ — {r}.", rHi: "датчиктер {k} эсе жогору", rLo: "датчиктер {k} эсе төмөн", rEq: "жакын (айырма 20 %дан аз)",
+  dPeak: "Модель эң көп {h} саатта төмөндөтөт: датчиктер {s}, модель {m} мкг/м³ ({n} күндүн медианасы).", dUse: "Бул сааттарда эскертүүлөр жана чаралар үчүн моделге гана эмес, датчиктерге таянуу пайдалуураак.",
+  dLs: "Датчиктер", dLm: "Модель", dTbl: "Сааттар боюнча таблица", cH: "Саат", cN: "Күн" });
+Object.assign(GV_S.en, { dH: "By hour of day, last 7 days", dSub: "Median of sensors and of the CAMS model at the same places for each hour (local time), {a}–{b}. Recalculated automatically every 6 hours.",
+  dP: ["Night (0–5 h)", "Morning (6–10 h)", "Day (11–17 h)", "Evening (18–23 h)"], dRow: "{p}: sensors {s}, model {m} µg/m³ — {r}.", rHi: "sensors {k}× higher", rLo: "sensors {k}× lower", rEq: "close (less than 20% apart)",
+  dPeak: "The model underestimates most at {h}: sensors {s}, model {m} µg/m³ (median of {n} days).", dUse: "At these hours, alerts and measures should rely on sensors, not only on the model.",
+  dLs: "Sensors", dLm: "Model", dTbl: "Table by hour", cH: "Hour", cN: "Days" });
+function gvDivHTML(dv) {
+  const H = (dv.h || []).map((x, i) => ({ i, n: x[0], s: x[1], m: x[2] })), ok = H.filter(x => x.n >= 3 && x.s != null && x.m != null);
+  if (ok.length < 18) return "";
+  const f1 = v => gvF(v, 1), hh = i => String(i).padStart(2, "0") + ":00", rat = (s, m) => { const k = m > 0 ? s / m : null; return k == null ? "" : k >= 1.2 ? GV("rHi", { k: fmt(k, 1) }) : k <= 1 / 1.2 ? GV("rLo", { k: fmt(1 / k, 1) }) : GV("rEq"); };
+  const ld = z => z ? new Date(new Date(z).getTime() + 6 * 36e5).toISOString().slice(0, 10).split("-").reverse().slice(0, 2).join(".") : "—";
+  const P = [[0, 5], [6, 10], [11, 17], [18, 23]].map(([a, b], k) => { const r = ok.filter(x => x.i >= a && x.i <= b); return r.length ? { p: GV("dP")[k], s: gvMean(r.map(x => x.s)), m: gvMean(r.map(x => x.m)) } : null; }).filter(Boolean);
+  const pk = ok.reduce((b, x) => (x.m > 0 && (!b || x.s / x.m > b.s / b.m)) ? x : b, null), under = pk && pk.s / pk.m >= 1.2;
+  const Wd = 360, Hd = 150, x0 = 26, step = (Wd - x0 - 4) / 24, bw = Math.max(2, step / 2 - 1), mx = Math.max(10, ...ok.map(x => Math.max(x.s, x.m))) * 1.1, y = v => Hd - 18 - (v / mx) * (Hd - 30);
+  const tk = [0, 6, 12, 18, 23], st = mx > 120 ? 50 : mx > 60 ? 20 : 10, gl = [...Array(Math.floor(mx / st) + 1)].map((_, i) => i * st);
+  const bars = H.map(x => { if (x.s == null || x.m == null) return ""; const X = x0 + x.i * step + 1;
+    return `<rect x="${X.toFixed(1)}" y="${y(x.s).toFixed(1)}" width="${bw.toFixed(1)}" height="${(Hd - 18 - y(x.s)).toFixed(1)}" rx="1.5" class="gv-dvs"/><rect x="${(X + bw + 1).toFixed(1)}" y="${y(x.m).toFixed(1)}" width="${bw.toFixed(1)}" height="${(Hd - 18 - y(x.m)).toFixed(1)}" rx="1.5" class="gv-dvm"/>`; }).join("");
+  const axis = gl.map(v => `<line x1="${x0}" x2="${Wd - 4}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" class="gv-dvg"/><text x="${x0 - 3}" y="${(y(v) + 3).toFixed(1)}" text-anchor="end" class="gv-svt">${v}</text>`).join("")
+    + tk.map(i => `<text x="${(x0 + i * step + step / 2).toFixed(1)}" y="${Hd - 4}" text-anchor="middle" class="gv-svt">${i}</text>`).join("");
+  const lines = P.map(o => GV("dRow", { p: o.p, s: f1(o.s), m: f1(o.m), r: rat(o.s, o.m) }));
+  const aria = GV("dH") + ". " + lines.join(" ");
+  return `<div class="gv-dv"><h4>${esc(GV("dH"))}</h4><p class="small">${esc(GV("dSub", { a: ld(dv.from), b: ld(dv.to) }))}</p>
+    <svg class="gv-svg" viewBox="0 0 ${Wd} ${Hd}" role="img" aria-label="${esc(aria)}">${axis}${bars}</svg>
+    <p class="small gv-dvl"><span><i class="gv-dvs"></i>${esc(GV("dLs"))}</span><span><i class="gv-dvm"></i>${esc(GV("dLm"))}</span><span class="muted">PM2.5, ${LANG === "en" ? "µg/m³" : "мкг/м³"}</span></p>
+    <ul class="small gv-dvp">${lines.map(l => `<li>${esc(l)}</li>`).join("")}</ul>
+    ${under ? `<p class="small"><b>${esc(GV("dPeak", { h: hh(pk.i), s: f1(pk.s), m: f1(pk.m), n: pk.n }))}</b> ${esc(GV("dUse"))}</p>` : ""}
+    <details class="gv-noprint"><summary class="small">${esc(GV("dTbl"))}</summary><div class="gv-tw"><table class="gv-t"><thead><tr><th>${GV("cH")}</th><th>${GV("dLs")}</th><th>${GV("dLm")}</th><th>${GV("cN")}</th></tr></thead>
+      <tbody>${H.map(x => `<tr><td>${hh(x.i)}</td><td>${f1(x.s)}</td><td>${f1(x.m)}</td><td>${x.n}</td></tr>`).join("")}</tbody></table></div></details>
+    <p class="small muted">${gvA("sc")} · ${gvA("om")}</p></div>`;
 }
 function gvRender(el, G) {
   const R = G.rows, by30 = R.slice().sort((a, b) => (b.a30 || 0) - (a.a30 || 0) || (b.now || 0) - (a.now || 0)), byP = R.slice().sort((a, b) => b.P - a.P || (b.now || 0) - (a.now || 0)).slice(0, 10);

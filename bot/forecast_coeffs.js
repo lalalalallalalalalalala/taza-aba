@@ -5,6 +5,7 @@
  * 3) Поправка: obs − CAMS = c0 + Σ a_период · H·D, H = нагрев (12 − T за 24 ч)/10, D = застой (ветер, слой перемешивания);
  *    гребневая регрессия по последним 14 дням. Плюс «наукаст» в браузере (текущее отклонение датчиков, затухает с τ = 6 ч).
  * 4) Честная проверка: для каждого часа последних 7 дней коэффициенты строятся только по прошлым 14 дням, сравнение с датчиками.
+ * 5) div: медиана датчиков и модели по каждому местному часу суток за 7 дней (для карточки «Модель и датчики» в #gov).
  * Результат: forecast/coeffs.json. Если данных мало — файл не перезаписывается (в браузере остаются встроенные коэффициенты). */
 "use strict";
 const fs = require("fs"), path = require("path");
@@ -83,7 +84,12 @@ function ridge(rows) {   // rows: [x(5), y]
         logE[L <= 2 ? "a" : L <= 6 ? "b" : L <= 24 ? "c" : "d"].push(L1(obs[h]) - L1(p)); }
     }
     const q = (a, p) => { const s = [...a].sort((x, y) => x - y); return s.length ? +s[Math.min(s.length - 1, Math.floor(p * s.length))].toFixed(2) : null; };
-    out.cities[cid] = { sensors: list.length, hours: keys.length, bInc: bInc.map(v => +v.toFixed(3)), bBg: bBg.map(v => +v.toFixed(3)),
+    // расхождение датчики/модель по часам суток (местное время) за последние 7 дней — те же часы и точки, что в проверке
+    const dv = [...Array(24)].map(() => [[], []]), dk = keys.filter(h => h > start);
+    dk.forEach(h => { const b = dv[W[h].lh]; b[0].push(obs[h]); b[1].push(mod[h]); });
+    const div = { days: 7, from: dk[0] ? dk[0] + ":00Z" : null, to: dk.length ? dk[dk.length - 1] + ":00Z" : null, tz: "UTC+6",
+      h: dv.map(([o, m]) => o.length ? [o.length, +med(o).toFixed(1), +med(m).toFixed(1)] : [0, null, null]) };
+    out.cities[cid] = { sensors: list.length, hours: keys.length, div, bInc: bInc.map(v => +v.toFixed(3)), bBg: bBg.map(v => +v.toFixed(3)),
       band: Object.fromEntries(Object.entries(logE).map(([k, a]) => [k, [q(a, 0.1), q(a, 0.9)]])),
       check: { days: 7, lead: "0–24 h", n: errNew.length, maeRaw: +mean(errRaw).toFixed(2), maeNew: +mean(errNew).toFixed(2) } };
     console.log(cid, JSON.stringify(out.cities[cid]));

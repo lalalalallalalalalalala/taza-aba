@@ -166,3 +166,16 @@ html[data-theme="dark"] .gv-zone{border-color:rgba(255,255,255,.12)}
 .gv-sens .gv-t td:not(:first-child),.gv-sens .gv-t th:not(:first-child){text-align:right;padding-left:4px;padding-right:4px}
 .gv-sens .gv-tw{max-width:640px}
 .gb-sens{margin-top:4px}
+
+/* v75: датчики/модель по часам суток */
+.gv-dv{margin-top:12px;padding-top:10px;border-top:1px solid rgba(127,127,127,.18)}
+.gv-dv h4{margin:0 0 4px;font-size:1rem}
+.gv-dvs{fill:#d4572a;background:#d4572a}.gv-dvm{fill:#8a96a3;background:#8a96a3}
+.gv-dvg{stroke:rgba(127,127,127,.22);stroke-width:1}
+html[data-theme="dark"] .gv-dvs{fill:#ff8a65;background:#ff8a65}html[data-theme="dark"] .gv-dvm{fill:#9aa7b4;background:#9aa7b4}
+.gv-dvl{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:2px 0 6px}
+.gv-dvl span{display:inline-flex;align-items:center;gap:6px}.gv-dvl i{display:inline-block;width:10px;height:10px;border-radius:2px}
+.gv-dvp{margin:4px 0 6px;padding-left:18px}.gv-dvp li{margin:2px 0}
+.gv-dv details{margin:6px 0}.gv-dv summary{cursor:pointer}
+.gv-dv .gv-t td,.gv-dv .gv-t th{text-align:right}.gv-dv .gv-t td:first-child,.gv-dv .gv-t th:first-child{text-align:left}
+@media print{.gv-dvs{fill:#d4572a!important}.gv-dvm{fill:#8a96a3!important}}
