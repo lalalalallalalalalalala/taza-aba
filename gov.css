@@ -166,7 +166,8 @@ html[data-theme="dark"] .gv-zone{border-color:rgba(255,255,255,.12)}
 .gv-sens .gv-t td:not(:first-child),.gv-sens .gv-t th:not(:first-child){text-align:right;padding-left:4px;padding-right:4px}
 .gv-sens .gv-tw{max-width:640px}
 .gb-sens,.gb-div{margin-top:4px}
-.gb-div[hidden]{display:none}
+.gb-div[hidden],.gz-div[hidden]{display:none}
+.gz-div{margin-top:3px}
 
 /* v75: датчики/модель по часам суток */
 .gv-dv{margin-top:12px;padding-top:10px;border-top:1px solid rgba(127,127,127,.18)}
@@ -180,3 +181,24 @@ html[data-theme="dark"] .gv-dvs{fill:#ff8a65;background:#ff8a65}html[data-theme=
 .gv-dv details{margin:6px 0}.gv-dv summary{cursor:pointer}
 .gv-dv .gv-t td,.gv-dv .gv-t th{text-align:right}.gv-dv .gv-t td:first-child,.gv-dv .gv-t th:first-child{text-align:left}
 @media print{.gv-dvs{fill:#d4572a!important}.gv-dvm{fill:#8a96a3!important}}
+/* v77: печать памятки A4 и листа A5 — шкала шрифтов polish.css (html body h1/h3/.sub/.small/td с !important) перебивала размеры для печати,
+   а в тёмной теме заголовки печатались светло-серыми на белом. Лист A5 из-за этого выходил на 2 страницы. */
+@media print{
+  html body .v-govbrief{--c-text:#111;--c-muted:#4a4f55;--muted:#4a4f55;--walnut:#111;--text:#111;color:#111!important}
+  html body .v-govbrief :is(h1,h2,h3,h4){color:#111!important}
+  html body .v-govbrief :is(.muted,.small,small,.sub){color:#4a4f55!important}
+  html body .v-govbrief h1{font-size:18px!important;line-height:1.15!important}
+  html body .v-govbrief .sub{font-size:11px!important;line-height:1.3!important}
+  html body .v-govbrief h3{font-size:13px!important;line-height:1.25!important}
+  html body .v-govbrief :is(.small,small){font-size:10px!important;line-height:1.3!important}
+  html body .v-govbrief td{font-size:inherit}
+  html body .v-gazeta .gz-head h1{font-size:17px!important}
+  html body .v-gazeta .sub{font-size:9px!important}
+  html body .v-gazeta .gz-s h3{font-size:12.5px!important}
+  html body .v-gazeta :is(.small,small){font-size:8.8px!important}
+  html body .v-gazeta .gz-t td{font-size:10.2px!important;line-height:1.3!important}
+  html:root body,html:root[data-theme] body{background:#fff!important;background-image:none!important}
+  html body .v-govbrief a{color:#111!important}
+  html body .v-govbrief .card,html body .v-govbrief .gb-s{background:#fff!important;background-image:none!important;border:1px solid #ccc!important;box-shadow:none!important}
+  html body .v-govbrief .gv-m{color:#111!important;background:#eef0f2!important;border:1px solid #d5d9de}
+}

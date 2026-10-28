@@ -644,7 +644,7 @@ function gvGzParts(G, winLine) {
   return { c, B, lv, tips, date: new Date(G.at).toLocaleDateString("ru-RU"), winLine };
 }
 function gvGzText(P) { const B = P.B;
-  return [GZ_KY.title + " — " + P.c + ", " + P.date, "", GZ_KY.s1 + ": " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + ".", ...(P.winLine ? [P.winLine] : []),
+  return [GZ_KY.title + " — " + P.c + ", " + P.date, "", GZ_KY.s1 + ": " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + ".", ...(P.winLine ? [P.winLine] : []), ...(P.divLine ? [P.divLine] : []),
     "", GZ_KY.s2 + ":", ...P.lv.map(l => `• ${l.r} — ${l.n}: ${l.t}`), "", GZ_KY.s3 + ":", ...P.tips.map(x => "• " + x), "", GZ_KY.s4 + ":", ...GZ_KY.r.map(x => "• " + x), "", GZ_KY.live + " " + SITE_URL, GZ_KY.data].join("\n"); }
 function gvGzRender(el, G) {
   const cached = (() => { try { return JSON.parse(localStorage.getItem("tazaAba.gvWin2." + CITY) || "null"); } catch (e) { return null; } })();
@@ -654,7 +654,7 @@ function gvGzRender(el, G) {
     <header class="gz-head"><div><h1>${esc(GZ_KY.title)}</h1><p class="sub">${esc(GZ_KY.sub.replace("{city}", P.c).replace("{date}", P.date))}</p></div>
       <figure class="gb-qr gz-qr"><img src="icons/qr-site.svg" alt="QR: https://taza-aba.surge.sh/" width="64" height="64"><figcaption>taza-aba.surge.sh</figcaption></figure></header>
     <section class="gz-s"><h3>${GZ_KY.s1}</h3><div class="gz-k"><div><small>${GV("b30")}</small>${pin(P.B.a30)}</div><div><small>${GV("bDw")}</small><b>${gvF(P.B.dO)}<span class="small muted"> / ${gvF(P.B.dN)}</span></b></div></div>
-      <p class="small" id="gzWin">${P.winLine ? "❄️ " + esc(P.winLine) : ""}</p></section>
+      <p class="small" id="gzWin">${P.winLine ? "❄️ " + esc(P.winLine) : ""}</p><p class="small gz-div" id="gzDiv" hidden></p></section>
     <section class="gz-s"><h3>${GZ_KY.s2}</h3><table class="gz-t"><tbody>${P.lv.map(l => `<tr><td><span class="gz-sw" style="background:${l.c}"></span>${l.r}</td><td><b>${esc(l.n)}</b> — ${esc(l.t)}</td></tr>`).join("")}</tbody></table></section>
     <section class="gz-s gz-two"><div><h3>${GZ_KY.s3}</h3><ul>${P.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div><div><h3>${GZ_KY.s4}</h3><ul>${GZ_KY.r.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></section>
     <footer class="gz-f"><p><b>${GZ_KY.live}</b> taza-aba.surge.sh</p><p class="small muted">${esc(GZ_KY.data)} ${gvAs("airnow")}, ${gvAs("who20")}, ${gvAs("unicef")}, ${gvAs("om")}</p></footer></article>`);
@@ -664,6 +664,8 @@ function gvGzRender(el, G) {
     <div id="gzBox">${sheet()}</div>`;
   $("#gzPrint").onclick = () => window.print();
   $("#gzCopy").onclick = () => copyText(gvGzText(P));
+  { const dc = CITY; gvCoef().then(j => { const x = j && j.cities && j.cities[dc], p = $("#gzDiv"); if (!p || CITY !== dc || !x || !x.div) return;   // v77: вечернее расхождение модели и датчиков (7 дн.), на кыргызском
+    P.divLine = gvWithLang("ky", () => gvDivLine(x.div)); if (P.divLine) { p.textContent = "🌙 " + P.divLine; p.hidden = false; } }).catch(e => console.warn("gazeta div:", e.message)); }
   if (!P.winLine) { const wc = CITY; gvWinLoad().then(W => { if (CITY !== wc) return; P.winLine = gvWithLang("ky", () => gvBriefWin(W)); const p = $("#gzWin"); if (p && P.winLine) p.textContent = "❄️ " + P.winLine; }).catch(e => console.warn("gazeta winters:", e.message)); }
 }
 (function () { const _b = gvBriefRender;
