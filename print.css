@@ -1,0 +1,32 @@
+/* v79: печать любого раздела (Ctrl+P / «Отчёт PDF») — всегда тёмный текст на белом, в любой теме и любом дизайне.
+   Раньше правило печати было только у памятки (.v-govbrief, v77): #gov в тёмной теме печатался тёмными карточками
+   с почти невидимым текстом и светлыми заголовками на белом, #history — целиком тёмной страницей с меню. */
+@media print{
+  @page{margin:12mm}
+  html:root,html:root[data-theme],html:root[data-theme][data-accent]{color-scheme:light;
+    --wool:#fff!important;--wool-2:#f4f4f2!important;--cream:#fff!important;--paper:#fff!important;--card:#fff!important;
+    --walnut:#111!important;--walnut-2:#333!important;--ink:#111!important;--forest:#111!important;--forest-2:#1F5A3D!important;--text:#111!important;--c-text:#111!important;
+    --muted:#4a4f55!important;--c-muted:#4a4f55!important;--line:#cfd3d6!important;
+    --leaf-soft:#eef5ec!important;--teal-soft:#eef5f6!important;--saffron-soft:#eef6fb!important;--sun-soft:#eef6fb!important;--green-100:#eef5ec!important;
+    --shadow:none!important;--shadow-lg:none!important;background:#fff!important}
+  html:root body,html:root[data-theme] body,html:root[data-theme][data-accent] body{background:#fff!important;background-image:none!important;color:#111!important}
+  html:root body::before,html:root body::after{display:none!important}
+  html body :is(.topbar,.tabbar,.foot,.toast,#modal,.gs-pop,.skip,.gv-noprint,.hr-dock){display:none!important}
+  html body :is(.app,main,.view){background:transparent!important;box-shadow:none!important}
+  html[data-theme] body :is(.card,.fday,.stat,.opt,.gcard,.route,.tip,.quick a,.h-pol,.h-card,.h-kpi,details,.gv-zone,.gv-my,.hero,.hr,.hr-card,.hr-in,.src-ag,select,input){background:#fff!important;background-image:none!important;color:#111!important;border-color:#cfd3d6!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html[data-theme] body :is(.card,.fday,.stat,.gcard,.h-pol){break-inside:avoid}
+  html[data-theme] body :is(.card,.fday,.stat,.gcard,.route,.tip)::before{display:none!important}
+  html[data-theme] body :is(h1,h2,h3,h4,h5,figcaption,th,td,li,p,label,dt,dd,b,strong,legend,summary){color:#111!important}
+  html[data-theme] body :is(.muted,.small,small,.sub,.note){color:#4a4f55!important}
+  html[data-theme] body a{color:#1a3d6e!important}
+  html[data-theme] body :is(button,.btn,.chip-btn){background:#fff!important;color:#111!important;border:1px solid #cfd3d6!important;box-shadow:none!important}
+  html[data-theme] body :is(.gv-chip,.gv-pin,.gv-bar i,.tf-bar span,.h-bar,.lvl,.aqi-badge){-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html[data-theme] body svg text{fill:#333}
+}
+/* тёмная тема: прочие тёмные плашки (главная, советы) — прозрачный фон; цветные шкалы и значки AQI (инлайн-цвет, .chip, .lv-sw, полосы) не трогаем */
+@media print{
+  html[data-theme="dark"] body main :not([style*="background"]):not([style*="--"]):not(.h-cat):not(.gv-chip):not(.gv-pin):not(.gv-bar i):not(.tf-bar span):not(.chip):not(.lv-sw):not(.h-bar):not(.lvl):not(.aqi-badge):not([class*="bar"]):not([class*="seg"]):not([class*="dot"]):not(svg *){background-color:transparent!important}
+  html[data-theme="dark"] body main :is(.hr-pill,.hr-chip,.pol-main,.eco-hg-t){background-image:none!important;color:#111!important}
+}
+@media print{html[data-theme] body .h-cat :is(b,span){color:#fff!important}}
+@media print{html[data-theme="dark"] body main :is(.v,em):not([style]){color:#111!important}}
