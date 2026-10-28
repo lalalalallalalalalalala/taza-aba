@@ -576,21 +576,21 @@ Object.assign(GV_S.ru, { arH: "Открытый архив по дням", arSub
   arCsv: "CSV: {city}", arAll: "Все города (index.json)", arGh: "Папка на GitHub ↗", arColsH: "Столбцы CSV",
   arCols: "date — дата (местное время); aqi_mean / aqi_max — средний и максимальный US AQI за сутки; pm2_5_mean / pm2_5_max, pm10_mean, no2_mean — мкг/м³; hours_pm2_5_over_15 — часов с PM2.5 > 15; hours — часов с данными (сутки с < 20 часами не пишутся).",
   arNote: "Модельные значения CAMS (Copernicus) через Open-Meteo, CC BY 4.0 — не измерения датчиков. Модель может заметно отличаться от наземных измерений, особенно при зимних инверсиях: сравнивайте дни и годы между собой, а не с нормами и не города между собой. История до {s} догружена один раз из архива Open-Meteo (с {f}).",
-  gzLink: "🗞️ Кыргызча, A5 — для районной газеты", gzBack: "← Памятка A4", gzPrint: "🖨️ Печать A5 / PDF", gzCopy: "📋 Скопировать текст (кыргызча)", gzHint: "Лист A5 на кыргызском для районной газеты или доски объявлений: цифры за 30 дней, шкала AQI с советами жителям и QR на живой прогноз. Текст всегда на кыргызском, независимо от языка приложения." });
+  gzLink: "🗞️ A5 для районной газеты (кыргызча / русский)", gzBack: "← Памятка A4", gzPrint: "🖨️ Печать A5 / PDF", gzCopy: "📋 Скопировать текст листа", gzLang: "Язык листа", gzHint: "Лист A5 для районной газеты или доски объявлений: цифры за 30 дней, шкала AQI с советами жителям и QR на живой прогноз. Язык листа — кыргызский или русский (для двуязычных газет), независимо от языка приложения." });
 Object.assign(GV_S.ky, { arH: "Күн сайынкы ачык архив", arSub: "Күн сайын түнкүсүн (Бишкек убактысы менен болжол менен 04:40) GitHub Actions {n} шаар боюнча суткалык маанилерди (шаардын борбору, CAMS модели) ачык репозиторийге сактайт. Жазылган күндөр өзгөрбөйт — архивге шилтеме берип, текшерсе болот.",
   arLoad: "Архив жүктөлүүдө…", arErr: "Архив азыр жеткиликсиз (GitHub). Кийинчерээк аракет кылыңыз.", arNone: "Бул шаар боюнча архивде азырынча маалымат жок.",
   arStat: "{city}: {d} сутка, {a} – {b}. Орточо PM2.5 ДССУ ченеминен (15 мкг/м³) ашкан сутка: {w} ({p} %).", arUpd: "Жаңыланды: {t}.", arChart: "Бүт архив боюнча суткалык орточо PM2.5, мкг/м³; ичке сызык — сутка, жоон сызык — 15 күндүк орточо; пунктир — ДССУ ченеми 15",
   arCsv: "CSV: {city}", arAll: "Бардык шаарлар (index.json)", arGh: "GitHub'дагы папка ↗", arColsH: "CSV мамычалары",
   arCols: "date — күнү (жергиликтүү убакыт); aqi_mean / aqi_max — сутканын орточо жана эң жогорку US AQI; pm2_5_mean / pm2_5_max, pm10_mean, no2_mean — мкг/м³; hours_pm2_5_over_15 — PM2.5 > 15 болгон сааттар; hours — маалыматы бар сааттар (20 сааттан аз сутка жазылбайт).",
   arNote: "Open-Meteo аркылуу CAMS (Copernicus) моделинин маанилери, CC BY 4.0 — датчиктердин өлчөөсү эмес. Модель жердеги өлчөөлөрдөн, айрыкча кышкы инверсияда, бир топ айырмаланышы мүмкүн: күндөрдү жана жылдарды ченемдер же башка шаарлар менен эмес, өз ара салыштырыңыз. {s} чейинки тарых Open-Meteo архивинен бир жолу жүктөлгөн ({f} баштап).",
-  gzLink: "🗞️ Кыргызча, A5 — райондук гезит үчүн", gzBack: "← A4 эскертме", gzPrint: "🖨️ A5 басып чыгаруу / PDF", gzCopy: "📋 Текстти көчүрүү (кыргызча)", gzHint: "Райондук гезит же кулактандыруу тактасы үчүн кыргызча A5 барак: 30 күндүк сандар, тургундар үчүн кеңештери менен AQI шкаласы жана жандуу божомолго QR." });
+  gzLink: "🗞️ A5 райондук гезит үчүн (кыргызча / орусча)", gzBack: "← A4 эскертме", gzPrint: "🖨️ A5 басып чыгаруу / PDF", gzCopy: "📋 Барактын текстин көчүрүү", gzLang: "Барактын тили", gzHint: "Райондук гезит же кулактандыруу тактасы үчүн A5 барак: 30 күндүк сандар, тургундар үчүн кеңештери менен AQI шкаласы жана жандуу божомолго QR. Барактын тили — кыргызча же орусча (эки тилдүү гезиттер үчүн)." });
 Object.assign(GV_S.en, { arH: "Open daily archive", arSub: "Every night (around 04:40 Bishkek time) GitHub Actions saves daily values for {n} cities (city centre, CAMS model) to a public repository. Days already written never change, so the archive can be cited and checked.",
   arLoad: "Loading the archive…", arErr: "The archive is unavailable right now (GitHub). Try again later.", arNone: "No archive data for this city yet.",
   arStat: "{city}: {d} days, {a} to {b}. Days with mean PM2.5 above the WHO guideline (15 µg/m³): {w} ({p}%).", arUpd: "Updated: {t}.", arChart: "Daily mean PM2.5 over the whole archive, µg/m³; thin line — daily, thick line — 15-day mean; dashed line — WHO guideline 15",
   arCsv: "CSV: {city}", arAll: "All cities (index.json)", arGh: "Folder on GitHub ↗", arColsH: "CSV columns",
   arCols: "date — local date; aqi_mean / aqi_max — daily mean and max US AQI; pm2_5_mean / pm2_5_max, pm10_mean, no2_mean — µg/m³; hours_pm2_5_over_15 — hours with PM2.5 > 15; hours — hours with data (days with < 20 hours are not written).",
   arNote: "Modelled CAMS (Copernicus) values via Open-Meteo, CC BY 4.0 — not sensor measurements. The model can differ substantially from ground measurements, especially during winter inversions: compare days and years with each other, not with guidelines or other cities. History before {s} was loaded once from the Open-Meteo archive (from {f}).",
-  gzLink: "🗞️ Kyrgyz A5 — for district newspapers", gzBack: "← A4 brief", gzPrint: "🖨️ Print A5 / PDF", gzCopy: "📋 Copy text (Kyrgyz)", gzHint: "An A5 sheet in Kyrgyz for a district newspaper or notice board: 30-day figures, the AQI scale with advice for residents and a QR to the live forecast. The text is always in Kyrgyz, whatever the app language." });
+  gzLink: "🗞️ A5 for district newspapers (Kyrgyz / Russian)", gzBack: "← A4 brief", gzPrint: "🖨️ Print A5 / PDF", gzCopy: "📋 Copy sheet text", gzLang: "Sheet language", gzHint: "An A5 sheet for a district newspaper or notice board: 30-day figures, the AQI scale with advice for residents and a QR to the live forecast. The sheet is in Kyrgyz or Russian (for bilingual papers), whatever the app language." });
 const GV_AR_REPO = (window.TAZA_CONFIG || {}).ARCHIVE_REPO || "zusenbaev7-cmd/taza-aba";
 const GV_AR_RAW = `https://raw.githubusercontent.com/${GV_AR_REPO}/main/archive/`, GV_AR_GH = `https://github.com/${GV_AR_REPO}/tree/main/archive`;
 const gvArCache = {};
@@ -636,6 +636,12 @@ function gvArMount() {
 const GZ_KY = { title: "Шаарыбыздын абасы: түтүн боюнча кыскача", sub: "{city} · {date} · «Таза Аба» тиркемесинин маалыматы", s1: "Акыркы 30 күн", s2: "AQI шкаласы: эмне кылуу керек", s3: "Түтүндүү күндөрү", s4: "Абаны таза сактоого ар ким салым кошо алат",
   r: ["Таштанды, жалбырак жана пластикти өрттөбөңүз.", "Мүмкүн болсо коомдук транспортту колдонуңуз.", "Үйүңүздү жылуулаңыз: терезе, дубал жана чатыр — жылуулук сакталып, отун азыраак кетет."],
   live: "Эртеңки божомол жана жандуу маалымат:", data: "Маалымат: CAMS (Copernicus) модели, Open-Meteo аркылуу, CC BY 4.0 — моделдик маанилер, датчиктердин өлчөөсү эмес. Кеңештер — AQI шкаласы (AirNow, АКШ EPA) жана ДССУ боюнча." };
+/* v78: тот же лист на русском — для двуязычных районных газет (#govbrief/gazeta/ru). Перевод тех же формулировок, числа те же. */
+const GZ_RU = { title: "Воздух нашего города: коротко о смоге", sub: "{city} · {date} · данные приложения «Таза Аба»", s1: "Последние 30 дней", s2: "Шкала AQI: что делать", s3: "В дымные дни", s4: "Каждый может помочь сохранить воздух чистым",
+  r: ["Не сжигайте мусор, листья и пластик.", "По возможности пользуйтесь общественным транспортом.", "Утеплите дом: окна, стены и крыша — тепло сохраняется, топлива уходит меньше."],
+  live: "Прогноз на завтра и живые данные:", data: "Данные: модель CAMS (Copernicus) через Open-Meteo, CC BY 4.0 — значения модели, а не измерения датчиков. Советы — по шкале AQI (AirNow, EPA США) и ВОЗ." };
+const GZ_T = { ky: GZ_KY, ru: GZ_RU };
+let GZL = "ky";   // язык листа A5: ky (по умолчанию) или ru
 const gvWithLang = (lg, f) => { const o = LANG; LANG = lg; try { return f(); } finally { LANG = o; } };
 function gvGzParts(G, winLine) {
   const c = tr(cityObj().name), B = gvBriefData(G), lo = [0, 51, 101, 151, 201, 301];
@@ -643,14 +649,15 @@ function gvGzParts(G, winLine) {
   const tips = [...tr(AQI_LEVELS[2].tips), ...tr(AQI_LEVELS[3].tips).slice(1)];
   return { c, B, lv, tips, date: new Date(G.at).toLocaleDateString("ru-RU"), winLine };
 }
-function gvGzText(P) { const B = P.B;
+function gvGzText(P) { const B = P.B, GZ_KY = GZ_T[GZL];
   return [GZ_KY.title + " — " + P.c + ", " + P.date, "", GZ_KY.s1 + ": " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + ".", ...(P.winLine ? [P.winLine] : []), ...(P.divLine ? [P.divLine] : []),
     "", GZ_KY.s2 + ":", ...P.lv.map(l => `• ${l.r} — ${l.n}: ${l.t}`), "", GZ_KY.s3 + ":", ...P.tips.map(x => "• " + x), "", GZ_KY.s4 + ":", ...GZ_KY.r.map(x => "• " + x), "", GZ_KY.live + " " + SITE_URL, GZ_KY.data].join("\n"); }
 function gvGzRender(el, G) {
+  GZL = (location.hash || "").slice(1).split("?")[0].split("/")[2] === "ru" ? "ru" : "ky"; const GZ_KY = GZ_T[GZL];
   const cached = (() => { try { return JSON.parse(localStorage.getItem("tazaAba.gvWin2." + CITY) || "null"); } catch (e) { return null; } })();
-  let P = gvWithLang("ky", () => gvGzParts(G, gvBriefWin(cached)));
+  let P = gvWithLang(GZL, () => gvGzParts(G, gvBriefWin(cached)));
   const pin = a => a == null ? "—" : `<span class="gv-chip" style="background:${level(a).color}">${Math.round(a)}</span>`;
-  const sheet = () => gvWithLang("ky", () => `<article class="gz-sheet" lang="ky">
+  const sheet = () => gvWithLang(GZL, () => `<article class="gz-sheet" lang="${GZL}">
     <header class="gz-head"><div><h1>${esc(GZ_KY.title)}</h1><p class="sub">${esc(GZ_KY.sub.replace("{city}", P.c).replace("{date}", P.date))}</p></div>
       <figure class="gb-qr gz-qr"><img src="icons/qr-site.svg" alt="QR: https://taza-aba.surge.sh/" width="64" height="64"><figcaption>taza-aba.surge.sh</figcaption></figure></header>
     <section class="gz-s"><h3>${GZ_KY.s1}</h3><div class="gz-k"><div><small>${GV("b30")}</small>${pin(P.B.a30)}</div><div><small>${GV("bDw")}</small><b>${gvF(P.B.dO)}<span class="small muted"> / ${gvF(P.B.dN)}</span></b></div></div>
@@ -660,13 +667,14 @@ function gvGzRender(el, G) {
     <footer class="gz-f"><p><b>${GZ_KY.live}</b> taza-aba.surge.sh</p><p class="small muted">${esc(GZ_KY.data)} ${gvAs("airnow")}, ${gvAs("who20")}, ${gvAs("unicef")}, ${gvAs("om")}</p></footer></article>`);
   el.innerHTML = `<p class="gv-noprint small"><a href="#govbrief">${GV("gzBack")}</a> · <a href="#gov">${GV("bFull")}</a></p>
     <p class="gv-noprint small muted gz-hint">${esc(GV("gzHint"))}</p>
+    <div class="gv-acts gv-noprint gz-lang" role="group" aria-label="${esc(GV("gzLang"))}">${[["ky", "Кыргызча"], ["ru", "Русский"]].map(([k, n]) => `<a class="btn${k === GZL ? "" : " ghost"}" href="#govbrief/gazeta${k === "ru" ? "/ru" : ""}" lang="${k}"${k === GZL ? ' aria-current="page"' : ""}>${n}</a>`).join("")}</div>
     <div class="gv-acts gv-noprint"><button class="btn" id="gzPrint" type="button">${GV("gzPrint")}</button><button class="btn ghost" id="gzCopy" type="button">${GV("gzCopy")}</button></div>
     <div id="gzBox">${sheet()}</div>`;
   $("#gzPrint").onclick = () => window.print();
   $("#gzCopy").onclick = () => copyText(gvGzText(P));
   { const dc = CITY; gvCoef().then(j => { const x = j && j.cities && j.cities[dc], p = $("#gzDiv"); if (!p || CITY !== dc || !x || !x.div) return;   // v77: вечернее расхождение модели и датчиков (7 дн.), на кыргызском
-    P.divLine = gvWithLang("ky", () => gvDivLine(x.div)); if (P.divLine) { p.textContent = "🌙 " + P.divLine; p.hidden = false; } }).catch(e => console.warn("gazeta div:", e.message)); }
-  if (!P.winLine) { const wc = CITY; gvWinLoad().then(W => { if (CITY !== wc) return; P.winLine = gvWithLang("ky", () => gvBriefWin(W)); const p = $("#gzWin"); if (p && P.winLine) p.textContent = "❄️ " + P.winLine; }).catch(e => console.warn("gazeta winters:", e.message)); }
+    P.divLine = gvWithLang(GZL, () => gvDivLine(x.div)); if (P.divLine) { p.textContent = "🌙 " + P.divLine; p.hidden = false; } }).catch(e => console.warn("gazeta div:", e.message)); }
+  if (!P.winLine) { const wc = CITY; gvWinLoad().then(W => { if (CITY !== wc) return; P.winLine = gvWithLang(GZL, () => gvBriefWin(W)); const p = $("#gzWin"); if (p && P.winLine) p.textContent = "❄️ " + P.winLine; }).catch(e => console.warn("gazeta winters:", e.message)); }
 }
 (function () { const _b = gvBriefRender;
   gvBriefRender = function (el, G) {
@@ -734,11 +742,11 @@ const gvMyLn = {};   // CITY|lang → строка (для текста «Ско
 (function () { const _r = gvBriefRender, _bt = gvBriefText, _gt = gvGzText;
   const ins = (s, line, after) => { if (!line) return s; const L = s.split("\n"), i = after ? L.indexOf(after) : -1; L.splice(i >= 0 ? i + 1 : 3, 0, line); return L.join("\n"); };
   gvBriefText = function (G, B, winLine, divLine) { return ins(_bt(G, B, winLine, divLine), gvMyLn[CITY + "|" + LANG], winLine); };
-  gvGzText = function (P) { return gvWithLang("ky", () => ins(_gt(P), gvMyLn[CITY + "|ky"], P.winLine)); };   // и подписи «30 күн» всегда на кыргызском (раньше — на языке интерфейса)
+  gvGzText = function (P) { return gvWithLang(GZL, () => ins(_gt(P), gvMyLn[CITY + "|" + GZL], P.winLine)); };   // и подписи «30 күн» всегда на кыргызском (раньше — на языке интерфейса)
   gvBriefRender = function (el, G) { _r(el, G);
     const gz = el.classList.contains("v-gazeta"), anchor = el.querySelector(gz ? "#gzWin" : "#gbWin"); if (!anchor) return;
-    const lg = gz ? "ky" : LANG, c = CITY, put = t => { const old = el.querySelector("#gbMy"); if (old) old.remove(); if (!t) return;
-      anchor.insertAdjacentHTML("afterend", `<p class="small gb-my" id="gbMy"${gz ? ' lang="ky"' : ""}>📅 ${esc(t)}</p>`); };
+    const lg = gz ? GZL : LANG, c = CITY, put = t => { const old = el.querySelector("#gbMy"); if (old) old.remove(); if (!t) return;
+      anchor.insertAdjacentHTML("afterend", `<p class="small gb-my" id="gbMy"${gz ? ` lang="${GZL}"` : ""}>📅 ${esc(t)}</p>`); };
     const k = c + "|" + lg; if (gvMyLn[k]) return put(gvMyLn[k]);
     gvArLoad(c).then(A => { if (CITY !== c || !el.isConnected || !el.contains(anchor)) return; let t = null;
       try { t = gvWithLang(lg, () => gvMyLine(A)); } catch (e) { console.warn("brief same-period:", e.message); }
