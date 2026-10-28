@@ -22,7 +22,7 @@
   "hours"
  ],
  "started": "2026-10-20",
- "updated": "2026-10-27T01:37:21.313Z",
+ "updated": "2026-10-28T01:42:48.971Z",
  "cities": {
   "bishkek": {
    "name": {
@@ -34,9 +34,9 @@
    "lat": 42.8746,
    "lon": 74.5698,
    "file": "bishkek.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "naryn": {
    "name": {
@@ -48,9 +48,9 @@
    "lat": 41.4287,
    "lon": 75.9911,
    "file": "naryn.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "osh": {
    "name": {
@@ -62,9 +62,9 @@
    "lat": 40.53,
    "lon": 72.8,
    "file": "osh.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "jalal": {
    "name": {
@@ -76,9 +76,9 @@
    "lat": 40.933,
    "lon": 73,
    "file": "jalal.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "karakol": {
    "name": {
@@ -90,9 +90,9 @@
    "lat": 42.49,
    "lon": 78.39,
    "file": "karakol.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "talas": {
    "name": {
@@ -104,9 +104,9 @@
    "lat": 42.52,
    "lon": 72.24,
    "file": "talas.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "batken": {
    "name": {
@@ -118,9 +118,9 @@
    "lat": 40.06,
    "lon": 70.82,
    "file": "batken.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "tokmok": {
    "name": {
@@ -132,9 +132,9 @@
    "lat": 42.84,
    "lon": 75.29,
    "file": "tokmok.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "balykchy": {
    "name": {
@@ -146,9 +146,9 @@
    "lat": 42.4571,
    "lon": 76.1963,
    "file": "balykchy.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "cholponata": {
    "name": {
@@ -160,9 +160,9 @@
    "lat": 42.6417,
    "lon": 77.0665,
    "file": "cholponata.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "uchkun_naryn": {
    "name": {
@@ -174,9 +174,9 @@
    "lat": 41.3813,
    "lon": 75.3594,
    "file": "uchkun_naryn.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kemin": {
    "name": {
@@ -188,9 +188,9 @@
    "lat": 42.7822,
    "lon": 75.6895,
    "file": "kemin.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kajisay": {
    "name": {
@@ -202,9 +202,9 @@
    "lat": 42.1379,
    "lon": 77.1829,
    "file": "kajisay.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "toktogul": {
    "name": {
@@ -216,9 +216,9 @@
    "lat": 41.8719,
    "lon": 72.9378,
    "file": "toktogul.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "uzgen": {
    "name": {
@@ -230,9 +230,9 @@
    "lat": 40.7688,
    "lon": 73.2987,
    "file": "uzgen.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kyzylkiya": {
    "name": {
@@ -244,9 +244,9 @@
    "lat": 40.26,
    "lon": 72.1312,
    "file": "kyzylkiya.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "razzakov": {
    "name": {
@@ -258,9 +258,9 @@
    "lat": 39.8361,
    "lon": 69.5312,
    "file": "razzakov.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "sulukta": {
    "name": {
@@ -272,9 +272,9 @@
    "lat": 39.9407,
    "lon": 69.5712,
    "file": "sulukta.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kadamjay": {
    "name": {
@@ -286,9 +286,9 @@
    "lat": 40.1302,
    "lon": 71.7288,
    "file": "kadamjay.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "aidarken": {
    "name": {
@@ -300,9 +300,9 @@
    "lat": 39.9464,
    "lon": 71.3424,
    "file": "aidarken.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "bazarkorgon": {
    "name": {
@@ -314,9 +314,9 @@
    "lat": 41.0349,
    "lon": 72.7429,
    "file": "bazarkorgon.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kerben": {
    "name": {
@@ -328,9 +328,9 @@
    "lat": 41.4896,
    "lon": 71.7546,
    "file": "kerben.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "karakul": {
    "name": {
@@ -342,9 +342,9 @@
    "lat": 41.6316,
    "lon": 72.6718,
    "file": "karakul.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "mailuusuu": {
    "name": {
@@ -356,9 +356,9 @@
    "lat": 41.2457,
    "lon": 72.4508,
    "file": "mailuusuu.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "tashkumyr": {
    "name": {
@@ -370,9 +370,9 @@
    "lat": 41.3453,
    "lon": 72.2215,
    "file": "tashkumyr.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kochkorata": {
    "name": {
@@ -384,9 +384,9 @@
    "lat": 41.0354,
    "lon": 72.4834,
    "file": "kochkorata.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kokjangak": {
    "name": {
@@ -398,9 +398,9 @@
    "lat": 41.0309,
    "lon": 73.1979,
    "file": "kokjangak.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "shamaldysay": {
    "name": {
@@ -412,9 +412,9 @@
    "lat": 41.1987,
    "lon": 72.1802,
    "file": "shamaldysay.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "karasuu": {
    "name": {
@@ -426,9 +426,9 @@
    "lat": 40.7069,
    "lon": 72.8799,
    "file": "karasuu.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "nookat": {
    "name": {
@@ -440,9 +440,9 @@
    "lat": 40.2657,
    "lon": 72.6178,
    "file": "nookat.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "gulcha": {
    "name": {
@@ -454,9 +454,9 @@
    "lat": 40.3118,
    "lon": 73.4438,
    "file": "gulcha.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "karabalta": {
    "name": {
@@ -468,9 +468,9 @@
    "lat": 42.8011,
    "lon": 73.8523,
    "file": "karabalta.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kant": {
    "name": {
@@ -482,9 +482,9 @@
    "lat": 42.8888,
    "lon": 74.8501,
    "file": "kant.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kaindy": {
    "name": {
@@ -496,9 +496,9 @@
    "lat": 42.8271,
    "lon": 73.6784,
    "file": "kaindy.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "belovodskoe": {
    "name": {
@@ -510,9 +510,9 @@
    "lat": 42.8319,
    "lon": 74.0969,
    "file": "belovodskoe.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "sokuluk": {
    "name": {
@@ -524,9 +524,9 @@
    "lat": 42.8565,
    "lon": 74.2983,
    "file": "sokuluk.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "aravan": {
    "name": {
@@ -538,9 +538,9 @@
    "lat": 40.5115,
    "lon": 72.4998,
    "file": "aravan.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "shopokov": {
    "name": {
@@ -552,9 +552,9 @@
    "lat": 42.8575,
    "lon": 74.342,
    "file": "shopokov.csv",
-   "days": 1426,
+   "days": 1427,
    "first": "2022-12-01",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   },
   "kochkor": {
    "name": {
@@ -566,9 +566,9 @@
    "lat": 42.2132,
    "lon": 75.7541,
    "file": "kochkor.csv",
-   "days": 8,
+   "days": 9,
    "first": "2026-10-19",
-   "last": "2026-10-26"
+   "last": "2026-10-27"
   }
  },
  "backfill": {
