@@ -1,0 +1,47 @@
+/* v80: доступность (WCAG 2.1 AA, проверено axe-core) — только контраст и читаемость, цвета шкалы AQI EPA не меняются.
+   1) приглушённый текст светлой темы чуть темнее (#66707A → #5A636C: 4.4 → 5.4:1 на сером фоне);
+   2) полупрозрачные подписи (opacity .6–.85: группы меню, шапки таблиц #gov, «← Главная», подписи #history) — сплошной приглушённый цвет;
+   3) цифры AQI на жёлтых/оранжевых/зелёных/красных плашках — тёмным текстом без тени (белый был 2.3–3.9:1);
+   4) текст цвета категории AQI на светлом фоне (прогноз по дням, «Сравнение районов», чипы) — более тёмный оттенок того же цвета в светлой теме, более светлый — в тёмной;
+   5) синие ссылки/кнопки эко-маршрутов и «Моё местоположение» — контрастный оттенок синего. */
+html[data-theme="light"]{--c-muted:#5A636C}
+html body :is(.nav-grp,.gv-t th,.gv-zs small,.h-back,.h-kpis span,.h-kpis small,.h-grp li small,.h-rd small,.h-rn,.eco-legend2 em,.adv-modes small,.e3-km,.eco-best-src){opacity:1!important}
+html body :is(.gv-t th,.gv-zs small,.h-back,.h-kpis small,.h-grp li small,.h-rd small,.h-rn){color:var(--c-muted)!important}
+html body .h-back{color:var(--c-text)!important}
+html body :is(.gv-chip,.aqi-pin)[style*="background:#2fbf71"],
+html body .src-list em[style*="--c:#2fbf71"],
+html body .h-cat[style*="--c:#2fbf71"] :is(b,span),
+html body :is(.gv-chip,.aqi-pin)[style*="background:#e6b800"],
+html body .src-list em[style*="--c:#e6b800"],
+html body .h-cat[style*="--c:#e6b800"] :is(b,span),
+html body :is(.gv-chip,.aqi-pin)[style*="background:#e3b505"],
+html body .src-list em[style*="--c:#e3b505"],
+html body .h-cat[style*="--c:#e3b505"] :is(b,span),
+html body :is(.gv-chip,.aqi-pin)[style*="background:#ff8a3d"],
+html body .src-list em[style*="--c:#ff8a3d"],
+html body .h-cat[style*="--c:#ff8a3d"] :is(b,span),
+html body :is(.gv-chip,.aqi-pin)[style*="background:#e5484d"],
+html body .src-list em[style*="--c:#e5484d"],
+html body .h-cat[style*="--c:#e5484d"] :is(b,span),
+html body :is(.gv-chip,.aqi-pin)[style*="background:#29a763"],
+html body .src-list em[style*="--c:#29a763"],
+html body .h-cat[style*="--c:#29a763"] :is(b,span),
+html body :is(.gv-chip,.aqi-pin)[style*="background:#caa100"],
+html body .src-list em[style*="--c:#caa100"],
+html body .h-cat[style*="--c:#caa100"] :is(b,span){color:#14181C!important;text-shadow:none!important}
+@media screen{
+html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style^="color:#2fbf71"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*=";color:#2fbf71"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*="; color:#2fbf71"]{color:#17703f!important}
+html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style^="color:#e6b800"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*=";color:#e6b800"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*="; color:#e6b800"]{color:#7a6100!important}
+html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style^="color:#e3b505"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*=";color:#e3b505"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*="; color:#e3b505"]{color:#7a6100!important}
+html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style^="color:#ff8a3d"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*=";color:#ff8a3d"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*="; color:#ff8a3d"]{color:#a3460b!important}
+html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style^="color:#e5484d"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*=";color:#e5484d"],html[data-theme="light"] body :is(span,div,b,em,small,strong,i,a)[style*="; color:#e5484d"]{color:#b4232a!important}
+html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style^="color:#8e44ad"],html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style*=";color:#8e44ad"],html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style*="; color:#8e44ad"]{color:#c79be0!important}
+html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style^="color:#7a1f2b"],html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style*=";color:#7a1f2b"],html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style*="; color:#7a1f2b"]{color:#e08a96!important}
+html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style^="color:#e5484d"],html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style*=";color:#e5484d"],html[data-theme="dark"] body :is(span,div,b,em,small,strong,i,a)[style*="; color:#e5484d"]{color:#ff8589!important}
+html[data-theme="light"] body .eco :is(.eco-add,.eco-rd em,.eco-rd>svg,.eco-ib,.eco-loc){color:#1F6FA8}
+html[data-theme="dark"] body .eco :is(.eco-add,.eco-rd em,.eco-rd>svg,.eco-ib){color:#5AB4E8}
+html[data-theme="light"] body .gv-dn{color:#17784e}
+html body .tf-t{background:#4361d8}
+html[data-theme="light"] body .dl-ver{color:#185A8A}
+html[data-theme="light"] body :is(.dl-btn2,.dl-arm a),html[data-theme="light"] body .dl-home em{color:#1F6FA8}
+}

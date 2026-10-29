@@ -71,3 +71,16 @@ function start(){
 window.taPolishStrip=strip;
 if(document.body)start();else document.addEventListener("DOMContentLoaded",start);
 })();
+/* v80: доступность — горизонтально прокручиваемые блоки (таблицы #gov, часы погоды) получают фокус с клавиатуры
+   (tabindex=0, role=region, подпись из ближайшего заголовка), чтобы их можно было прокрутить стрелками без мыши. */
+(function(){"use strict";
+if(window.__taScrollA11y)return;window.__taScrollA11y=1;
+var SEL=".gv-tw,.wx-hours",t=0;
+function lbl(el){for(var x=el;x&&x!==document.body;x=x.parentElement){var h=x.querySelector&&x.querySelector("h1,h2,h3,summary");if(h&&h.textContent.trim())return h.textContent.trim().slice(0,80);}return "";}
+function run(){t=0;var a=document.querySelectorAll(SEL);for(var i=0;i<a.length;i++){var el=a[i],sc=el.scrollWidth>el.clientWidth+1;
+  if(sc&&!el.hasAttribute("tabindex")){el.setAttribute("tabindex","0");el.setAttribute("role","region");var l=lbl(el);if(l)el.setAttribute("aria-label",l);el.dataset.a11ySc="1";}
+  else if(!sc&&el.dataset.a11ySc){el.removeAttribute("tabindex");el.removeAttribute("role");el.removeAttribute("aria-label");delete el.dataset.a11ySc;}}}
+function q(){if(!t)t=setTimeout(run,400);}
+function a11yGo(){new MutationObserver(q).observe(document.body,{childList:true,subtree:true});addEventListener("resize",q);q();}
+if(document.body)a11yGo();else document.addEventListener("DOMContentLoaded",a11yGo);
+})();
