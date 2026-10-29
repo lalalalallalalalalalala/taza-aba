@@ -48,3 +48,12 @@
   html body .home-grid h2{break-after:avoid}
   html body .view:has(>.home-grid){zoom:.8}
 }
+/* v81: текст цвета категории AQI на бумаге (белый фон) — тёмные оттенки в любой теме, как в светлой на экране (a11y.css v80 действует только @media screen;
+   в печати «100 · Умеренно» жёлтым по белому было ~1,9:1) */
+@media print{
+html body :is(span,div,b,em,small,strong,i,a)[style^="color:#2fbf71"],html body :is(span,div,b,em,small,strong,i,a)[style*=";color:#2fbf71"],html body :is(span,div,b,em,small,strong,i,a)[style*="; color:#2fbf71"]{color:#17703f!important}
+html body :is(span,div,b,em,small,strong,i,a)[style^="color:#e6b800"],html body :is(span,div,b,em,small,strong,i,a)[style*=";color:#e6b800"],html body :is(span,div,b,em,small,strong,i,a)[style*="; color:#e6b800"]{color:#7a6100!important}
+html body :is(span,div,b,em,small,strong,i,a)[style^="color:#e3b505"],html body :is(span,div,b,em,small,strong,i,a)[style*=";color:#e3b505"],html body :is(span,div,b,em,small,strong,i,a)[style*="; color:#e3b505"]{color:#7a6100!important}
+html body :is(span,div,b,em,small,strong,i,a)[style^="color:#ff8a3d"],html body :is(span,div,b,em,small,strong,i,a)[style*=";color:#ff8a3d"],html body :is(span,div,b,em,small,strong,i,a)[style*="; color:#ff8a3d"]{color:#a3460b!important}
+html body :is(span,div,b,em,small,strong,i,a)[style^="color:#e5484d"],html body :is(span,div,b,em,small,strong,i,a)[style*=";color:#e5484d"],html body :is(span,div,b,em,small,strong,i,a)[style*="; color:#e5484d"]{color:#b4232a!important}
+}
