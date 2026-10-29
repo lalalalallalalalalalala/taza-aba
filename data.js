@@ -297,7 +297,8 @@ const MORE_DISTRICTS = {
 Object.entries(MORE_DISTRICTS).forEach(([cid, list]) => {
   const C = CITIES[cid];
   list.forEach(([id, lat, lon, factor, coalShare, type, ru, ky, en]) => {
-    C.districts.push({ id, lat, lon, factor, coalShare, type, approx: true, name: { ru, ky, en },
+    /* v84: доля угля здесь — выдуманная (демо); v71 обнулял её до того, как сюда добавлялись эти районы → не показываем */
+    C.districts.push({ id, lat, lon, factor, coalShare: null, type, approx: true, name: { ru, ky, en },
       loc: { ru: `в районе «${ru}»`, ky: `«${ky}» аймагында`, en: `in ${en}` } });
   });
 });
