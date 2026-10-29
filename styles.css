@@ -270,3 +270,20 @@ details.how li{margin:5px 0}
 .dlist .dl-note{font-weight:600;line-height:1.45;padding:2px 4px 8px;border-bottom:1px solid var(--line)}
 .dlist .dl-src{font-weight:600}
 .dlist .dl-src.s{color:var(--ink)}
+/* v83: свёрнутые группы районов с одинаковым значением */
+.dlist .dl-grp{border-bottom:1px solid var(--line)}
+.dlist .dl-grp:last-child{border:0}
+.dlist .dl-grp-h{width:100%;background:none;border:0;border-bottom:0;font:inherit;color:inherit;text-align:left;cursor:pointer;border-radius:10px}
+.dlist .dl-grp-h:hover{background:color-mix(in srgb,var(--c-accent,#3b82c4) 7%,transparent)}
+.dlist .dl-grp-h:focus-visible{outline:2px solid var(--c-accent,#3b82c4);outline-offset:-2px}
+.dlist .dl-grp-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.dlist .dl-grp-t .name{overflow-wrap:anywhere}
+.dlist .dl-grp-t .small{font-weight:700}
+.dlist .dl-grp-a{display:flex;align-items:center;gap:4px;font-weight:700;color:var(--c-link,#1F6FA8);white-space:nowrap;flex-shrink:0}
+.dlist .dl-grp-a svg{transition:transform .2s}
+.dlist .dl-grp.open .dl-grp-a svg{transform:rotate(180deg)}
+.dlist .dl-grp-b{padding-left:14px;border-left:2px solid var(--line);margin:0 0 6px 20px}
+.dlist .dl-grp-b .item:last-child{border:0}
+@media (max-width:420px){.dlist .dl-grp-l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){.dlist .dl-grp-a svg{transition:none}}
+@media print{.dlist .dl-grp-b[hidden]{display:block!important}.dlist .dl-grp-a{display:none}}

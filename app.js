@@ -677,14 +677,51 @@ const DLS_T = { ru: { s: "датчики рядом", st: "станция", m: "
   en: { s: "nearby sensors", st: "station", m: "CAMS model" } };
 const dlsT = k => (DLS_T[LANG] || DLS_T.ru)[k];
 function dlSrc(r) { return !r || r.aqi == null ? "" : r.src === "sensors" ? dlsT("s") : r.src === "station" ? dlsT("st") : r.src === "model" ? dlsT("m") : ""; }
-function distListHTML(arr) {
-  const r = DISTRICTS.map(d => ({ d, a: air.byDistrict[d.id].aqi })).sort((x, y) => byAqiDesc(x.a, y.a)).map(({ d, a }) => {
-    const Lv = level(a), R = air.byDistrict[d.id], src = dlSrc(R);
-    return `<div class="item"><div class="badge" style="background:${Lv.color}">${aqiTxt(a)}</div>
+/* v83: подряд идущие районы с одинаковым AQI и одним источником числа сворачиваются в одну строку
+ * («Ак-Кыя, Центр и ещё 41 район · 85 · модель CAMS»); нажатие (или Enter/пробел) раскрывает полный список. */
+const DLG_T = {
+  ru: { more: n => `и ещё ${n} ${n % 10 === 1 && n % 100 !== 11 ? "район" : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? "района" : "районов"}`,
+    same: n => `${n} ${n % 10 === 1 && n % 100 !== 11 ? "район" : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? "района" : "районов"} с одинаковым значением`, show: "показать все", hide: "свернуть" },
+  ky: { more: n => `жана дагы ${n} район`, same: n => `бирдей маанидеги ${n} район`, show: "баарын көрсөтүү", hide: "жыйноо" },
+  en: { more: n => `and ${n} more ${n === 1 ? "district" : "districts"}`, same: n => `${n} districts with the same value`, show: "show all", hide: "collapse" } };
+const dlgT = () => DLG_T[LANG] || DLG_T.ru;
+const DL_OPEN = new Set();
+const DL_SRC_ORD = { sensors: 0, station: 1, model: 2 };
+function dlItemHTML(d, a) {
+  const Lv = level(a), R = air.byDistrict[d.id], src = dlSrc(R);
+  return `<div class="item"><div class="badge" style="background:${Lv.color}">${aqiTxt(a)}</div>
       <div style="flex:1"><div class="name">${esc(dName(d))}</div><div class="small muted" style="font-weight:700">${tr(Lv.name)} · ${tr(DTYPE[d.type])}${src ? ` · <span class="dl-src${R.src === "sensors" ? " s" : ""}">${esc(src)}</span>` : ""}</div></div>
       ${d.coalShare == null ? "" : `<div class="small muted" style="font-weight:800">🔥 ${Math.round(d.coalShare * 100)}%</div>`}</div>`;
-  });
-  return arr ? r : r.join("");
+}
+function dlGroupHTML(g) {
+  const { a, R } = g[0], Lv = level(a), src = dlSrc(R), T = dlgT(), n = g.length;
+  const key = a + "|" + (R && R.src) + "|" + g[0].d.id, open = DL_OPEN.has(key), id = "dlg-" + g[0].d.id;
+  const names = g.slice(0, 2).map(x => esc(dName(x.d))).join(", ");
+  return `<div class="dl-grp${open ? " open" : ""}" data-k="${esc(key)}"><button type="button" class="item dl-grp-h" aria-expanded="${open}" aria-controls="${esc(id)}">
+      <span class="badge" style="background:${Lv.color}">${aqiTxt(a)}</span>
+      <span class="dl-grp-t"><span class="name">${names} ${esc(T.more(n - 2))}</span><span class="small muted">${tr(Lv.name)}${src ? ` · <span class="dl-src${R.src === "sensors" ? " s" : ""}">${esc(src)}</span>` : ""} · ${esc(T.same(n))}</span></span>
+      <span class="dl-grp-a small"><span class="dl-grp-l">${esc(open ? T.hide : T.show)}</span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </button><div class="dl-grp-b" id="${esc(id)}"${open ? "" : " hidden"}>${g.map(x => dlItemHTML(x.d, x.a)).join("")}</div></div>`;
+}
+function distListHTML(arr) {
+  const rows = DISTRICTS.map(d => ({ d, a: air.byDistrict[d.id].aqi, R: air.byDistrict[d.id] }))
+    .sort((x, y) => byAqiDesc(x.a, y.a) || ((DL_SRC_ORD[x.R && x.R.src] ?? 3) - (DL_SRC_ORD[y.R && y.R.src] ?? 3)));
+  const out = []; let i = 0;
+  while (i < rows.length) {
+    let j = i + 1; const s0 = rows[i].R && rows[i].R.src;
+    if (rows[i].a != null) while (j < rows.length && rows[j].a === rows[i].a && (rows[j].R && rows[j].R.src) === s0) j++;
+    out.push(j - i >= 3 ? dlGroupHTML(rows.slice(i, j)) : rows.slice(i, j).map(x => dlItemHTML(x.d, x.a)).join(""));
+    i = j;
+  }
+  return arr ? out : out.join("");
+}
+function dlGroupBind(el) {
+  const di = el.querySelector(".dl-items"); if (!di || di.__dlg) return; di.__dlg = 1;
+  di.addEventListener("click", e => { const b = e.target.closest(".dl-grp-h"); if (!b) return;
+    const g = b.parentNode, body = g.querySelector(".dl-grp-b"), open = b.getAttribute("aria-expanded") !== "true", T = dlgT();
+    b.setAttribute("aria-expanded", open); body.hidden = !open; g.classList.toggle("open", open);
+    b.querySelector(".dl-grp-l").textContent = open ? T.hide : T.show;
+    open ? DL_OPEN.add(g.dataset.k) : DL_OPEN.delete(g.dataset.k); });
 }
 const DL_N = {
   ru: { same: (lo, hi) => `Между районами разницы почти нет (${lo === hi ? "везде AQI " + lo : "AQI " + lo + "–" + hi}): модель CAMS с шагом ~40 км районы не различает.`,
@@ -785,7 +822,7 @@ function viewMap(el) {
     M.once("moveend", () => { if (M !== map) return; const op = () => { if (M !== map) return; drawPins(); const mk = MSu ? null : pins.get("d:" + id); mk ? mk.openPopup() : L.popup().setLatLng([d.lat, d.lon]).setContent(popD(d)).openOn(M); };
       op(); window.__gsFocus = null; setTimeout(() => { if (M === map && !M.getContainer().querySelector(".leaflet-popup")) op(); }, 700); }); };
   // список районов и второстепенные слои — в свободное время браузера (не мешают первой отрисовке карты)
-  dlNoteFill(el);
+  dlNoteFill(el); dlGroupBind(el);
   { const items = distListHTML(true); let i = 0; const step = () => { const di = el.querySelector(".dl-items"); if (!di || M !== map || i >= items.length) return;
       di.insertAdjacentHTML("beforeend", items.slice(i, i += 25).join("")); idle(step, 400); }; idle(step, 300); }
   idle(() => { if (M !== map) return;
