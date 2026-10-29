@@ -3,30 +3,38 @@
    2) полупрозрачные подписи (opacity .6–.85: группы меню, шапки таблиц #gov, «← Главная», подписи #history) — сплошной приглушённый цвет;
    3) цифры AQI на жёлтых/оранжевых/зелёных/красных плашках — тёмным текстом без тени (белый был 2.3–3.9:1);
    4) текст цвета категории AQI на светлом фоне (прогноз по дням, «Сравнение районов», чипы) — более тёмный оттенок того же цвета в светлой теме, более светлый — в тёмной;
-   5) синие ссылки/кнопки эко-маршрутов и «Моё местоположение» — контрастный оттенок синего. */
+   5) (v82) то же для значков AQI в списках районов и городов (.dlist .badge);
+   6) синие ссылки/кнопки эко-маршрутов и «Моё местоположение» — контрастный оттенок синего. */
 html[data-theme="light"]{--c-muted:#5A636C}
 html body :is(.nav-grp,.gv-t th,.gv-zs small,.h-back,.h-kpis span,.h-kpis small,.h-grp li small,.h-rd small,.h-rn,.eco-legend2 em,.adv-modes small,.e3-km,.eco-best-src){opacity:1!important}
 html body :is(.gv-t th,.gv-zs small,.h-back,.h-kpis small,.h-grp li small,.h-rd small,.h-rn){color:var(--c-muted)!important}
 html body .h-back{color:var(--c-text)!important}
 html body :is(.gv-chip,.aqi-pin)[style*="background:#2fbf71"],
+html body .dlist .badge[style*="background:#2fbf71"],
 html body .src-list em[style*="--c:#2fbf71"],
 html body .h-cat[style*="--c:#2fbf71"] :is(b,span),
 html body :is(.gv-chip,.aqi-pin)[style*="background:#e6b800"],
+html body .dlist .badge[style*="background:#e6b800"],
 html body .src-list em[style*="--c:#e6b800"],
 html body .h-cat[style*="--c:#e6b800"] :is(b,span),
 html body :is(.gv-chip,.aqi-pin)[style*="background:#e3b505"],
+html body .dlist .badge[style*="background:#e3b505"],
 html body .src-list em[style*="--c:#e3b505"],
 html body .h-cat[style*="--c:#e3b505"] :is(b,span),
 html body :is(.gv-chip,.aqi-pin)[style*="background:#ff8a3d"],
+html body .dlist .badge[style*="background:#ff8a3d"],
 html body .src-list em[style*="--c:#ff8a3d"],
 html body .h-cat[style*="--c:#ff8a3d"] :is(b,span),
 html body :is(.gv-chip,.aqi-pin)[style*="background:#e5484d"],
+html body .dlist .badge[style*="background:#e5484d"],
 html body .src-list em[style*="--c:#e5484d"],
 html body .h-cat[style*="--c:#e5484d"] :is(b,span),
 html body :is(.gv-chip,.aqi-pin)[style*="background:#29a763"],
+html body .dlist .badge[style*="background:#29a763"],
 html body .src-list em[style*="--c:#29a763"],
 html body .h-cat[style*="--c:#29a763"] :is(b,span),
 html body :is(.gv-chip,.aqi-pin)[style*="background:#caa100"],
+html body .dlist .badge[style*="background:#caa100"],
 html body .src-list em[style*="--c:#caa100"],
 html body .h-cat[style*="--c:#caa100"] :is(b,span){color:#14181C!important;text-shadow:none!important}
 @media screen{

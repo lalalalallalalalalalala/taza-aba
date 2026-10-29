@@ -114,6 +114,11 @@ function aiContext() {
       const x = typeof airCtx === "function" ? airCtx() : null;
       if (x) lines.push(`Today: best hour ${x.vars.best} (AQI ${x.vars.bv}), peak ${x.vars.worst} (AQI ${x.vars.wv}). Tomorrow max AQI ${x.vars.tm}.`);
       const days = dailyForecast(a).slice(1, 4); if (days.length) lines.push("Next days max AQI: " + days.map(z => z.date + " " + z.max).join(", ") + ".");
+      /* v82: честный разброс по районам — чтобы ИИ не называл «самый чистый район», когда модель их не различает */
+      if (typeof dlNoteText === "function") { const v = DISTRICTS.map(x => ({ x, r: air.byDistrict[x.id] })).filter(o => o.r && o.r.aqi != null);
+        if (v.length >= 2) { const as = v.map(o => o.r.aqi), lo = Math.min(...as), hi = Math.max(...as), ns = v.filter(o => o.r.src === "sensors").length;
+          const nm = a => v.filter(o => o.r.aqi === a).map(o => tr(o.x.name)), L1 = nm(lo), H1 = nm(hi);
+          lines.push(`District AQI across the city (${v.length} districts): lowest ${lo} (${L1.slice(0, 3).join(", ")}${L1.length > 3 ? " and " + (L1.length - 3) + " more" : ""}), highest ${hi} (${H1.slice(0, 3).join(", ")}${H1.length > 3 ? " and " + (H1.length - 3) + " more" : ""}). ${ns ? `${ns} of ${v.length} districts are corrected with nearby residents' low-cost sensors; the rest are` : "All districts are"} the CAMS model (~40 km grid), which cannot tell neighbouring districts apart. ${hi - lo < 5 ? "There is practically no difference between districts — do not name a cleanest or dirtiest district." : "Mention whether a value is a model estimate or sensor-based when comparing districts."}`); } }
     } else lines.push("Air data is still loading.");
     if (air.weather) lines.push(`Weather now: ${fmt(air.weather.temperature_2m, 0)}°C, wind ${fmt(air.weather.wind_speed_10m, 1)} m/s.`);
   } catch (e) { }

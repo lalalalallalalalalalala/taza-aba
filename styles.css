@@ -266,3 +266,7 @@ details.how li{margin:5px 0}
 .map-sat .aqi-pin,.map-sat .home-pin,.map-sat .mf-cl,.map-sat .mf-pin,.map-sat .c-pin,.map-sat .ms-pin{box-shadow:0 0 0 2px #fff,0 1px 4px #000b!important;text-shadow:0 1px 2px #0009}
 
 @media (max-width:600px){.bm-ctl button{padding:7px 7px;font-size:11px}}
+/* v82: источник числа в списке районов и заметка о зонах модели */
+.dlist .dl-note{font-weight:600;line-height:1.45;padding:2px 4px 8px;border-bottom:1px solid var(--line)}
+.dlist .dl-src{font-weight:600}
+.dlist .dl-src.s{color:var(--ink)}

@@ -624,8 +624,8 @@ function viewCountry(el) {
     <div class="toggles"><div class="toggle" id="backCity">${t("backToCity")}</div></div>
     <div class="legend">${AQI_LEVELS.slice(0, 5).map(l => `<span style="background:${l.color}">${tr(l.name)}</span>`).join("")}</div>
     </div><div class="list-col">
-    <h2>${t("citiesList")}</h2>
-    <div class="card dlist">
+    <h2 id="dlH">${t("citiesList")}</h2>
+    <div class="card dlist" tabindex="0" role="region" aria-labelledby="dlH">
       ${list.map(({ id, c, a }) => { const Lv = level(a);
         return `<div class="item" data-city="${id}" style="cursor:pointer"><div class="badge" style="background:${Lv.color}">${aqiTxt(a)}</div>
           <div style="flex:1"><div class="name">${c.emoji} ${tr(c.name)}</div><div class="small muted" style="font-weight:700">${tr(Lv.name)}</div></div>
@@ -670,15 +670,49 @@ function openCityFromCountry(id) {
   if (m) { m.flyTo(CITIES[id].center, 11, { duration: 0.6 }); m.once("moveend", () => setTimeout(go, 50)); setTimeout(() => { if (mapMode === "country" && m === map) go(); }, 1200); } else go();
 }
 
+/* v82: у каждого района в списке — откуда число (датчики рядом / станция / модель CAMS); над списком — честная заметка,
+ * почему у многих районов одинаковые значения (модель CAMS ~40 км различает 1–3 зоны; разница — только у датчиков). */
+const DLS_T = { ru: { s: "датчики рядом", st: "станция", m: "модель CAMS" },
+  ky: { s: "жанындагы датчиктер", st: "станция", m: "CAMS модели" },
+  en: { s: "nearby sensors", st: "station", m: "CAMS model" } };
+const dlsT = k => (DLS_T[LANG] || DLS_T.ru)[k];
+function dlSrc(r) { return !r || r.aqi == null ? "" : r.src === "sensors" ? dlsT("s") : r.src === "station" ? dlsT("st") : r.src === "model" ? dlsT("m") : ""; }
 function distListHTML(arr) {
   const r = DISTRICTS.map(d => ({ d, a: air.byDistrict[d.id].aqi })).sort((x, y) => byAqiDesc(x.a, y.a)).map(({ d, a }) => {
-    const Lv = level(a);
+    const Lv = level(a), R = air.byDistrict[d.id], src = dlSrc(R);
     return `<div class="item"><div class="badge" style="background:${Lv.color}">${aqiTxt(a)}</div>
-      <div style="flex:1"><div class="name">${esc(dName(d))}</div><div class="small muted" style="font-weight:700">${tr(Lv.name)} · ${tr(DTYPE[d.type])}</div></div>
+      <div style="flex:1"><div class="name">${esc(dName(d))}</div><div class="small muted" style="font-weight:700">${tr(Lv.name)} · ${tr(DTYPE[d.type])}${src ? ` · <span class="dl-src${R.src === "sensors" ? " s" : ""}">${esc(src)}</span>` : ""}</div></div>
       ${d.coalShare == null ? "" : `<div class="small muted" style="font-weight:800">🔥 ${Math.round(d.coalShare * 100)}%</div>`}</div>`;
   });
   return arr ? r : r.join("");
 }
+const DL_N = {
+  ru: { same: (lo, hi) => `Между районами разницы почти нет (${lo === hi ? "везде AQI " + lo : "AQI " + lo + "–" + hi}): модель CAMS с шагом ~40 км районы не различает.`,
+    z: z => z === 1 ? "Модель CAMS (~40 км) даёт на весь город одно значение — районы не различаются." : `Модель CAMS (~40 км) различает в городе только ${z} ${z < 5 ? "зоны" : "зон"} — у районов внутри зоны одно значение.`,
+    noS: " Разницу между соседними районами покажут только наземные датчики.",
+    s: (ns, n, z) => `Отличаются районы, где рядом есть датчики жителей (${ns} из ${n}); остальные показывают модель CAMS${z ? (z === 1 ? " — одно значение на весь город" : `, которая различает в городе только ${z} ${z < 5 ? "зоны" : "зон"}`) : ""}.`,
+    m: "Все значения — модель CAMS (~40 км), а не измерения." },
+  ky: { same: (lo, hi) => `Райондордун ортосунда айырма дээрлик жок (${lo === hi ? "баары AQI " + lo : "AQI " + lo + "–" + hi}): ~40 км кадамы бар CAMS модели райондорду айырмалабайт.`,
+    z: z => z === 1 ? "CAMS модели (~40 км) бүт шаарга бир маани берет — райондор айырмаланбайт." : `CAMS модели (~40 км) шаарда болгону ${z} зонаны айырмалайт — зонанын ичиндеги райондордо бир эле маани.`,
+    noS: " Коңшу райондордун айырмасын жердеги датчиктер гана көрсөтө алат.",
+    s: (ns, n, z) => `Жанында тургундардын датчиктери бар райондор айырмаланат (${n} райондун ${ns}); калгандары CAMS моделин көрсөтөт${z ? (z === 1 ? " — бүт шаарга бир маани" : ` (шаарда болгону ${z} зона)`) : ""}.`,
+    m: "Бардык маанилер — CAMS модели (~40 км), өлчөө эмес." },
+  en: { same: (lo, hi) => `There is almost no difference between districts (${lo === hi ? "AQI " + lo + " everywhere" : "AQI " + lo + "–" + hi}): the ~40 km CAMS model cannot tell districts apart.`,
+    z: z => z === 1 ? "The CAMS model (~40 km) gives one value for the whole city — districts are not distinguished." : `The CAMS model (~40 km) distinguishes only ${z} zones in the city — districts inside a zone share one value.`,
+    noS: " Only ground sensors can show differences between neighbouring districts.",
+    s: (ns, n, z) => `Districts differ where residents' sensors are nearby (${ns} of ${n}); the rest show the CAMS model${z ? (z === 1 ? " — one value for the whole city" : `, which distinguishes only ${z} zones in the city`) : ""}.`,
+    m: "All values are the CAMS model (~40 km), not measurements." } };
+function dlNoteText() {
+  const N = DL_N[LANG] || DL_N.ru, v = DISTRICTS.map(d => air.byDistrict[d.id]).filter(r => r && r.aqi != null);
+  if (v.length < 2) return "";
+  const as = v.map(r => r.aqi), lo = Math.min(...as), hi = Math.max(...as), ns = v.filter(r => r.src === "sensors").length;
+  const zs = new Set(v.map(r => { const m = r.model && r.model.pm25 != null ? r.model.pm25 : r.src === "model" ? r.pm25 : null; return m == null ? null : Math.round(m * 10); }).filter(x => x != null));
+  const z = zs.size && zs.size <= 3 && v.length >= 6 ? zs.size : 0;
+  if (hi - lo < 5) return N.same(lo, hi);
+  if (ns) return N.s(ns, v.length, z);
+  return z ? N.z(z) + N.noS : (v.every(r => r.src === "model") ? N.m : "");
+}
+function dlNoteFill(el) { const n = el.querySelector(".dl-note"); if (!n) return; const s = dlNoteText(); n.textContent = s; n.hidden = !s; }
 function viewMap(el) {
   if (mapMode === "country") return viewCountry(el);
   el.innerHTML = `
@@ -693,8 +727,9 @@ function viewMap(el) {
     </div>
     <div class="legend">${AQI_LEVELS.slice(0, 5).map(l => `<span style="background:${l.color}">${tr(l.name)}</span>`).join("")}</div>
     </div><div class="list-col">
-    <h2>${t("districtsList")}</h2>
-    <div class="card dlist">
+    <h2 id="dlH">${t("districtsList")}</h2>
+    <div class="card dlist" tabindex="0" role="region" aria-labelledby="dlH">
+      <div class="dl-note small muted"></div>
       <div class="dl-items"></div>
       ${DISTRICTS.some(d => d.coalShare != null) ? `<div class="small muted" style="font-weight:700;margin-top:6px">${t("coalShareNote")}</div>` : ""}
     </div></div></div>
@@ -743,13 +778,14 @@ function viewMap(el) {
   M.on("zoomend moveend", drawSoon); M.whenReady(drawPins);
   /* обновление данных на месте (догрузка дальних районов) — без пересоздания карты */
   window.mapUpdate = () => { if (M !== map || !document.body.contains(M.getContainer())) return false; syncCircles(); drawPins(); if (MSu) MSu();
-    const di = el.querySelector(".dl-items"); if (di) di.innerHTML = distListHTML(); return true; };
+    const di = el.querySelector(".dl-items"); if (di) di.innerHTML = distListHTML(); dlNoteFill(el); return true; };
   /* фокус на районе (из глобального поиска) */
   window.mapFocus = id => { const d = DISTRICTS.find(x => x.id === id); if (!d || M !== map) return; if (MSu && window.msFocus) return msFocus(d);
     M.flyTo([d.lat, d.lon], Math.max(15, M.getZoom()), { duration: LOWEND ? 0 : 0.6 });
     M.once("moveend", () => { if (M !== map) return; const op = () => { if (M !== map) return; drawPins(); const mk = MSu ? null : pins.get("d:" + id); mk ? mk.openPopup() : L.popup().setLatLng([d.lat, d.lon]).setContent(popD(d)).openOn(M); };
       op(); window.__gsFocus = null; setTimeout(() => { if (M === map && !M.getContainer().querySelector(".leaflet-popup")) op(); }, 700); }); };
   // список районов и второстепенные слои — в свободное время браузера (не мешают первой отрисовке карты)
+  dlNoteFill(el);
   { const items = distListHTML(true); let i = 0; const step = () => { const di = el.querySelector(".dl-items"); if (!di || M !== map || i >= items.length) return;
       di.insertAdjacentHTML("beforeend", items.slice(i, i += 25).join("")); idle(step, 400); }; idle(step, 300); }
   idle(() => { if (M !== map) return;
