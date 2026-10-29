@@ -5,14 +5,20 @@ window.HERO_ON = (() => { try { const q = new URL(location.href).searchParams.ge
   if (q === "1") localStorage.removeItem("tazaAba.hero"); if (q === "0") localStorage.setItem("tazaAba.hero", "0");
   return localStorage.getItem("tazaAba.hero") !== "0"; } catch (e) { return true; } })();
 const HR_T = {
-  ru: { tag: "ИИ-помощник о воздухе", q1: c => `Какой воздух сейчас в ${c}?`, a1: (c, a, lv, n, t) => `Сейчас AQI ${a} — «${lv}». Это медиана по ${n} районам: модель CAMS + датчики. ${t}`,
-    q2: "А где чище всего?", a2: (lo, la, hi, ha) => `Чище всего — ${lo} (AQI ${la}). Хуже всего — ${hi} (AQI ${ha}). Подробно — на карте «Дымка».`,
+  ru: { tag: "ИИ-помощник о воздухе", q1: c => `Какой воздух сейчас в ${c}?`, a1: (c, a, lv, n, t, s) => `Сейчас AQI ${a} — «${lv}». Это медиана по ${n} районам: ${s ? "модель CAMS + датчики" : "модель CAMS (датчиков в городе нет)"}. ${t}`,
+    q2: "А где чище всего?", a2: P => P.same ? `Между районами разницы почти нет (${P.la === P.ha ? "везде AQI " + P.la : "AQI " + P.la + "–" + P.ha}) — модель CAMS с шагом ~40 км районы не различает. Подробно — на карте «Дымка».`
+      : `Выше всего — ${P.hi}${P.nhi ? " и ещё " + P.nhi : ""} (AQI ${P.ha}${P.hiS ? ", по датчикам жителей рядом" : ""}). Ниже всего — ${P.lo}${P.nlo ? " и ещё " + P.nlo : ""} (AQI ${P.la}${P.sens && !P.loS ? ", модель — датчиков рядом нет" : ""}).`
+        + (P.z ? (P.z === 1 ? " Модель CAMS даёт на весь город одно значение" : ` Модель CAMS различает в городе только ${P.z} ${P.z < 5 ? "зоны" : "зон"}`) + (P.sens ? ", остальная разница — поправка по датчикам." : " — районы внутри зоны не различаются.") : "") + " Подробно — на карте «Дымка».",
     ph: "Спросите о воздухе…", demo: "демо", live: "живые данные", dock: { map: "Карта смога", advisor: "ИИ-советник", gov: "Для мэрии", alerts: "Уведомления", history: "Архив", news: "Новости", complaints: "Жалобы" }, h: "Чистый воздух начинается с данных", s: "Живой AQI по районам, прогноз смога и советы — бесплатно для каждого." },
-  ky: { tag: "Аба боюнча ИИ-жардамчы", q1: c => `${c} азыр аба кандай?`, a1: (c, a, lv, n, t) => `Азыр AQI ${a} — «${lv}». Бул ${n} райондун медианасы: CAMS модели + датчиктер. ${t}`,
-    q2: "Эң таза жер кайда?", a2: (lo, la, hi, ha) => `Эң таза — ${lo} (AQI ${la}). Эң начар — ${hi} (AQI ${ha}). Толугураак — «Дымка» картасында.`,
+  ky: { tag: "Аба боюнча ИИ-жардамчы", q1: c => `${c} азыр аба кандай?`, a1: (c, a, lv, n, t, s) => `Азыр AQI ${a} — «${lv}». Бул ${n} райондун медианасы: ${s ? "CAMS модели + датчиктер" : "CAMS модели (шаарда датчик жок)"}. ${t}`,
+    q2: "Эң таза жер кайда?", a2: P => P.same ? `Райондордун ортосунда айырма дээрлик жок (${P.la === P.ha ? "бардык жерде AQI " + P.la : "AQI " + P.la + "–" + P.ha}) — ~40 км кадамы бар CAMS модели райондорду айырмалабайт. Толугураак — «Дымка» картасында.`
+      : `Эң жогору — ${P.hi}${P.nhi ? " жана дагы " + P.nhi : ""} (AQI ${P.ha}${P.hiS ? ", жакын жердеги тургундардын датчиктери боюнча" : ""}). Эң төмөн — ${P.lo}${P.nlo ? " жана дагы " + P.nlo : ""} (AQI ${P.la}${P.sens && !P.loS ? ", модель — жакын жерде датчик жок" : ""}).`
+        + (P.z ? (P.z === 1 ? " CAMS модели бүт шаарга бир маани берет" : ` CAMS модели шаарда болгону ${P.z} зонаны айырмалайт`) + (P.sens ? ", калган айырма — датчиктер боюнча оңдоо." : " — зонанын ичиндеги райондор айырмаланбайт.") : "") + " Толугураак — «Дымка» картасында.",
     ph: "Аба жөнүндө сураңыз…", demo: "демо", live: "жандуу маалымат", dock: { map: "Түтүн картасы", advisor: "ИИ-кеңешчи", gov: "Мэрия үчүн", alerts: "Билдирмелер", history: "Архив", news: "Жаңылыктар", complaints: "Даттануулар" }, h: "Таза аба маалыматтан башталат", s: "Райондор боюнча жандуу AQI, түтүн болжолу жана кеңештер — баарына акысыз." },
-  en: { tag: "AI air assistant", q1: c => `What's the air like in ${c} right now?`, a1: (c, a, lv, n, t) => `Right now AQI is ${a} — “${lv}”. That's the median of ${n} districts: CAMS model + sensors. ${t}`,
-    q2: "Where is it cleanest?", a2: (lo, la, hi, ha) => `Cleanest: ${lo} (AQI ${la}). Worst: ${hi} (AQI ${ha}). Details on the smog map.`,
+  en: { tag: "AI air assistant", q1: c => `What's the air like in ${c} right now?`, a1: (c, a, lv, n, t, s) => `Right now AQI is ${a} — “${lv}”. That's the median of ${n} districts: ${s ? "CAMS model + sensors" : "CAMS model (no sensors in the city)"}. ${t}`,
+    q2: "Where is it cleanest?", a2: P => P.same ? `Districts barely differ (${P.la === P.ha ? "AQI " + P.la + " everywhere" : "AQI " + P.la + "–" + P.ha}): the CAMS model (~40 km grid) can't tell districts apart. Details on the smog map.`
+      : `Highest: ${P.hi}${P.nhi ? " and " + P.nhi + " more" : ""} (AQI ${P.ha}${P.hiS ? ", from residents' sensors nearby" : ""}). Lowest: ${P.lo}${P.nlo ? " and " + P.nlo + " more" : ""} (AQI ${P.la}${P.sens && !P.loS ? ", model — no sensors nearby" : ""}).`
+        + (P.z ? (P.z === 1 ? " The CAMS model gives one value for the whole city" : ` The CAMS model has only ${P.z} zones for the city`) + (P.sens ? "; the rest of the difference is the sensor correction." : " — districts within a zone are identical.") : "") + " Details on the smog map.",
     ph: "Ask about the air…", demo: "demo", live: "live data", dock: { map: "Smog map", advisor: "AI advisor", gov: "For the city hall", alerts: "Alerts", history: "Archive", news: "News", complaints: "Reports" }, h: "Clean air starts with data", s: "Live AQI by district, smog forecast and advice — free for everyone." } };
 const HT = () => HR_T[LANG] || HR_T.ru;
 const HR_GOV = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M4 10h16M12 3l8 5H4z"/><path d="M6 10v8M10 10v8M14 10v8M18 10v8"/></svg>';
@@ -21,8 +27,17 @@ function hrData() {   // v58: только живые данные; без ни�
   const live = air.status === "ok" && pts.length > 0, c = cityObj(), T = HT();
   const city = LANG === "ru" || LANG === "ky" ? tr(c.prep || c.name) : tr(c.name);
   if (!live) return { live };
-  const md = Math.round(median(pts.map(p => p.a))), Lv = level(md), s = [...pts].sort((x, y) => x.a - y.a);
-  return { live, md, a1: T.a1(city, md, tr(Lv.name), pts.length, tr(Lv.text)), a2: pts.length > 1 ? T.a2(dName(s[0].d), s[0].a, dName(s[s.length - 1].d), s[s.length - 1].a) : "" };
+  const md = Math.round(median(pts.map(p => p.a))), Lv = level(md), sens = cityLiveSensN() > 0;
+  return { live, md, a1: T.a1(city, md, tr(Lv.name), pts.length, tr(Lv.text), sens), a2: pts.length > 1 ? T.a2(hrSpread(pts, sens)) : "" };
+}
+/* v81: честный разброс по районам — без «случайного» района из десятка с одинаковым числом: группы равных значений («и ещё N»),
+ * откуда число (датчики рядом / только модель), сколько зон различает модель CAMS; если разницы почти нет — так и говорим. */
+function hrSpread(pts, sens) {
+  const s = [...pts].sort((x, y) => x.a - y.a), la = s[0].a, ha = s[s.length - 1].a, R = p => (air.byDistrict[p.d.id] || {});
+  const zs = new Set(pts.map(p => R(p).model && R(p).model.pm25 != null ? Math.round(R(p).model.pm25 * 10) : null).filter(v => v != null));
+  const lo = s.filter(p => p.a === la), hi = s.filter(p => p.a === ha).reverse(), isS = g => g.some(p => R(p).src === "sensors");
+  return { same: ha - la < 5, la, ha, sens, lo: dName(lo[0].d), nlo: lo.length - 1, hi: dName(hi[0].d), nhi: hi.length - 1, hiS: isS(hi), loS: isS(lo),
+    z: zs.size && zs.size <= 3 && pts.length >= 6 ? zs.size : 0 };
 }
 const HR_Q = ["walk", "windows", "mask", "coal"];
 function hrStars(n, w, h, seed) { let s = seed, r = () => (s = (s * 9301 + 49297) % 233280) / 233280; const o = [];

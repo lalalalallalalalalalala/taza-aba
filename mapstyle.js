@@ -9,10 +9,12 @@ const msBin = a => a == null ? "#9aa5ad" : MS_BIN[msBinI(a)];
 const msBinRGB = a => { const h = msBin(a); return [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); };
 const msDark = () => document.documentElement.dataset.theme === "dark";
 const MS_T = {
-  ru: { note: "Оценка: AQI сглажен между районами (модель CAMS + датчики)", lo: "Чище всего", hi: "Грязнее всего", all: "Везде", find: "Найти свой район, микрорайон, жилмассив…", none: "Ничего не найдено", area: "граница примерная" },
-  ky: { note: "Баалоо: AQI райондордун ортосунда жылмаланган (CAMS модели + датчиктер)", lo: "Эң таза", hi: "Эң булганыч", all: "Бардык жерде", find: "Районуңузду, кичи районду, конушту табыңыз…", none: "Эч нерсе табылган жок", area: "чеги болжолдуу" },
-  en: { note: "Estimate: AQI smoothed between districts (CAMS model + sensors)", lo: "Cleanest", hi: "Most polluted", all: "Everywhere", find: "Find your district or neighbourhood…", none: "Nothing found", area: "approximate boundary" } };
+  ru: { note: "Оценка: AQI сглажен между районами (модель CAMS + датчики)", noteM: "Оценка: AQI сглажен между районами (модель CAMS; датчиков в городе нет)", lo: "Чище всего", hi: "Грязнее всего", all: "Везде", more: "и ещё {n} с тем же AQI", find: "Найти свой район, микрорайон, жилмассив…", none: "Ничего не найдено", area: "граница примерная" },
+  ky: { note: "Баалоо: AQI райондордун ортосунда жылмаланган (CAMS модели + датчиктер)", noteM: "Баалоо: AQI райондордун ортосунда жылмаланган (CAMS модели; шаарда датчик жок)", lo: "Эң таза", hi: "Эң булганыч", all: "Бардык жерде", more: "жана дагы {n} ушундай эле AQI менен", find: "Районуңузду, кичи районду, конушту табыңыз…", none: "Эч нерсе табылган жок", area: "чеги болжолдуу" },
+  en: { note: "Estimate: AQI smoothed between districts (CAMS model + sensors)", noteM: "Estimate: AQI smoothed between districts (CAMS model; no sensors in the city)", more: "and {n} more with the same AQI", lo: "Cleanest", hi: "Most polluted", all: "Everywhere", find: "Find your district or neighbourhood…", none: "Nothing found", area: "approximate boundary" } };
 const MST = k => (MS_T[LANG] || MS_T.ru)[k];
+/* v81: «+ датчики» в подписи — только если в городе есть живые датчики (Ош, Нарын… — только модель) */
+const msNote = () => MST(typeof air !== "undefined" && air.status === "ok" && typeof cityLiveSensN === "function" && !cityLiveSensN() ? "noteM" : "note");
 function msBaseTile() { const k = msDark() ? "Dark" : "Light";
   return L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_${k}_Gray_Base/MapServer/tile/{z}/{y}/{x}`, { maxZoom: 18, maxNativeZoom: 16, keepBuffer: 2, className: "tl-ms", attribution: "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors" }); }
 function msRefTile() { const k = msDark() ? "Dark" : "Light";
@@ -73,15 +75,15 @@ function msSmog(M, G, popD) {
   const cont = M.getContainer(); cont.classList.add("ms-on", "ms-a");
   if (!M.getPane("msRef")) { const pn = M.createPane("msRef"); pn.style.zIndex = 450; pn.style.pointerEvents = "none"; }
   let ref = null; const syncRef = mode => { if (ref) M.removeLayer(ref); ref = mode === "osm" ? (window.iosRefLayer ? iosRefLayer(M, msRefTile) : msRefTile()).addTo(M) : null; }; syncRef(baseMode()); M.on("basemode", e => syncRef(e.mode));
-  if (M.getSize().x < 600) cont.insertAdjacentHTML("afterend", `<div class="ms-note ms-note-out">${esc(MST("note"))} · ▼ ${esc(MST("lo").toLowerCase())} · ▲ ${esc(MST("hi").toLowerCase())}</div>`);
-  else { const note = L.control({ position: "bottomleft" }); note.onAdd = () => { const d = L.DomUtil.create("div", "ms-note"); d.textContent = MST("note"); return d; }; note.addTo(M); }
+  if (M.getSize().x < 600) cont.insertAdjacentHTML("afterend", `<div class="ms-note ms-note-out">${esc(msNote())} · ▼ ${esc(MST("lo").toLowerCase())} · ▲ ${esc(MST("hi").toLowerCase())}</div>`);
+  else { const note = L.control({ position: "bottomleft" }); note.onAdd = () => { const d = L.DomUtil.create("div", "ms-note"); d.textContent = msNote(); return d; }; note.addTo(M); }
   /* легенда под картой — та же палитра */
   const lg = cont.closest(".map-col") && cont.closest(".map-col").querySelector(".legend");
   if (lg) lg.querySelectorAll("span").forEach((s, i) => { s.style.background = MS_BIN[i]; s.style.color = i === 1 ? "#3b2a00" : "#fff"; });
   const selG = L.layerGroup().addTo(M); let selId = null;
   const select = (d, fly) => { selG.clearLayers(); selId = d.id; const dk = msDark();
     L.polygon(msCell(d), { color: dk ? "#cfe6f5" : "#1d3b53", weight: 1.5, opacity: .75, dashArray: "4 4", fill: true, fillColor: dk ? "#cfe6f5" : "#1d3b53", fillOpacity: .06, interactive: false }).addTo(selG);
-    const open = () => { if (M !== map) return; L.popup({ className: "ms-pop", autoPanPadding: [20, 20] }).setLatLng([d.lat, d.lon]).setContent(popD(d) + `<br><small class="ms-pop-n">${esc(MST("note"))}; ${esc(MST("area"))}</small>`).openOn(M); names(); };
+    const open = () => { if (M !== map) return; L.popup({ className: "ms-pop", autoPanPadding: [20, 20] }).setLatLng([d.lat, d.lon]).setContent(popD(d) + `<br><small class="ms-pop-n">${esc(msNote())}; ${esc(MST("area"))}</small>`).openOn(M); names(); };
     if (fly) { M.flyTo([d.lat, d.lon], Math.max(14, M.getZoom()), { duration: (typeof LOWEND !== "undefined" && LOWEND) ? 0 : 0.7 }); M.once("moveend", open); } else open(); };
   window.msFocus = d => select(d, true);
   M.on("click", e => { if (!G._map) return; const n = msNearest(e.latlng); if (n && n.k < 4) select(n.d, false); });
@@ -106,7 +108,9 @@ function msSmog(M, G, popD) {
     L.marker([p.d.lat, p.d.lon], { keyboard: false, icon: L.divIcon({ className: "ms-lbl-w", html: `<div class="ms-lbl ${cls}"><i style="background:${msBin(p.a)}"></i><span>${txt}</span> <b>${p.a}</b></div>`, iconSize: [0, 0] }) }).bindPopup(() => popD(p.d)).addTo(lblG); };
   const upd = () => { cv._redraw(); lblG.clearLayers(); const pts = msPts(); if (!pts.length) return; const s = [...pts].sort((x, y) => x.a - y.a), lo = s[0], hi = s[s.length - 1];
     if (hi.a - lo.a < 10) { pill({ d: { lat: cityObj().center[0], lon: cityObj().center[1] }, a: Math.round(median(pts.map(p => p.a))) }, "all", esc(MST("all")) + " ≈"); return; }
-    pill(lo, "lo", `<em>${esc(MST("lo"))} · </em>${esc(dName(lo.d))}`); pill(hi, "hi", `<em>${esc(MST("hi"))} · </em>${esc(dName(hi.d))}`); };
+    /* v81: если несколько районов с тем же числом — «+N» (иначе подпись выбирает один район из равных случайно) */
+    const tie = (p, cls) => { const n = pts.filter(q => q.a === p.a).length - 1; return `<em>${esc(MST(cls))} · </em>${esc(dName(p.d))}${n > 0 ? ` <small title="${esc(MST("more").replace("{n}", n))}">+${n}</small>` : ""}`; };
+    pill(lo, "lo", tie(lo, "lo")); pill(hi, "hi", tie(hi, "hi")); };
   upd(); setTimeout(names, 200);
   return () => { upd(); names(); };
 }

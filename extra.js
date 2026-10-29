@@ -21,6 +21,10 @@ async function loadSensors(center) {
 }
 const kmDist = (a, b) => { const R = 6371, dl = (b.lat - a.lat) * Math.PI / 180, dn = (b.lon - a.lon) * Math.PI / 180;
   const h = Math.sin(dl / 2) ** 2 + Math.cos(a.lat * Math.PI / 180) * Math.cos(b.lat * Math.PI / 180) * Math.sin(dn / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+/* v81: число живых датчиков (Sensor.Community, с PM2.5) не дальше 25 км от центра города — как в forecast.js; 0 — значит цифры только модель */
+function cityLiveSensN() { try { const c = cityObj().center; if (!c || typeof air === "undefined") return 0;
+  const n = (air.sensors || []).filter(s => s.p2 != null && kmDist({ lat: c[0], lon: c[1] }, s) <= 25).length;
+  return n || (Object.values(air.byDistrict || {}).some(r => r && r.src === "sensors") ? 1 : 0); } catch (e) { return 0; } }
 const median = a => { const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 /* US EPA (2024) PM2.5 → AQI */
 function pm25ToAqi(c) {

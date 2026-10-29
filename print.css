@@ -30,3 +30,21 @@
 }
 @media print{html[data-theme] body .h-cat :is(b,span){color:#fff!important}}
 @media print{html[data-theme="dark"] body main :is(.v,em):not([style]){color:#111!important}}
+/* v81: главная в печати — только сводка воздуха (AQI района, ответ помощника, риск вечернего смога, источники, загрязнители, совет, прогноз и часы).
+   Кнопки «Поделиться», выбор/поиск района, «Маршрут от меня», вопросы-чипы и поле ввода, быстрые действия, ссылки-баннеры — на бумаге бесполезны. */
+@media print{
+  html body .home-grid :is(.share-row,#districtSel,.d-search,.eco-homego,.hr-chips,.hr-in,.hr-sky,.aq-sky,.hist-link,.quick,.card.tip,details.lv-details),
+  html body .home-grid h2:has(+ .quick),html body .view :is(.dl-home){display:none!important}
+  html body .home-grid{display:block!important}
+  html body .home-grid>.col{width:auto!important;max-width:none!important}
+  html body .home-grid :is(.hero,.hr,.hr-card,.ev-card,.src-card,.pol-card,.advice-card,.forecast){margin-bottom:8px!important}
+  html body .home-grid :is(.hero,.hr,.hr-card){min-height:0!important;padding-bottom:12px!important}
+  html body .home-grid .bars>div,html body .home-grid .aq-scale *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html body main:has(.home-grid),html body .view:has(>.home-grid){padding-top:0!important;margin-top:0!important}
+  html body .home-grid .hr{padding:6px 0!important}
+  html body .home-grid .hr-head{margin-bottom:6px!important}
+  html[data-theme] body .home-grid .pol-card{break-inside:auto}
+  html body .home-grid :is(.pol-row,.pol-main){break-inside:avoid}
+  html body .home-grid h2{break-after:avoid}
+  html body .view:has(>.home-grid){zoom:.8}
+}
