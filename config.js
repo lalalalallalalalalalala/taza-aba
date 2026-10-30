@@ -27,10 +27,9 @@ window.TAZA_CONFIG = Object.assign({
      Заполняется скриптом backend/setup.sh. Anon key публичный по замыслу: доступ ограничен RLS. */
   /* ARCHIVE_REPO — публичный репозиторий GitHub с открытым архивом по дням (archive/<город>.csv, пишет workflow daily-archive.yml). */
   ARCHIVE_REPO: "zusenbaev7-cmd/taza-aba",
-  /* SUPPORT — реквизиты для добровольной поддержки в разделе #support. Пока все поля пустые, блок «Поддержать деньгами» НЕ показывается.
-     mbank/odengi/elsom/optima — номер телефона или кошелька для перевода; name — имя получателя, как его видит банк;
-     boosty/kofi/patreon/other — полная ссылка https://…; otherName — подпись для other; note_ru/note_ky/note_en — необязательная строка «на что идут деньги». */
-  SUPPORT: { name: "", mbank: "", odengi: "", elsom: "", optima: "", boosty: "", kofi: "", patreon: "", other: "", otherName: "", note_ru: "", note_ky: "", note_en: "" },
+  /* SUPPORT — одна ссылка для добровольной поддержки в разделе #support (только https://, например страница сбора). Без имён, телефонов и номеров кошельков.
+     link — адрес; linkName — подпись кнопки (пусто = «Поддержать»); note_ru/note_ky/note_en — необязательная строка. Пока link пустой, блок НЕ показывается. */
+  SUPPORT: { link: "", linkName: "", note_ru: "", note_ky: "", note_en: "" },
   SUPABASE_URL: "",
   SUPABASE_ANON_KEY: "",
 }, window.TAZA_CONFIG || {});

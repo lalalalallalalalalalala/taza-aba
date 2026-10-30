@@ -43,12 +43,6 @@ html body .sp-share{grid-column:1/-1;flex-direction:row;gap:24px;align-items:str
 html body .sp-don{margin-top:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
 .sp-don>p{margin:0;font-size:14px;line-height:1.55;color:var(--c-muted)}
 .sp-don .sp-note{color:var(--c-text)}
-.sp-recip{color:var(--c-text)!important}
-.sp-pays{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.sp-pay{display:grid;grid-template-columns:130px minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--c-line);border-radius:10px}
-.sp-pay-n{font-weight:600;font-size:14px}
-.sp-pay code{font:500 14.5px/1.3 ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere;user-select:all}
-.sp-pay .sp-btn2{min-height:36px;padding:6px 12px;font-size:13px}
 .sp-foot{color:var(--c-link)!important;font-weight:600}
 @media (max-width:860px){
   .sp-grid{grid-template-columns:1fr}
@@ -57,7 +51,6 @@ html body .sp-don{margin-top:14px;padding:20px;display:flex;flex-direction:colum
   .sp-qr img{width:112px;height:112px}
 }
 @media (max-width:420px){
-  .sp-pay{grid-template-columns:1fr auto}.sp-pay-n{grid-column:1/-1}
   .sp-row>.sp-btn,.sp-row>.sp-btn2{flex:1 1 auto}
 }
 @media print{.sp-row,.sp-lnk{display:none!important}}

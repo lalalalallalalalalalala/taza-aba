@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-uaDVzMzVmI+lDcrRBmPJRmkN78LDYjDogddBpBdjPLo=' 'sha256-ZjJY3SxvJHEuUi4xMSf6xOoKv9XfxouNSlVNovAl4oc=' 'sha256-z+KGtNxf10JzKdJxMiSxIFS7Edw/NZJA93xJlMsSXFE=' 'sha256-bzlm4T1fhMNbAvzVNN14ucgRg5OIugAdQ/IoRLvgXXU=' https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: wss: http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*; worker-src 'self'; manifest-src 'self'; media-src 'self' data: blob:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self' https: mailto:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-uaDVzMzVmI+lDcrRBmPJRmkN78LDYjDogddBpBdjPLo=' 'sha256-ZjJY3SxvJHEuUi4xMSf6xOoKv9XfxouNSlVNovAl4oc=' 'sha256-z+KGtNxf10JzKdJxMiSxIFS7Edw/NZJA93xJlMsSXFE=' 'sha256-c+m4idQLAjkR8XWj2ev9PBIA0D8plhwAlGgcD3+YwjU=' https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: wss: http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*; worker-src 'self'; manifest-src 'self'; media-src 'self' data: blob:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self' https: mailto:">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0F1216">
 <meta name="description" content="Качество воздуха в Бишкеке и 39 городах Кыргызстана: AQI по районам, прогноз смога, PM2.5, эко-маршруты, ИИ-советник по здоровью. Бесплатно, 3 языка.">
@@ -164,6 +164,6 @@
 <script src="calm-nav.js"></script>
 <script src="polish.js"></script>
 <script src="aqi-premium.js"></script>
-<script>/* app.js рисует экран до регистрации разделов из features/gov/traffic2 — перерисовать, если прямая ссылка (#traffic, #gov…) открылась как «Главная» */(function(){var t=(location.hash||"#home").slice(1).split("/")[0];if(t&&views[t]&&!document.getElementById("view").classList.contains("v-"+t))route(true);try{renderChrome()}catch(e){}})();</script>
+<script>/* app.js рисует экран до регистрации разделов из features/gov/traffic2 — перерисовать, если прямая ссылка (#traffic, #gov…) открылась как «Главная»; «Ещё» — всегда, иначе плитки модулей не видны */(function(){var t=(location.hash||"#home").slice(1).split("/")[0];if(t&&views[t]&&(t==="more"||!document.getElementById("view").classList.contains("v-"+t)))route(true);try{renderChrome()}catch(e){}})();</script>
 </body>
 </html>

@@ -21,8 +21,7 @@ const SP_T = {
     kyTitle: "Перевод на кыргызский: ", kyBody: "Где (раздел, экран):\n\nСейчас написано:\n\nКак правильно:\n",
     govH: "Расскажите акимату, школе или газете", govP: "Для акимата и мэрии есть памятка на одну страницу A4, для районной газеты — лист A5 на кыргызском и русском. Их можно распечатать или отправить в PDF.", govA4: "Памятка A4", govA5: "Лист A5 для газеты", govOpen: "Открытые данные",
     codeH: "Код и архив данных открыты", codeP: "Ежедневный архив качества воздуха по городам лежит на GitHub в CSV. Если вы разработчик или исследователь, можно пользоваться данными и предлагать улучшения.", codeRepo: "Репозиторий", codeArch: "Архив CSV",
-    donH: "Поддержать деньгами", donP: "Перевод добровольный и ни на что в приложении не влияет: всё остаётся бесплатным для всех.", donCopy: "Скопировать", donCopied: "Скопировано", recip: "Получатель", open: "Открыть",
-    mbank: "MBank", odengi: "О!Деньги", elsom: "Элсом", optima: "Optima Bank", boosty: "Boosty", kofi: "Ko-fi", patreon: "Patreon", other: "Ещё способ", ext: "откроется в новой вкладке" },
+    donH: "Поддержать деньгами", donP: "Перевод добровольный и ни на что в приложении не влияет: всё остаётся бесплатным для всех.", donBtn: "Поддержать", ext: "откроется в новой вкладке" },
   ky: { menu: "Долбоорду колдоо", menuSub: "«Таза Абага» кантип жардам берүү: айтуу, ката жөнүндө жазуу, датчик коюу", foot: "Долбоорду колдоо",
     title: "«Таза Абаны» колдоо", lede: "«Таза Аба» районуңуздун абасын көрсөтөт жана кечки түтүн жөнүндө эскертет. Тиркемени компания же мамлекеттик орган эмес, көз карандысыз автор жасайт. Долбоорго эң көп жардам — аны колдонгон жана башкаларга айткан адамдар.",
     f1: "Акысыз", f2: "Жарнамасыз", f3: "Каттоосуз", f4: "Ачык маалымат жана код",
@@ -41,8 +40,7 @@ const SP_T = {
     kyTitle: "Кыргызча котормо: ", kyBody: "Кайда (бөлүм, экран):\n\nАзыр жазылганы:\n\nКантип туура:\n",
     govH: "Акимчиликке, мектепке же гезитке айтыңыз", govP: "Акимчилик жана мэрия үчүн A4 форматында бир барактык эскертме, райондук гезит үчүн кыргызча жана орусча A5 барак бар. Аларды басып чыгарууга же PDF кылып жөнөтүүгө болот.", govA4: "A4 эскертме", govA5: "Гезит үчүн A5 барак", govOpen: "Ачык маалымат",
     codeH: "Код жана маалымат архиви ачык", codeP: "Шаарлар боюнча абанын сапатынын күнүмдүк архиви GitHubда CSV түрүндө жатат. Иштеп чыгуучу же изилдөөчү болсоңуз, маалыматты колдонуп, жакшыртууларды сунуштай аласыз.", codeRepo: "Репозиторий", codeArch: "CSV архиви",
-    donH: "Акча менен колдоо", donP: "Которуу ыктыярдуу жана тиркемеге эч таасир этпейт: баары баарына акысыз бойдон калат.", donCopy: "Көчүрүү", donCopied: "Көчүрүлдү", recip: "Алуучу", open: "Ачуу",
-    mbank: "MBank", odengi: "О!Деньги", elsom: "Элсом", optima: "Optima Bank", boosty: "Boosty", kofi: "Ko-fi", patreon: "Patreon", other: "Дагы бир жол", ext: "жаңы өтмөктө ачылат" },
+    donH: "Акча менен колдоо", donP: "Которуу ыктыярдуу жана тиркемеге эч таасир этпейт: баары баарына акысыз бойдон калат.", donBtn: "Колдоо", ext: "жаңы өтмөктө ачылат" },
   en: { menu: "Support the project", menuSub: "How to help Taza Aba: share it, report a bug, set up a sensor", foot: "Support the project",
     title: "Support Taza Aba", lede: "Taza Aba shows what your district is breathing and warns about evening smog. It is built by an independent creator, not a company or a government body. What helps the project most is people who use it and tell others about it.",
     f1: "Free", f2: "No ads", f3: "No sign-up", f4: "Open data and code",
@@ -61,8 +59,7 @@ const SP_T = {
     kyTitle: "Kyrgyz translation: ", kyBody: "Where (section, screen):\n\nCurrent text:\n\nCorrect text:\n",
     govH: "Tell your akimat, school or newspaper", govP: "There is a one-page A4 brief for the akimat and city hall, and an A5 sheet in Kyrgyz and Russian for district newspapers. Print them or send them as PDF.", govA4: "A4 brief", govA5: "A5 newspaper sheet", govOpen: "Open data",
     codeH: "The code and data archive are open", codeP: "A daily air-quality archive for each city is on GitHub as CSV. If you are a developer or researcher, you can use the data and suggest improvements.", codeRepo: "Repository", codeArch: "CSV archive",
-    donH: "Support with money", donP: "Donations are voluntary and change nothing in the app: everything stays free for everyone.", donCopy: "Copy", donCopied: "Copied", recip: "Recipient", open: "Open",
-    mbank: "MBank", odengi: "O!Dengi", elsom: "Elsom", optima: "Optima Bank", boosty: "Boosty", kofi: "Ko-fi", patreon: "Patreon", other: "Another way", ext: "opens in a new tab" } };
+    donH: "Support with money", donP: "Donations are voluntary and change nothing in the app: everything stays free for everyone.", donBtn: "Support", ext: "opens in a new tab" } };
 const SPT = (k, o) => { let s = (SP_T[LANG] || SP_T.ru)[k] ?? SP_T.ru[k]; if (o) for (const [a, b] of Object.entries(o)) s = s.split("{" + a + "}").join(b); return s; };
 const SP_I = (p) => `<svg class="sp-i" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${p}</svg>`;
 const SP_IC = {
@@ -96,20 +93,15 @@ function spCoverage() {
     const far = D.un.filter(x => x.km != null).slice(0, 3).map(x => `<li><span>${esc(dName(x.d))}</span><b>${esc(SPT("km", { v: fmt(x.km, 1) }))}</b></li>`).join("");
     return `<div class="sp-cov"><p>${esc(SPT("senCov", { city, c: D.c, n: D.n }))}</p>${far ? `<ul>${far}</ul>` : ""}<a href="#map" class="sp-lnk" data-sp-cov>${esc(SPT("senMore"))}</a></div>`;
   } catch (e) { return ""; } }
-/* пожертвования: только из config.js; ничего не заполнено — блока нет */
-const SP_PAY = ["mbank", "odengi", "elsom", "optima"], SP_WEB = ["boosty", "kofi", "patreon", "other"];
+/* поддержка деньгами: только одна ссылка https из config.js (без имён, телефонов и номеров кошельков); пусто = блока нет */
 function spDonate() {
   const S = (window.TAZA_CONFIG && TAZA_CONFIG.SUPPORT) || {};
   const val = k => (typeof S[k] === "string" ? S[k].trim() : "");
-  const pay = SP_PAY.filter(val), web = SP_WEB.filter(k => /^https:\/\//.test(val(k)));
-  if (!pay.length && !web.length) return "";
+  const link = val("link"); if (!/^https:\/\/[^\s]+$/.test(link)) return "";
   const note = val("note_" + LANG) || val("note_ru");
-  const rows = pay.map(k => `<li class="sp-pay"><span class="sp-pay-n">${esc(SPT(k))}</span><code>${esc(val(k))}</code><button type="button" class="sp-btn2 sp-cp" data-sp-copy="${esc(val(k))}">${SP_I(SP_IC.copy)}${esc(SPT("donCopy"))}</button></li>`).join("");
-  const links = web.map(k => spExt(val(k), k === "other" ? (val("otherName") || SPT("other")) : SPT(k), "sp-btn2")).join("");
   return `<section class="card sp-don" aria-labelledby="spDonH"><div class="sp-h"><span class="sp-ic">${SP_I(SP_IC.wallet)}</span><h2 id="spDonH">${esc(SPT("donH"))}</h2></div>
     <p>${esc(SPT("donP"))}</p>${note ? `<p class="sp-note">${esc(note)}</p>` : ""}
-    ${val("name") ? `<p class="sp-recip">${esc(SPT("recip"))}: <b>${esc(val("name"))}</b></p>` : ""}
-    ${rows ? `<ul class="sp-pays">${rows}</ul>` : ""}${links ? `<div class="sp-row">${links}</div>` : ""}</section>`;
+    <div class="sp-row">${spExt(link, val("linkName") || SPT("donBtn"), "sp-btn")}</div></section>`;
 }
 function viewSupport(el) {
   const C = window.TAZA_CONFIG || {}, url = SP_URL, txt = SPT("shareText");
@@ -141,8 +133,7 @@ function viewSupport(el) {
   const nb = el.querySelector("#spNative");
   if (navigator.share) { nb.hidden = false; nb.onclick = async () => { try { await navigator.share({ title: "Таза Аба", text: txt, url }); } catch (e) { /* отменено */ } }; }
   el.querySelector("#spCopy").onclick = async () => toast((await spCopy(url)) ? SPT("copied") : SPT("copyFail"));
-  el.querySelectorAll("[data-sp-copy]").forEach(b => b.onclick = async () => toast((await spCopy(b.dataset.spCopy)) ? SPT("donCopied") : SPT("copyFail")));
-  /* данные о воздухе приходят позже, чем рисуется раздел — дорисовать строку покрытия, когда они появятся */
+    /* данные о воздухе приходят позже, чем рисуется раздел — дорисовать строку покрытия, когда они появятся */
   const slot = el.querySelector("#spCovSlot"); let tries = 0, last = spCoverage();
   const fill = () => { if (!slot.isConnected) return; const h = spCoverage(); if (h && h !== last) { last = h; slot.innerHTML = h; bindCov(); } if (++tries < 40) setTimeout(fill, 1500); };
   const bindCov = () => { const cv = el.querySelector("[data-sp-cov]"); if (cv) cv.onclick = () => { try { if (typeof mapLayers !== "undefined") mapLayers.cov = true; } catch (e) {} }; };
