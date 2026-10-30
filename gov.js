@@ -15,7 +15,7 @@ ru: { gridNote: "Важно: разрешение модели CAMS — окол
   fH: "Формула", fTxt: "Приоритет P = 100 × (0,5·a + 0,3·b + 0,2·c), где a — средний PM2.5 района за 30 дней, делённый на максимум по городу; b — доля часов с PM2.5 > 15 мкг/м³ за 30 дней; c — прогнозный максимум AQI на завтра, делённый на максимум по городу. Мера: «замена угля», если оценка вклада отопления ≥ 70 %; «автобусы / транспорт», если вклад транспорта ≥ 25 %; «деревья и пылеподавление», если PM2.5/PM10 < 0,55 (много крупной пыли).",
   mHeat: "Замена угля: тепловые насосы, газ, утепление", mBus: "Автобусы и чистый транспорт", mTree: "Деревья и пылеподавление", mNone: "Нет данных для оценки источника", pts: "балл",
   cmpH: "Жалобы жителей по районам", cmpNote: "Честно: у приложения нет сервера, поэтому здесь только жалобы, отправленные с этого устройства (примерные жалобы-образцы не учитываются). Для городской картины нужен общий приёмник жалоб.", cmpNone: "На этом устройстве пока нет жалоб по этому городу.", cmpAll: "Всего",
-  expH: "Открытые данные", expTxt: "CSV/JSON: по каждому району и дню за 30 дней — средний и максимальный AQI, средний PM2.5, часы с PM2.5 > 15 мкг/м³ и зона модели (районы в одной ячейке модели получают одинаковые значения); в строке последнего дня — текущая медиана датчиков жителей Sensor.Community и их число (недорогие датчики без поверки). Данные: Open-Meteo (CC BY 4.0), модель CAMS (Copernicus).",
+  expH: "Открытые данные", expTxt: "CSV/JSON: по каждому району и дню за 30 дней — средний и максимальный AQI, средний PM2.5, часы с PM2.5 > 15 мкг/м³ и зона модели (районы в одной ячейке модели получают одинаковые значения); в строке последнего дня — текущая медиана датчиков жителей Sensor.Community и их число (недорогие датчики без поверки), откуда взято значение района сейчас (датчики рядом / станция / модель CAMS) и расстояние до ближайшего датчика или станции, км. Данные: Open-Meteo (CC BY 4.0), модель CAMS (Copernicus).",
   repH: "Отчёт по качеству воздуха", repGen: "Сформировано {t} · Таза Аба", srcH: "Источники",
   meas: [["Ограничений не требуется.", "Хорошее время для занятий на улице."],
     ["Предупредить особо чувствительных людей (астма, болезни сердца).", "Ограничений для школ не требуется."],
@@ -44,7 +44,7 @@ ky: { gridNote: "Маанилүү: CAMS моделинин тактыгы евр
   fH: "Формула", fTxt: "Артыкчылык P = 100 × (0,5·a + 0,3·b + 0,2·c), мында a — райондун 30 күндүк орточо PM2.5, шаардагы максимумга бөлүнгөн; b — 30 күндө PM2.5 > 15 мкг/м³ болгон сааттардын үлүшү; c — эртеңки AQI божомолунун максимуму, шаардагы максимумга бөлүнгөн. Чара: жылытуунун баалоо үлүшү ≥ 70 % болсо — «көмүрдү алмаштыруу»; транспорттуку ≥ 25 % болсо — «автобустар / транспорт»; PM2.5/PM10 < 0,55 болсо (ири чаң көп) — «дарактар жана чаңды басуу».",
   mHeat: "Көмүрдү алмаштыруу: жылуулук насостору, газ, жылуулоо", mBus: "Автобустар жана таза транспорт", mTree: "Дарактар жана чаңды басуу", mNone: "Булакты баалоо үчүн маалымат жок", pts: "упай",
   cmpH: "Тургундардын даттануулары райондор боюнча", cmpNote: "Чынын айтканда: тиркеменин сервери жок, ошондуктан бул жерде ушул түзмөктөн жөнөтүлгөн даттануулар гана (үлгү даттануулар эсептелбейт). Шаардык сүрөт үчүн жалпы кабыл алгыч керек.", cmpNone: "Бул түзмөктө бул шаар боюнча азырынча даттануу жок.", cmpAll: "Бардыгы",
-  expH: "Ачык маалымат", expTxt: "CSV/JSON: ар бир район жана 30 күндүн ар бир күнү боюнча — орточо жана максималдуу AQI, орточо PM2.5, PM2.5 > 15 мкг/м³ болгон сааттар жана модель зонасы (моделдин бир уячасындагы райондордо маанилер бирдей); акыркы күндүн сабында — Sensor.Community тургундарынын датчиктеринин азыркы медианасы жана саны (текшерүүсүз арзан датчиктер). Маалымат: Open-Meteo (CC BY 4.0), CAMS модели (Copernicus).",
+  expH: "Ачык маалымат", expTxt: "CSV/JSON: ар бир район жана 30 күндүн ар бир күнү боюнча — орточо жана максималдуу AQI, орточо PM2.5, PM2.5 > 15 мкг/м³ болгон сааттар жана модель зонасы (моделдин бир уячасындагы райондордо маанилер бирдей); акыркы күндүн сабында — Sensor.Community тургундарынын датчиктеринин азыркы медианасы жана саны (текшерүүсүз арзан датчиктер), райондун азыркы мааниси кайдан алынганы (жанындагы датчиктер / станция / CAMS модели) жана жакынкы датчикке же станцияга чейинки аралык, км. Маалымат: Open-Meteo (CC BY 4.0), CAMS модели (Copernicus).",
   repH: "Абанын сапаты боюнча отчёт", repGen: "Түзүлгөн убакыт {t} · Таза Аба", srcH: "Булактар",
   meas: [["Чектөө талап кылынбайт.", "Сыртта машыгууга жакшы убакыт."],
     ["Өтө сезгич адамдарга (астма, жүрөк оорулары) эскертүү.", "Мектептер үчүн чектөө талап кылынбайт."],
@@ -73,7 +73,7 @@ en: { gridNote: "Important: the CAMS model resolution is about 11 km in the Euro
   fH: "Formula", fTxt: "Priority P = 100 × (0.5·a + 0.3·b + 0.2·c), where a is the district's 30-day mean PM2.5 divided by the city maximum; b is the share of hours with PM2.5 > 15 µg/m³ over 30 days; c is tomorrow's forecast maximum AQI divided by the city maximum. Measure: \"replace coal\" if the estimated heating share is ≥ 70%; \"buses / transport\" if the transport share is ≥ 25%; \"trees & dust control\" if PM2.5/PM10 < 0.55 (lots of coarse dust).",
   mHeat: "Replace coal: heat pumps, gas, insulation", mBus: "Buses & clean transport", mTree: "Trees & dust control", mNone: "Not enough data to estimate the source", pts: "pts",
   cmpH: "Residents' complaints by district", cmpNote: "Honestly: the app has no server, so this shows only complaints sent from this device (sample complaints are excluded). A city-wide picture needs a shared complaint inbox.", cmpNone: "No complaints for this city on this device yet.", cmpAll: "Total",
-  expH: "Open data", expTxt: "CSV/JSON: for each district and day over 30 days — mean and max AQI, mean PM2.5, hours with PM2.5 > 15 µg/m³ and the model zone (districts in one model cell get identical values); the latest-day row also has the current median and count of Sensor.Community citizen sensors (low-cost, uncalibrated). Data: Open-Meteo (CC BY 4.0), CAMS model (Copernicus).",
+  expH: "Open data", expTxt: "CSV/JSON: for each district and day over 30 days — mean and max AQI, mean PM2.5, hours with PM2.5 > 15 µg/m³ and the model zone (districts in one model cell get identical values); the latest-day row also has the current median and count of Sensor.Community citizen sensors (low-cost, uncalibrated), where the district's current value comes from (nearby sensors / station / CAMS model) and the distance to the nearest sensor or station, km. Data: Open-Meteo (CC BY 4.0), CAMS model (Copernicus).",
   repH: "Air quality report", repGen: "Generated {t} · Taza Aba", srcH: "Sources",
   meas: [["No restrictions needed.", "A good time for outdoor activities."],
     ["Inform unusually sensitive people (asthma, heart disease).", "No restrictions for schools needed."],
@@ -238,13 +238,18 @@ function gvExport(G, kind) {
   const sNow = r => sBy[r.id] ? { pm2_5_median: +median(sBy[r.id]).toFixed(1), n: sBy[r.id].length } : null;
   meta.sensorsNow = { at: new Date().toISOString(), source: "Sensor.Community (open citizen sensors, after outlier QC, readings no older than 60 min, assigned to the nearest district)", count: SD.rows.length,
     note: "low-cost citizen sensors without official calibration; can overstate PM2.5 in fog and high humidity; not official measurements. In CSV, sensor_pm25_now and sensor_n_now are filled only in the latest-date row of each district" };
+  /* v86: откуда значение района сейчас и расстояние до ближайшего датчика/станции (как в карточке «Где не хватает датчиков») — тоже только в строке последнего дня */
+  const CV = gvCovData(), cBy = new Map(CV.all.map(x => [x.d.id, x])), cNow = r => cBy.get(r.id) || null;
+  const cSrc = r => { const x = cNow(r); return x ? x.src : null; }, cKm = r => { const x = cNow(r); return x && x.km != null ? +x.km.toFixed(2) : null; };
+  meta.coverageNow = { at: new Date().toISOString(), measurementPoints: CV.np, districtsWithMeasurement: CV.c, districts: CV.n,
+    note: "value_source_now: where the district value shown now comes from — 'sensors' (median of Sensor.Community sensors within 2.5 km), 'station' (nearest station) or 'model' (CAMS model at the district point, no correction). km_to_nearest_measurement_now: straight-line distance to the nearest sensor or station that responded in the latest update (empty if none). In CSV both are filled only in the latest-date row of each district" };
   let blob, name = `taza-aba-${CITY}-aqi-30d`;
   if (kind === "csv") {
-    const q = s => `"${String(s).replace(/"/g, '""')}"`, L = ["date,district_id,district_name,model_zone,aqi_mean,aqi_max,pm2_5_mean,hours_pm2_5_over_15,hours,sensor_pm25_now,sensor_n_now"];
-    G.rows.forEach(r => { const sn = sNow(r), last = r.days.length - 1; r.days.forEach((x, i) => L.push([x.date, r.id, q(r.name), zOf.get(r), x.aqiMean == null ? "" : x.aqiMean.toFixed(1), x.aqiMax == null ? "" : Math.round(x.aqiMax), x.pmMean == null ? "" : x.pmMean.toFixed(1), x.hOver, x.n, i === last && sn ? sn.pm2_5_median : "", i === last && sn ? sn.n : ""].join(","))); });
+    const q = s => `"${String(s).replace(/"/g, '""')}"`, L = ["date,district_id,district_name,model_zone,aqi_mean,aqi_max,pm2_5_mean,hours_pm2_5_over_15,hours,sensor_pm25_now,sensor_n_now,value_source_now,km_to_nearest_measurement_now"];
+    G.rows.forEach(r => { const sn = sNow(r), last = r.days.length - 1; r.days.forEach((x, i) => L.push([x.date, r.id, q(r.name), zOf.get(r), x.aqiMean == null ? "" : x.aqiMean.toFixed(1), x.aqiMax == null ? "" : Math.round(x.aqiMax), x.pmMean == null ? "" : x.pmMean.toFixed(1), x.hOver, x.n, i === last && sn ? sn.pm2_5_median : "", i === last && sn ? sn.n : "", i === last && cSrc(r) ? cSrc(r) : "", i === last && cKm(r) != null ? cKm(r) : ""].join(","))); });
     blob = new Blob(["\ufeff" + L.join("\n")], { type: "text/csv;charset=utf-8" }); name += ".csv";
   } else {
-    blob = new Blob([JSON.stringify({ ...meta, districts: G.rows.map(r => ({ id: r.id, name: r.name, lat: r.d.lat, lon: r.d.lon, model_zone: zOf.get(r), priority: r.P, sensors_now: sNow(r), days: r.days.map(x => ({ date: x.date, aqi_mean: x.aqiMean == null ? null : +x.aqiMean.toFixed(1), aqi_max: x.aqiMax == null ? null : Math.round(x.aqiMax), pm2_5_mean: x.pmMean == null ? null : +x.pmMean.toFixed(1), hours_pm2_5_over_15: x.hOver, hours: x.n })) })) }, null, 1)], { type: "application/json" }); name += ".json";
+    blob = new Blob([JSON.stringify({ ...meta, districts: G.rows.map(r => ({ id: r.id, name: r.name, lat: r.d.lat, lon: r.d.lon, model_zone: zOf.get(r), priority: r.P, sensors_now: sNow(r), value_source_now: cSrc(r), km_to_nearest_measurement_now: cKm(r), days: r.days.map(x => ({ date: x.date, aqi_mean: x.aqiMean == null ? null : +x.aqiMean.toFixed(1), aqi_max: x.aqiMax == null ? null : Math.round(x.aqiMax), pm2_5_mean: x.pmMean == null ? null : +x.pmMean.toFixed(1), hours_pm2_5_over_15: x.hOver, hours: x.n })) })) }, null, 1)], { type: "application/json" }); name += ".json";
   }
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
 }
@@ -346,21 +351,27 @@ function gvSensHTML(nZ) {
 Object.assign(GV_S.ru, { cvH: "Где не хватает датчиков", cvSub: "Измерения рядом с районом (датчик жителей не дальше 2,5 км или станция) есть у {c} из {n} районов. У остальных {k} — только модель CAMS, которая не видит разницу между соседними кварталами.",
   cvNone: "Рядом с городом сейчас нет ни одного открытого датчика или станции — все {n} районов показывают только модель CAMS.", cvAll: "Измерения рядом есть у всех {n} районов.",
   cvFar: "Районы без измерений, дальше всего от ближайшего датчика (сначала городская застройка, затем сёла):", cvD: "Район", cvT: "Застройка", cvKm: "До датчика, км", cvMore: "Все районы без измерений ({k})",
+  cvMapH: "Карта покрытия", cvMapA: "Карта: районы с измерениями рядом — {c}, только модель — {k}, датчиков и станций — {p}. Те же данные — в таблице выше.",
+  cvLm: "есть измерения рядом", cvLu: "только модель CAMS", cvLp: "датчик или станция; круг — где их значение используется (датчик 2,5 км, станция 3–6 км)",
   cvNote: "Расстояние — по прямой до ближайшего датчика Sensor.Community или станции, которые ответили при последнем обновлении. Новый датчик в таком районе сразу даст ему собственное измеренное значение на карте и в этой панели." });
 Object.assign(GV_S.ky, { cvH: "Датчиктер кайда жетишпейт", cvSub: "Райондун жанында өлчөө (2,5 км ичинде тургундардын датчиги же станция) {n} райондун {c} районунда бар. Калган {k} райондо — CAMS модели гана, ал коңшу кварталдардын айырмасын көрбөйт.",
   cvNone: "Азыр шаардын жанында бир да ачык датчик же станция жок — бардык {n} район CAMS моделин гана көрсөтөт.", cvAll: "Бардык {n} райондун жанында өлчөө бар.",
   cvFar: "Өлчөөсү жок, жакынкы датчиктен эң алыс райондор (адегенде шаардык курулуш, анан айылдар):", cvD: "Район", cvT: "Курулуш", cvKm: "Датчикке чейин, км", cvMore: "Өлчөөсү жок бардык райондор ({k})",
+  cvMapH: "Камтуу картасы", cvMapA: "Карта: жанында өлчөө бар райондор — {c}, модель гана — {k}, датчиктер жана станциялар — {p}. Ушул эле маалымат жогорудагы таблицада.",
+  cvLm: "жанында өлчөө бар", cvLu: "CAMS модели гана", cvLp: "датчик же станция; тегерек — алардын мааниси колдонулган аймак (датчик 2,5 км, станция 3–6 км)",
   cvNote: "Аралык — акыркы жаңыртууда жооп берген Sensor.Community датчигине же станцияга чейин түз сызык менен. Мындай райондогу жаңы датчик ага картада жана бул панелде өз өлчөнгөн маанисин дароо берет." });
 Object.assign(GV_S.en, { cvH: "Where sensors are missing", cvSub: "{c} of {n} districts have a measurement nearby (a residents' sensor within 2.5 km or a station). The other {k} have only the CAMS model, which cannot see differences between neighbouring blocks.",
   cvNone: "There is no open sensor or station near this city right now — all {n} districts show only the CAMS model.", cvAll: "All {n} districts have a measurement nearby.",
   cvFar: "Districts without measurements, farthest from the nearest sensor (urban areas first, then villages):", cvD: "District", cvT: "Housing", cvKm: "To sensor, km", cvMore: "All districts without measurements ({k})",
+  cvMapH: "Coverage map", cvMapA: "Map: districts with a measurement nearby — {c}, model only — {k}, sensors and stations — {p}. The same data is in the table above.",
+  cvLm: "measurement nearby", cvLu: "CAMS model only", cvLp: "sensor or station; circle — where its value is used (sensor 2.5 km, station 3–6 km)",
   cvNote: "Distance is a straight line to the nearest Sensor.Community sensor or station that responded in the last update. A new sensor in such a district immediately gives it its own measured value on the map and in this dashboard." });
 function gvCovData() {
-  const byD = (air && air.byDistrict) || {}, P = [...((air && air.sensors) || []), ...((air && air.stations) || []).filter(s => s.pm25 != null)].filter(p => p.lat != null && p.lon != null);
+  const byD = (air && air.byDistrict) || {}, P = [...((air && air.sensors) || []).map(s => ({ lat: s.lat, lon: s.lon, r: 2.5 })), ...((air && air.stations) || []).filter(s => s.pm25 != null).map(s => ({ lat: s.lat, lon: s.lon, r: s.ref ? 6 : 3 }))].filter(p => p.lat != null && p.lon != null);
   const v = DISTRICTS.filter(d => byD[d.id] && byD[d.id].aqi != null);
-  const un = v.filter(d => byD[d.id].src !== "sensors" && byD[d.id].src !== "station")
-    .map(d => ({ d, km: P.length ? Math.min(...P.map(p => kmDist(d, p))) : null })).sort((a, b) => ((a.d.type === "village") - (b.d.type === "village")) || (b.km || 0) - (a.km || 0));
-  return { n: v.length, c: v.length - un.length, un, np: P.length };
+  const all = v.map(d => { const s = byD[d.id].src; return { d, src: s === "sensors" || s === "station" ? s : "model", km: P.length ? Math.min(...P.map(p => kmDist(d, p))) : null }; });
+  const un = all.filter(x => x.src === "model").sort((a, b) => ((a.d.type === "village") - (b.d.type === "village")) || (b.km || 0) - (a.km || 0));
+  return { n: v.length, c: v.length - un.length, un, all, np: P.length, P };
 }
 function gvCovHTML() {
   if (!air || !air.live || air.status !== "ok") return "";
@@ -373,7 +384,26 @@ function gvCovHTML() {
   return h + `<p class="small">${esc(GV("cvSub", { c: D.c, n: D.n, k: D.un.length }))}</p>
     <p class="small"><b>${esc(GV("cvFar"))}</b></p>${tb(D.un.slice(0, 8))}
     ${D.un.length > 8 ? `<details class="gv-zall"><summary>${esc(GV("cvMore", { k: D.un.length }))}</summary>${tb(D.un)}</details>` : ""}
+    <h4 class="gv-noprint">${esc(GV("cvMapH"))}</h4><div id="gvCovMap" class="gv-map gv-covmap gv-noprint" role="region" aria-label="${esc(GV("cvMapA", { c: D.c, k: D.un.length, p: D.np }))}"></div>
+    <p class="small gv-covlg gv-noprint"><span><i class="gv-lm"></i>${esc(GV("cvLm"))}</span><span><i class="gv-lu"></i>${esc(GV("cvLu"))}</span><span><i class="gv-lp"></i>${esc(GV("cvLp"))}</span></p>
     <p class="small muted">${esc(GV("cvNote"))} ${gvA("sc")}</p></div>`;
+}
+/* v86: карта покрытия — районы с измерениями рядом и без них; круг — радиус, в котором точка даёт значение району (датчик 2,5 км — extra.js sensorsNear; станция 3 км, опорная 6 км — sources.js applyStations) */
+let gvCovM = null;
+function gvCovKill() { if (gvCovM) { try { gvCovM.off(); gvCovM.remove(); } catch (e) { /* уже удалена */ } gvCovM = null; } }
+window.addEventListener("hashchange", () => { if ((location.hash || "").slice(1).split("/")[0] !== "gov") gvCovKill(); });
+function gvCovMount() {
+  gvCovKill(); const el = $("#gvCovMap"); if (!el || typeof L === "undefined") return;
+  const D = gvCovData(); if (!D.all.length) return;
+  const m = gvCovM = mkMap("gvCovMap", { zoomControl: true, scrollWheelZoom: false }); baseTiles(m);
+  const km = v => v == null ? "" : ` · ${GV("cvKm")}: ${fmt(v, 1)}`;
+  D.P.forEach(p => L.circle([p.lat, p.lon], { radius: p.r * 1000, color: "#1f7a52", weight: 1, opacity: 0.5, fillColor: "#2f9e6e", fillOpacity: 0.08, interactive: false }).addTo(m));
+  D.all.forEach(x => { const on = x.src !== "model";
+    L.circleMarker([x.d.lat, x.d.lon], on ? { radius: 6, color: "#14532d", weight: 1.5, fillColor: "#2f9e6e", fillOpacity: 0.9 } : { radius: 6, color: "#b45309", weight: 2, dashArray: "3 2", fillColor: "#ffffff", fillOpacity: 0.85 })
+      .bindTooltip(`${esc(dName(x.d))} · ${esc(GV(on ? "cvLm" : "cvLu"))}${on ? "" : km(x.km)}`).addTo(m); });
+  D.P.forEach(p => L.circleMarker([p.lat, p.lon], { radius: 3, color: "#ffffff", weight: 1.2, fillColor: "#111827", fillOpacity: 1, interactive: false }).addTo(m));
+  try { m.fitBounds(L.latLngBounds(D.all.map(x => [x.d.lat, x.d.lon])).pad(0.08)); } catch (e) { m.setView(cityObj().center, cityObj().zoom || 11); }
+  setTimeout(() => { if (m === gvCovM && m._mapPane) m.invalidateSize(); }, 80);
 }
 function gvSensAccMount() {
   const c = CITY; gvCoef().then(j => { const e = $("#gvSensAcc"), x = j && j.cities && j.cities[c], ck = x && x.check; if (!e || CITY !== c || !ck || ck.maeNew == null) return;
@@ -459,7 +489,7 @@ function gvRender(el, G) {
   $("#gvPrint").onclick = () => window.print();
   $("#gvCsv").onclick = () => gvExport(G, "csv"); $("#gvJson").onclick = () => gvExport(G, "json");
   const cb = $("#gvCopy"); if (cb) cb.onclick = () => copyText(gvWarnText(G));
-  gvSensAccMount();
+  gvSensAccMount(); gvCovMount();
   const wc = CITY; gvWinLoad().then(R => { const w = $("#gvWin"); if (w && CITY === wc) w.innerHTML = gvWinHTML(R); })
     .catch(e => { console.warn("gov winters:", e.message); const w = $("#gvWin"); if (w) w.innerHTML = `<p class="small muted">${GV("winErr")}</p>`; });
   const me = $("#gvCmpMap");

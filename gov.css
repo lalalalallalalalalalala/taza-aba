@@ -205,3 +205,12 @@ html[data-theme="dark"] .gv-dvs{fill:#ff8a65;background:#ff8a65}html[data-theme=
 .gv-cov .gv-t td:first-child{white-space:normal}
 .gv-cov .gv-t td:last-child,.gv-cov .gv-t th:last-child{text-align:right}
 .gv-cov .gv-tw{max-width:640px}
+/* v86: карта покрытия датчиками */
+.gv-covmap{height:300px}
+.gv-cov h4{margin:14px 0 4px}
+.gv-covlg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px}
+.gv-covlg span{display:inline-flex;align-items:center;gap:6px}
+.gv-covlg i{display:inline-block;flex:none;width:12px;height:12px;border-radius:50%}
+.gv-covlg .gv-lm{background:#2f9e6e;border:1.5px solid #14532d}
+.gv-covlg .gv-lu{background:#fff;border:2px dashed #b45309}
+.gv-covlg .gv-lp{width:8px;height:8px;background:#111827;border:1.5px solid #fff;box-shadow:0 0 0 4px rgba(47,158,110,.3)}
