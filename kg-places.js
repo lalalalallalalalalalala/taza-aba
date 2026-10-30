@@ -24,12 +24,12 @@ const GRP_NAME = {
 };
 const GRP_ORDER = ["len", "okt", "perv", "sverd", "city", "alam", "sokul", "karasuu", "sub"];
 (function () {
-  const mkD = (cid, x) => ({ id: x.id, lat: x.lat, lon: x.lon, factor: 1, coalShare: null, type: x.typ, approx: false, osm: x.osm, grp: x.g || null, far: !!x.far,
+  const mkD = (cid, x) => ({ id: x.id, lat: x.lat, lon: x.lon, coalShare: null, type: x.typ, approx: false, osm: x.osm, grp: x.g || null, far: !!x.far,
     name: { ru: x.ru, ky: x.ky, en: x.en }, loc: { ru: `в районе «${x.ru}»`, ky: `«${x.ky}» аймагында`, en: `in ${x.en}` } });
   // 1) новые населённые пункты
   KGP.cities.forEach((c, i) => {
     const C = makeCity({ id: c.id, emoji: c.emoji, center: c.center, seed: 7 + i, demoBase: 80, name: c.name, gen: c.gen, prep: c.prep,
-      sides: ["north", "south"], factors: [1, 1, 1], coal: [0.5, 0.5, 0.5], house: c.house, k: c.k || {} });
+      sides: ["north", "south"], house: c.house, k: c.k || {} });
     C.districts = c.districts.map(x => mkD(c.id, x));
     C.defaultDistrict = C.alertDistrict = C.districts[0].id;
     C.leaderboard = {}; C.demoAqi = {};

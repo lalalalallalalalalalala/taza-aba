@@ -53,3 +53,6 @@ html body .tf-t{background:#4361d8}
 html[data-theme="light"] body .dl-ver{color:#185A8A}
 html[data-theme="light"] body :is(.dl-btn2,.dl-arm a),html[data-theme="light"] body .dl-home em{color:#1F6FA8}
 }
+/* v87: легенда AQI на карте — цветная точка + текст обычного цвета (белый текст на светлых цветах шкалы в тёмной/голубой теме давал 2,3–4,4:1) */
+html body .legend span.lg-i{background:none!important;color:inherit!important;padding:2px 6px 2px 0;display:inline-flex;align-items:center;gap:6px;font-weight:700;text-shadow:none!important}
+html body .legend span.lg-i i{display:inline-block;flex:none;width:11px;height:11px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}

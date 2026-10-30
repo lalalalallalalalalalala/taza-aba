@@ -366,13 +366,7 @@ Object.assign(GV_S.en, { cvH: "Where sensors are missing", cvSub: "{c} of {n} di
   cvMapH: "Coverage map", cvMapA: "Map: districts with a measurement nearby — {c}, model only — {k}, sensors and stations — {p}. The same data is in the table above.",
   cvLm: "measurement nearby", cvLu: "CAMS model only", cvLp: "sensor or station; circle — where its value is used (sensor 2.5 km, station 3–6 km)",
   cvNote: "Distance is a straight line to the nearest Sensor.Community sensor or station that responded in the last update. A new sensor in such a district immediately gives it its own measured value on the map and in this dashboard." });
-function gvCovData() {
-  const byD = (air && air.byDistrict) || {}, P = [...((air && air.sensors) || []).map(s => ({ lat: s.lat, lon: s.lon, r: 2.5 })), ...((air && air.stations) || []).filter(s => s.pm25 != null).map(s => ({ lat: s.lat, lon: s.lon, r: s.ref ? 6 : 3 }))].filter(p => p.lat != null && p.lon != null);
-  const v = DISTRICTS.filter(d => byD[d.id] && byD[d.id].aqi != null);
-  const all = v.map(d => { const s = byD[d.id].src; return { d, src: s === "sensors" || s === "station" ? s : "model", km: P.length ? Math.min(...P.map(p => kmDist(d, p))) : null }; });
-  const un = all.filter(x => x.src === "model").sort((a, b) => ((a.d.type === "village") - (b.d.type === "village")) || (b.km || 0) - (a.km || 0));
-  return { n: v.length, c: v.length - un.length, un, all, np: P.length, P };
-}
+function gvCovData() { return covData(); }   /* v87: общий расчёт с картой #map (app.js covData) */
 function gvCovHTML() {
   if (!air || !air.live || air.status !== "ok") return "";
   const D = gvCovData(); if (D.n < 2) return "";

@@ -287,3 +287,12 @@ details.how li{margin:5px 0}
 @media (max-width:420px){.dlist .dl-grp-l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
 @media (prefers-reduced-motion:reduce){.dlist .dl-grp-a svg{transition:none}}
 @media print{.dlist .dl-grp-b[hidden]{display:block!important}.dlist .dl-grp-a{display:none}}
+/* v87: легенда слоя «Покрытие датчиками» на карте #map (те же значки, что у карты покрытия в #gov) */
+.legend[hidden],.cov-lg[hidden]{display:none!important}
+.cov-lg{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 0 0}
+.cov-lg span{display:inline-flex;align-items:center;gap:6px}
+.cov-lg .cov-sum{flex-basis:100%;font-weight:700}
+.cov-lg i{display:inline-block;flex:none;width:12px;height:12px;border-radius:50%}
+.cov-lg .gv-lm{background:#2f9e6e;border:1.5px solid #14532d}
+.cov-lg .gv-lu{background:#fff;border:2px dashed #b45309}
+.cov-lg .gv-lp{width:8px;height:8px;background:#111827;border:1.5px solid #fff;box-shadow:0 0 0 4px rgba(47,158,110,.3)}

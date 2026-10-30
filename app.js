@@ -106,7 +106,7 @@ async function fetchJSON(url, ms = 9000) {
 }
 
 /* Один запрос на все районы (списки координат через запятую). Значение — модель CAMS в точке района, БЕЗ поправок
- * (`factor` из data.js используется только в демо-данных). Сетка CAMS ~0,1° (~10 км): районы в одной ячейке получают одинаковый AQI. */
+ * (демо-коэффициенты районов удалены из data.js в v87). Сетка CAMS ~0,1° (~10 км): районы в одной ячейке получают одинаковый AQI. */
 /* одна загрузка «в полёте» на город: повторные вызовы (online, таймер, кнопка) ждут тот же промис */
 let airInflight = null, airRetryT = null, airRetryN = 0;
 function loadAir() {
@@ -576,7 +576,7 @@ function footer() {
 }
 
 /* ---------------- 2. Карта ---------------- */
-let mapLayers = { smog: true, complaints: true, routes: false };
+let mapLayers = { smog: true, complaints: true, routes: false, cov: false };
 const allComplaints = () => state.complaints.filter(inCity);   // v58: только свои настоящие жалобы
 const C_EMOJI = { chimney: "🏭", trash: "🔥", dump: "🗑️", car: "🚌", factory: "🏗️" };
 function complaintPopup(c) {
@@ -622,7 +622,7 @@ function viewCountry(el) {
     <div class="map-grid"><div class="map-col">
     <div id="mapEl"></div>
     <div class="toggles"><div class="toggle" id="backCity">${t("backToCity")}</div></div>
-    <div class="legend">${AQI_LEVELS.slice(0, 5).map(l => `<span style="background:${l.color}">${tr(l.name)}</span>`).join("")}</div>
+    <div class="legend">${AQI_LEVELS.slice(0, 5).map(l => `<span class="lg-i"><i style="background:${l.color}" aria-hidden="true"></i>${tr(l.name)}</span>`).join("")}</div>
     </div><div class="list-col">
     <h2 id="dlH">${t("citiesList")}</h2>
     <div class="card dlist" tabindex="0" role="region" aria-labelledby="dlH">
@@ -660,7 +660,7 @@ function viewCountry(el) {
     cps.forEach(o => { const e = o.mk.getElement(); if (!e) return; e.style.display = o.hidden ? "none" : ""; const cp = e.firstElementChild; cp.classList.toggle("nol", !!o.nol);
       const n = cp.querySelector(".cp-n"); n.hidden = !o.grp.length; n.textContent = "+" + o.grp.length; }); };
   let lt = 0; M.on("zoomend moveend resize", () => { clearTimeout(lt); lt = setTimeout(layout, 60); }); M.whenReady(layout); setTimeout(layout, 80);
-  $("#backCity").onclick = () => { mapMode = "city"; route(true); };
+  $("#backCity").onclick = () => { mapMode = "city"; route(true); }; tgA11y(el);
   el.querySelectorAll("[data-city]").forEach(x => x.onclick = () => { window.scrollTo(0, 0); openCityFromCountry(x.dataset.city); });
   setTimeout(() => map && map.invalidateSize(), 50);
 }
@@ -677,6 +677,44 @@ const DLS_T = { ru: { s: "датчики рядом", st: "станция", m: "
   en: { s: "nearby sensors", st: "station", m: "CAMS model" } };
 const dlsT = k => (DLS_T[LANG] || DLS_T.ru)[k];
 function dlSrc(r) { return !r || r.aqi == null ? "" : r.src === "sensors" ? dlsT("s") : r.src === "station" ? dlsT("st") : r.src === "model" ? dlsT("m") : ""; }
+/* v87: слой «Покрытие датчиками» на карте #map — тот же расчёт, что в карточке #gov «Где не хватает датчиков» (v85–v86):
+ * район «с измерением рядом» — если его значение сейчас из датчиков жителей (≤ 2,5 км, extra.js sensorsNear) или станции (sources.js applyStations). */
+const COV_T = { ru: { l: "Покрытие датчиками", on: "есть измерения рядом", off: "только модель CAMS", p: "датчик или станция; круг — где его значение используется (датчик 2,5 км, станция 3–6 км)",
+    sum: "Измерения рядом есть у {c} из {n} районов, у остальных {k} — только модель CAMS.", none: "Рядом с городом сейчас нет ни одного открытого датчика или станции — все {n} районов показывают только модель CAMS.", km: "до датчика, км", nod: "Нет данных" },
+  ky: { l: "Датчиктер менен камтуу", on: "жанында өлчөө бар", off: "CAMS модели гана", p: "датчик же станция; тегерек — алардын мааниси колдонулган аймак (датчик 2,5 км, станция 3–6 км)",
+    sum: "Жанында өлчөө {n} райондун {c} районунда бар, калган {k} райондо — CAMS модели гана.", none: "Азыр шаардын жанында бир да ачык датчик же станция жок — бардык {n} район CAMS моделин гана көрсөтөт.", km: "датчикке чейин, км", nod: "Маалымат жок" },
+  en: { l: "Sensor coverage", on: "measurement nearby", off: "CAMS model only", p: "sensor or station; circle — where its value is used (sensor 2.5 km, station 3–6 km)",
+    sum: "{c} of {n} districts have a measurement nearby; the other {k} have only the CAMS model.", none: "There is no open sensor or station near this city right now — all {n} districts show only the CAMS model.", km: "to sensor, km", nod: "No data" } };
+const covT = (k, v = {}) => ((COV_T[LANG] || COV_T.ru)[k] || COV_T.ru[k]).replace(/\{(\w)\}/g, (_, x) => v[x] ?? "");
+function covData() {
+  const byD = (air && air.byDistrict) || {}, P = [...((air && air.sensors) || []).map(s => ({ lat: s.lat, lon: s.lon, r: 2.5 })), ...((air && air.stations) || []).filter(s => s.pm25 != null).map(s => ({ lat: s.lat, lon: s.lon, r: s.ref ? 6 : 3 }))].filter(p => p.lat != null && p.lon != null);
+  const v = DISTRICTS.filter(d => byD[d.id] && byD[d.id].aqi != null);
+  const all = v.map(d => { const s = byD[d.id].src; return { d, src: s === "sensors" || s === "station" ? s : "model", km: P.length ? Math.min(...P.map(p => kmDist(d, p))) : null }; });
+  const un = all.filter(x => x.src === "model").sort((a, b) => ((a.d.type === "village") - (b.d.type === "village")) || (b.km || 0) - (a.km || 0));
+  return { n: v.length, c: v.length - un.length, un, all, np: P.length, P };
+}
+function covFill(g) {
+  g.clearLayers(); const D = covData();
+  D.P.forEach(p => L.circle([p.lat, p.lon], { radius: p.r * 1000, color: "#1f7a52", weight: 1, opacity: 0.5, fillColor: "#2f9e6e", fillOpacity: 0.08, interactive: false }).addTo(g));
+  D.all.forEach(x => { const on = x.src !== "model";
+    L.circleMarker([x.d.lat, x.d.lon], on ? { radius: 7, color: "#14532d", weight: 1.5, fillColor: "#2f9e6e", fillOpacity: 0.9 } : { radius: 7, color: "#b45309", weight: 2, dashArray: "3 2", fillColor: "#ffffff", fillOpacity: 0.85 })
+      .bindTooltip(`${esc(dName(x.d))} · ${esc(covT(on ? "on" : "off"))}${on || x.km == null ? "" : ` · ${esc(covT("km"))}: ${fmt(x.km, 1)}`}`).addTo(g); });
+  D.P.forEach(p => L.circleMarker([p.lat, p.lon], { radius: 3, color: "#ffffff", weight: 1.2, fillColor: "#111827", fillOpacity: 1, interactive: false }).addTo(g));
+  return D;
+}
+function covLegend(D) {
+  if (!D || !D.n) return esc(covT("nod"));
+  return `<span class="cov-sum">${esc(covT(D.np ? "sum" : "none", { c: D.c, n: D.n, k: D.un.length }))}</span>
+    ${D.c ? `<span><i class="gv-lm"></i>${esc(covT("on"))}</span>` : ""}<span><i class="gv-lu"></i>${esc(covT("off"))}</span>${D.np ? `<span><i class="gv-lp"></i>${esc(covT("p"))}</span>` : ""}`;
+}
+/* v87: переключатели слоёв (div.toggle) — доступны с клавиатуры: role=button, tabindex, aria-pressed, Enter/пробел (раньше базовые три были недоступны с клавиатуры) */
+function tgA11y(el) {
+  el.querySelectorAll(".toggles .toggle").forEach(b => { b.setAttribute("role", "button"); b.tabIndex = 0; b.setAttribute("aria-pressed", b.classList.contains("on") ? "true" : "false"); });
+  const tg = el.querySelector(".toggles"); if (!tg || tg._a11y) return; tg._a11y = 1;
+  tg.addEventListener("keydown", e => { const b = e.target.closest && e.target.closest(".toggle"); if (!b || e.defaultPrevented || (e.key !== "Enter" && e.key !== " ")) return; e.preventDefault(); b.click(); });
+  tg.addEventListener("click", () => setTimeout(() => tgA11y(el), 0));
+  if (window.MutationObserver) new MutationObserver(() => { if (tg.isConnected) tgA11y(el); }).observe(tg, { childList: true });
+}
 /* v83: подряд идущие районы с одинаковым AQI и одним источником числа сворачиваются в одну строку
  * («Ак-Кыя, Центр и ещё 41 район · 85 · модель CAMS»); нажатие (или Enter/пробел) раскрывает полный список. */
 const DLG_T = {
@@ -752,6 +790,7 @@ function dlNoteText() {
 function dlNoteFill(el) { const n = el.querySelector(".dl-note"); if (!n) return; const s = dlNoteText(); n.textContent = s; n.hidden = !s; }
 function viewMap(el) {
   if (mapMode === "country") return viewCountry(el);
+  if (mapLayers.cov && mapLayers.smog) mapLayers.smog = false;   /* v87: «Покрытие» и «Смог» — взаимоисключающие (точки покрытия не прячутся под метками AQI) */
   el.innerHTML = `
     <div class="row between" style="align-items:flex-start"><div><h1>${t("mapTitle")}</h1><p class="sub">${t("mapSub")}</p></div>
       <button class="btn ghost country-btn" id="countryBtn">${ctryT("countryBtn")}</button></div>
@@ -761,8 +800,10 @@ function viewMap(el) {
       <div class="toggle ${mapLayers.smog ? "on" : ""}" data-layer="smog">${t("layerSmog")}</div>
       <div class="toggle ${mapLayers.complaints ? "on" : ""}" data-layer="complaints">${t("layerComplaints")}</div>
       <div class="toggle ${mapLayers.routes ? "on" : ""}" data-layer="routes">${t("layerRoutes")}</div>
+      ${air.live && air.status === "ok" ? `<div class="toggle ${mapLayers.cov ? "on" : ""}" data-layer="cov">${esc(covT("l"))}</div>` : ""}
     </div>
-    <div class="legend">${AQI_LEVELS.slice(0, 5).map(l => `<span style="background:${l.color}">${tr(l.name)}</span>`).join("")}</div>
+    <div class="legend"${mapLayers.smog ? "" : " hidden"}>${AQI_LEVELS.slice(0, 5).map(l => `<span class="lg-i"><i style="background:${l.color}" aria-hidden="true"></i>${tr(l.name)}</span>`).join("")}</div>
+    <p class="small cov-lg gv-covlg"${mapLayers.cov ? "" : " hidden"} aria-live="polite"></p>
     </div><div class="list-col">
     <h2 id="dlH">${t("districtsList")}</h2>
     <div class="card dlist" tabindex="0" role="region" aria-labelledby="dlH">
@@ -777,7 +818,8 @@ function viewMap(el) {
   baseTiles(map);
   map.fitBounds(L.latLngBounds(DISTRICTS.map(d => [d.lat, d.lon])).pad(CITY === "bishkek" ? 0.04 : 0.3));
 
-  const layers = { smog: L.layerGroup(), complaints: L.layerGroup(), routes: L.layerGroup() };
+  const layers = { smog: L.layerGroup(), complaints: L.layerGroup(), routes: L.layerGroup(), cov: L.layerGroup() };
+  const covUpd = () => { const lg = el.querySelector(".cov-lg"); if (!mapLayers.cov) return; const D = covFill(layers.cov); if (lg) lg.innerHTML = covLegend(D); };
   // районы: круги-«пятна» (canvas) + метки AQI; кластеры пересчитываются только на zoomend/moveend (с задержкой) и только в видимой области
   const R0 = cityObj().radius || 900, M = map;
   const nn = d => { let m = 1e9; for (const x of DISTRICTS) if (x !== d) m = Math.min(m, kmDist(d, x) * 1000); return m; };
@@ -815,7 +857,7 @@ function viewMap(el) {
   M.on("zoomend moveend", drawSoon); M.whenReady(drawPins);
   /* обновление данных на месте (догрузка дальних районов) — без пересоздания карты */
   window.mapUpdate = () => { if (M !== map || !document.body.contains(M.getContainer())) return false; syncCircles(); drawPins(); if (MSu) MSu();
-    const di = el.querySelector(".dl-items"); if (di) di.innerHTML = distListHTML(); dlNoteFill(el); return true; };
+    const di = el.querySelector(".dl-items"); if (di) di.innerHTML = distListHTML(); dlNoteFill(el); covUpd(); return true; };
   /* фокус на районе (из глобального поиска) */
   window.mapFocus = id => { const d = DISTRICTS.find(x => x.id === id); if (!d || M !== map) return; if (MSu && window.msFocus) return msFocus(d);
     M.flyTo([d.lat, d.lon], Math.max(15, M.getZoom()), { duration: LOWEND ? 0 : 0.6 });
@@ -830,11 +872,17 @@ function viewMap(el) {
   ECO_ROUTES.forEach(r => L.polyline(r.path, { color: r.color, weight: 6, opacity: 0.9, dashArray: r.mode === "bike" ? "1 10" : null, lineCap: "round" })
     .bindPopup(() => `<b>${tr(r.name)}</b><br>${r.mode === "walk" ? t("rWalk") : t("rBike")} · ${t("rKm", { n: fmt(routeKm(r), 1) })}`).addTo(layers.routes));
   });
+  covUpd();
   Object.keys(layers).forEach(k => { if (mapLayers[k]) layers[k].addTo(map); });
-  el.querySelectorAll(".toggle").forEach(tg => tg.onclick = () => {
-    const k = tg.dataset.layer; mapLayers[k] = !mapLayers[k]; tg.classList.toggle("on", mapLayers[k]);
-    mapLayers[k] ? layers[k].addTo(map) : map.removeLayer(layers[k]);
+  const setL = (k, v) => { mapLayers[k] = v; const b = el.querySelector(`.toggle[data-layer="${k}"]`); if (b) { b.classList.toggle("on", v); b.setAttribute("aria-pressed", v ? "true" : "false"); }
+    v ? layers[k].addTo(map) : map.removeLayer(layers[k]);
+    if (k === "smog") { const lg = el.querySelector(".legend"); if (lg) lg.hidden = !v; }
+    if (k === "cov") { const lg = el.querySelector(".cov-lg"); if (lg) lg.hidden = !v; if (v) covUpd(); } };
+  el.querySelectorAll(".toggle[data-layer]").forEach(tg => tg.onclick = () => {
+    const k = tg.dataset.layer, v = !mapLayers[k]; setL(k, v);
+    if (v && k === "cov" && mapLayers.smog) setL("smog", false); else if (v && k === "smog" && mapLayers.cov) setL("cov", false);
   });
+  tgA11y(el);
   if (typeof stAttach === "function") idle(() => { if (map === M) try { stAttach(el); } catch (e) { console.warn("stations layer:", e); } });
   setTimeout(() => { map && map.invalidateSize(); if (window.__gsFocus && Date.now() - (window.__gsFocusAt || 0) < 20000) mapFocus(window.__gsFocus); else window.__gsFocus = null; }, 60);
 }
