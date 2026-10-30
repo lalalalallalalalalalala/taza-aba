@@ -3,7 +3,7 @@
 name: News headlines
 on:
   schedule:
-    - cron: "7 * * * *"   # каждый час, минута 7
+    - cron: "7 */3 * * *"   # каждые 3 часа, минута 7 (реже пушей — меньше риск блокировки аккаунта)
   workflow_dispatch:
 permissions:
   contents: write
