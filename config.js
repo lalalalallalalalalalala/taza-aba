@@ -28,8 +28,8 @@ window.TAZA_CONFIG = Object.assign({
   /* ARCHIVE_REPO — публичный репозиторий GitHub с открытым архивом по дням (archive/<город>.csv, пишет workflow daily-archive.yml). */
   ARCHIVE_REPO: "zusenbaev7-cmd/taza-aba",
   /* SUPPORT — одна ссылка для добровольной поддержки в разделе #support (только https://, например страница сбора). Без имён, телефонов и номеров кошельков.
-     link — адрес; linkName — подпись кнопки (пусто = «Поддержать»); note_ru/note_ky/note_en — необязательная строка. Пока link пустой, блок НЕ показывается. */
-  SUPPORT: { link: "", linkName: "", note_ru: "", note_ky: "", note_en: "" },
+     link — адрес; linkName — подпись кнопки (пусто = «Поддержать»); note_ru/note_ky/note_en — необязательная строка. Пустой link = блок не показывается. */
+  SUPPORT: { link: "https://boosty.to/lalalalallalalalalalalai/donate", linkName: "Boosty", note_ru: "", note_ky: "", note_en: "" },
   SUPABASE_URL: "",
   SUPABASE_ANON_KEY: "",
 }, window.TAZA_CONFIG || {});
