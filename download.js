@@ -1,8 +1,8 @@
 /* v45: «Скачать приложение» (#download) — Windows (Neutralino exe), Linux (.deb/.pkg.tar.zst/.tar.gz), Android, установка PWA. Файлы — ассеты GitHub Release, не в репозитории. */
 const DL = { tag: "app-v44", ver: "v44", base: "https://github.com/lalalalallalalalalalala/taza-aba/releases/download/app-v44/", rel: "https://github.com/lalalalallalalalalalala/taza-aba/releases/tag/app-v44",
-  files: { exe: { n: "TazaAba.exe", mb: 22.3 }, zip: { n: "TazaAba-Windows-portable.zip", mb: 7.4 }, apk: { n: "TazaAba.apk", mb: 0.12 },
-    deb: { n: "taza-aba_1.0.44-1_amd64.deb", mb: 5.4 }, debA: { n: "taza-aba_1.0.44-1_arm64.deb", mb: 5.3 }, pac: { n: "taza-aba-1.0.44-1-x86_64.pkg.tar.zst", mb: 5.7 }, pacA: { n: "taza-aba-1.0.44-1-aarch64.pkg.tar.zst", mb: 5.7 },
-    tgz: { n: "TazaAba-linux-x64.tar.gz", mb: 7.3 }, tgzA: { n: "TazaAba-linux-arm64.tar.gz", mb: 7.3 } } };
+  files: { exe: { n: "TazaAba.exe", mb: 10.9 }, zip: { n: "TazaAba-Windows-portable.zip", mb: 4.6 }, apk: { n: "TazaAba.apk", mb: 0.12 },
+    deb: { n: "taza-aba_1.0.44-1_amd64.deb", mb: 3.6 }, debA: { n: "taza-aba_1.0.44-1_arm64.deb", mb: 3.6 }, pac: { n: "taza-aba-1.0.44-1-x86_64.pkg.tar.zst", mb: 3.8 }, pacA: { n: "taza-aba-1.0.44-1-aarch64.pkg.tar.zst", mb: 3.8 },
+    tgz: { n: "TazaAba-linux-x64.tar.gz", mb: 4.4 }, tgzA: { n: "TazaAba-linux-arm64.tar.gz", mb: 4.4 } } };
 const DL_T = {
   ru: { menu: "Скачать приложение", menuSub: "Windows, Linux, Android, установка с сайта", title: "Таза Аба — приложения", sub: "Тот же сервис качества воздуха — отдельным окном на компьютере и в телефоне. Бесплатно, без рекламы и регистрации.",
     win: "Windows", winSub: "Windows 10/11 · 64-бит · без установки", exe: "Скачать .exe", zip: "Портативный .zip", and: "Android", andSub: "Android 7+ · APK", soon: "Скоро", apk: "Скачать .apk",
