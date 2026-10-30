@@ -1,5 +1,5 @@
 /* v45: «Скачать приложение» (#download) — Windows (Neutralino exe), Linux (.deb/.pkg.tar.zst/.tar.gz), Android, установка PWA. Файлы — ассеты GitHub Release, не в репозитории. */
-const DL = { tag: "app-v44", ver: "v44", base: "https://github.com/zusenbaev7-cmd/taza-aba/releases/download/app-v44/", rel: "https://github.com/zusenbaev7-cmd/taza-aba/releases/tag/app-v44",
+const DL = { tag: "app-v44", ver: "v44", base: "https://github.com/lalalalallalalalalalala/taza-aba/releases/download/app-v44/", rel: "https://github.com/lalalalallalalalalalala/taza-aba/releases/tag/app-v44",
   files: { exe: { n: "TazaAba.exe", mb: 22.3 }, zip: { n: "TazaAba-Windows-portable.zip", mb: 7.4 }, apk: { n: "TazaAba.apk", mb: 0.12 },
     deb: { n: "taza-aba_1.0.44-1_amd64.deb", mb: 5.4 }, debA: { n: "taza-aba_1.0.44-1_arm64.deb", mb: 5.3 }, pac: { n: "taza-aba-1.0.44-1-x86_64.pkg.tar.zst", mb: 5.7 }, pacA: { n: "taza-aba-1.0.44-1-aarch64.pkg.tar.zst", mb: 5.7 },
     tgz: { n: "TazaAba-linux-x64.tar.gz", mb: 7.3 }, tgzA: { n: "TazaAba-linux-arm64.tar.gz", mb: 7.3 } } };

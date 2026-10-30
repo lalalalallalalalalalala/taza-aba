@@ -330,7 +330,7 @@ function gvSensData() {
   return { rows, ms, mm, k: mm > 0 ? ms / mm : null, lo: rows[rows.length - 1].s, hi: rows[0].s, bad: ((air && air.sensorsBad) || []).length };
 }
 let gvCoefP = null;
-const gvCoef = () => gvCoefP || (gvCoefP = fetch(/github\.io$/.test(location.hostname) ? "forecast/coeffs.json" : "https://zusenbaev7-cmd.github.io/taza-aba/forecast/coeffs.json", { cache: "no-cache", signal: AbortSignal.timeout(12000) })
+const gvCoef = () => gvCoefP || (gvCoefP = fetch(/github\.io$/.test(location.hostname) ? "forecast/coeffs.json" : "https://lalalalallalalalalalala.github.io/taza-aba/forecast/coeffs.json", { cache: "no-cache", signal: AbortSignal.timeout(12000) })
   .then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status))).catch(e => { gvCoefP = null; throw e; }));
 function gvSensHTML(nZ) {
   const D = gvSensData(), f1 = v => gvF(v, 1);
@@ -649,7 +649,7 @@ Object.assign(GV_S.en, { arH: "Open daily archive", arSub: "Every night (around 
   arCols: "date — local date; aqi_mean / aqi_max — daily mean and max US AQI; pm2_5_mean / pm2_5_max, pm10_mean, no2_mean — µg/m³; hours_pm2_5_over_15 — hours with PM2.5 > 15; hours — hours with data (days with < 20 hours are not written).",
   arNote: "Modelled CAMS (Copernicus) values via Open-Meteo, CC BY 4.0 — not sensor measurements. The model can differ substantially from ground measurements, especially during winter inversions: compare days and years with each other, not with guidelines or other cities. History before {s} was loaded once from the Open-Meteo archive (from {f}).",
   gzLink: "🗞️ A5 for district newspapers (Kyrgyz / Russian)", gzBack: "← A4 brief", gzPrint: "🖨️ Print A5 / PDF", gzCopy: "📋 Copy sheet text", gzLang: "Sheet language", gzHint: "An A5 sheet for a district newspaper or notice board: 30-day figures, the AQI scale with advice for residents and a QR to the live forecast. The sheet is in Kyrgyz or Russian (for bilingual papers), whatever the app language." });
-const GV_AR_REPO = (window.TAZA_CONFIG || {}).ARCHIVE_REPO || "zusenbaev7-cmd/taza-aba";
+const GV_AR_REPO = (window.TAZA_CONFIG || {}).ARCHIVE_REPO || "lalalalallalalalalalala/taza-aba";
 const GV_AR_RAW = `https://raw.githubusercontent.com/${GV_AR_REPO}/main/archive/`, GV_AR_GH = `https://github.com/${GV_AR_REPO}/tree/main/archive`;
 const gvArCache = {};
 async function gvTxt(url, ms = 20000) { const r = await fetch(url, { cache: "no-cache", signal: AbortSignal.timeout(ms) }); if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); }

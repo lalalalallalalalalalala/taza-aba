@@ -1,7 +1,7 @@
 /* v88-proposal: «Поддержать проект» (#support). Только настоящие способы помочь и настоящие ссылки.
  * Блок пожертвований показывается, только если в config.js заполнен TAZA_CONFIG.SUPPORT; пустой = блока нет (никаких образцов жителям). */
 "use strict";
-const SP_URL = "https://zusenbaev7-cmd.github.io/taza-aba/", SP_REPO = "https://github.com/zusenbaev7-cmd/taza-aba";
+const SP_URL = "https://lalalalallalalalalalala.github.io/taza-aba/", SP_REPO = "https://github.com/lalalalallalalalalalala/taza-aba";
 const SP_T = {
   ru: { menu: "Поддержать проект", menuSub: "Как помочь «Таза Аба»: рассказать, сообщить об ошибке, поставить датчик", foot: "Поддержать проект",
     title: "Поддержать «Таза Аба»", lede: "«Таза Аба» показывает, чем дышит ваш район, и предупреждает о вечернем смоге. Приложение делает независимый автор, а не компания или госорган. Больше всего проекту помогают люди, которые им пользуются и рассказывают о нём другим.",

@@ -472,7 +472,7 @@ async function loadWeather(force) {
 }
 // v35: rss2json отвечал 403 → ленты забирает сервер (GitHub Actions, bot/news_fetch.js, раз в час) в news/<набор>.json.
 // На GitHub Pages читаем со своего адреса, на других хостах (Surge, exe) — с raw.githubusercontent.com (CORS), запасной путь — другой.
-const NEWS_REPO = "zusenbaev7-cmd/taza-aba", NEWS_RAW = `https://raw.githubusercontent.com/${NEWS_REPO}/main/news/`;
+const NEWS_REPO = "lalalalallalalalalalala/taza-aba", NEWS_RAW = `https://raw.githubusercontent.com/${NEWS_REPO}/main/news/`;
 // набор лент по языку интерфейса: Kabar и 24.kg выпускают кыргызскую, русскую и английскую версии, Kloop — только русскую (в лентах).
 // Для турецкого интерфейса у КР-изданий нет турецких лент → русский набор (самый полный).
 const newsSet = ctry => "kg-" + (LANG === "ky" ? "ky" : LANG === "en" ? "en" : "ru");

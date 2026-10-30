@@ -21,7 +21,7 @@ const text = s => dec(cdata(s || "").replace(/<[^>]*>/g, " ")).replace(/<[^>]*>/
 const tag = (s, n) => { const m = s.match(new RegExp(`<${n}(?:\\s[^>]*)?>([\\s\\S]*?)</${n}>`, "i")); return m ? m[1] : ""; };
 const safeUrl = u => { try { const x = new URL(text(u)); return /^https?:$/.test(x.protocol) ? x.href : ""; } catch (e) { return ""; } };
 async function feed(url) {
-  const r = await fetch(url, { headers: { "User-Agent": "TazaAbaNewsBot/1.0 (+https://zusenbaev7-cmd.github.io/taza-aba/)", Accept: "application/rss+xml, application/xml, text/xml" }, signal: AbortSignal.timeout(30000) });
+  const r = await fetch(url, { headers: { "User-Agent": "TazaAbaNewsBot/1.0 (+https://lalalalallalalalalalala.github.io/taza-aba/)", Accept: "application/rss+xml, application/xml, text/xml" }, signal: AbortSignal.timeout(30000) });
   if (!r.ok) throw new Error("HTTP " + r.status);
   const xml = await r.text();
   return (xml.match(/<item[\s>][\s\S]*?<\/item>/gi) || []).slice(0, MAX).map(it => {

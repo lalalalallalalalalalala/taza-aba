@@ -9,7 +9,7 @@
 /* SITE_URL — публичный адрес сайта со слешем на конце (для ссылок «Поделиться» и og:image), например
  *   "https://USER.github.io/taza-aba/". Пусто = берётся текущий адрес страницы. mkzip.py подставляет его в og:url/og:image. */
 window.TAZA_CONFIG = Object.assign({
-  SITE_URL: "https://zusenbaev7-cmd.github.io/taza-aba/",
+  SITE_URL: "https://lalalalallalalalalalala.github.io/taza-aba/",
   AIRNOW_KEY: "",
   WAQI_TOKEN: "",
   OPENAQ_KEY: "",
@@ -26,7 +26,7 @@ window.TAZA_CONFIG = Object.assign({
   /* Серверные аккаунты (Supabase). Пусто = только локальные зашифрованные аккаунты на устройстве.
      Заполняется скриптом backend/setup.sh. Anon key публичный по замыслу: доступ ограничен RLS. */
   /* ARCHIVE_REPO — публичный репозиторий GitHub с открытым архивом по дням (archive/<город>.csv, пишет workflow daily-archive.yml). */
-  ARCHIVE_REPO: "zusenbaev7-cmd/taza-aba",
+  ARCHIVE_REPO: "lalalalallalalalalalala/taza-aba",
   /* SUPPORT — одна ссылка для добровольной поддержки в разделе #support (только https://, например страница сбора). Без имён, телефонов и номеров кошельков.
      link — адрес; linkName — подпись кнопки (пусто = «Поддержать»); note_ru/note_ky/note_en — необязательная строка. Пустой link = блок не показывается. */
   SUPPORT: { link: "https://boosty.to/lalalalallalalalalalalai/donate", linkName: "Boosty", note_ru: "", note_ky: "", note_en: "" },

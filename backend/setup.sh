@@ -21,7 +21,7 @@ for i in $(seq 1 60); do S=$(curl -fsS "${H[@]}" $API/projects/$REF | python3 -c
 echo "Применяю schema.sql…"
 curl -fsS "${H[@]}" -X POST $API/projects/$REF/database/query -d "$(python3 -c 'import json;print(json.dumps({"query":open("schema.sql").read()}))')" >/dev/null
 echo "Настраиваю Auth (адрес сайта для писем подтверждения)…"
-curl -fsS "${H[@]}" -X PATCH $API/projects/$REF/config/auth -d "$(python3 -c 'import json,sys;print(json.dumps({"site_url":sys.argv[1],"uri_allow_list":sys.argv[1]+"**,https://zusenbaev7-cmd.github.io/taza-aba/**"}))' "$SITE")" >/dev/null || echo "  (не удалось обновить настройки Auth — задайте Site URL вручную)"
+curl -fsS "${H[@]}" -X PATCH $API/projects/$REF/config/auth -d "$(python3 -c 'import json,sys;print(json.dumps({"site_url":sys.argv[1],"uri_allow_list":sys.argv[1]+"**,https://lalalalallalalalalalala.github.io/taza-aba/**"}))' "$SITE")" >/dev/null || echo "  (не удалось обновить настройки Auth — задайте Site URL вручную)"
 ANON=$(curl -fsS "${H[@]}" "$API/projects/$REF/api-keys" | python3 -c 'import json,sys;k=[x for x in json.load(sys.stdin) if x.get("name")=="anon"];print(k[0]["api_key"])')
 URL="https://$REF.supabase.co"
 python3 - "$URL" "$ANON" <<'PY'

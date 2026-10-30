@@ -10,7 +10,7 @@
   const SKIP = /us_aqi_pm2_5/;                      // главный запрос по районам (AQ_Q) — у него собственный кэш с меткой времени
   const LONG = /past_days=(?:[4-9]|\d\d)|coeffs\.json/; // история и коэффициенты меняются медленно
   const MAX_AGE = 24 * 3600e3, MAX_AGE_LONG = 7 * 864e5, MAX_N = 80;
-  const own = u => u.hostname === "zusenbaev7-cmd.github.io" && /^\/taza-aba\/(forecast|news)\//.test(u.pathname);
+  const own = u => u.hostname === "lalalalallalalalalalala.github.io" && /^\/taza-aba\/(forecast|news)\//.test(u.pathname);
   const norm = u => { const x = new URL(u.href); ["t", "startDate", "endDate", "_"].forEach(k => x.searchParams.delete(k)); return x.href; };
   let dbP = null;
   const db = () => dbP || (dbP = new Promise((res, rej) => { try { const r = indexedDB.open("tazaAba-offline", 1);

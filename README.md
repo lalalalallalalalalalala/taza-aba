@@ -2,7 +2,7 @@
 
 **Таза Аба** («чистый воздух» по-кыргызски) — веб-приложение против зимнего смога в Кыргызстане и в Турции: качество воздуха по районам, прогноз, советы и инструменты для жителей и мэрии. Охват — **59 городов**.
 
-🌐 **Сайт:** https://taza-aba.surge.sh/ (основной) · зеркало на GitHub Pages: https://zusenbaev7-cmd.github.io/taza-aba/
+🌐 **Сайт:** https://taza-aba.surge.sh/ (основной) · зеркало на GitHub Pages: https://lalalalallalalalalalala.github.io/taza-aba/
 
 ![Главная](docs/screenshot-home.png)
 
@@ -44,7 +44,7 @@
 ## Как запустить локально
 
 ```bash
-git clone https://github.com/zusenbaev7-cmd/taza-aba.git
+git clone https://github.com/lalalalallalalalalalala/taza-aba.git
 cd taza-aba
 python3 -m http.server 8765
 # открыть http://localhost:8765/
@@ -69,4 +69,4 @@ python3 -m http.server 8765
 
 **Run locally:** `python3 -m http.server 8765` in the repo root, then open http://localhost:8765/. No build step and no keys required.
 
-**Live:** https://taza-aba.surge.sh/ · https://zusenbaev7-cmd.github.io/taza-aba/
+**Live:** https://taza-aba.surge.sh/ · https://lalalalallalalalalalala.github.io/taza-aba/

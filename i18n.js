@@ -309,7 +309,7 @@ function applySeo() {
     set('meta[property="og:locale"]', "content", { ru: "ru_RU", ky: "ky_KG", en: "en_US" }[LANG] || "ru_RU");
     // canonical: язык из ссылки ?lang= — на свою версию; без параметра — корень
     const ql = new URLSearchParams(location.search).get("lang");
-    set('link[rel="canonical"]', "href", "https://zusenbaev7-cmd.github.io/taza-aba/" + (SEO[ql] ? "?lang=" + ql : ""));
+    set('link[rel="canonical"]', "href", "https://lalalalallalalalalalala.github.io/taza-aba/" + (SEO[ql] ? "?lang=" + ql : ""));
   } catch (e) {}
 }
 function setLang(l) { try { const u = new URL(location.href); if (u.searchParams.has("lang")) { u.searchParams.set("lang", l); history.replaceState(history.state, "", u); } } catch (e) {} LANG = l; localStorage.setItem("tazaAba.lang", l); document.documentElement.lang = l === "ky" ? "ky" : l; }

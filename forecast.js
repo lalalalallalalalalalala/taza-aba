@@ -12,7 +12,7 @@
     transfer: { bBg: [7.537, 10.596, 3.294, 0.016, 11.619], f: 0.8, lo: 0.35, hi: 1.6 }, _def: true };
   let C = DEF;
   /* коэффициенты обновляет GitHub Actions в репозитории Pages; с других хостов (Surge, приложения) берём их оттуда, иначе — локальную копию */
-  const PAGES = "https://zusenbaev7-cmd.github.io/taza-aba/forecast/coeffs.json", gj = u => fetch(u, { cache: "no-cache" }).then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)));
+  const PAGES = "https://lalalalallalalalalalala.github.io/taza-aba/forecast/coeffs.json", gj = u => fetch(u, { cache: "no-cache" }).then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)));
   (/github\.io$/.test(location.hostname) ? gj("forecast/coeffs.json") : gj(PAGES).catch(() => gj("forecast/coeffs.json"))).then(j => { if (j && j.cities && j.updated !== C.updated) { C = j; reapply(); } }).catch(() => {});
   const fresh = () => Date.now() - Date.parse(C.updated) < 72 * 36e5;
   const L1 = x => Math.log(Math.max(0, x) + 1), ex1 = y => Math.max(0, Math.exp(y) - 1);
