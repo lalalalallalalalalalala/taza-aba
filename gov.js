@@ -342,6 +342,39 @@ function gvSensHTML(nZ) {
     <p class="small" id="gvSensAcc"></p><div id="gvSensDiv"></div>
     <p class="small muted">${esc(GV("sNote"))}${D.bad ? " " + esc(GV("sQC", { x: D.bad })) : ""}</p></div>`;
 }
+/* v85: «Где не хватает датчиков» — у каких районов есть измерения рядом (датчик жителей ≤ 2,5 км или станция), а где только модель CAMS */
+Object.assign(GV_S.ru, { cvH: "Где не хватает датчиков", cvSub: "Измерения рядом с районом (датчик жителей не дальше 2,5 км или станция) есть у {c} из {n} районов. У остальных {k} — только модель CAMS, которая не видит разницу между соседними кварталами.",
+  cvNone: "Рядом с городом сейчас нет ни одного открытого датчика или станции — все {n} районов показывают только модель CAMS.", cvAll: "Измерения рядом есть у всех {n} районов.",
+  cvFar: "Районы без измерений, дальше всего от ближайшего датчика (сначала городская застройка, затем сёла):", cvD: "Район", cvT: "Застройка", cvKm: "До датчика, км", cvMore: "Все районы без измерений ({k})",
+  cvNote: "Расстояние — по прямой до ближайшего датчика Sensor.Community или станции, которые ответили при последнем обновлении. Новый датчик в таком районе сразу даст ему собственное измеренное значение на карте и в этой панели." });
+Object.assign(GV_S.ky, { cvH: "Датчиктер кайда жетишпейт", cvSub: "Райондун жанында өлчөө (2,5 км ичинде тургундардын датчиги же станция) {n} райондун {c} районунда бар. Калган {k} райондо — CAMS модели гана, ал коңшу кварталдардын айырмасын көрбөйт.",
+  cvNone: "Азыр шаардын жанында бир да ачык датчик же станция жок — бардык {n} район CAMS моделин гана көрсөтөт.", cvAll: "Бардык {n} райондун жанында өлчөө бар.",
+  cvFar: "Өлчөөсү жок, жакынкы датчиктен эң алыс райондор (адегенде шаардык курулуш, анан айылдар):", cvD: "Район", cvT: "Курулуш", cvKm: "Датчикке чейин, км", cvMore: "Өлчөөсү жок бардык райондор ({k})",
+  cvNote: "Аралык — акыркы жаңыртууда жооп берген Sensor.Community датчигине же станцияга чейин түз сызык менен. Мындай райондогу жаңы датчик ага картада жана бул панелде өз өлчөнгөн маанисин дароо берет." });
+Object.assign(GV_S.en, { cvH: "Where sensors are missing", cvSub: "{c} of {n} districts have a measurement nearby (a residents' sensor within 2.5 km or a station). The other {k} have only the CAMS model, which cannot see differences between neighbouring blocks.",
+  cvNone: "There is no open sensor or station near this city right now — all {n} districts show only the CAMS model.", cvAll: "All {n} districts have a measurement nearby.",
+  cvFar: "Districts without measurements, farthest from the nearest sensor (urban areas first, then villages):", cvD: "District", cvT: "Housing", cvKm: "To sensor, km", cvMore: "All districts without measurements ({k})",
+  cvNote: "Distance is a straight line to the nearest Sensor.Community sensor or station that responded in the last update. A new sensor in such a district immediately gives it its own measured value on the map and in this dashboard." });
+function gvCovData() {
+  const byD = (air && air.byDistrict) || {}, P = [...((air && air.sensors) || []), ...((air && air.stations) || []).filter(s => s.pm25 != null)].filter(p => p.lat != null && p.lon != null);
+  const v = DISTRICTS.filter(d => byD[d.id] && byD[d.id].aqi != null);
+  const un = v.filter(d => byD[d.id].src !== "sensors" && byD[d.id].src !== "station")
+    .map(d => ({ d, km: P.length ? Math.min(...P.map(p => kmDist(d, p))) : null })).sort((a, b) => ((a.d.type === "village") - (b.d.type === "village")) || (b.km || 0) - (a.km || 0));
+  return { n: v.length, c: v.length - un.length, un, np: P.length };
+}
+function gvCovHTML() {
+  if (!air || !air.live || air.status !== "ok") return "";
+  const D = gvCovData(); if (D.n < 2) return "";
+  const h = `<div class="card gv-cov"><h3>📍 ${GV("cvH")}</h3>`;
+  if (!D.np) return h + `<p class="small">${esc(GV("cvNone", { n: D.n }))}</p></div>`;
+  if (!D.un.length) return h + `<p class="small">${esc(GV("cvAll", { n: D.n }))}</p></div>`;
+  const tb = rs => `<div class="gv-tw"><table class="gv-t"><thead><tr><th>${GV("cvD")}</th><th>${GV("cvT")}</th><th>${GV("cvKm")}</th></tr></thead><tbody>${rs.map(r =>
+    `<tr><td>${esc(dName(r.d))}</td><td>${r.d.type && DTYPE[r.d.type] ? esc(tr(DTYPE[r.d.type])) : "—"}</td><td>${r.km == null ? "—" : fmt(r.km, 1)}</td></tr>`).join("")}</tbody></table></div>`;
+  return h + `<p class="small">${esc(GV("cvSub", { c: D.c, n: D.n, k: D.un.length }))}</p>
+    <p class="small"><b>${esc(GV("cvFar"))}</b></p>${tb(D.un.slice(0, 8))}
+    ${D.un.length > 8 ? `<details class="gv-zall"><summary>${esc(GV("cvMore", { k: D.un.length }))}</summary>${tb(D.un)}</details>` : ""}
+    <p class="small muted">${esc(GV("cvNote"))} ${gvA("sc")}</p></div>`;
+}
 function gvSensAccMount() {
   const c = CITY; gvCoef().then(j => { const e = $("#gvSensAcc"), x = j && j.cities && j.cities[c], ck = x && x.check; if (!e || CITY !== c || !ck || ck.maeNew == null) return;
     const t = j.updated ? new Date(j.updated).toLocaleString(numLocale(), { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
@@ -411,6 +444,7 @@ function gvRender(el, G) {
       <details class="gv-zall"><summary>${esc(GV("zAll", { n: R.length }))}</summary>${TBL}</details>` : TBL}
       <p class="small muted">${GV("whoNote")} ${gvA("who21")}</p><p class="small gv-grid">${esc(GV("gridNote", { z: new Set(R.map(gvZoneKey)).size, zw: gvZw(new Set(R.map(gvZoneKey)).size), n: R.length }))}</p></div>
     ${gvSensHTML(new Set(R.map(gvZoneKey)).size)}
+    ${gvCovHTML()}
     <div class="card gv-win"><h3>❄️ ${GV("winH")}</h3><p class="small">${GV("winSub")}</p><div id="gvWin"><p class="small muted">${GV("winLoad")}</p></div></div>
     <div class="card"><h3>🔥🚗 ${GV("contH")}</h3>${tp == null ? `<p class="small muted">${GV("mNone")}</p>` : `<div class="tf-bar" role="img" aria-label="${GV("trans")} ${tp}% / ${GV("heat")} ${100 - tp}%"><span class="tf-t" style="width:${tp}%">${tp}%</span><span class="tf-h" style="width:${100 - tp}%">${100 - tp}%</span></div>
       <div class="row between small" style="margin-top:4px"><span>${GV("trans")}</span><span>${GV("heat")}</span></div>`}

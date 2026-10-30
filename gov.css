@@ -202,3 +202,6 @@ html[data-theme="dark"] .gv-dvs{fill:#ff8a65;background:#ff8a65}html[data-theme=
   html body .v-govbrief .card,html body .v-govbrief .gb-s{background:#fff!important;background-image:none!important;border:1px solid #ccc!important;box-shadow:none!important}
   html body .v-govbrief .gv-m{color:#111!important;background:#eef0f2!important;border:1px solid #d5d9de}
 }
+.gv-cov .gv-t td:first-child{white-space:normal}
+.gv-cov .gv-t td:last-child,.gv-cov .gv-t th:last-child{text-align:right}
+.gv-cov .gv-tw{max-width:640px}
