@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T05:57Z",
+ "updated": "2026-10-30T13:05Z",
  "method": "obs−CAMS = c0 + Σ a·H·D (ridge, 14 d) + nowcast τ=6 h",
  "tau": 6,
  "cities": {
