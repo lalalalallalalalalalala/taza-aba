@@ -57,3 +57,15 @@ html body :is(span,div,b,em,small,strong,i,a)[style^="color:#e3b505"],html body 
 html body :is(span,div,b,em,small,strong,i,a)[style^="color:#ff8a3d"],html body :is(span,div,b,em,small,strong,i,a)[style*=";color:#ff8a3d"],html body :is(span,div,b,em,small,strong,i,a)[style*="; color:#ff8a3d"]{color:#a3460b!important}
 html body :is(span,div,b,em,small,strong,i,a)[style^="color:#e5484d"],html body :is(span,div,b,em,small,strong,i,a)[style*=";color:#e5484d"],html body :is(span,div,b,em,small,strong,i,a)[style*="; color:#e5484d"]{color:#b4232a!important}
 }
+/* v93: печать #gov целиком — было 8 страниц A4 с большими пустотами: большие карточки (таблицы, графики) целиком переносились на новую
+   страницу (break-inside:avoid), а 5-я плашка KPI одна уезжала на 2-ю страницу. Теперь большие карточки могут делиться между страницами
+   (не разрываются строки таблиц, графики и заголовок с началом карточки), 5 KPI — в один ряд, масштаб 0,85. Содержание не меняется. */
+@media print{
+  html body .view:has(>.gv-print-h){zoom:.85}
+  html[data-theme] body .view:has(>.gv-print-h) .card{break-inside:auto;margin-bottom:8px!important}
+  html[data-theme] body .view:has(>.gv-print-h) :is(.gv-k,.gv-zone,tr,svg,figure,.gv-bh,li,.gv-dvl,.gv-covlg,.gv-dv){break-inside:avoid}
+  html body .view:has(>.gv-print-h) :is(h2,h3,h4,thead){break-after:avoid}
+  html body .view:has(>.gv-print-h) thead{display:table-header-group}
+  html body .view:has(>.gv-print-h) .gv-kpis{grid-template-columns:repeat(5,1fr)!important;gap:6px!important;margin-bottom:8px!important}
+  html body .view:has(>.gv-print-h) .gv-k{padding:8px!important}
+}
