@@ -302,8 +302,8 @@ function viewTraffic2(el) {
   const m = mkMap("tfMap", { zoomControl: true }).setView(cityObj().center, cityObj().zoom || 12); map = m; baseTiles(m);
   const hIn = $("#tfH"), hV = $("#tfHv");
   const L1 = tf2Layer(tf2Stat, N => { const any = N && Object.values(N)[0]; if (any && hIn && hIn.isConnected) hIn.dataset.now = any.hNow; }).addTo(m);
-  const legend = mode => { const g = $("#tfLeg"); if (!g) return; g.innerHTML = mode === "cong" ? `<b class="small">${T2("cLeg")}:</b> <span class="small">${T2("c1")}</span> ${TF3_LEG.map(v => `<span style="background:${tfCol(v)}">${Math.round(v * 100)}%</span>`).join("")} <span class="small">${T2("c5")}</span>`
-    : `<b class="small">${mode === "load" ? T2("mLoad") : T2("leg")}:</b> ${TF2_LEG.map(([v, l]) => `<span style="background:${tf2Col(v)}">${l}</span>`).join("")}`; };
+  const legend = mode => { const g = $("#tfLeg"); if (!g) return; g.innerHTML = mode === "cong" ? `<b class="small">${T2("cLeg")}:</b> <span class="small">${T2("c1")}</span> ${TF3_LEG.map(v => `<span class="lg-i"><i style="background:${tfCol(v)}"></i>${Math.round(v * 100)}%</span>`).join("")} <span class="small">${T2("c5")}</span>`
+    : `<b class="small">${mode === "load" ? T2("mLoad") : T2("leg")}:</b> ${TF2_LEG.map(([v, l]) => `<span class="lg-i"><i style="background:${tf2Col(v)}"></i>${l}</span>`).join("")}`; };
   legend("cong");
   L1.onPaint = st => { const el = $("#tfMean"); if (!el) return; const nd = tf3NowHD(), h = st.h == null ? nd.h : st.h, dt = st.dt == null ? nd.dt : st.dt, v = L1.meanAt(h, dt);
     el.textContent = v == null || st.mode !== "cong" ? "" : T2("mean", { v: Math.round(100 * v) }); };

@@ -28,11 +28,10 @@ const GRP_ORDER = ["len", "okt", "perv", "sverd", "city", "alam", "sokul", "kara
     name: { ru: x.ru, ky: x.ky, en: x.en }, loc: { ru: `в районе «${x.ru}»`, ky: `«${x.ky}» аймагында`, en: `in ${x.en}` } });
   // 1) новые населённые пункты
   KGP.cities.forEach((c, i) => {
-    const C = makeCity({ id: c.id, emoji: c.emoji, center: c.center, seed: 7 + i, demoBase: 80, name: c.name, gen: c.gen, prep: c.prep,
+    const C = makeCity({ id: c.id, emoji: c.emoji, center: c.center, seed: 7 + i, name: c.name, gen: c.gen, prep: c.prep,
       sides: ["north", "south"], house: c.house, k: c.k || {} });
     C.districts = c.districts.map(x => mkD(c.id, x));
     C.defaultDistrict = C.alertDistrict = C.districts[0].id;
-    C.leaderboard = {}; C.demoAqi = {};
     C.groups.forEach((g, k) => { g.district = C.districts[k % C.districts.length].id; });
     C.homes = []; C.complaints = [];   // демо-дома и демо-жалобы для новых пунктов не генерируем
     C.routes = c.routes.map(r => ({ id: r.id, type: r.type, mode: r.type === "bike" ? "bike" : "walk", color: RT_COLOR[r.type], far: false, approx: false, osm: true, name: r.name, path: r.path, via: r.via || [] }));

@@ -325,7 +325,7 @@ function viewTraffic(el) {
   const d = DISTRICTS.find(x => x.id === state.district) || DISTRICTS[0];
   el.innerHTML = `<h1>${FT("tf")}</h1><p class="sub">${FT("tfSub")}</p>
     <div class="map-grid"><div class="map-col"><div id="tfMap" class="mini-map" style="height:400px"></div>
-      <div class="legend tf-leg">${[[5, "<10"], [15, "10–25"], [30, "25–40"], [50, "40–60"], [70, "60+"]].map(([v, l]) => `<span style="background:${no2Col(v)}">NO₂ ${l}</span>`).join("")}</div>
+      <div class="legend tf-leg">${[[5, "<10"], [15, "10–25"], [30, "25–40"], [50, "40–60"], [70, "60+"]].map(([v, l]) => `<span class="lg-i"><i style="background:${no2Col(v)}"></i>NO₂ ${l}</span>`).join("")}</div>
       <p class="small muted" id="tfStat">${FT("roadsLoad")}</p><p class="small muted">${FT("roadsSrc")}</p></div>
     <div class="list-col"><div class="card tf-card"><div class="row between"><h3 style="margin:0">${FT("estH")}</h3><button class="btn ghost" id="tfHow" type="button">❓ ${FT("how")}</button></div>
       <label for="tfD" class="small">${t("district")}</label><select id="tfD">${districtOptions(d.id)}</select><div id="tfBox"></div></div>

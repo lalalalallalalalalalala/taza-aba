@@ -93,10 +93,6 @@ const BK_DEMO_HOMES = [];   // v54: демо-дома удалены (выдум
 
 const BK_DEMO_GROUPS = [];   // v54: групповые закупки удалены
 
-const BK_DEMO_LEADERBOARD = {};   // v54: демо-рейтинг удалён
-
-const BK_DEMO_AQI = {};   // v58: без выдуманных AQI
-
 const BK_DEMO_COMPLAINTS = [];   // v58: без выдуманных жалоб
 
 /* DEMO: эко-маршруты (координаты проложены вручную, приблизительно). */
@@ -134,8 +130,6 @@ const NR_DISTRICTS = [
 ];
 const NR_DEMO_HOMES = [];
 const NR_DEMO_GROUPS = [];
-const NR_DEMO_LEADERBOARD = {};
-const NR_DEMO_AQI = {};
 const NR_DEMO_COMPLAINTS = [];
 const NR_ECO_ROUTES = [
   { id: "nr1", mode: "walk", color: "#2e9e5b",
@@ -153,13 +147,13 @@ const CITIES = {
   bishkek: { id: "bishkek", center: [42.8746, 74.5698], defaultDistrict: "akorgo", alertDistrict: "akordo",
     name: { ru: "Бишкек", ky: "Бишкек", en: "Bishkek" }, gen: { ru: "Бишкека", ky: "Бишкектин", en: "Bishkek" }, prep: { ru: "Бишкеке", ky: "Бишкекте", en: "Bishkek" },
     house: { area: 100, coal: 5, price: 7000 }, k: {},
-    districts: BK_DISTRICTS, homes: BK_DEMO_HOMES, groups: BK_DEMO_GROUPS, leaderboard: BK_DEMO_LEADERBOARD, demoAqi: BK_DEMO_AQI, complaints: BK_DEMO_COMPLAINTS, routes: BK_ECO_ROUTES },
+    districts: BK_DISTRICTS, homes: BK_DEMO_HOMES, groups: BK_DEMO_GROUPS, complaints: BK_DEMO_COMPLAINTS, routes: BK_ECO_ROUTES },
   /* Нарын: зима длиннее и холоднее → больше угля (8 т), уголь дешевле (рядом Кара-Кече, ~5 000 сом/т),
    * тепловой насос в морозы −20…−30 °C работает хуже (COP 2.2), солнца на высоте больше (1 450 кВт·ч/кВт). */
   naryn: { id: "naryn", center: [41.4287, 75.9911], defaultDistrict: "n_west", alertDistrict: "n_west",
     name: { ru: "Нарын", ky: "Нарын", en: "Naryn" }, gen: { ru: "Нарына", ky: "Нарындын", en: "Naryn" }, prep: { ru: "Нарыне", ky: "Нарында", en: "Naryn" },
     house: { area: 90, coal: 8, price: 5000 }, k: { hpCOP: 2.2, pvYield: 1450 },
-    districts: NR_DISTRICTS, homes: NR_DEMO_HOMES, groups: NR_DEMO_GROUPS, leaderboard: NR_DEMO_LEADERBOARD, demoAqi: NR_DEMO_AQI, complaints: NR_DEMO_COMPLAINTS, routes: NR_ECO_ROUTES },
+    districts: NR_DISTRICTS, homes: NR_DEMO_HOMES, groups: NR_DEMO_GROUPS, complaints: NR_DEMO_COMPLAINTS, routes: NR_ECO_ROUTES },
 };
 
 /* ================= ДРУГИЕ ГОРОДА (DEMO-генератор) =================
@@ -201,29 +195,27 @@ function makeCity(c) {
       avoid: { ru: "объездную трассу", ky: "айланма жолду", en: "the bypass road" },
       path: [[la + 0.010, lo - 0.016], [la + 0.008, lo - 0.008], [la + 0.006, lo], [la + 0.005, lo + 0.008], [la + 0.004, lo + 0.016]] },
   ];
-  const leaderboard = {};
-  const demoAqi = {};
   return { id: c.id, center: c.center, zoom: 13, radius: 700, defaultDistrict: districts[1].id, alertDistrict: districts[1].id,
     name: c.name, gen: c.gen, prep: c.prep, house: c.house, k: c.k || {}, emoji: c.emoji,
-    districts, homes, groups, leaderboard, demoAqi, complaints, routes };
+    districts, homes, groups, complaints, routes };
 }
 const EXTRA_CITIES = [
-  { id: "osh", emoji: "🏯", center: [40.5300, 72.8000], seed: 1, demoBase: 110, river: { ru: "Ак-Буура", ky: "Ак-Буура", en: "Ak-Buura" },
+  { id: "osh", emoji: "🏯", center: [40.5300, 72.8000], seed: 1, river: { ru: "Ак-Буура", ky: "Ак-Буура", en: "Ak-Buura" },
     name: { ru: "Ош", ky: "Ош", en: "Osh" }, gen: { ru: "Оша", ky: "Оштун", en: "Osh" }, prep: { ru: "Оше", ky: "Ошто", en: "Osh" },
     sides: ["north", "south", "east", "west"], house: { area: 110, coal: 4, price: 6500 }, k: { pvYield: 1450 } },
-  { id: "jalal", emoji: "♨️", center: [40.9330, 73.0000], seed: 2, demoBase: 100,
+  { id: "jalal", emoji: "♨️", center: [40.9330, 73.0000], seed: 2,
     name: { ru: "Джалал-Абад", ky: "Жалал-Абад", en: "Jalal-Abad" }, gen: { ru: "Джалал-Абада", ky: "Жалал-Абаддын", en: "Jalal-Abad" }, prep: { ru: "Джалал-Абаде", ky: "Жалал-Абадда", en: "Jalal-Abad" },
     sides: ["north", "south", "west"], house: { area: 100, coal: 4, price: 6000 }, k: { pvYield: 1450 } },
-  { id: "karakol", emoji: "🌲", center: [42.4900, 78.3900], seed: 3, demoBase: 120, river: { ru: "Каракол", ky: "Каракол", en: "Karakol" },
+  { id: "karakol", emoji: "🌲", center: [42.4900, 78.3900], seed: 3, river: { ru: "Каракол", ky: "Каракол", en: "Karakol" },
     name: { ru: "Каракол", ky: "Каракол", en: "Karakol" }, gen: { ru: "Каракола", ky: "Караколдун", en: "Karakol" }, prep: { ru: "Караколе", ky: "Караколдо", en: "Karakol" },
     sides: ["north", "south", "east"], house: { area: 100, coal: 7, price: 6000 }, k: { hpCOP: 2.3, pvYield: 1450 } },
-  { id: "talas", emoji: "🐎", center: [42.5200, 72.2400], seed: 4, demoBase: 95, river: { ru: "Талас", ky: "Талас", en: "Talas" },
+  { id: "talas", emoji: "🐎", center: [42.5200, 72.2400], seed: 4, river: { ru: "Талас", ky: "Талас", en: "Talas" },
     name: { ru: "Талас", ky: "Талас", en: "Talas" }, gen: { ru: "Таласа", ky: "Таластын", en: "Talas" }, prep: { ru: "Таласе", ky: "Таласта", en: "Talas" },
     sides: ["north", "south", "west"], house: { area: 100, coal: 6, price: 6500 }, k: {} },
-  { id: "batken", emoji: "🌸", center: [40.0600, 70.8200], seed: 5, demoBase: 85,
+  { id: "batken", emoji: "🌸", center: [40.0600, 70.8200], seed: 5,
     name: { ru: "Баткен", ky: "Баткен", en: "Batken" }, gen: { ru: "Баткена", ky: "Баткендин", en: "Batken" }, prep: { ru: "Баткене", ky: "Баткенде", en: "Batken" },
     sides: ["north", "south", "east"], house: { area: 90, coal: 4, price: 7000 }, k: { pvYield: 1500 } },
-  { id: "tokmok", emoji: "🌾", center: [42.8400, 75.2900], seed: 6, demoBase: 115, river: { ru: "Чу", ky: "Чүй", en: "Chuy" },
+  { id: "tokmok", emoji: "🌾", center: [42.8400, 75.2900], seed: 6, river: { ru: "Чу", ky: "Чүй", en: "Chuy" },
     name: { ru: "Токмок", ky: "Токмок", en: "Tokmok" }, gen: { ru: "Токмока", ky: "Токмоктун", en: "Tokmok" }, prep: { ru: "Токмоке", ky: "Токмокто", en: "Tokmok" },
     sides: ["north", "south", "east", "west"], house: { area: 100, coal: 5, price: 7000 }, k: {} },
 ];
