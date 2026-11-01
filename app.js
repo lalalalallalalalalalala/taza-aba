@@ -577,6 +577,11 @@ function footer() {
 
 /* ---------------- 2. Карта ---------------- */
 let mapLayers = { smog: true, complaints: true, routes: false, cov: false };
+/* v94: выбор слоёв карты запоминается между заходами (только флаги слоёв, никаких данных) */
+const MAPL_KEY = "tazaAba.mapLayers";
+try { const s = JSON.parse(localStorage.getItem(MAPL_KEY) || "null"); if (s && typeof s === "object") Object.keys(mapLayers).forEach(k => { if (typeof s[k] === "boolean") mapLayers[k] = s[k]; }); } catch (e) { }
+let mapCovWant = false;
+const mapLSave = () => { try { localStorage.setItem(MAPL_KEY, JSON.stringify(mapLayers)); } catch (e) { } };
 const allComplaints = () => state.complaints.filter(inCity);   // v58: только свои настоящие жалобы
 const C_EMOJI = { chimney: "🏭", trash: "🔥", dump: "🗑️", car: "🚌", factory: "🏗️" };
 function complaintPopup(c) {
@@ -790,6 +795,8 @@ function dlNoteText() {
 function dlNoteFill(el) { const n = el.querySelector(".dl-note"); if (!n) return; const s = dlNoteText(); n.textContent = s; n.hidden = !s; }
 function viewMap(el) {
   if (mapMode === "country") return viewCountry(el);
+  { const ok = air.live && air.status === "ok";   /* v94: выбран «Покрытие», но живых данных ещё/уже нет — пока показываем «Смог», а «Покрытие» вернётся, когда данные придут */
+    if (mapLayers.cov && !ok) { mapCovWant = true; mapLayers.cov = false; mapLayers.smog = true; } else if (ok && mapCovWant) { mapCovWant = false; mapLayers.cov = true; } }
   if (mapLayers.cov && mapLayers.smog) mapLayers.smog = false;   /* v87: «Покрытие» и «Смог» — взаимоисключающие (точки покрытия не прячутся под метками AQI) */
   el.innerHTML = `
     <div class="row between" style="align-items:flex-start"><div><h1>${t("mapTitle")}</h1><p class="sub">${t("mapSub")}</p></div>
@@ -881,6 +888,7 @@ function viewMap(el) {
   el.querySelectorAll(".toggle[data-layer]").forEach(tg => tg.onclick = () => {
     const k = tg.dataset.layer, v = !mapLayers[k]; setL(k, v);
     if (v && k === "cov" && mapLayers.smog) setL("smog", false); else if (v && k === "smog" && mapLayers.cov) setL("cov", false);
+    mapCovWant = false; mapLSave();
   });
   tgA11y(el);
   if (typeof stAttach === "function") idle(() => { if (map === M) try { stAttach(el); } catch (e) { console.warn("stations layer:", e); } });

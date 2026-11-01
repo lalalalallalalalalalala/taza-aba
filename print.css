@@ -69,3 +69,16 @@ html body :is(span,div,b,em,small,strong,i,a)[style^="color:#e5484d"],html body 
   html body .view:has(>.gv-print-h) .gv-kpis{grid-template-columns:repeat(5,1fr)!important;gap:6px!important;margin-bottom:8px!important}
   html body .view:has(>.gv-print-h) .gv-k{padding:8px!important}
 }
+/* v94: «Где не хватает датчиков» — если раскрыт полный список районов без измерений, в печати он компактный, в 2 колонки
+   (строка: район · застройка · км), а дублирующая таблица «первые 8» скрыта. Содержание и порядок те же. */
+@media print{
+  html body .gv-cov:has(>.gv-zall[open])>.gv-tw{display:none!important}
+  html body .gv-cov>.gv-zall[open]>.gv-tw{max-width:none!important;column-count:2;column-gap:20px;column-rule:1px solid #cfd3d6}
+  html body .gv-cov>.gv-zall[open] :is(table,tbody){display:block!important;width:100%}
+  html body .gv-cov>.gv-zall[open] thead{display:block!important;break-after:avoid}
+  html body .gv-cov>.gv-zall[open] tr{display:grid!important;grid-template-columns:minmax(0,1fr) 7.5em 4.2em;gap:0 6px;break-inside:avoid}
+  html body .gv-cov>.gv-zall[open] :is(th,td):nth-child(2){text-align:left!important}
+  html body .gv-cov>.gv-zall[open] :is(th,td){padding:1px 2px!important;font-size:10.5px!important;line-height:1.25;white-space:normal!important;min-width:0!important;overflow-wrap:anywhere}
+  html body .gv-cov>.gv-zall[open] summary{margin:2px 0 4px!important;list-style:none}
+  html body .gv-cov>.gv-zall[open] summary::-webkit-details-marker{display:none}
+}
