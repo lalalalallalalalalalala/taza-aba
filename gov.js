@@ -171,7 +171,7 @@ function gvDistrict(d, r, W, now) {
     a7: gvMean(last(168).map(aq)), a30: gvMean(p30.map(aq)), pm30: gvMean(p30.map(p25)), no2_7: gvMean(last(168).map(i => H.nitrogen_dioxide[i])),
     hOver: withPm.filter(i => p25(i) > 15).length, hN: withPm.length, hShare: withPm.length ? withPm.filter(i => p25(i) > 15).length / withPm.length : null,
     dOver: days.filter(x => x.date !== today && x.n >= 20 && x.pmMean > 15).length, dN: days.filter(x => x.date !== today && x.n >= 20).length,
-    tmrMax: gvMax(tm.map(aq)), tmrPm: gvMean(tm.map(p25)), tmrDate, days, E };
+    tmrMax: gvMax(tm.map(aq)), tmrPm: gvMean(tm.map(p25)), tmrH: tm.map(i => [+H.time[i].slice(11, 13), aq(i)]), tmrDate, days, E };
 }
 const gvLvlIdx = a => Math.max(0, AQI_LEVELS.findIndex(l => a <= l.max) === -1 ? AQI_LEVELS.length - 1 : AQI_LEVELS.findIndex(l => a <= l.max));
 const gvDate = s => { const [y, m, d] = s.split("-"); return `${d}.${m}.${y}`; };
@@ -209,14 +209,52 @@ function gvBanner(G) {
   return `<div class="card gv-banner" style="border-left:6px solid ${L.color}">
     <div class="gv-bh"><span class="aqi-pin gv-pin" style="background:${L.color}">${a}</span><div><h3>⚠️ ${GV("tmrH", { date: gvDate(G.tmrDate) })}</h3>
     <b>${esc(tr(L.name))}</b> · ${esc(GV("tmrWorst", { d: W.label, a }))}<br><span class="small">${esc(GV("tmrCity", { a: cityA }))}</span></div></div>
+    ${gvHoursHTML(G)}
     <h4>${GV("measH")}</h4><ul class="gv-meas">${ms.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
     <p class="small muted">${GV("measNote")} ${gvA("airnow")} · ${gvA("flag")} · ${gvA("who20")}</p><p class="small muted">${GV("tmrSrc")}</p>
     <button class="btn ghost gv-noprint" id="gvCopy" type="button">${GV("copyWarn")}</button></div>`;
 }
+/* v96: почасовой прогноз на завтра — по каждому часу максимум среди районов (худшая зона модели CAMS).
+ * Помогает выбрать время: уроки на улице и мероприятия — на часы ниже AQI 100, проверки и ограничения — на часы пика. */
+Object.assign(GV_S.ru, { hrH: "По часам завтра (худшая зона модели)", hrOver: "Выше AQI 100 (вредно для чувствительных групп): {r}", hrNone: "Ни в один час завтра модель не ждёт AQI выше 100.",
+  hrPeak: "Пик: {h}:00, AQI {a}", hr150: "выше 150 — {n}", hrTip: "Занятия на улице и массовые мероприятия лучше переносить на часы ниже AQI 100 (совет AirNow — планировать активность на время, когда воздух чище).",
+  hrNote: "Почасовой прогноз модели CAMS; время и высота пика могут отличаться от фактических, особенно вечером при инверсии.", hrUnit: "ч", hrLine: "По часам (модель): {o}; {p}." });
+Object.assign(GV_S.ky, { hrH: "Эртең саат боюнча (модельдин эң начар зонасы)", hrOver: "AQI 100дөн жогору (сезгич топторго зыяндуу): {r}", hrNone: "Эртең модель эч бир саатта AQI 100дөн жогору күтпөйт.",
+  hrPeak: "Чокусу: {h}:00, AQI {a}", hr150: "150дөн жогору — {n}", hrTip: "Сырттагы сабактарды жана көпчүлүк иш-чараларды AQI 100дөн төмөн сааттарга жылдырган жакшы (AirNow кеңеши — абасы тазараак убакытка пландоо).",
+  hrNote: "CAMS моделинин саат сайын божомолу; чокунун убактысы жана бийиктиги, айрыкча кечинде инверсияда, чындыктан айырмаланышы мүмкүн.", hrUnit: "саат", hrLine: "Саат боюнча (модель): {o}; {p}." });
+Object.assign(GV_S.en, { hrH: "Tomorrow by hour (worst model zone)", hrOver: "Above AQI 100 (unhealthy for sensitive groups): {r}", hrNone: "The model expects no hour above AQI 100 tomorrow.",
+  hrPeak: "Peak: {h}:00, AQI {a}", hr150: "above 150 — {n}", hrTip: "Outdoor lessons and mass events are better moved to hours below AQI 100 (AirNow advice: plan activities for times when the air is cleaner).",
+  hrNote: "Hourly CAMS model forecast; the timing and height of the peak may differ from reality, especially in the evening during inversions.", hrUnit: "h", hrLine: "By hour (model): {o}; {p}." });
+function gvHours(G) {
+  const by = {}; G.rows.forEach(r => (r.tmrH || []).forEach(([h, a]) => { if (a != null) by[h] = Math.max(by[h] == null ? -1 : by[h], a); }));
+  const hs = Object.keys(by).map(Number).sort((x, y) => x - y); if (hs.length < 12) return null;
+  const H = hs.map(h => ({ h, a: Math.round(by[h]) })), pk = H.reduce((b, x) => x.a > b.a ? x : b);
+  const rg = []; H.forEach(x => { if (x.a > 100) { const l = rg[rg.length - 1]; if (l && l[1] === x.h - 1) l[1] = x.h; else rg.push([x.h, x.h]); } });
+  return { H, pk, rg, n150: H.filter(x => x.a > 150).length };
+}
+const gvHH = h => String(h).padStart(2, "0");
+const gvRg = HS => HS.rg.map(([a, b]) => `${gvHH(a)}:00–${gvHH(b + 1)}:00`).join(", ");
+function gvHoursLine(HS) {
+  const o = HS.rg.length ? GV("hrOver", { r: gvRg(HS) }) + (HS.n150 ? ` (${GV("hr150", { n: HS.n150 + " " + GV("hrUnit") })})` : "") : GV("hrNone").replace(/\.$/, "");
+  const lc = x => x.charAt(0).toLowerCase() + x.slice(1);
+  return GV("hrLine", { o: lc(o), p: lc(GV("hrPeak", { h: gvHH(HS.pk.h), a: HS.pk.a })) });
+}
+function gvHoursHTML(G) {
+  const HS = gvHours(G); if (!HS) return "";
+  const Wd = 360, Hd = 110, mx = Math.max(120, HS.pk.a) * 1.08, bw = (Wd - 8) / 24, y = v => Hd - 16 - (v / mx) * (Hd - 26);
+  const bars = HS.H.map(x => `<rect x="${(4 + x.h * bw + 0.8).toFixed(1)}" y="${y(x.a).toFixed(1)}" width="${(bw - 1.6).toFixed(1)}" height="${Math.max(1, Hd - 16 - y(x.a)).toFixed(1)}" rx="1.5" fill="${level(x.a).color}"><title>${gvHH(x.h)}:00 — AQI ${x.a}</title></rect>`).join("");
+  const lab = [0, 6, 12, 18, 23].map(h => `<text x="${(4 + h * bw + bw / 2).toFixed(1)}" y="${Hd - 3}" text-anchor="middle" class="gv-svt">${gvHH(h)}</text>`).join("");
+  const over = HS.rg.length ? GV("hrOver", { r: gvRg(HS) }) + (HS.n150 ? ` (${GV("hr150", { n: HS.n150 + " " + GV("hrUnit") })})` : "") : GV("hrNone");
+  const pk = GV("hrPeak", { h: gvHH(HS.pk.h), a: HS.pk.a });
+  return `<div class="gv-hr"><h4>🕒 ${GV("hrH")}</h4><svg class="gv-svg gv-hrsvg" viewBox="0 0 ${Wd} ${Hd}" role="img" aria-label="${esc(GV("hrH") + ". " + over.replace(/\.$/, "") + ". " + pk)}">
+    <line x1="2" x2="${Wd - 2}" y1="${y(100).toFixed(1)}" y2="${y(100).toFixed(1)}" stroke="#7a8796" stroke-dasharray="4 3"/><text x="${Wd - 4}" y="${(y(100) - 3).toFixed(1)}" text-anchor="end" class="gv-svt">100</text>${bars}${lab}</svg>
+    <p class="gv-hrs"><b>${esc(over)}</b> · ${esc(pk)}</p>${HS.rg.length ? `<p class="small">${esc(GV("hrTip"))}</p>` : ""}<p class="small muted">${esc(GV("hrNote"))}</p></div>`;
+}
 function gvWarnText(G) {
   const R = G.rows.filter(r => r.tmrMax != null); if (!R.length) return "";
   const W = gvWorst(R), a = W.a, li = gvLvlIdx(a);
-  return GV("warnTxt", { date: gvDate(G.tmrDate), city: tr(cityObj().name), a, lvl: tr(level(a).name), d: W.label }) + "\n" + GV("meas")[Math.min(li, 5)].map(x => "• " + x).join("\n") + "\n" + SITE_URL;
+  const HS = gvHours(G), hl = HS ? "\n" + gvHoursLine(HS) : "";
+  return GV("warnTxt", { date: gvDate(G.tmrDate), city: tr(cityObj().name), a, lvl: tr(level(a).name), d: W.label }) + hl + "\n" + GV("meas")[Math.min(li, 5)].map(x => "• " + x).join("\n") + "\n" + SITE_URL;
 }
 function gvCmpHTML() {
   const C = (state.complaints || []).filter(inCity);

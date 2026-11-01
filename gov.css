@@ -214,3 +214,6 @@ html[data-theme="dark"] .gv-dvs{fill:#ff8a65;background:#ff8a65}html[data-theme=
 .gv-covlg .gv-lm{background:#2f9e6e;border:1.5px solid #14532d}
 .gv-covlg .gv-lu{background:#fff;border:2px dashed #b45309}
 .gv-covlg .gv-lp{width:8px;height:8px;background:#111827;border:1.5px solid #fff;box-shadow:0 0 0 4px rgba(47,158,110,.3)}
+
+/* v96: почасовой прогноз на завтра в карточке «Прогноз смога» */
+.gv-hr{margin:10px 0 4px}.gv-hr h4{margin:6px 0 2px}.gv-hr .gv-hrs{margin:4px 0}.gv-hr svg.gv-hrsvg{max-width:520px!important}
