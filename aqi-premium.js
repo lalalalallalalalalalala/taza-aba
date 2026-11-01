@@ -12,7 +12,7 @@ function pos(v){v=Math.max(0,Math.min(500,v||0));for(var i=1;i<BR.length;i++)if(
 var COL=["#2fbf71","#e3b505","#ff8a3d","#e5484d","#8e44ad","#7a1f2b"];
 function nf(v,d){if(v==null||isNaN(v))return"—";try{return Number(v).toLocaleString(typeof LANG!=="undefined"&&LANG==="en"?"en-US":"ru-RU",{minimumFractionDigits:d,maximumFractionDigits:d})}catch(e){return(+v).toFixed(d)}}
 function el(h){var t=document.createElement("template");t.innerHTML=h.trim();return t.content.firstChild}
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function apEsc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 var PIN='<svg class="aq-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>';
 function stats(a,w){
   var c=[["PM2.5",nf(a.pm25,1),T("ug")]];
@@ -34,11 +34,11 @@ function enhance(){
       dist=((h.querySelector(".district")||{}).textContent||"").trim(),time=(a.currentTime||"").slice(11,16);
   h.classList.add("aq-p","aq-"+V);h.style.setProperty("--lvc",COL[Math.min(li,5)]);
   var head='<div class="aq-head"><div class="aq-sky" aria-hidden="true"><i></i><i></i></div>'+
-      '<div class="aq-loc">'+PIN+'<span>'+esc(dist)+'</span><em>'+T("upd")+' '+time+'</em></div>'+
-      '<div class="aq-main"><div class="aq-num" aria-label="US AQI '+v+'">'+v+'</div><div class="aq-lvl"><span class="aq-u">US AQI</span><b>'+esc(lvTxt)+'</b><span>'+esc(title)+'</span></div></div>'+
+      '<div class="aq-loc">'+PIN+'<span>'+apEsc(dist)+'</span><em>'+T("upd")+' '+time+'</em></div>'+
+      '<div class="aq-main"><div class="aq-num" aria-label="US AQI '+v+'">'+v+'</div><div class="aq-lvl"><span class="aq-u">US AQI</span><b>'+apEsc(lvTxt)+'</b><span>'+apEsc(title)+'</span></div></div>'+
       scale(v,li)+stats(a,w)+'</div>';
   var top=h.querySelector(".hero-top");h.insertBefore(el(head),top||h.firstChild);
 }
-function start(){var vw=document.getElementById("view");if(!vw)return;enhance();new MutationObserver(enhance).observe(vw,{childList:true,subtree:true})}
-if(document.readyState!=="loading")start();else document.addEventListener("DOMContentLoaded",start);
+function apStart(){var vw=document.getElementById("view");if(!vw)return;enhance();new MutationObserver(enhance).observe(vw,{childList:true,subtree:true})}
+if(document.readyState!=="loading")apStart();else document.addEventListener("DOMContentLoaded",apStart);
 })();

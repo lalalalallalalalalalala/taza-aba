@@ -82,3 +82,13 @@ html body :is(span,div,b,em,small,strong,i,a)[style^="color:#e5484d"],html body 
   html body .gv-cov>.gv-zall[open] summary{margin:2px 0 4px!important;list-style:none}
   html body .gv-cov>.gv-zall[open] summary::-webkit-details-marker{display:none}
 }
+
+/* v95: тёмная тема в печати — светлые цвета экрана на белой бумаге давали 2,0–2,5:1 (pr95.js, WCAG):
+   «живые данные · ЧЧ:ММ» в плашке главной и уровень «риска вечернего смога» (.ev-v). На бумаге — тёмные варианты того же цвета (≥ 5:1). */
+@media print{
+  html[data-theme] body .hr-pill b.live{color:#17784e!important}
+  html[data-theme] body .ev-v{color:#17784e!important}
+  html[data-accent="blue"][data-theme] body .ev-0 .ev-v{color:#185a8a!important}
+  html[data-theme] body .ev-1 .ev-v{color:#8f5600!important}
+  html[data-theme] body .ev-2 .ev-v{color:#c42b33!important}
+}
