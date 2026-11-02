@@ -92,3 +92,10 @@ html body :is(span,div,b,em,small,strong,i,a)[style^="color:#e5484d"],html body 
   html[data-theme] body .ev-1 .ev-v{color:#8f5600!important}
   html[data-theme] body .ev-2 .ev-v{color:#c42b33!important}
 }
+/* v98: #traffic в печати — кнопки подложки «Схема/Спутник/Гибрид» и масштаб карты на бумаге не нужны; подписи пробок «+N мин» — тёмным на белом (в тёмной теме были 1,8:1) */
+@media print{
+  html body :is(.bm-ctl,.leaflet-control-zoom,.leaflet-control-layers){display:none!important}
+  html[data-theme] body :is(.tf-jamlab,.tfe-pill){background:#fff!important;color:#111!important;border:1px solid #888!important;box-shadow:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html[data-theme] body :is(.tf-jamlab,.tfe-pill) :is(b,i){color:#111!important}
+  html[data-theme] body :is(.tf-jamlab,.tfe-pill) i{color:#a3122a!important}
+}

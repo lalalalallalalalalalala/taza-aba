@@ -81,7 +81,6 @@ const AQI_LEVELS = [
             en: ["Don't go outside", "Run the air purifier at max", "Watch how you feel"] } },
 ];
 
-/* DEMO: дома, которые уже перешли на чистое отопление. what — ключ варианта. */
 const HOME_WHAT = {
   pump:  { ru: "Тепловой насос", ky: "Жылуулук насосу", en: "Heat pump" },
   solar: { ru: "Солнечные панели", ky: "Күн панелдери", en: "Solar panels" },
@@ -89,11 +88,8 @@ const HOME_WHAT = {
   insul_solar: { ru: "Утепление + панели", ky: "Жылуулоо + панелдер", en: "Insulation + solar" },
   insul_pump:  { ru: "Утепление + насос", ky: "Жылуулоо + насос", en: "Insulation + heat pump" },
 };
-const BK_DEMO_HOMES = [];   // v54: демо-дома удалены (выдуманные данные)
 
-const BK_DEMO_GROUPS = [];   // v54: групповые закупки удалены
 
-const BK_DEMO_COMPLAINTS = [];   // v58: без выдуманных жалоб
 
 /* DEMO: эко-маршруты (координаты проложены вручную, приблизительно). */
 const BK_ECO_ROUTES = [
@@ -128,9 +124,6 @@ const NR_DISTRICTS = [
   { id: "n_north", lat: 41.4400, lon: 76.0050, coalShare: null, type: "micro",
     name: { ru: "Северный склон", ky: "Түндүк бет", en: "North slope" }, loc: { ru: "на северном склоне", ky: "түндүк бетте", en: "on the north slope" } },
 ];
-const NR_DEMO_HOMES = [];
-const NR_DEMO_GROUPS = [];
-const NR_DEMO_COMPLAINTS = [];
 const NR_ECO_ROUTES = [
   { id: "nr1", mode: "walk", color: "#2e9e5b",
     name: { ru: "Набережная реки Нарын", ky: "Нарын дарыясынын жээги", en: "Naryn river embankment" },
@@ -147,13 +140,13 @@ const CITIES = {
   bishkek: { id: "bishkek", center: [42.8746, 74.5698], defaultDistrict: "akorgo", alertDistrict: "akordo",
     name: { ru: "Бишкек", ky: "Бишкек", en: "Bishkek" }, gen: { ru: "Бишкека", ky: "Бишкектин", en: "Bishkek" }, prep: { ru: "Бишкеке", ky: "Бишкекте", en: "Bishkek" },
     house: { area: 100, coal: 5, price: 7000 }, k: {},
-    districts: BK_DISTRICTS, homes: BK_DEMO_HOMES, groups: BK_DEMO_GROUPS, complaints: BK_DEMO_COMPLAINTS, routes: BK_ECO_ROUTES },
+    districts: BK_DISTRICTS, routes: BK_ECO_ROUTES },
   /* Нарын: зима длиннее и холоднее → больше угля (8 т), уголь дешевле (рядом Кара-Кече, ~5 000 сом/т),
    * тепловой насос в морозы −20…−30 °C работает хуже (COP 2.2), солнца на высоте больше (1 450 кВт·ч/кВт). */
   naryn: { id: "naryn", center: [41.4287, 75.9911], defaultDistrict: "n_west", alertDistrict: "n_west",
     name: { ru: "Нарын", ky: "Нарын", en: "Naryn" }, gen: { ru: "Нарына", ky: "Нарындын", en: "Naryn" }, prep: { ru: "Нарыне", ky: "Нарында", en: "Naryn" },
     house: { area: 90, coal: 8, price: 5000 }, k: { hpCOP: 2.2, pvYield: 1450 },
-    districts: NR_DISTRICTS, homes: NR_DEMO_HOMES, groups: NR_DEMO_GROUPS, complaints: NR_DEMO_COMPLAINTS, routes: NR_ECO_ROUTES },
+    districts: NR_DISTRICTS, routes: NR_ECO_ROUTES },
 };
 
 /* ================= ДРУГИЕ ГОРОДА (DEMO-генератор) =================
@@ -177,27 +170,11 @@ function makeCity(c) {
       coalShare: null, type: S.type, name: S.name,
       loc: sd === "center" ? { ru: `в центре ${c.gen.ru}`, ky: `${c.gen.ky} борборунда`, en: `in central ${c.name.en}` } : S.loc };
   });
-  const D = i => districts[i % districts.length];
-  const off = (d, a, b) => [+(d.lat + a).toFixed(4), +(d.lon + b).toFixed(4)];
-  const homes = [];   // v54: без выдуманных домов
-  const d1 = D(1), d2 = D(0);
-  const groups = [];   // v54: без выдуманных закупок
-  const complaints = [];
-  const [la, lo] = c.center;
-  const routes = [
-    { id: `${c.id}_r1`, mode: "walk", color: "#2e9e5b",
-      name: { ru: "Городской парк → центр", ky: "Шаардык парк → борбор", en: "City park → centre" },
-      avoid: { ru: "центральную улицу", ky: "борбордук көчөнү", en: "the main street" },
-      path: [[la - 0.006, lo - 0.008], [la - 0.004, lo - 0.005], [la - 0.002, lo - 0.003], [la, lo - 0.001], [la + 0.002, lo + 0.001]] },
-    { id: `${c.id}_r2`, mode: "bike", color: "#ffb347",
-      name: c.river ? { ru: `Вдоль реки ${c.river.ru}`, ky: `${c.river.ky} суусунун боюнда`, en: `Along the ${c.river.en} river` }
-        : { ru: "Зелёная аллея вдоль арыка", ky: "Арыктын боюндагы жашыл аллея", en: "Green alley along the canal" },
-      avoid: { ru: "объездную трассу", ky: "айланма жолду", en: "the bypass road" },
-      path: [[la + 0.010, lo - 0.016], [la + 0.008, lo - 0.008], [la + 0.006, lo], [la + 0.005, lo + 0.008], [la + 0.004, lo + 0.016]] },
-  ];
+  // v98: без выдуманных маршрутов-заглушек («Городской парк → центр», «Вдоль реки …» — линии от центра, не настоящие улицы) и пустых демо-полей
+  const routes = [];
   return { id: c.id, center: c.center, zoom: 13, radius: 700, defaultDistrict: districts[1].id, alertDistrict: districts[1].id,
     name: c.name, gen: c.gen, prep: c.prep, house: c.house, k: c.k || {}, emoji: c.emoji,
-    districts, homes, groups, complaints, routes };
+    districts, routes };
 }
 const EXTRA_CITIES = [
   { id: "osh", emoji: "🏯", center: [40.5300, 72.8000], seed: 1, river: { ru: "Ак-Буура", ky: "Ак-Буура", en: "Ak-Buura" },

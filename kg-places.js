@@ -32,8 +32,6 @@ const GRP_ORDER = ["len", "okt", "perv", "sverd", "city", "alam", "sokul", "kara
       sides: ["north", "south"], house: c.house, k: c.k || {} });
     C.districts = c.districts.map(x => mkD(c.id, x));
     C.defaultDistrict = C.alertDistrict = C.districts[0].id;
-    C.groups.forEach((g, k) => { g.district = C.districts[k % C.districts.length].id; });
-    C.homes = []; C.complaints = [];   // демо-дома и демо-жалобы для новых пунктов не генерируем
     C.routes = c.routes.map(r => ({ id: r.id, type: r.type, mode: r.type === "bike" ? "bike" : "walk", color: RT_COLOR[r.type], far: false, approx: false, osm: true, name: r.name, path: r.path, via: r.via || [] }));
     C.country = "kg"; C.newsRx = new RegExp("(?:^|[^A-Za-zА-Яа-яЁёӨөҮүҢң])(?:" + c.rx + ")(?![A-Za-zА-Яа-яЁёӨөҮүҢң])", "i"); C.zoom = c.zoom || 14; C.radius = c.radius || 500; C.trName = c.name.tr; C.noSC = true; if (c.short) C.short = c.short;
     CITIES[c.id] = C;
@@ -48,7 +46,6 @@ const GRP_ORDER = ["len", "okt", "perv", "sverd", "city", "alam", "sokul", "kara
     if (U.replaceDemo) {   // районы «Северная/Южная часть» (смещения от центра) заменяем реальными
       C.districts = C.districts.filter(d => !U.replaceDemo.includes(d.id));
       C.defaultDistrict = C.alertDistrict = U.def || C.districts[0].id;
-      C.groups.forEach((g, k) => { if (!C.districts.some(d => d.id === g.district)) g.district = C.defaultDistrict; });
     }
   });
 })();
