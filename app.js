@@ -877,7 +877,7 @@ function viewMap(el) {
   idle(() => { if (M !== map) return;
   allComplaints().forEach(c => L.marker([c.lat, c.lon], { icon: complaintIcon(c) }).bindPopup(() => complaintPopup(c), { maxWidth: 220 }).addTo(layers.complaints));
   ECO_ROUTES.forEach(r => L.polyline(r.path, { color: r.color, weight: 6, opacity: 0.9, dashArray: r.mode === "bike" ? "1 10" : null, lineCap: "round" })
-    .bindPopup(() => `<b>${tr(r.name)}</b><br>${r.mode === "walk" ? t("rWalk") : t("rBike")} · ${t("rKm", { n: fmt(routeKm(r), 1) })}`).addTo(layers.routes));
+    .bindPopup(() => `<b>${tr(r.name)}</b><br>${r.mode === "walk" ? t("rWalk") : t("rBike")} · ${t("rKm", { n: fmt(routeKm(r), 1) })}${r.osm ? " · OSM" : `<br><small>${t("rApprox")} — ${esc(t("rApproxT"))}</small>`}`).addTo(layers.routes));
   });
   covUpd();
   Object.keys(layers).forEach(k => { if (mapLayers[k]) layers[k].addTo(map); });

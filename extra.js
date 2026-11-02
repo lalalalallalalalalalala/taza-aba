@@ -366,7 +366,7 @@ function viewRoutes2(el) {
       const Lv = aq ? level(aq.v) : null;
       return `<div class="card route ${selRoute === r.id ? "sel" : ""}" data-route="${r.id}" tabindex="0">
         <div class="row between"><b style="font-size:15.5px"><span class="rdot" style="background:${r.color}"></span>${tr(r.name)}</b>${r.id === cleanest ? `<span class="chip">${t("rBest")}</span>` : ""}</div>
-        <div class="r-meta"><span>${RT_ICON[type]} ${RT(type)}</span><span>📏 ${r.far ? "≈" : ""}${t("rKm", { n: fmt(km, 1) })}</span><span>⏱️ ${t("rMin", { n: Math.max(5, Math.round(km / RT_SPEED[type] * 60)) })}</span>
+        <div class="r-meta">${r.osm ? `<span class="r-osm">OSM</span>` : `<span class="r-apx" title="${esc(t("rApproxT"))}">${t("rApprox")}</span>`}<span>${RT_ICON[type]} ${RT(type)}</span><span>📏 ${r.far ? "≈" : ""}${t("rKm", { n: fmt(km, 1) })}</span><span>⏱️ ${t("rMin", { n: Math.max(5, Math.round(km / RT_SPEED[type] * 60)) })}</span>
           ${aq ? `<span style="background:${Lv.color}22;color:${Lv.color}">AQI ${aq.v} · ${aq.src === "sensors" ? "📡" : "🛰️"}</span>` : `<span>AQI —</span>`}
           ${type !== "trip" ? `<span class="g">🌱 ${t("rCO2", { n: fmt(km * CAR_KG_PER_KM, 2) })}</span>` : ""}</div>
         ${r.avoid ? `<div class="small muted" style="font-weight:700;margin-top:6px">🚫 ${t("rAvoid", { s: tr(r.avoid) })}</div>` : ""}
@@ -374,14 +374,14 @@ function viewRoutes2(el) {
       </div>`;
     }).join("")}
     </div></div>
-    <div class="foot">${R("note")} ${t("rDemo")}</div>`;
+    <div class="foot">${all.some(x => !x.r.osm) ? t("rNoteApx") + " " : ""}${all.some(x => x.r.osm) ? t("rNoteOsm") + " " : ""}${R("note")} ${t("rCo2N")}</div>`;
   map = mkMap("rMap", { zoomControl: false });
   baseTiles(map);
   const lines = {}, show = rs.map(x => x.r), near = show.filter(r => !r.far);
   show.forEach(r => {
     const type = r.type || r.mode;
     lines[r.id] = L.polyline(r.path, { color: r.color, weight: selRoute === r.id ? 9 : 6, opacity: selRoute && selRoute !== r.id ? 0.45 : 0.95, lineCap: "round", dashArray: r.mode === "bike" ? "1 11" : null }).addTo(map)
-      .bindPopup(`<b>${tr(r.name)}</b><br>${RT_ICON[type]} ${RT(type)}`);
+      .bindPopup(`<b>${tr(r.name)}</b><br>${RT_ICON[type]} ${RT(type)}${r.osm ? " · OSM" : `<br><small>${t("rApprox")} — ${esc(t("rApproxT"))}</small>`}`);
     L.marker(r.path[0], { icon: L.divIcon({ className: "", html: `<div class="r-start" style="background:${r.color}">${RT_ICON[type]}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) }).addTo(map);
   });
   const fitSet = selRoute && lines[selRoute] ? null : (near.length ? near : show);
@@ -395,11 +395,11 @@ function viewRoutes2(el) {
 }
 const RD = {
   ru: { soon: "Маршруты для этого города скоро появятся. Пока смотрите карту воздуха и лучшее время для прогулки на главной.", all: "Все", rt_walk: "Прогулка", rt_bike: "Велосипед", rt_run: "Бег", rt_school: "В школу", rt_commute: "На работу", rt_trip: "За город", sClean: "Сначала чистые", sShort: "Сначала короткие",
-    note: "Координаты маршрутов приблизительные. AQI маршрута — по живым данным в точках маршрута (📡 датчики / 🛰️ модель CAMS); для загородных — модель в точке маршрута." },
+    note: "AQI маршрута — по живым данным в точках маршрута (📡 датчики / 🛰️ модель CAMS); для загородных — модель в точке маршрута." },
   ky: { soon: "Бул шаар үчүн маршруттар жакында кошулат. Азырынча аба картасын жана башкы беттеги сейилдөөгө эң жакшы убакытты караңыз.", all: "Баары", rt_walk: "Сейил", rt_bike: "Велосипед", rt_run: "Чуркоо", rt_school: "Мектепке", rt_commute: "Жумушка", rt_trip: "Шаардан сыртка", sClean: "Адегенде тазалары", sShort: "Адегенде кыскалары",
-    note: "Маршруттардын координаттары болжолдуу. Маршруттун AQI — анын чекиттериндеги жандуу маалымат (📡 датчиктер / 🛰️ CAMS модели); шаардан сырткылар үчүн — маршрут чекитиндеги модель." },
+    note: "Маршруттун AQI — анын чекиттериндеги жандуу маалымат (📡 датчиктер / 🛰️ CAMS модели); шаардан сырткылар үчүн — маршрут чекитиндеги модель." },
   en: { soon: "Routes for this city are coming soon. Meanwhile, check the air map and the best time to walk on the home screen.", all: "All", rt_walk: "Walk", rt_bike: "Cycling", rt_run: "Running", rt_school: "To school", rt_commute: "Commute", rt_trip: "Day trip", sClean: "Cleanest first", sShort: "Shortest first",
-    note: "Route coordinates are approximate. Route AQI uses live data at its waypoints (📡 sensors / 🛰️ CAMS model); out-of-town trips use the model at the route point." },
+    note: "Route AQI uses live data at its waypoints (📡 sensors / 🛰️ CAMS model); out-of-town trips use the model at the route point." },
 };
 const R = k => RD[LANG][k] ?? RD.ru[k];
 

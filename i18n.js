@@ -332,7 +332,7 @@ Object.assign(DICT.ru, {
   cMine: "моя", layerComplaints: "⚠️ Жалобы", cDelete: "Удалить",
   rTitle: "Эко-маршруты", rSub: "Чистые пешие и велосипедные пути через парки и зелёные зоны, в обход загруженных магистралей",
   rWalk: "🚶 Пешком", rBike: "🚲 Велосипед", rKm: "{n} км", rMin: "{n} мин", rCO2: "−{n} кг CO₂ vs авто", rAir: "Воздух на маршруте: AQI {aqi}",
-  rShow: "Показать на карте", rDemo: "Маршруты проложены вручную по паркам и бульварам. CO₂ считаем как ~170 г на км для легкового авто.",
+  rShow: "Показать на карте", rApprox: "≈ примерно", rApproxT: "Нарисован вручную по названным местам — линия приблизительная, не по улицам", rNoteOsm: "Маршруты с пометкой «OSM» проложены по улицам OpenStreetMap.", rNoteApx: "Маршруты с пометкой «≈ примерно» нарисованы вручную по названным местам — линия приблизительная.", rCo2N: "CO₂ считаем как ~170 г на км для легкового авто.", rDemo: "Маршруты проложены вручную по паркам и бульварам. CO₂ считаем как ~170 г на км для легкового авто.",
   rBest: "🌿 Чище всего сейчас", rAvoid: "Обходит: {s}", layerRoutes: "🌳 Эко-маршруты", rTotal: "Пройдите все маршруты — сэкономите {n} кг CO₂",
 });
 Object.assign(DICT.ky, {
@@ -352,7 +352,7 @@ Object.assign(DICT.ky, {
   cMine: "меники", layerComplaints: "⚠️ Арыздар", cDelete: "Өчүрүү",
   rTitle: "Эко-маршруттар", rSub: "Парктар жана жашыл аймактар аркылуу, жүгү көп көчөлөрдү айланып өткөн таза жөө жана велосипед жолдору",
   rWalk: "🚶 Жөө", rBike: "🚲 Велосипед", rKm: "{n} км", rMin: "{n} мүн", rCO2: "унаага салыштырмалуу −{n} кг CO₂", rAir: "Маршруттагы аба: AQI {aqi}",
-  rShow: "Картадан көрсөтүү", rDemo: "Маршруттар парктар жана бульварлар боюнча кол менен түзүлгөн. CO₂ жеңил унаа үчүн ~170 г/км деп эсептелет.",
+  rShow: "Картадан көрсөтүү", rApprox: "≈ болжолдуу", rApproxT: "Аталган жерлер боюнча кол менен тартылган — сызык болжолдуу, көчөлөр боюнча эмес", rNoteOsm: "«OSM» белгиси бар маршруттар OpenStreetMap көчөлөрү боюнча түзүлгөн.", rNoteApx: "«≈ болжолдуу» белгиси бар маршруттар аталган жерлер боюнча кол менен тартылган — сызык болжолдуу.", rCo2N: "CO₂ жеңил унаа үчүн ~170 г/км деп эсептелет.", rDemo: "Маршруттар парктар жана бульварлар боюнча кол менен түзүлгөн. CO₂ жеңил унаа үчүн ~170 г/км деп эсептелет.",
   rBest: "🌿 Азыр эң таза", rAvoid: "Айланып өтөт: {s}", layerRoutes: "🌳 Эко-маршруттар", rTotal: "Бардык маршруттарды басып өтсөңүз, {n} кг CO₂ үнөмдөйсүз",
 });
 Object.assign(DICT.en, {
@@ -372,7 +372,7 @@ Object.assign(DICT.en, {
   cMine: "mine", layerComplaints: "⚠️ Complaints", cDelete: "Delete",
   rTitle: "Eco-routes", rSub: "Clean walking and cycling paths through parks and green areas, avoiding busy roads",
   rWalk: "🚶 Walk", rBike: "🚲 Bike", rKm: "{n} km", rMin: "{n} min", rCO2: "−{n} kg CO₂ vs car", rAir: "Air on route: AQI {aqi}",
-  rShow: "Show on map", rDemo: "Routes are drawn by hand along parks and boulevards. CO₂ assumes ~170 g per km for a car.",
+  rShow: "Show on map", rApprox: "≈ approximate", rApproxT: "Drawn by hand between named places — the line is approximate, not along streets", rNoteOsm: "Routes marked “OSM” follow OpenStreetMap streets.", rNoteApx: "Routes marked “≈ approximate” are drawn by hand between named places — the line is approximate.", rCo2N: "CO₂ assumes ~170 g per km for a car.", rDemo: "Routes are drawn by hand along parks and boulevards. CO₂ assumes ~170 g per km for a car.",
   rBest: "🌿 Cleanest right now", rAvoid: "Avoids: {s}", layerRoutes: "🌳 Eco-routes", rTotal: "Do all routes and save {n} kg CO₂",
 });
 
@@ -380,11 +380,11 @@ Object.assign(DICT.ru, { cityChanged: "Город: {city} 🏔️" });
 Object.assign(DICT.ky, { cityChanged: "Шаар: {city} 🏔️" });
 Object.assign(DICT.en, { cityChanged: "City: {city} 🏔️" });
 Object.assign(DICT.ru, { countryBtn: "🇰🇬 Вся страна", countryTitle: "Воздух в Кыргызстане", countrySub: "Нажмите на город — приложение переключится на него",
-  citiesList: "🏙️ Города: от грязного к чистому", countryNote: "AQI — модель CAMS для центра каждого города (Open-Meteo). Районы и маршруты новых городов — демо, названия массивов условные.",
+  citiesList: "🏙️ Города: от грязного к чистому", countryNote: "AQI — модель CAMS для центра каждого города (Open-Meteo). Районы и маршруты — по OpenStreetMap, кроме помеченных «≈» (координаты приблизительные).",
   countryDemo: "⚠️ Нет данных: нет связи с Open-Meteo.", openCity: "Открыть", cityLbl: "Город", backToCity: "🏙️ {city}" });
 Object.assign(DICT.ky, { countryBtn: "🇰🇬 Бүт өлкө", countryTitle: "Кыргызстандагы аба", countrySub: "Шаарды басыңыз — колдонмо ошол шаарга өтөт",
-  citiesList: "🏙️ Шаарлар: эң кирдүүдөн эң тазага", countryNote: "AQI — ар бир шаардын борбору үчүн CAMS модели (Open-Meteo). Жаңы шаарлардын райондору жана маршруттары — демо, массивдердин аттары шарттуу.",
+  citiesList: "🏙️ Шаарлар: эң кирдүүдөн эң тазага", countryNote: "AQI — ар бир шаардын борбору үчүн CAMS модели (Open-Meteo). Райондор жана маршруттар — OpenStreetMap боюнча, «≈» белгиленгендерден башкасы (координаттары болжолдуу).",
   countryDemo: "⚠️ Маалымат жок: Open-Meteo менен байланыш жок.", openCity: "Ачуу", cityLbl: "Шаар", backToCity: "🏙️ {city}" });
 Object.assign(DICT.en, { countryBtn: "🇰🇬 Whole country", countryTitle: "Air across Kyrgyzstan", countrySub: "Tap a city and the app switches to it",
-  citiesList: "🏙️ Cities: dirtiest to cleanest", countryNote: "AQI = CAMS model for each city centre (Open-Meteo). Districts and routes for the new cities are demo; area names are approximate.",
+  citiesList: "🏙️ Cities: dirtiest to cleanest", countryNote: "AQI = CAMS model for each city centre (Open-Meteo). Districts and routes come from OpenStreetMap, except those marked “≈” (approximate coordinates).",
   countryDemo: "⚠️ No data: no connection to Open-Meteo.", openCity: "Open", cityLbl: "City", backToCity: "🏙️ {city}" });

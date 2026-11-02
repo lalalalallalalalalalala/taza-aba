@@ -219,9 +219,9 @@ function ecoMapClick(e) { const ll = [e.latlng.lat, e.latlng.lng], n = eco.pts.l
   pop.getElement().querySelectorAll("[data-a]").forEach(b => b.onclick = () => { ecoMap.closePopup(); const a = b.dataset.a;
     if (a === "0") ecoSetPt(0, ll); else if (a === "1") ecoSetPt(eco.pts.length - 1, ll); else if (eco.pts.length < 5) { eco.pts.splice(eco.pts.length - 1, 0, null); ecoSetPt(eco.pts.length - 2, ll); } }); }
 function ecoReady(el) {
-  const ready = (ECO_READY[CITY] || []).map(r => ({ id: r.id, mode: r.mode, name: tr(r.n), p: r.p, built: true })), old = (typeof ECO_ROUTES !== "undefined" ? ECO_ROUTES : []).filter(r => !r.far).map(r => ({ id: r.id, mode: r.mode === "bike" ? "bike" : "walk", name: tr(r.name), path: r.path }));
+  const ready = (ECO_READY[CITY] || []).map(r => ({ id: r.id, mode: r.mode, name: tr(r.n), p: r.p, built: true })), old = (typeof ECO_ROUTES !== "undefined" ? ECO_ROUTES : []).filter(r => !r.far).map(r => ({ id: r.id, mode: r.mode === "bike" ? "bike" : "walk", name: tr(r.name), path: r.path, apx: !r.osm }));
   const all = [...ready, ...old]; if (!all.length) return "";
-  return `<h2>🌳 ${esc(ET("ready"))}</h2><p class="sub">${esc(ET("readySub"))}</p><div class="eco-ready">${all.map(r => `<button type="button" class="eco-card eco-rd" data-rd="${r.id}">${ECO_ICON[r.mode]}<span><b>${esc(r.name)}</b><small>${esc(ET(r.mode))}</small></span><em>${esc(ET("go"))} →</em></button>`).join("")}</div>`;
+  return `<h2>🌳 ${esc(ET("ready"))}</h2><p class="sub">${esc(ET("readySub"))}</p><div class="eco-ready">${all.map(r => `<button type="button" class="eco-card eco-rd" data-rd="${r.id}">${ECO_ICON[r.mode]}<span><b>${esc(r.name)}</b><small>${esc(ET(r.mode))}${r.apx && typeof t === "function" ? ` · <span class="r-apx" title="${esc(t("rApproxT"))}">${esc(t("rApprox"))}</span>` : ""}</small></span><em>${esc(ET("go"))} →</em></button>`).join("")}</div>`;
 }
 function ecoUseReady(id) { const r = (ECO_READY[CITY] || []).find(x => x.id === id), o = (ECO_ROUTES || []).find(x => x.id === id);
   if (r) { eco.mode = r.mode; eco.pts = r.p.map(ll => ({ ll, label: ecoPtLabel(ll) })); const nm = tr(r.n).split(" → "); eco.pts[0].label = nm[0]; eco.pts[eco.pts.length - 1].label = nm[nm.length - 1].replace(/ — .*$/, ""); }
