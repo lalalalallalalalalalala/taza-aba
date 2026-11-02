@@ -165,7 +165,8 @@ html[data-theme="dark"] .gv-zone{border-color:rgba(255,255,255,.12)}
 .gv-sens .gv-t th{white-space:normal;vertical-align:bottom}
 .gv-sens .gv-t td:not(:first-child),.gv-sens .gv-t th:not(:first-child){text-align:right;padding-left:4px;padding-right:4px}
 .gv-sens .gv-tw{max-width:640px}
-.gb-sens,.gb-div{margin-top:4px}
+.gb-sens,.gb-div,.gz-hr{margin-top:4px}
+.gb-hr{margin:0 0 6px}
 .gb-div[hidden],.gz-div[hidden]{display:none}
 .gz-div{margin-top:3px}
 

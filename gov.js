@@ -225,6 +225,10 @@ Object.assign(GV_S.ky, { hrH: "Эртең саат боюнча (модельд�
 Object.assign(GV_S.en, { hrH: "Tomorrow by hour (worst model zone)", hrOver: "Above AQI 100 (unhealthy for sensitive groups): {r}", hrNone: "The model expects no hour above AQI 100 tomorrow.",
   hrPeak: "Peak: {h}:00, AQI {a}", hr150: "above 150 — {n}", hrTip: "Outdoor lessons and mass events are better moved to hours below AQI 100 (AirNow advice: plan activities for times when the air is cleaner).",
   hrNote: "Hourly CAMS model forecast; the timing and height of the peak may differ from reality, especially in the evening during inversions.", hrUnit: "h", hrLine: "By hour (model): {o}; {p}." });
+/* v97: та же строка в памятке A4 (#govbrief, раздел 2) и в листе A5 (#govbrief/gazeta, с датой — лист могут читать позже). */
+Object.assign(GV_S.ru, { bHr: "По часам (модель CAMS, худшая зона): {o}; {p}.", gzHr: "Прогноз на {date} по часам (модель CAMS, худшая зона города): {o}; {p}." });
+Object.assign(GV_S.ky, { bHr: "Саат боюнча (CAMS модели, эң начар зона): {o}; {p}.", gzHr: "{date} күнгө саат боюнча божомол (CAMS модели, шаардын эң начар зонасы): {o}; {p}." });
+Object.assign(GV_S.en, { bHr: "By hour (CAMS model, worst zone): {o}; {p}.", gzHr: "Forecast for {date} by hour (CAMS model, worst zone of the city): {o}; {p}." });
 function gvHours(G) {
   const by = {}; G.rows.forEach(r => (r.tmrH || []).forEach(([h, a]) => { if (a != null) by[h] = Math.max(by[h] == null ? -1 : by[h], a); }));
   const hs = Object.keys(by).map(Number).sort((x, y) => x - y); if (hs.length < 12) return null;
@@ -234,10 +238,10 @@ function gvHours(G) {
 }
 const gvHH = h => String(h).padStart(2, "0");
 const gvRg = HS => HS.rg.map(([a, b]) => `${gvHH(a)}:00–${gvHH(b + 1)}:00`).join(", ");
-function gvHoursLine(HS) {
+function gvHoursLine(HS, k, x) {
   const o = HS.rg.length ? GV("hrOver", { r: gvRg(HS) }) + (HS.n150 ? ` (${GV("hr150", { n: HS.n150 + " " + GV("hrUnit") })})` : "") : GV("hrNone").replace(/\.$/, "");
-  const lc = x => x.charAt(0).toLowerCase() + x.slice(1);
-  return GV("hrLine", { o: lc(o), p: lc(GV("hrPeak", { h: gvHH(HS.pk.h), a: HS.pk.a })) });
+  const lc = x => /^.\p{Lu}/u.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1);   // v97: «AQI …» не превращать в «aQI …» (ky)
+  return GV(k || "hrLine", Object.assign({ o: lc(o), p: lc(GV("hrPeak", { h: gvHH(HS.pk.h), a: HS.pk.a })) }, x || {}));
 }
 function gvHoursHTML(G) {
   const HS = gvHours(G); if (!HS) return "";
@@ -625,7 +629,7 @@ function gvBriefText(G, B, winLine, divLine) {
   if (winLine) L.push(winLine);
   { const sl = gvSensLine(); if (sl) L.push(sl); }
   if (divLine) L.push(divLine);
-  if (B.tmr != null) { const li = gvLvlIdx(B.tmr); L.push("", GV("bS2", { a: B.tmr, lvl: tr(level(B.tmr).name) }), ...GV("meas")[Math.min(li, 5)].map(x => "• " + x)); }
+  if (B.tmr != null) { const li = gvLvlIdx(B.tmr), HS = gvHours(G); L.push("", GV("bS2", { a: B.tmr, lvl: tr(level(B.tmr).name) }), ...(HS ? [gvHoursLine(HS, "bHr")] : []), ...GV("meas")[Math.min(li, 5)].map(x => "• " + x)); }
   L.push("", GV("bS3") + ":"); if (B.top.length) B.top.forEach((r, i) => L.push(`${i + 1}) ${r.name} (${GV("bPri", { p: r.P })}) — ${r.meas.map(m => GV(m)).join("; ")}`)); else L.push(GV("bOne", { city: c }));
   L.push("", GV("bS4") + ":", ...GV("bM").map(m => "• " + m[0] + " (" + m[1].map(k => GV_SHORT[k]).join(", ") + ")"), "", GV("bData"), SITE_URL);
   return L.join("\n");
@@ -643,7 +647,7 @@ function gvBriefRender(el, G) {
       <div><small>${GV("bNow")}</small>${pin(B.now)}</div><div><small>${GV("b30")}</small>${pin(B.a30)}</div>
       <div><small>${GV("bDw")}</small><span><b>${gvF(B.dO)}</b><span class="small muted"> / ${gvF(B.dN)}</span></span></div><div><small>${GV("bTmr")}</small>${pin(B.tmr)}</div></div>
       <p class="small" id="gbWin">❄️ ${esc(winLine || GV("winLoad"))}</p>${(() => { const sl = gvSensLine(); return sl ? `<p class="small gb-sens">📡 ${esc(sl)}</p>` : ""; })()}<p class="small gb-div" id="gbDiv" hidden></p></section>
-    ${L ? `<section class="card gb-s" style="border-left:6px solid ${L.color}"><h3>${esc(GV("bS2", { a: B.tmr, lvl: tr(L.name) }))}</h3><ul class="gv-meas">${GV("meas")[Math.min(li, 5)].map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+    ${L ? `<section class="card gb-s" style="border-left:6px solid ${L.color}"><h3>${esc(GV("bS2", { a: B.tmr, lvl: tr(L.name) }))}</h3>${(() => { const HS = gvHours(G); return HS ? `<p class="small gb-hr">🕒 ${esc(gvHoursLine(HS, "bHr"))}</p>` : ""; })()}<ul class="gv-meas">${GV("meas")[Math.min(li, 5)].map(x => `<li>${esc(x)}</li>`).join("")}</ul>
       <p class="small muted">${GV("tmrSrc")} ${gvAs("airnow")} · ${gvAs("who20")}</p></section>` : ""}
     <section class="card gb-s"><h3>${GV("bS3")}</h3>${B.top.length ? `<ol class="gb-top">${B.top.map(r => `<li><b>${esc(r.name)}</b> <span class="small muted">(${esc(GV("bPri", { p: r.P }))})</span> — ${r.meas.map(m => `<span class="gv-m gv-${m}">${esc(GV(m))}</span>`).join(" ")}</li>`).join("")}</ol>
       <p class="small muted">${esc(GV("bZones", { z: B.zones, zw: gvZw(B.zones), n: G.rows.length }))}</p>` : `<p class="small gv-grid">${esc(GV("bOne", { city: c }))}</p>`}</section>
@@ -743,10 +747,11 @@ function gvGzParts(G, winLine) {
   const c = tr(cityObj().name), B = gvBriefData(G), lo = [0, 51, 101, 151, 201, 301];
   const lv = AQI_LEVELS.map((L, i) => ({ c: L.color, r: i < 5 ? `${lo[i]}–${L.max}` : "301+", n: tr(L.name), t: tr(L.text) }));
   const tips = [...tr(AQI_LEVELS[2].tips), ...tr(AQI_LEVELS[3].tips).slice(1)];
-  return { c, B, lv, tips, date: new Date(G.at).toLocaleDateString("ru-RU"), winLine };
+  const HS = gvHours(G), hr = HS ? gvHoursLine(HS, "gzHr", { date: gvDate(G.tmrDate) }) : null;   // v97: часы выше AQI 100 завтра (модель)
+  return { c, B, lv, tips, date: new Date(G.at).toLocaleDateString("ru-RU"), winLine, hr };
 }
 function gvGzText(P) { const B = P.B, GZ_KY = GZ_T[GZL];
-  return [GZ_KY.title + " — " + P.c + ", " + P.date, "", GZ_KY.s1 + ": " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + ".", ...(P.winLine ? [P.winLine] : []), ...(P.divLine ? [P.divLine] : []),
+  return [GZ_KY.title + " — " + P.c + ", " + P.date, "", GZ_KY.s1 + ": " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + ".", ...(P.winLine ? [P.winLine] : []), ...(P.divLine ? [P.divLine] : []), ...(P.hr ? [P.hr] : []),
     "", GZ_KY.s2 + ":", ...P.lv.map(l => `• ${l.r} — ${l.n}: ${l.t}`), "", GZ_KY.s3 + ":", ...P.tips.map(x => "• " + x), "", GZ_KY.s4 + ":", ...GZ_KY.r.map(x => "• " + x), "", GZ_KY.live + " " + SITE_URL, GZ_KY.data].join("\n"); }
 function gvGzRender(el, G) {
   GZL = (location.hash || "").slice(1).split("?")[0].split("/")[2] === "ru" ? "ru" : "ky"; const GZ_KY = GZ_T[GZL];
@@ -757,7 +762,7 @@ function gvGzRender(el, G) {
     <header class="gz-head"><div><h1>${esc(GZ_KY.title)}</h1><p class="sub">${esc(GZ_KY.sub.replace("{city}", P.c).replace("{date}", P.date))}</p></div>
       <figure class="gb-qr gz-qr"><img src="icons/qr-site.svg" alt="QR: https://taza-aba.surge.sh/" width="64" height="64"><figcaption>taza-aba.surge.sh</figcaption></figure></header>
     <section class="gz-s"><h3>${GZ_KY.s1}</h3><div class="gz-k"><div><small>${GV("b30")}</small>${pin(P.B.a30)}</div><div><small>${GV("bDw")}</small><b>${gvF(P.B.dO)}<span class="small muted"> / ${gvF(P.B.dN)}</span></b></div></div>
-      <p class="small" id="gzWin">${P.winLine ? "❄️ " + esc(P.winLine) : ""}</p><p class="small gz-div" id="gzDiv" hidden></p></section>
+      <p class="small" id="gzWin">${P.winLine ? "❄️ " + esc(P.winLine) : ""}</p><p class="small gz-div" id="gzDiv" hidden></p>${P.hr ? `<p class="small gz-hr">🕒 ${esc(P.hr)}</p>` : ""}</section>
     <section class="gz-s"><h3>${GZ_KY.s2}</h3><table class="gz-t"><tbody>${P.lv.map(l => `<tr><td><span class="gz-sw" style="background:${l.c}"></span>${l.r}</td><td><b>${esc(l.n)}</b> — ${esc(l.t)}</td></tr>`).join("")}</tbody></table></section>
     <section class="gz-s gz-two"><div><h3>${GZ_KY.s3}</h3><ul>${P.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div><div><h3>${GZ_KY.s4}</h3><ul>${GZ_KY.r.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></section>
     <footer class="gz-f"><p><b>${GZ_KY.live}</b> taza-aba.surge.sh</p><p class="small muted">${esc(GZ_KY.data)} ${gvAs("airnow")}, ${gvAs("who20")}, ${gvAs("unicef")}, ${gvAs("om")}</p></footer></article>`);
