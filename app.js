@@ -1406,37 +1406,7 @@ const routeKm = r => r.path.slice(1).reduce((s, p, i) => s + haversineKm(r.path[
 const CAR_KG_PER_KM = 0.17;  // средний легковой автомобиль, кг CO₂ на км
 const routeAqi = r => { const v = [...new Set(r.path.map(p => nearestDistrict(p[0], p[1]).id))].map(id => air.byDistrict[id] && air.byDistrict[id].aqi).filter(x => x != null); return v.length ? Math.round(v.reduce((s, x) => s + x, 0) / v.length) : null; };
 let selRoute = null;
-function viewRoutes(el) {
-  const rs = ECO_ROUTES.map(r => ({ r, km: routeKm(r), aqi: routeAqi(r) }));
-  const cleanest = rs.slice().sort((a, b) => (a.aqi ?? 1e9) - (b.aqi ?? 1e9))[0].r.id;
-  const total = rs.reduce((s, x) => s + x.km * CAR_KG_PER_KM, 0);
-  el.innerHTML = `
-    <h1>🌳 ${t("rTitle")}</h1>
-    <p class="sub">${t("rSub")}</p>
-    <div id="rMap" class="mini-map" style="height:300px"></div>
-    <div class="card tip" style="margin-top:12px;font-weight:800">🌍 ${t("rTotal", { n: fmt(total, 1) })}</div>
-    ${rs.map(({ r, km, aqi }) => {
-      const speed = r.mode === "walk" ? 4.5 : 14; const Lv = level(aqi);
-      return `<div class="card route ${selRoute === r.id ? "sel" : ""}" data-route="${r.id}">
-        <div class="row between"><b style="font-size:16px"><span class="rdot" style="background:${r.color}"></span>${tr(r.name)}</b>${r.id === cleanest ? `<span class="chip">${t("rBest")}</span>` : ""}</div>
-        <div class="r-meta"><span>${r.mode === "walk" ? t("rWalk") : t("rBike")}</span><span>📏 ${t("rKm", { n: fmt(km, 1) })}</span><span>⏱️ ${t("rMin", { n: Math.round(km / speed * 60) })}</span>
-          <span style="background:${Lv.color}22;color:${Lv.color}">AQI ${aqiTxt(aqi)}</span><span class="g">🌱 ${t("rCO2", { n: fmt(km * CAR_KG_PER_KM, 2) })}</span></div>
-        <div class="small muted" style="font-weight:700;margin-top:6px">🚫 ${t("rAvoid", { s: tr(r.avoid) })}</div>
-      </div>`;
-    }).join("")}
-    <div class="foot">${t("rDemo")}</div>
-  `;
-  map = mkMap("rMap", { zoomControl: false });
-  baseTiles(map);
-  const lines = {};
-  ECO_ROUTES.forEach(r => {
-    lines[r.id] = L.polyline(r.path, { color: r.color, weight: selRoute === r.id ? 9 : 6, opacity: selRoute && selRoute !== r.id ? 0.45 : 0.95, lineCap: "round", dashArray: r.mode === "bike" ? "1 11" : null }).addTo(map);
-    L.marker(r.path[0], { icon: L.divIcon({ className: "", html: `<div class="r-start" style="background:${r.color}">${r.mode === "walk" ? "🚶" : "🚲"}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) }).addTo(map);
-  });
-  map.fitBounds(selRoute ? lines[selRoute].getBounds().pad(0.3) : L.latLngBounds(ECO_ROUTES.flatMap(r => r.path)).pad(0.08));
-  setTimeout(() => map && map.invalidateSize(), 50);
-  el.querySelectorAll("[data-route]").forEach(c => c.onclick = () => { selRoute = selRoute === c.dataset.route ? null : c.dataset.route; viewRoutes(el); $("#rMap").scrollIntoView({ block: "center" }); });
-}
+/* v101: старый экран маршрутов viewRoutes удалён — #routes рисует viewRoutes2 (extra.js). */
 
 /* ---------------- Старт ---------------- */
 /* Карты часто пересоздаются при смене экрана/языка/города. CSS-анимация зума Leaflet падает,
