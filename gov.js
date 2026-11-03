@@ -241,7 +241,9 @@ const gvRg = HS => HS.rg.map(([a, b]) => `${gvHH(a)}:00–${gvHH(b + 1)}:00`).jo
 function gvHoursLine(HS, k, x) {
   const o = HS.rg.length ? GV("hrOver", { r: gvRg(HS) }) + (HS.n150 ? ` (${GV("hr150", { n: HS.n150 + " " + GV("hrUnit") })})` : "") : GV("hrNone").replace(/\.$/, "");
   const lc = x => /^.\p{Lu}/u.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1);   // v97: «AQI …» не превращать в «aQI …» (ky)
-  return GV(k || "hrLine", Object.assign({ o: lc(o), p: lc(GV("hrPeak", { h: gvHH(HS.pk.h), a: HS.pk.a })) }, x || {}));
+  /* v102: если ни один час не выше AQI 100, «пик» не показываем — строка «ни в один час … выше 100» уже всё говорит */
+  const s = GV(k || "hrLine", Object.assign({ o: lc(o), p: HS.rg.length ? lc(GV("hrPeak", { h: gvHH(HS.pk.h), a: HS.pk.a })) : "" }, x || {}));
+  return HS.rg.length ? s : s.replace(/;\s*\.$/, ".");
 }
 function gvHoursHTML(G) {
   const HS = gvHours(G); if (!HS) return "";
@@ -249,10 +251,10 @@ function gvHoursHTML(G) {
   const bars = HS.H.map(x => `<rect x="${(4 + x.h * bw + 0.8).toFixed(1)}" y="${y(x.a).toFixed(1)}" width="${(bw - 1.6).toFixed(1)}" height="${Math.max(1, Hd - 16 - y(x.a)).toFixed(1)}" rx="1.5" fill="${level(x.a).color}"><title>${gvHH(x.h)}:00 — AQI ${x.a}</title></rect>`).join("");
   const lab = [0, 6, 12, 18, 23].map(h => `<text x="${(4 + h * bw + bw / 2).toFixed(1)}" y="${Hd - 3}" text-anchor="middle" class="gv-svt">${gvHH(h)}</text>`).join("");
   const over = HS.rg.length ? GV("hrOver", { r: gvRg(HS) }) + (HS.n150 ? ` (${GV("hr150", { n: HS.n150 + " " + GV("hrUnit") })})` : "") : GV("hrNone");
-  const pk = GV("hrPeak", { h: gvHH(HS.pk.h), a: HS.pk.a });
-  return `<div class="gv-hr"><h4>🕒 ${GV("hrH")}</h4><svg class="gv-svg gv-hrsvg" viewBox="0 0 ${Wd} ${Hd}" role="img" aria-label="${esc(GV("hrH") + ". " + over.replace(/\.$/, "") + ". " + pk)}">
+  const pk = HS.rg.length ? GV("hrPeak", { h: gvHH(HS.pk.h), a: HS.pk.a }) : "";   // v102: без «пика», если нет часов выше 100
+  return `<div class="gv-hr"><h4>🕒 ${GV("hrH")}</h4><svg class="gv-svg gv-hrsvg" viewBox="0 0 ${Wd} ${Hd}" role="img" aria-label="${esc(GV("hrH") + ". " + over.replace(/\.$/, "") + (pk ? ". " + pk : "."))}">
     <line x1="2" x2="${Wd - 2}" y1="${y(100).toFixed(1)}" y2="${y(100).toFixed(1)}" stroke="#7a8796" stroke-dasharray="4 3"/><text x="${Wd - 4}" y="${(y(100) - 3).toFixed(1)}" text-anchor="end" class="gv-svt">100</text>${bars}${lab}</svg>
-    <p class="gv-hrs"><b>${esc(over)}</b> · ${esc(pk)}</p>${HS.rg.length ? `<p class="small">${esc(GV("hrTip"))}</p>` : ""}<p class="small muted">${esc(GV("hrNote"))}</p></div>`;
+    <p class="gv-hrs"><b>${esc(over)}</b>${pk ? ` · ${esc(pk)}` : ""}</p>${HS.rg.length ? `<p class="small">${esc(GV("hrTip"))}</p>` : ""}<p class="small muted">${esc(GV("hrNote"))}</p></div>`;
 }
 function gvWarnText(G) {
   const R = G.rows.filter(r => r.tmrMax != null); if (!R.length) return "";

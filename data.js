@@ -209,8 +209,12 @@ Object.assign(CITIES.naryn, { emoji: "🏔️", zoom: 13, radius: 800 });
 /* Порядок в переключателе. */
 const CITY_ORDER = ["bishkek", "osh", "jalal", "karakol", "naryn", "talas", "batken", "tokmok"];
 
-/* Дополнительные районы/микрорайоны/жилмассивы. Координаты ПРИБЛИЗИТЕЛЬНЫЕ (центр района, ±0,5–1 км).
- * [id, lat, lon, тип, ru, ky, en] (v87: без демо-коэффициента и доли угля) */
+/* Дополнительные районы/микрорайоны/жилмассивы. [id, lat, lon, тип, ru, ky, en, osm] (v87: без демо-коэффициента и доли угля)
+ * v102: все точки сверены со снимком OpenStreetMap (/workspace/osm/kg.osm.pbf, 19.10.2026; © участники OSM, ODbL);
+ *   osm — объект OSM, по которому стоит точка (центр контура или точка place=*). Районы, которых в OSM нет, удалены:
+ *   «ул. Московская» (Нарын; улицы с таким названием в OSM нет), «Черемушки» (Ош; в OSM только магазин), «Амир-Темур» (Ош; только улица),
+ *   «Дунганская слобода» (Каракол; есть только мечеть), «Арал» и «Копуро-Базар» (Талас), «Кыштут» (Баткен), «Дунганский квартал» (Токмок; только улица).
+ *   Точки без osm остаются «приблизительными» (approx). Бишкекские точки ниже уточняет kg-places.js (KGP.upd.bishkek.fix, по OSM). */
 const MORE_DISTRICTS = {
   bishkek: [
     ["kokjar", 42.8300, 74.5950, "micro", "Кок-Жар", "Көк-Жар", "Kok-Jar"],
@@ -224,47 +228,39 @@ const MORE_DISTRICTS = {
     ["akbata", 42.8980, 74.4600, "private", "Ак-Бата", "Ак-Бата", "Ak-Bata"],
   ],
   naryn: [
-    ["n_moskovskaya", 41.4300, 75.9700, "private", "ул. Московская", "Московская көч.", "Moskovskaya St."],
-    ["n_bazar", 41.4270, 76.0120, "apts", "Район рынка", "Базар аймагы", "Bazaar area"],
-    ["n_unicampus", 41.4220, 75.9300, "micro", "Кампус UCA", "UCA кампусу", "UCA campus"],
+    ["n_bazar", 41.4304, 75.9918, "apts", "Район рынка", "Базар аймагы", "Bazaar area", "r15677163"],            // OSM: «Городской рынок», amenity=marketplace (было 41.427, 76.012 — 1,7 км)
+    ["n_unicampus", 41.4301, 75.9035, "micro", "Кампус UCA", "UCA кампусу", "UCA campus", "w440148147"],         // OSM: «Университет Центральной Азии», amenity=university (было 41.422, 75.930 — 2,4 км)
   ],
-  osh: [
-    ["osh_cheremushki", 40.5220, 72.8150, "micro", "Черемушки", "Черемушки", "Cheryomushki"],
-    ["osh_amir", 40.5480, 72.7950, "private", "Амир-Темур", "Амир-Темир", "Amir-Temur"],
+  osh: [   // точки уточняет kg-places.js (KGP.upd.osh.fix, по OSM)
     ["osh_kyzylkyshtak", 40.5560, 72.7700, "private", "Кызыл-Кыштак", "Кызыл-Кыштак", "Kyzyl-Kyshtak"],
     ["osh_anar", 40.5080, 72.7950, "private", "Анар", "Анар", "Anar"],
     ["osh_japalak", 40.5350, 72.8330, "private", "Жапалак", "Жапалак", "Japalak"],
   ],
   jalal: [
-    ["jalal_kurort", 40.9500, 73.0300, "private", "Курорт", "Курорт", "Resort area"],
-    ["jalal_sputnik", 40.9200, 73.0150, "micro", "Спутник", "Спутник", "Sputnik"],
-    ["jalal_bazar", 40.9330, 72.9900, "apts", "Центральный рынок", "Борбордук базар", "Central bazaar"],
+    ["jalal_kurort", 40.9461, 73.0306, "private", "Курорт", "Курорт", "Resort area", "w439917220"],              // OSM: «Курорт» (Sanatorium "Kurort"), контур (было 40.950, 73.030 — 0,4 км)
+    ["jalal_sputnik", 40.9375, 72.9690, "micro", "Спутник", "Спутник", "Sputnik", "w630066700"],                 // OSM: «мкр. Спутник 8 көчөсү» (рядом гост. «Спутник»; было 40.920, 73.015 — 4,3 км)
+    ["jalal_bazar", 40.9288, 72.9994, "apts", "Центральный рынок (Чоң базар)", "Борбордук базар (Чоң базар)", "Central bazaar (Chong Bazar)", "w251578867"], // OSM: «Чоң базар», landuse=retail (было 40.933, 72.990 — 0,9 км)
   ],
   karakol: [
-    ["karakol_dungan", 42.4950, 78.3950, "private", "Дунганская слобода", "Дуңган конушу", "Dungan quarter"],
-    ["karakol_pristan", 42.5300, 78.3200, "private", "Пристань-Пржевальск", "Пристань-Пржевальск", "Pristan-Przhevalsk"],
-    ["karakol_bazar", 42.4870, 78.3850, "apts", "Район Ак-Тилек базара", "Ак-Тилек базар аймагы", "Ak-Tilek bazaar area"],
+    ["karakol_pristan", 42.5738, 78.3109, "private", "Пристань-Пржевальск", "Пржевальск пристаны", "Pristan-Przhevalsk", "n3081985079"], // OSM: place=village (было 42.530, 78.320 — 4,9 км)
+    ["karakol_bazar", 42.4936, 78.3847, "apts", "Район рынка", "Базар аймагы", "Bazaar area", "w1086761316"],    // OSM: «Main Bazaar», amenity=marketplace; «Ак-Тилек базара» в OSM нет (было 42.487, 78.385)
   ],
   talas: [
-    ["talas_aral", 42.5300, 72.2100, "private", "Арал", "Арал", "Aral"],
-    ["talas_bazar", 42.5180, 72.2450, "apts", "Район рынка", "Базар аймагы", "Bazaar area"],
-    ["talas_kopuro", 42.5050, 72.2650, "private", "Копуро-Базар", "Көпүрө-Базар", "Kopuro-Bazar"],
+    ["talas_bazar", 42.5167, 72.2447, "apts", "Район рынка", "Базар аймагы", "Bazaar area", "w87400220"],          // OSM: «Центральный базар», amenity=marketplace (было 42.518, 72.245 — 0,1 км)
   ],
   batken: [
-    ["batken_bazar", 40.0620, 70.8250, "apts", "Район рынка", "Базар аймагы", "Bazaar area"],
-    ["batken_kyshtut", 40.0450, 70.8000, "private", "Кыштут", "Кыштут", "Kyshtut"],
-    ["batken_airport", 40.0750, 70.8450, "private", "У аэропорта", "Аэропорт жагы", "Airport side"],
+    ["batken_bazar", 40.0575, 70.8246, "apts", "Район рынка", "Базар аймагы", "Bazaar area", "w174790103"],       // OSM: «центральный рынок» (было 40.062, 70.825 — 0,5 км)
+    ["batken_airport", 40.0750, 70.8450, "private", "У аэропорта", "Аэропорт жагы", "Airport side"],              // точку уточняет kg-places.js (OSM place=suburb «Аэропорт», 40.0437, 70.8292)
   ],
   tokmok: [
-    ["tokmok_dungan", 42.8350, 75.3100, "private", "Дунганский квартал", "Дуңган кварталы", "Dungan quarter"],
-    ["tokmok_station", 42.8500, 75.2850, "micro", "Район вокзала", "Вокзал аймагы", "Station area"],
+    ["tokmok_station", 42.8188, 75.3033, "micro", "Район вокзала", "Вокзал аймагы", "Station area", "w157213220"], // OSM: «Железнодорожный вокзал», building=train_station (было 42.850, 75.285 — 3,8 км)
   ],
 };
 Object.entries(MORE_DISTRICTS).forEach(([cid, list]) => {
   const C = CITIES[cid];
-  list.forEach(([id, lat, lon, type, ru, ky, en]) => {
+  list.forEach(([id, lat, lon, type, ru, ky, en, osm]) => {
     /* v84: доля угля здесь — выдуманная (демо); v71 обнулял её до того, как сюда добавлялись эти районы → не показываем */
-    C.districts.push({ id, lat, lon, coalShare: null, type, approx: true, name: { ru, ky, en },
+    C.districts.push({ id, lat, lon, coalShare: null, type, approx: !osm, osm: osm || null, name: { ru, ky, en },
       loc: { ru: `в районе «${ru}»`, ky: `«${ky}» аймагында`, en: `in ${en}` } });
   });
 });
