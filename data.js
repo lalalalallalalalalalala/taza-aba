@@ -119,9 +119,9 @@ const NR_DISTRICTS = [
   { id: "n_center", lat: 41.4287, lon: 75.9911, coalShare: null, type: "apts",
     name: { ru: "Центр", ky: "Борбор", en: "Centre" }, loc: { ru: "в центре Нарына", ky: "Нарындын борборунда", en: "in central Naryn" } },
   { id: "n_west", lat: 41.4330, lon: 75.9480, coalShare: null, type: "private",
-    name: { ru: "Западный массив", ky: "Батыш массиви", en: "West side" }, loc: { ru: "в Западном массиве", ky: "Батыш массивинде", en: "on the west side" } },
+    name: { ru: "Западная часть", ky: "Батыш бөлүгү", en: "West side" }, loc: { ru: "в западной части", ky: "батыш бөлүгүндө", en: "on the west side" } },   // v103: в OSM нет «Западного массива» — описательно, как у других городов
   { id: "n_east", lat: 41.4250, lon: 76.0350, coalShare: null, type: "private",
-    name: { ru: "Восточный массив", ky: "Чыгыш массиви", en: "East side" }, loc: { ru: "в Восточном массиве", ky: "Чыгыш массивинде", en: "on the east side" } },
+    name: { ru: "Восточная часть", ky: "Чыгыш бөлүгү", en: "East side" }, loc: { ru: "в восточной части", ky: "чыгыш бөлүгүндө", en: "on the east side" } },   // v103: в OSM нет «Восточного массива»
   { id: "n_left", lat: 41.4175, lon: 75.9850, coalShare: null, type: "private",
     name: { ru: "Левый берег", ky: "Сол жээк", en: "Left bank" }, loc: { ru: "на левом берегу", ky: "сол жээкте", en: "on the left bank" } },
   { id: "n_north", lat: 41.4400, lon: 76.0050, coalShare: null, type: "micro",
