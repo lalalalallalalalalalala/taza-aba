@@ -161,6 +161,8 @@ function gvDistrict(d, r, W, now) {
   const tm = idx.filter(i => H.time[i].slice(0, 10) === tmrDate);
   /* v103: ночь после завтрашнего дня (00–07 ч послезавтра) — ночной смог при инверсии часто продолжается после полуночи */
   const nDate = new Date(now + off + 2 * 86400e3).toISOString().slice(0, 10), tn = idx.filter(i => H.time[i].slice(0, 10) === nDate && +H.time[i].slice(11, 13) < 8);
+  /* v104: «сегодня вечером и ночью» — оставшиеся часы сегодня (с текущего часа) и завтра до 08:00; [час, AQI, начало часа в мс] */
+  const tn8 = idx.filter(i => T[i] > now - 3600e3 && (H.time[i].slice(0, 10) === today || (H.time[i].slice(0, 10) === tmrDate && +H.time[i].slice(11, 13) < 8)));
   const p30 = last(30 * 24), withPm = p30.filter(i => p25(i) != null);
   const daily = {}; p30.forEach(i => { const k = H.time[i].slice(0, 10); (daily[k] = daily[k] || []).push(i); });
   const days = Object.keys(daily).sort().map(k => { const ii = daily[k]; return { date: k, aqiMean: gvMean(ii.map(aq)), aqiMax: gvMax(ii.map(aq)), pmMean: gvMean(ii.map(p25)), hOver: ii.filter(i => p25(i) > 15).length, n: ii.length }; });
@@ -173,7 +175,8 @@ function gvDistrict(d, r, W, now) {
     a7: gvMean(last(168).map(aq)), a30: gvMean(p30.map(aq)), pm30: gvMean(p30.map(p25)), no2_7: gvMean(last(168).map(i => H.nitrogen_dioxide[i])),
     hOver: withPm.filter(i => p25(i) > 15).length, hN: withPm.length, hShare: withPm.length ? withPm.filter(i => p25(i) > 15).length / withPm.length : null,
     dOver: days.filter(x => x.date !== today && x.n >= 20 && x.pmMean > 15).length, dN: days.filter(x => x.date !== today && x.n >= 20).length,
-    tmrMax: gvMax(tm.map(aq)), tmrPm: gvMean(tm.map(p25)), tmrH: tm.map(i => [+H.time[i].slice(11, 13), aq(i)]).concat(tn.map(i => [24 + +H.time[i].slice(11, 13), aq(i)])), tmrDate, nDate, days, E };
+    tmrMax: gvMax(tm.map(aq)), tmrPm: gvMean(tm.map(p25)), tmrH: tm.map(i => [+H.time[i].slice(11, 13), aq(i)]).concat(tn.map(i => [24 + +H.time[i].slice(11, 13), aq(i)])),
+    tnH: tn8.map(i => [(H.time[i].slice(0, 10) === tmrDate ? 24 : 0) + +H.time[i].slice(11, 13), aq(i), T[i]]), tmrDate, nDate, days, E };
 }
 const gvLvlIdx = a => Math.max(0, AQI_LEVELS.findIndex(l => a <= l.max) === -1 ? AQI_LEVELS.length - 1 : AQI_LEVELS.findIndex(l => a <= l.max));
 const gvDate = s => { const [y, m, d] = s.split("-"); return `${d}.${m}.${y}`; };
@@ -211,7 +214,7 @@ function gvBanner(G) {
   return `<div class="card gv-banner" style="border-left:6px solid ${L.color}">
     <div class="gv-bh"><span class="aqi-pin gv-pin" style="background:${L.color}">${a}</span><div><h3>⚠️ ${GV("tmrH", { date: gvDate(G.tmrDate) })}</h3>
     <b>${esc(tr(L.name))}</b> · ${esc(GV("tmrWorst", { d: W.label, a }))}<br><span class="small">${esc(GV("tmrCity", { a: cityA }))}</span></div></div>
-    ${gvHoursHTML(G)}
+    ${gvTonightHTML(G)}${gvHoursHTML(G)}
     <h4>${GV("measH")}</h4><ul class="gv-meas">${ms.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
     <p class="small muted">${GV("measNote")} ${gvA("airnow")} · ${gvA("flag")} · ${gvA("who20")}</p><p class="small muted">${GV("tmrSrc")}</p>
     <button class="btn ghost gv-noprint" id="gvCopy" type="button">${GV("copyWarn")}</button></div>`;
@@ -248,33 +251,56 @@ function gvHours(G) {
 }
 const gvHH = h => String(h).padStart(2, "0");
 /* v103: часы ≥ 24 — это следующая ночь: «03:00 (06.11)»; 24 как конец завтрашнего дня остаётся «24:00» */
-const gvT = (HS, h) => h > 24 || (h === 24 && HS && HS.night) ? `${gvHH(h - 24)}:00${HS && HS.nd ? ` (${HS.nd})` : ""}` : `${gvHH(h)}:00`;
-const gvRg = HS => HS.rg.map(([a, b]) => a >= 24 ? `${gvHH(a - 24)}:00–${gvT(HS, b + 1)}` : `${gvHH(a)}:00–${gvT(HS, b + 1)}`).join(", ");
+/* v104: дата без скобок — «03:00 06.11»; диапазон с датой — «19:00 – 08:00 06.11» (пробелы вокруг тире, чтобы дата не слипалась) */
+const gvT = (HS, h) => h > 24 || (h === 24 && HS && HS.night) ? `${gvHH(h - 24)}:00${HS && HS.nd ? ` ${HS.nd}` : ""}` : `${gvHH(h)}:00`;
+const gvRg = HS => HS.rg.map(([a, b]) => { const e = gvT(HS, b + 1), d = / /.test(e); return `${gvHH(a >= 24 ? a - 24 : a)}:00${d ? " – " : "–"}${e}`; }).join(", ");
+/* v104: «выше 150 — N ч» через точку с запятой, а не второй скобкой подряд */
+const gvOver = HS => GV("hrOver", { r: gvRg(HS) }) + (HS.n150 ? `; ${GV("hr150", { n: HS.n150 + " " + GV("hrUnit") })}` : "");
 const gvK = (HS, k) => HS && HS.night && GV_S.ru[k + "N"] ? k + "N" : k;
 function gvHoursLine(HS, k, x) {
-  const o = HS.rg.length ? GV("hrOver", { r: gvRg(HS) }) + (HS.n150 ? ` (${GV("hr150", { n: HS.n150 + " " + GV("hrUnit") })})` : "") : GV(gvK(HS, "hrNone")).replace(/\.$/, "");
+  const o = HS.rg.length ? gvOver(HS) : GV(HS.tn ? "tnNo" : gvK(HS, "hrNone")).replace(/\.$/, "");
   const lc = x => /^.\p{Lu}/u.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1);   // v97: «AQI …» не превращать в «aQI …» (ky)
   /* v102: если ни один час не выше AQI 100, «пик» не показываем — строка «ни в один час … выше 100» уже всё говорит */
-  const s = GV(gvK(HS, k || "hrLine"), Object.assign({ o: lc(o), p: HS.rg.length ? lc(GV("hrPeak", { h: gvT(HS, HS.pk.h), a: HS.pk.a })) : "" }, x || {}));
+  const s = GV(HS.tn ? k : gvK(HS, k || "hrLine"), Object.assign({ o: lc(o), s: HS.s, nd: HS.nd, p: HS.rg.length ? lc(GV("hrPeak", { h: gvT(HS, HS.pk.h), a: HS.pk.a })) : "" }, x || {}));
   return HS.rg.length ? s : s.replace(/;\s*\.$/, ".");
 }
-function gvHoursHTML(G) {
-  const HS = gvHours(G); if (!HS) return "";
-  const NH = Math.max(24, HS.H[HS.H.length - 1].h + 1), Wd = 360, Hd = 110, mx = Math.max(120, HS.pk.a) * 1.08, bw = (Wd - 8) / NH, y = v => Hd - 16 - (v / mx) * (Hd - 26);
-  const bars = HS.H.map(x => `<rect x="${(4 + x.h * bw + 0.8).toFixed(1)}" y="${y(x.a).toFixed(1)}" width="${(bw - 1.6).toFixed(1)}" height="${Math.max(1, Hd - 16 - y(x.a)).toFixed(1)}" rx="1.5" fill="${level(x.a).color}"><title>${gvT(HS, x.h)} — AQI ${x.a}</title></rect>`).join("");
-  const lab = (NH > 24 ? [0, 6, 12, 18, 24, NH - 1] : [0, 6, 12, 18, 23]).map(h => `<text x="${(4 + h * bw + bw / 2).toFixed(1)}" y="${Hd - 3}" text-anchor="middle" class="gv-svt">${gvHH(h % 24)}</text>`).join("")
-    /* v103: полночь между завтра и следующей ночью — пунктир и подпись «ночь 06.11» */
-    + (NH > 24 ? `<line x1="${(4 + 24 * bw).toFixed(1)}" x2="${(4 + 24 * bw).toFixed(1)}" y1="2" y2="${Hd - 14}" stroke="#7a8796" stroke-dasharray="2 3"/><text x="${(6 + 24 * bw).toFixed(1)}" y="10" class="gv-svt">${esc(GV("hrNight") + (HS.nd ? " " + HS.nd : ""))}</text>` : "");
-  const over = HS.rg.length ? GV("hrOver", { r: gvRg(HS) }) + (HS.n150 ? ` (${GV("hr150", { n: HS.n150 + " " + GV("hrUnit") })})` : "") : GV(gvK(HS, "hrNone"));
+function gvHoursHTML(G) { const HS = gvHours(G); return HS ? gvHrHTML(HS, GV(gvK(HS, "hrH")), GV(gvK(HS, "hrNone")), "🕒") : ""; }
+/* v104: общий график по часам; h0 — первый час (у «сегодня вечером» — текущий час), часы ≥ 24 — следующие сутки */
+function gvHrHTML(HS, title, none, ic, cls) {
+  const h0 = HS.H[0].h < 24 && HS.tn ? HS.H[0].h : 0, NH = Math.max(HS.tn ? 1 : 24, HS.H[HS.H.length - 1].h + 1) - h0, Wd = 360, Hd = 110, mx = Math.max(120, HS.pk.a) * 1.08, bw = (Wd - 8) / NH, y = v => Hd - 16 - (v / mx) * (Hd - 26), X = h => 4 + (h - h0) * bw;
+  const bars = HS.H.map(x => `<rect x="${(X(x.h) + 0.8).toFixed(1)}" y="${y(x.a).toFixed(1)}" width="${(bw - 1.6).toFixed(1)}" height="${Math.max(1, Hd - 16 - y(x.a)).toFixed(1)}" rx="1.5" fill="${level(x.a).color}"><title>${gvT(HS, x.h)} — AQI ${x.a}</title></rect>`).join("");
+  const ticks = HS.tn ? [...new Set([h0, ...[0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30].filter(h => h > h0 + 1 && h < h0 + NH - 1), h0 + NH - 1])] : NH > 24 ? [0, 6, 12, 18, 24, NH - 1] : [0, 6, 12, 18, 23];
+  const lab = ticks.map(h => `<text x="${(X(h) + bw / 2).toFixed(1)}" y="${Hd - 3}" text-anchor="middle" class="gv-svt">${gvHH(h % 24)}</text>`).join("")
+    /* v103: полночь между днём и следующей ночью — пунктир и подпись «ночь 06.11» */
+    + (h0 < 24 && h0 + NH > 24 ? `<line x1="${X(24).toFixed(1)}" x2="${X(24).toFixed(1)}" y1="2" y2="${Hd - 14}" stroke="#7a8796" stroke-dasharray="2 3"/><text x="${(X(24) + (X(24) > Wd - 70 ? -2 : 2)).toFixed(1)}" y="10" text-anchor="${X(24) > Wd - 70 ? "end" : "start"}" class="gv-svt">${esc(GV("hrNight") + (HS.nd ? " " + HS.nd : ""))}</text>` : "");
+  const over = HS.rg.length ? gvOver(HS) : none;
   const pk = HS.rg.length ? GV("hrPeak", { h: gvT(HS, HS.pk.h), a: HS.pk.a }) : "";   // v102: без «пика», если нет часов выше 100
-  return `<div class="gv-hr"><h4>🕒 ${GV(gvK(HS, "hrH"))}</h4><svg class="gv-svg gv-hrsvg" viewBox="0 0 ${Wd} ${Hd}" role="img" aria-label="${esc(GV(gvK(HS, "hrH")) + ". " + over.replace(/\.$/, "") + (pk ? ". " + pk : "."))}">
+  return `<div class="gv-hr${cls ? " " + cls : ""}"><h4>${ic} ${esc(title)}</h4><svg class="gv-svg gv-hrsvg" viewBox="0 0 ${Wd} ${Hd}" role="img" aria-label="${esc(title + ". " + over.replace(/\.$/, "") + (pk ? ". " + pk : "."))}">
     <line x1="2" x2="${Wd - 2}" y1="${y(100).toFixed(1)}" y2="${y(100).toFixed(1)}" stroke="#7a8796" stroke-dasharray="4 3"/><text x="${Wd - 4}" y="${(y(100) - 3).toFixed(1)}" text-anchor="end" class="gv-svt">100</text>${bars}${lab}</svg>
-    <p class="gv-hrs"><b>${esc(over)}</b>${pk ? ` · ${esc(pk)}` : ""}</p>${HS.rg.length ? `<p class="small">${esc(GV("hrTip"))}</p>` : ""}<p class="small muted">${esc(GV("hrNote"))}</p></div>`;
+    <p class="gv-hrs"><b>${esc(over)}</b>${pk ? ` · ${esc(pk)}` : ""}</p>${HS.rg.length && !HS.tn ? `<p class="small">${esc(GV("hrTip"))}</p>` : ""}<p class="small muted">${esc(GV("hrNote"))}</p></div>`;   // v104: совет — один раз, под завтрашним графиком
 }
+/* v104: «Сегодня вечером и ночью» — оставшиеся часы сегодня (с текущего часа) до 08:00 завтра, та же модель CAMS, худшая зона.
+ * Часы, которые уже прошли после загрузки (кэш до 30 мин), отбрасываются; нет часов или нет данных — блок не показываем. */
+Object.assign(GV_S.ru, { tnH: "Сегодня вечером и ночью: {s} – 08:00 {nd} (худшая зона модели)", tnNone: "С {s} до 08:00 {nd} модель не ждёт ни одного часа с AQI выше 100.", tnNo: "модель не ждёт ни одного часа с AQI выше 100",
+  bTn: "Сегодня с {s} до 08:00 {nd} по часам (модель CAMS, худшая зона): {o}; {p}.", gzTn: "{date}, с {s} до 08:00 {nd}, по часам (модель CAMS, худшая зона города): {o}; {p}." });
+Object.assign(GV_S.ky, { tnH: "Бүгүн кечинде жана түнү: {s} – 08:00 {nd} (модельдин эң начар зонасы)", tnNone: "{s} – 08:00 {nd} аралыгында модель эч бир саатта AQI 100дөн жогору күтпөйт.", tnNo: "модель эч бир саатта AQI 100дөн жогору күтпөйт",
+  bTn: "Бүгүн {s} – 08:00 {nd} саат боюнча (CAMS модели, эң начар зона): {o}; {p}.", gzTn: "{date}, {s} – 08:00 {nd} саат боюнча (CAMS модели, шаардын эң начар зонасы): {o}; {p}." });
+Object.assign(GV_S.en, { tnH: "This evening and tonight: {s} – 08:00 {nd} (worst model zone)", tnNone: "The model expects no hour above AQI 100 from {s} to 08:00 {nd}.", tnNo: "the model expects no hour above AQI 100",
+  bTn: "Today from {s} to 08:00 {nd} by hour (CAMS model, worst zone): {o}; {p}.", gzTn: "{date}, from {s} to 08:00 {nd}, by hour (CAMS model, worst zone of the city): {o}; {p}." });
+function gvTonight(G, now) {
+  now = now || Date.now(); const by = {};
+  (G.rows || []).forEach(r => (r.tnH || []).forEach(([h, a, T]) => { if (a != null && !(T != null && T <= now - 3600e3)) by[h] = Math.max(by[h] == null ? -1 : by[h], a); }));
+  const hs = Object.keys(by).map(Number).sort((x, y) => x - y); if (!hs.length) return null;
+  const H = hs.map(h => ({ h, a: Math.round(by[h]) })), pk = H.reduce((b, x) => x.a > b.a ? x : b);
+  const rg = []; H.forEach(x => { if (x.a > 100) { const l = rg[rg.length - 1]; if (l && l[1] === x.h - 1) l[1] = x.h; else rg.push([x.h, x.h]); } });
+  const nd = G.tmrDate ? gvDate(G.tmrDate).slice(0, 5) : "", s = `${gvHH(hs[0] % 24)}:00${hs[0] >= 24 ? " " + nd : ""}`;
+  return { H, pk, rg, n150: H.filter(x => x.a > 150).length, night: true, tn: true, nd, s };
+}
+function gvTonightHTML(G) { const HS = gvTonight(G); return HS ? gvHrHTML(HS, GV("tnH", { s: HS.s, nd: HS.nd }), GV("tnNone", { s: HS.s, nd: HS.nd }), "🌙", "gv-tn") : ""; }
 function gvWarnText(G) {
   const R = G.rows.filter(r => r.tmrMax != null); if (!R.length) return "";
   const W = gvWorst(R), a = W.a, li = gvLvlIdx(a);
-  const HS = gvHours(G), hl = HS ? "\n" + gvHoursLine(HS) : "";
+  const HS = gvHours(G), TN = gvTonight(G), hl = (TN ? "\n" + gvHoursLine(TN, "bTn") : "") + (HS ? "\n" + gvHoursLine(HS) : "");
   return GV("warnTxt", { date: gvDate(G.tmrDate), city: tr(cityObj().name), a, lvl: tr(level(a).name), d: W.label }) + hl + "\n" + GV("meas")[Math.min(li, 5)].map(x => "• " + x).join("\n") + "\n" + SITE_URL;
 }
 function gvCmpHTML() {
@@ -646,7 +672,7 @@ function gvBriefText(G, B, winLine, divLine) {
   if (winLine) L.push(winLine);
   { const sl = gvSensLine(); if (sl) L.push(sl); }
   if (divLine) L.push(divLine);
-  if (B.tmr != null) { const li = gvLvlIdx(B.tmr), HS = gvHours(G); L.push("", GV("bS2", { a: B.tmr, lvl: tr(level(B.tmr).name) }), ...(HS ? [gvHoursLine(HS, "bHr")] : []), ...GV("meas")[Math.min(li, 5)].map(x => "• " + x)); }
+  if (B.tmr != null) { const li = gvLvlIdx(B.tmr), HS = gvHours(G); L.push("", GV("bS2", { a: B.tmr, lvl: tr(level(B.tmr).name) }), ...(gvTonight(G) ? [gvHoursLine(gvTonight(G), "bTn")] : []), ...(HS ? [gvHoursLine(HS, "bHr")] : []), ...GV("meas")[Math.min(li, 5)].map(x => "• " + x)); }
   L.push("", GV("bS3") + ":"); if (B.top.length) B.top.forEach((r, i) => L.push(`${i + 1}) ${r.name} (${GV("bPri", { p: r.P })}) — ${r.meas.map(m => GV(m)).join("; ")}`)); else L.push(GV("bOne", { city: c }));
   L.push("", GV("bS4") + ":", ...GV("bM").map(m => "• " + m[0] + " (" + m[1].map(k => GV_SHORT[k]).join(", ") + ")"), "", GV("bData"), SITE_URL);
   return L.join("\n");
@@ -664,7 +690,7 @@ function gvBriefRender(el, G) {
       <div><small>${GV("bNow")}</small>${pin(B.now)}</div><div><small>${GV("b30")}</small>${pin(B.a30)}</div>
       <div><small>${GV("bDw")}</small><span><b>${gvF(B.dO)}</b><span class="small muted"> / ${gvF(B.dN)}</span></span></div><div><small>${GV("bTmr")}</small>${pin(B.tmr)}</div></div>
       <p class="small" id="gbWin">❄️ ${esc(winLine || GV("winLoad"))}</p>${(() => { const sl = gvSensLine(); return sl ? `<p class="small gb-sens">📡 ${esc(sl)}</p>` : ""; })()}<p class="small gb-div" id="gbDiv" hidden></p></section>
-    ${L ? `<section class="card gb-s" style="border-left:6px solid ${L.color}"><h3>${esc(GV("bS2", { a: B.tmr, lvl: tr(L.name) }))}</h3>${(() => { const HS = gvHours(G); return HS ? `<p class="small gb-hr">🕒 ${esc(gvHoursLine(HS, "bHr"))}</p>` : ""; })()}<ul class="gv-meas">${GV("meas")[Math.min(li, 5)].map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+    ${L ? `<section class="card gb-s" style="border-left:6px solid ${L.color}"><h3>${esc(GV("bS2", { a: B.tmr, lvl: tr(L.name) }))}</h3>${(() => { const HS = gvHours(G), TN = gvTonight(G); return (TN ? `<p class="small gb-tn">🌙 ${esc(gvHoursLine(TN, "bTn"))}</p>` : "") + (HS ? `<p class="small gb-hr">🕒 ${esc(gvHoursLine(HS, "bHr"))}</p>` : ""); })()}<ul class="gv-meas">${GV("meas")[Math.min(li, 5)].map(x => `<li>${esc(x)}</li>`).join("")}</ul>
       <p class="small muted">${GV("tmrSrc")} ${gvAs("airnow")} · ${gvAs("who20")}</p></section>` : ""}
     <section class="card gb-s"><h3>${GV("bS3")}</h3>${B.top.length ? `<ol class="gb-top">${B.top.map(r => `<li><b>${esc(r.name)}</b> <span class="small muted">(${esc(GV("bPri", { p: r.P }))})</span> — ${r.meas.map(m => `<span class="gv-m gv-${m}">${esc(GV(m))}</span>`).join(" ")}</li>`).join("")}</ol>
       <p class="small muted">${esc(GV("bZones", { z: B.zones, zw: gvZw(B.zones), n: G.rows.length }))}</p>` : `<p class="small gv-grid">${esc(GV("bOne", { city: c }))}</p>`}</section>
@@ -765,10 +791,11 @@ function gvGzParts(G, winLine) {
   const lv = AQI_LEVELS.map((L, i) => ({ c: L.color, r: i < 5 ? `${lo[i]}–${L.max}` : "301+", n: tr(L.name), t: tr(L.text) }));
   const tips = [...tr(AQI_LEVELS[2].tips), ...tr(AQI_LEVELS[3].tips).slice(1)];
   const HS = gvHours(G), hr = HS ? gvHoursLine(HS, "gzHr", { date: gvDate(G.tmrDate) }) : null;   // v97: часы выше AQI 100 завтра (модель)
-  return { c, B, lv, tips, date: new Date(G.at).toLocaleDateString("ru-RU"), winLine, hr };
+  const TN = gvTonight(G), tn = TN ? gvHoursLine(TN, "gzTn", { date: new Date(G.at).toLocaleDateString("ru-RU") }) : null;   // v104: сегодня вечером и ночью (модель), с датой — лист читают позже
+  return { c, B, lv, tips, date: new Date(G.at).toLocaleDateString("ru-RU"), winLine, hr, tn };
 }
 function gvGzText(P) { const B = P.B, GZ_KY = GZ_T[GZL];
-  return [GZ_KY.title + " — " + P.c + ", " + P.date, "", GZ_KY.s1 + ": " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + ".", ...(P.winLine ? [P.winLine] : []), ...(P.divLine ? [P.divLine] : []), ...(P.hr ? [P.hr] : []),
+  return [GZ_KY.title + " — " + P.c + ", " + P.date, "", GZ_KY.s1 + ": " + GV("b30") + " " + gvF(B.a30) + "; " + GV("bDw") + " " + gvF(B.dO) + "/" + gvF(B.dN) + ".", ...(P.winLine ? [P.winLine] : []), ...(P.divLine ? [P.divLine] : []), ...(P.tn ? [P.tn] : []), ...(P.hr ? [P.hr] : []),
     "", GZ_KY.s2 + ":", ...P.lv.map(l => `• ${l.r} — ${l.n}: ${l.t}`), "", GZ_KY.s3 + ":", ...P.tips.map(x => "• " + x), "", GZ_KY.s4 + ":", ...GZ_KY.r.map(x => "• " + x), "", GZ_KY.live + " " + SITE_URL, GZ_KY.data].join("\n"); }
 function gvGzRender(el, G) {
   GZL = (location.hash || "").slice(1).split("?")[0].split("/")[2] === "ru" ? "ru" : "ky"; const GZ_KY = GZ_T[GZL];
@@ -779,7 +806,7 @@ function gvGzRender(el, G) {
     <header class="gz-head"><div><h1>${esc(GZ_KY.title)}</h1><p class="sub">${esc(GZ_KY.sub.replace("{city}", P.c).replace("{date}", P.date))}</p></div>
       <figure class="gb-qr gz-qr"><img src="icons/qr-site.svg" alt="QR: https://taza-aba.surge.sh/" width="64" height="64"><figcaption>taza-aba.surge.sh</figcaption></figure></header>
     <section class="gz-s"><h3>${GZ_KY.s1}</h3><div class="gz-k"><div><small>${GV("b30")}</small>${pin(P.B.a30)}</div><div><small>${GV("bDw")}</small><b>${gvF(P.B.dO)}<span class="small muted"> / ${gvF(P.B.dN)}</span></b></div></div>
-      <p class="small" id="gzWin">${P.winLine ? "❄️ " + esc(P.winLine) : ""}</p><p class="small gz-div" id="gzDiv" hidden></p>${P.hr ? `<p class="small gz-hr">🕒 ${esc(P.hr)}</p>` : ""}</section>
+      <p class="small" id="gzWin">${P.winLine ? "❄️ " + esc(P.winLine) : ""}</p><p class="small gz-div" id="gzDiv" hidden></p>${P.tn ? `<p class="small gz-tn">🌙 ${esc(P.tn)}</p>` : ""}${P.hr ? `<p class="small gz-hr">🕒 ${esc(P.hr)}</p>` : ""}</section>
     <section class="gz-s"><h3>${GZ_KY.s2}</h3><table class="gz-t"><tbody>${P.lv.map(l => `<tr><td><span class="gz-sw" style="background:${l.c}"></span>${l.r}</td><td><b>${esc(l.n)}</b> — ${esc(l.t)}</td></tr>`).join("")}</tbody></table></section>
     <section class="gz-s gz-two"><div><h3>${GZ_KY.s3}</h3><ul>${P.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div><div><h3>${GZ_KY.s4}</h3><ul>${GZ_KY.r.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></section>
     <footer class="gz-f"><p><b>${GZ_KY.live}</b> taza-aba.surge.sh</p><p class="small muted">${esc(GZ_KY.data)} ${gvAs("airnow")}, ${gvAs("who20")}, ${gvAs("unicef")}, ${gvAs("om")}</p></footer></article>`);
